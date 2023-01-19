@@ -33,5 +33,5 @@
 - 후자의 경우 매우 힘든 과정을 거치므로 최대한 반응형으로 구성하는것이 좋아보인다.
 - material UI 같이 기존에 잘 구성된 라이브러리를 활용해보는 것이 좋을 것
 
-![스크린샷](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405/-/raw/master/%EA%B0%95%ED%83%9C%EC%84%A0/20230108/image/1.PNG)
-![스크린샷](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405/-/raw/master/%EA%B0%95%ED%83%9C%EC%84%A0/20230108/image/2.PNG)
+![스크린샷](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405/-/raw/master/%EA%B0%95%ED%83%9C%EC%84%A0/20230118/image/1.PNG)
+![스크린샷](https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405/-/raw/master/%EA%B0%95%ED%83%9C%EC%84%A0/20230118/image/2.PNG)
