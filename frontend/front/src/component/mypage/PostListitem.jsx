@@ -20,14 +20,22 @@ const Wrapper = styled.div`
 const TitleText = styled.p`
     font-size: 20px;
     font-weight: 500;
+    justify-content: center;
+    align-items: center;
 `;
 
 const ContentDiv = styled.div`
     display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 const ContentText = styled.p`
+    display: flex;
     font-size: 15px;
     margin-right: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 `;
 
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다

@@ -25,11 +25,15 @@ const PostContainer = styled.div`
 const TitleText = styled.p`
     font-size: 30px;
     font-weight: 500;
+    align-items: center;
+    justify-content: center;
 `;
 
 const ContentText = styled.p`
     font-size: 20px;
     white-space: pre-wrap;
+    align-items: center;
+    justify-content: center;
 `;
 
 function PostViewPage() {
@@ -46,7 +50,7 @@ function PostViewPage() {
                 <Button
                     title="뒤로 가기"
                     onClick={() => {
-                        navigate("/mypage");
+                        navigate(-1);
                     }}
                 />
                 <PostContainer>
@@ -59,7 +63,7 @@ function PostViewPage() {
                 <Button
                     title="방송 등록"
                     onClick={() => {
-                        navigate(`/mypage/${post.id}/post-write`);
+                        navigate(`/mypage/myItem/${post.id}/post-write`);
                     }}
                 />
             </Container>
