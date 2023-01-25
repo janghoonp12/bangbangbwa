@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../ui/Button";
+import Button from "../common/ui/Button";
 import data from "../../data.json";
 
 const Wrapper = styled.div`
