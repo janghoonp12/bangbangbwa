@@ -14,7 +14,7 @@ function Home() {
         <ItemList
           posts={data}
           onClickItem={(item) => {
-              navigate(`/items/${item.id}`);
+              navigate(`/broadcasts/${item.id}`);
           }}
         />
       </div>
