@@ -4,7 +4,7 @@ import {
     Route
   } from "react-router-dom";
 import styled from "styled-components";
-import Container from './Conatiner';
+import Container from './Container';
 import PostViewPage from '../page/PostViewPage';
 import PostWritePage from '../page/PostWritePage';
 

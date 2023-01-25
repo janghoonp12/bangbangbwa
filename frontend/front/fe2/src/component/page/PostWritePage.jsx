@@ -41,21 +41,21 @@ function PostWritePage(props) {
                     height={20}
                     value={type}
                     onChange={(event) => {
-                        setTitle(event.target.value);
+                        setType(event.target.value);
                     }}
                 />
                 <TextInput
                     height={20}
                     value={building_type}
                     onChange={(event) => {
-                        setTitle(event.target.value);
+                        setBuildingType(event.target.value);
                     }}
                 />
                 <TextInput
                     height={20}
                     value={manage_fee}
                     onChange={(event) => {
-                        setTitle(event.target.value);
+                        setManageFee(event.target.value);
                     }}
                 />
 
