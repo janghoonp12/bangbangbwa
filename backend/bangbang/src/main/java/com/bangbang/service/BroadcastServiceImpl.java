@@ -28,8 +28,8 @@ public class BroadcastServiceImpl implements BroadcastService{
     }
 
     @Override
-    public Broadcast deactivateBroadcast(int broadcastid, Broadcast broadcast) {
-        final Broadcast Broadcast = repository.findByBroadcastid(broadcastid);
+    public Broadcast deactivateBroadcast(int broadcastid) {
+        final Broadcast broadcast = repository.findByBroadcastid(broadcastid);
         if(broadcast == null) return null;
 
         if(broadcast.getBroadcast_status() == 0) {
@@ -44,16 +44,15 @@ public class BroadcastServiceImpl implements BroadcastService{
 
     @Override
     public Broadcast modifyBroadcast(int broadcastid, Broadcast broadcast) {
-        final Broadcast Broadcast = repository.findByBroadcastid(broadcastid);
-        if(broadcast == null) return null;
-
-        if(broadcast.getBroadcast_status() == 0) {
-            broadcast.setBroadcast_status(1);
+        final Broadcast broadcast_list = repository.findByBroadcastid(broadcastid);
+        if(broadcast_list == null) return null;
+        else{
+            if(broadcast.getBroadcastid() == broadcastid){
+                broadcast_list.setBroadcast_title(broadcast.getBroadcast_title());
+                broadcast_list.setBroadcast_description(broadcast.getBroadcast_description());
+            }
         }
-        else if (broadcast.getBroadcast_status() == 1){
-            broadcast.setBroadcast_status(0);
-        }
-        repository.save(broadcast);
+//        repository.save(broadcast);
         return broadcast;
     }
 }
