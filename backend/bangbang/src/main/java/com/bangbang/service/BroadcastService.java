@@ -1,10 +1,6 @@
 package com.bangbang.service;
 
 import com.bangbang.vo.Broadcast;
-import com.bangbang.vo.BroadcastRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 public interface BroadcastService {
@@ -17,7 +13,7 @@ public interface BroadcastService {
 
   List<Broadcast> searchBroadcastFilter();          //방송필터검색
 
-  Broadcast deactivateBroadcast(int broadcastid, Broadcast broadcast);    //방송삭제(비활성화)
+  Broadcast deactivateBroadcast(int broadcastid);    //방송삭제(비활성화)
 
 
   Broadcast modifyBroadcast(int broadcastid, Broadcast broadcast);        //방송내용수정
