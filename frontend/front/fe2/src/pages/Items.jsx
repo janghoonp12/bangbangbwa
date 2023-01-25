@@ -1,6 +1,6 @@
 import React from "react";
-import data from "../../data.json";
-import ItemList from "../list/ItemList"
+import data from "../data.json";
+import ItemList from "../component/item/ItemList";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import TextInput from "../ui/TextInput";
-import Button from "../ui/Button";
+import TextInput from "../common/ui/TextInput";
+import Button from "../common/ui/Button";
 
 const Wrapper = styled.div`
     display: flex;

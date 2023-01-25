@@ -4,9 +4,9 @@ import {
     Route
   } from "react-router-dom";
 import styled from "styled-components";
-import Container from './Container';
-import PostViewPage from '../page/PostViewPage';
-import PostWritePage from '../page/PostWritePage';
+import Container from '../component/mypage/Container';
+import PostViewPage from '../component/mypage/PostViewPage';
+import PostWritePage from '../component/mypage/PostWritePage';
 
 const Wrapper = styled.div`
     flex-direction: column;

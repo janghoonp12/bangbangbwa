@@ -6,13 +6,13 @@ import {
 } from "react-router-dom";
 
 //Pages
-import Nav from "./component/Nav";
-import Home from "./component/Home";
-import Items from "./component/page/Items";
-import Broadcasts from "./component/page/Broadcasts";
-import MyPage from "./component/page/MyPage";
-import NotFound from "./component/NotFound";
-import WriteItem from "./component/page/WriteItem";
+import Nav from "./component/common/Nav";
+import Home from "./pages/Home";
+import Items from "./pages/Items";
+import Broadcasts from "./pages/Broadcasts";
+import MyPage from "./pages/MyPage";
+import NotFound from "./pages/NotFound";
+import WriteItem from "./component/common/WriteItem";
 
 
 function App() {
