@@ -7,12 +7,8 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-
-    & > * {
-        :not(:last-child) {
-            margin-bottom: 16px;
-        }
-    }
+    align-items: center;
+    margin-bottom: 10px;
 `;
 
 // props로 받은 posts에는 post객체들이 들어있다.

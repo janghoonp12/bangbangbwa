@@ -4,11 +4,13 @@ import {
     Route
   } from "react-router-dom";
 import styled from "styled-components";
-import Container from '../component/mypage/Container';
+import MyProfile from "../component/mypage/MyProfile";
+import MyItem from '../component/mypage/MyItem';
 import PostViewPage from '../component/mypage/PostViewPage';
 import PostWritePage from '../component/mypage/PostWritePage';
 
 const Wrapper = styled.div`
+    margin-top: 3rem;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -19,11 +21,12 @@ function MyPage() {
 
     return (
         <Wrapper>
-          <h1>MyPage</h1>
+          {/* <h1>MyPage</h1> */}
           <Routes>
-            <Route index element={<Container />} />
-            <Route path=":postId" element={<PostViewPage />} />
-            <Route path=":postId/post-write" element={<PostWritePage />}/>
+            <Route index element={<MyProfile />} />
+            <Route path="myItem" element={<MyItem />} />
+            <Route path="myItem/:postId" element={<PostViewPage />} />
+            <Route path="myItem/:postId/post-write" element={<PostWritePage />}/>
           </Routes>
         </Wrapper>
     )
