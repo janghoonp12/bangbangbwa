@@ -19,31 +19,42 @@ const Navdiv = styled.div`
   align-items: center;
 `;
 
+const activeStyle = {
+  'text-decoration': 'none',
+  color: '#289951',
+  fontWeight: 700,
+};
+
+const nonActiveStyle = {
+  'text-decoration': 'none',
+  color: '#000000',
+};
+
 const Nav = () => {
   return (
     <Navbar>
       <Navdiv>
-        <NavLink to="/">
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/">
           홈
         </NavLink>
       </Navdiv>
       <Navdiv>
-        <NavLink to="/broadcasts">
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/broadcasts">
           방송
         </NavLink>
       </Navdiv>
       <Navdiv>
-        <NavLink to="/items">
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/items">
           매물
         </NavLink>
       </Navdiv>
       <Navdiv>
-        <NavLink to="/interests">
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests">
           관심
         </NavLink>
       </Navdiv>
       <Navdiv>
-        <NavLink to="/mypage">
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           MyPage
         </NavLink>
       </Navdiv>
