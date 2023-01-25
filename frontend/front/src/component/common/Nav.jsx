@@ -24,17 +24,22 @@ const Nav = () => {
     <Navbar>
       <Navdiv>
         <NavLink to="/">
-          Home
-        </NavLink>
-      </Navdiv>
-      <Navdiv>
-        <NavLink to="/items">
-          Items
+          홈
         </NavLink>
       </Navdiv>
       <Navdiv>
         <NavLink to="/broadcasts">
-          Broadcasts
+          방송
+        </NavLink>
+      </Navdiv>
+      <Navdiv>
+        <NavLink to="/items">
+          매물
+        </NavLink>
+      </Navdiv>
+      <Navdiv>
+        <NavLink to="/interests">
+          관심
         </NavLink>
       </Navdiv>
       <Navdiv>
