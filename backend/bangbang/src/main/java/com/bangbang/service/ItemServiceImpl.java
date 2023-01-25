@@ -1,9 +1,10 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.Item;
-import com.bangbang.vo.ItemRepository;
+import com.bangbang.vo.*;
+
 import java.util.List;
 import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +12,17 @@ import org.springframework.stereotype.Service;
 public class ItemServiceImpl implements ItemService {
 
   @Autowired
-  private ItemRepository repository;
+  private ItemRepository itemRepository;
 
   @Transactional
   @Override
   public void newItem(Item item) {
-    repository.save(item);
+    itemRepository.save(item);
   }
 
   @Override
   public List<Item> searchItemAll() {
-    return repository.findAll();
+    return itemRepository.findTop100By();
   }
 
   @Override
@@ -31,28 +32,28 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public Item itemDetail(int itemId) {
-    return repository.findById(itemId);
+    return itemRepository.findById(itemId);
   }
 
   @Transactional
   @Override
   public void deactivateItem(int itemId) {
-    Item item = repository.findById(itemId);
-    item.setItem_status(true);
-    repository.save(item);
+    Item item =  itemRepository.findById(itemId);
+    item.setItem_status(1);
+    itemRepository.save(item);
   }
 
   @Transactional
   @Override
   public void modifyItem(Item item) {
-    repository.save(item);
+    itemRepository.save(item);
   }
 
   @Transactional
   @Override
   public void itemSold(int itemId) {
-    Item item = repository.findById(itemId);
+    Item item = itemRepository.findById(itemId);
     item.setItem_deal_complete(true);
-    repository.save(item);
+    itemRepository.save(item);
   }
 }

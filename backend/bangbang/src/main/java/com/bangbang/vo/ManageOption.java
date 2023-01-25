@@ -37,6 +37,6 @@ public class ManageOption {
   @Column(nullable = true)
   private String manage_option_etc;
 
-  @Column(nullable = true)
+  @Column(nullable = false)
   private int item_id; //FK
 }

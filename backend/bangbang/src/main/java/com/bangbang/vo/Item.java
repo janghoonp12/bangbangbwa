@@ -2,11 +2,13 @@ package com.bangbang.vo;
 
 import javax.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
 @Table(name="item")
+@NoArgsConstructor
 @SuperBuilder
 public class Item {
     @Id
@@ -14,43 +16,43 @@ public class Item {
     private int item_id;
 
     @Column(nullable = true)
-    private int item_type;
+    private Integer item_type;
 
     @Column(nullable = true)
-    private int item_building_type;
+    private Integer item_building_type;
 
     @Column(nullable = true)
-    private int item_zonecode;
+    private Integer item_zonecode;
 
     @Column(nullable = true)
-    private int item_deal_type;
+    private Integer item_deal_type;
 
     @Column(nullable = true)
-    private int item_supply_area;
+    private Integer item_supply_area;
 
     @Column(nullable = true)
-    private int item_exclusive_area;
+    private Integer item_exclusive_area;
 
     @Column(nullable = true)
-    private int item_total_floor;
+    private Integer item_total_floor;
 
     @Column(nullable = true)
-    private int item_floor;
+    private Integer item_floor;
 
     @Column(nullable = true)
-    private int item_heating;
+    private Integer item_heating;
 
     @Column(nullable = true)
-    private int item_move_in_type;
+    private Integer item_move_in_type;
 
     @Column(nullable = true)
     private String item_move_in_date;
 
     @Column(nullable = true)
-    private int item_manage_fee;
+    private Integer item_manage_fee;
 
     @Column(nullable = true)
-    private int item_manage_type;
+    private Integer item_manage_type;
 
     @Column(nullable = true)
     private String item_title;
@@ -68,7 +70,7 @@ public class Item {
     private String item_road_name;
 
     @Column(nullable = true)
-    private String item_roadname_bonbun;
+    private String item_road_name_bonbun;
     @Column(nullable = true)
     private String item_roadname_bubun;
 
@@ -108,21 +110,30 @@ public class Item {
     @Column(nullable = true)
     private boolean item_deal_complete;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
+    @JoinTable(name="broker",
+            joinColumns = @JoinColumn(name="broker_id"),
+            inverseJoinColumns = @JoinColumn(name="broker_id"))
     private int broker_id; //FK
 
     @Column(nullable = true)
-    private boolean item_status;
+    private Integer item_status;
 
     @OneToOne
-    @JoinColumn(name="item_id")
+    @JoinTable(name="item_price",
+    joinColumns = @JoinColumn(name="item_id"),
+    inverseJoinColumns = @JoinColumn(name="item_id"))
     private ItemPrice itemPrice;
 
     @OneToOne
-    @JoinColumn(name="item_id")
+    @JoinTable(name="manage_option",
+            joinColumns = @JoinColumn(name="item_id"),
+            inverseJoinColumns =  @JoinColumn(name="item_id"))
     private ManageOption manageOption;
 
     @OneToOne
-    @JoinColumn(name="option")
+    @JoinTable(name="options",
+            joinColumns = @JoinColumn(name="item_id"),
+            inverseJoinColumns =  @JoinColumn(name="item_id"))
     private Option option;
 }

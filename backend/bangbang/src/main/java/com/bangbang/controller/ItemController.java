@@ -28,9 +28,6 @@ public class ItemController {
   @ApiOperation(value="매물 등록")
   @PostMapping("/items/new")
   public ResponseEntity<?> newItem(@RequestBody Item item) {
-    final Item params = Item.builder()
-        .item_title("")
-        .build(); //swagger 작성 마저하기
     try {
       itemService.newItem(item);
       return new ResponseEntity(HttpStatus.OK);

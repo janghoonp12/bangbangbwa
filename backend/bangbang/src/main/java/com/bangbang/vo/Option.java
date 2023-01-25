@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="option")
+@Table(name="options")
 public class Option {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,6 +70,6 @@ public class Option {
   @Column(nullable = true)
   private boolean option_doorlock;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private int item_id; //FK
 }

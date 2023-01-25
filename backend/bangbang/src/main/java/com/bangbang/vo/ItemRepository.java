@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-  List<Item> findAll();
+  List<Item> findTop100By();
   Item findById(int itemId);
 }

@@ -22,30 +22,19 @@ public class SwaggerConfig {
 	
 	@Bean
 	public Docket makeDocket() {
-		
-		Docket docket = new Docket(DocumentationType.SWAGGER_2);	//swagger 핵심 클래스
-		ApiSelectorBuilder builder = docket.select();				//문서 작성을 위한 내부 초기화 작업
-		
-		//문서를 만들 대상 컨트롤러가 있는 패키지 지정
-		builder = builder.apis(RequestHandlerSelectors.basePackage("com.mvc.controller"));
-		
-		//api()로 선택된 api중 특정 path조건에 맞는 api를 다시 필터링하여 문서화 작업을 함
-		builder = builder.paths(PathSelectors.ant("/**"));
-		//builder = builder.paths(regex("/customers/*.*"));
-		
-		docket = builder.build();
-		
-		docket = docket.apiInfo(apiInfo());
-		return docket;
+		return new Docket(DocumentationType.SWAGGER_2)
+				.groupName("bangbang")
+				.apiInfo(apiInfo())
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.bangbang.controller"))
+				.build();
 	}
-	
+
 	private ApiInfo apiInfo() {
-		ApiInfoBuilder b = new ApiInfoBuilder();
-		b = b.title("Customer API입니다.");
-		b = b.description("<h3>Customer</h3>Swagger를 이용한 Customer API<br><img src=image/f2.jpg width=150>");
-		b = b.version("3.0");
-		ApiInfo ai = b.build();
-		return ai;
+		return new ApiInfoBuilder().title("Item API")
+				.description("<h2>매물 API TEST</h2>")
+				.version("1.0").build();
 	}
-	
+
+
 }
