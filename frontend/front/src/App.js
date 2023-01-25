@@ -26,7 +26,7 @@ function App() {
         <Route path="/broadcasts/*" element={<Broadcasts />} />
         <Route path="/mypage/*" element={<MyPage />} />
         <Route path="/writeitems" element={<WriteItem />} />
-        <Route path="/interests" element={<Interests />} />
+        <Route path="/interests/*" element={<Interests />} />
         {/*일치하지 않는 모든 page는 NotFound */}
         <Route path="*" element={<NotFound />} />
       </Routes>
