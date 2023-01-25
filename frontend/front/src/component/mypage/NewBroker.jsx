@@ -1,9 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import PostList from "./PostList";
-import Button from "../common/ui/Button";
-import data from "../../data.json";
 import logosample from "../../assets/logosample.png"
 
 const Wrapper = styled.div`
@@ -29,9 +26,12 @@ const ProfileDiv = styled.div`
 const ItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
+  height: 100%;
+  max-height: 50%;
   border: 1px solid grey;
   border-radius: 8px;
-  // overflow: auto;
+  text-align: left;
+  padding: 10px;
 `;
 
 const ImgTag = styled.img`
@@ -40,13 +40,17 @@ const ImgTag = styled.img`
   margin-bottom: 1rem;
 `;
 
+const ImgTag2 = styled.img`
+  width: 100%;
+`;
+
 const NamePTag = styled.p`
   font-size: 20px;
 `;
 
 const EmailPTag = styled.p`
   margin-bottom: 5rem;
-  font-size: 10px;    
+  font-size: 10px;
 `;
 
 const MenuPTag = styled.p`
@@ -60,7 +64,28 @@ const NowMenuPTag = styled.p`
   cursor: pointer;
 `;
 
-function MyItem(props) {
+const FlexDiv = styled.div`
+  display: flex;
+  height: 100%;
+  max-height: 40%;
+  width: 100%;
+  max-width: 40%;
+  // justify-content: center;
+  align-items: center;
+  text-align: left;
+  
+`;
+
+const InfoDiv = styled.div`
+  width: 100%;
+  max-width: 20%;
+`;
+
+const AgreePTag = styled.p`
+  font-size: 5px;
+`;
+
+function NewBroker(props) {
 
   const navigate = useNavigate();
 
@@ -76,40 +101,64 @@ function MyItem(props) {
               navigate("/mypage")
             }}
           >내 프로필</MenuPTag>
-          <MenuPTag
+          <NowMenuPTag
             onClick={() => {
               navigate("/mypage/newBroker")
             }}
-          >중개사 등록</MenuPTag>
-          <NowMenuPTag
+          >중개사 등록</NowMenuPTag>
+          <MenuPTag
             onClick={() => {
               navigate("/mypage/myItem")
             }}
-          >나의 매물정보</NowMenuPTag>
+          >나의 매물정보</MenuPTag>
           <MenuPTag
             onClick={() => {
               navigate("/mypage")
             }}
           >나의 방송정보</MenuPTag>
+
         </ProfileDiv>
         <ItemDiv>
-          <Button
-            style={{position: 'absolute', right: 0, marginRight: "30px"}}
-            title="필터"
-            onClick={() => {
-            navigate("/");
-            }}
-          />
-          <PostList
-            posts={data}
-            onClickItem={(item) => {
-              navigate(`/mypage/myItem/${item.id}`);
-            }}
-          />
+          <div>
+            <p>기본정보</p>
+          </div>
+          <FlexDiv>
+            <InfoDiv>
+              <ImgTag2 alt="이미지" src={logosample} />
+            </InfoDiv>
+            <div>
+              <p>정진수</p>
+              <p>abcde@gmail.com</p>
+            </div>
+
+          </FlexDiv>
+          <hr />
+          <div>
+            <p>중개사무소 정보</p>
+            <p>중개사무소 찾기</p>
+          </div>
+          <hr />
+          <div>
+            <p>연락처</p>
+            <FlexDiv>
+              <p>010 - </p>
+              <p>1234 - </p>
+              <p>1234</p>
+            </FlexDiv>
+          </div>
+          <hr />
+          <div>
+            <p>대표 공인중개사 이메일</p>
+            <p>abcde@gmail.com</p>
+          </div>
+          <hr />
+          <div>
+            <AgreePTag>개인정보 수집 동의</AgreePTag>
+          </div>
         </ItemDiv>
       </Container>
     </Wrapper>
-  )
+    )
 }
 
-export default MyItem;
+export default NewBroker;
