@@ -10,10 +10,11 @@ const Wrapper = styled.div`
 
     & > * {
         :not(:last-child) {
-            margin-bottom: 16px;
+            margin-bottom: 15px;
         }
     }
 `;
+
 
 function BroadcastList(props) {
     const { posts, onClickItem } = props;
@@ -23,12 +24,12 @@ function BroadcastList(props) {
             {posts.map((post, index) => {
                 return (
                     <BroadcastListitem
-                        key={post.id}
-                        post={post}
-                        onClick={() => {
-                            onClickItem(post);
-                        }}
-                    />
+                      key={post.id}
+                      post={post}
+                      onClick={() => {
+                        onClickItem(post);
+                      }}
+                      />
                 );
             })}
         </Wrapper>

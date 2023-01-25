@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 function ItemListItem(props) {
     const { post, onClick } = props;
     return (
-      <Card style={{ width: '15rem', marginLeft: '50px' }} onClick={onClick}>
+      <Card style={{ width: '15rem', marginLeft: '50px', cursor: 'pointer' }} onClick={onClick}>
         <Card.Img variant="top" src="logo192.png" alt="이미지" />
         <Card.Body>
           <Card.Title>{post.title}</Card.Title>
