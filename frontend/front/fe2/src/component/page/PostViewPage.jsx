@@ -32,7 +32,6 @@ const ContentText = styled.p`
     white-space: pre-wrap;
 `;
 
-
 function PostViewPage() {
     const navigate = useNavigate();
     const {postId} = useParams();
