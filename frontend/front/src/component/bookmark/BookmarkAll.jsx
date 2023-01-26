@@ -5,7 +5,7 @@ function BookmarkAll() {
   
   return (
     <div>
-      <h2>즐겨찾기</h2>
+      <h3 align="center">즐겨찾기</h3>
     </div>
   )
 }

@@ -7,7 +7,7 @@ const Navbar = styled.nav`
   top: 0;
   width: 100%;
   height: 60px;
-  
+  background-color: #F8EDE3;
   display: flex;
   border: solid 2px;
 `;
@@ -20,13 +20,13 @@ const Navdiv = styled.div`
 `;
 
 const activeStyle = {
-  'text-decoration': 'none',
+  'textDecoration': 'none',
   color: '#289951',
   fontWeight: 700,
 };
 
 const nonActiveStyle = {
-  'text-decoration': 'none',
+  'textDecoration': 'none',
   color: '#000000',
 };
 
