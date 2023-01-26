@@ -21,7 +21,7 @@ const Container = styled.div`
 
 function BroadcastWrite(props) {
   const navigate = useNavigate();
-  const [item] = useState("방송 등록할 매물을 선택하세요");
+  const [item, setItem] = useState("방송 등록할 매물을 선택하세요");
   const [title, setTitle] = useState("방송 제목");
   const [outlook, setOutlook] = useState("방송 개요");
   const [startTime, setstartTime] = useState("방송 시작시간");
@@ -31,6 +31,9 @@ function BroadcastWrite(props) {
       <TextInput
         value={item}
         height={100}
+        onChange={(event) => {
+          setItem(event.target.value);
+      }}
       />
       <br />
       <Container>
