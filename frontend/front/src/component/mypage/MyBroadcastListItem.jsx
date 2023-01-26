@@ -27,7 +27,7 @@ const TitleText = styled.p`
 const ContentDiv = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 `;
 const ContentText = styled.p`
   display: flex;
