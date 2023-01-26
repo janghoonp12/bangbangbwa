@@ -26,11 +26,11 @@ function MyPage() {
     {/* <h1>MyPage</h1> */}
     <Routes>
       <Route index element={<MyProfile />} />
-      <Route path="newBroker" element={<NewBroker />}/>
-      <Route path="myItem" element={<MyItem />} />
-      <Route path="myItem/:postId" element={<PostViewPage />} />
-      <Route path="myItem/:postId/post-write" element={<PostWritePage />}/>
-      <Route path="myBroadcast" element={<MyBroadcast />}/>
+      <Route path="newbroker" element={<NewBroker />}/>
+      <Route path="myitem" element={<MyItem />} />
+      <Route path="myitem/:postId" element={<PostViewPage />} />
+      <Route path="myitem/:postId/post-write" element={<PostWritePage />}/>
+      <Route path="mybroadcast" element={<MyBroadcast />}/>
       {/* <Route path="myBroadcast/:myBroadcastId" element={<PostViewPage />} /> */}
       {/* <Route path="myBroadcast/:myBroadcastId/broadcast-write" element={<PostWritePage />}/> */}
     </Routes>

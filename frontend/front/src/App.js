@@ -14,6 +14,7 @@ import MyPage from "./pages/MyPage";
 import Interests from "./pages/Interests";
 import NotFound from "./pages/NotFound";
 import WriteItem from "./component/common/WriteItem";
+import Login from "./component/account/Login";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />}/>
         <Route path="/items/*" element={<Items />} />
         <Route path="/broadcasts/*" element={<Broadcasts />} />
         <Route path="/mypage/*" element={<MyPage />} />

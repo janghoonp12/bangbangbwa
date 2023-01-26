@@ -103,17 +103,17 @@ function NewBroker(props) {
           >내 프로필</MenuPTag>
           <NowMenuPTag
             onClick={() => {
-              navigate("/mypage/newBroker")
+              navigate("/mypage/newbroker")
             }}
           >중개사 등록</NowMenuPTag>
           <MenuPTag
             onClick={() => {
-              navigate("/mypage/myItem")
+              navigate("/mypage/myitem")
             }}
           >나의 매물정보</MenuPTag>
           <MenuPTag
             onClick={() => {
-              navigate("/mypage/myBroadcast")
+              navigate("/mypage/mybroadcast")
             }}
           >나의 방송정보</MenuPTag>
 
