@@ -7,7 +7,8 @@ const StyledTextarea = styled.textarea`
     }
     padding: 25px;
     font-size: 16px;
-    line-height: 20px;
+    line-height: 100%;
+    height: 100%;
 `;
 
 /*
