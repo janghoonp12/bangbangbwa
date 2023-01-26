@@ -70,6 +70,6 @@ public class Option {
   @Column(nullable = true)
   private boolean option_doorlock;
 
-  @Column(nullable = true)
+  @Column(nullable = false)
   private int item_id; //FK
 }
