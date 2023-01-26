@@ -9,6 +9,7 @@ import NewBroker from "../component/mypage/NewBroker";
 import MyItem from '../component/mypage/MyItem';
 import PostViewPage from '../component/mypage/PostViewPage';
 import PostWritePage from '../component/mypage/PostWritePage';
+import MyBroadcast from "../component/mypage/MyBroadcast";
 
 const Wrapper = styled.div`
   margin-top: 3rem;
@@ -29,6 +30,9 @@ function MyPage() {
       <Route path="myItem" element={<MyItem />} />
       <Route path="myItem/:postId" element={<PostViewPage />} />
       <Route path="myItem/:postId/post-write" element={<PostWritePage />}/>
+      <Route path="myBroadcast" element={<MyBroadcast />}/>
+      {/* <Route path="myBroadcast/:myBroadcastId" element={<PostViewPage />} /> */}
+      {/* <Route path="myBroadcast/:myBroadcastId/broadcast-write" element={<PostWritePage />}/> */}
     </Routes>
     </Wrapper>
   )
