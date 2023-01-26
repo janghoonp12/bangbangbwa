@@ -18,11 +18,11 @@ const LoginWrapper = styled.div`
   margin: 200px auto;
 `
 
-const Image = styled.img`
-  border-radius: 5px 0px 0px 5px;
-  width: 100%;
-  height: 100%;
-`
+// const Image = styled.img`
+//   border-radius: 5px 0px 0px 5px;
+//   width: 100%;
+//   height: 100%;
+// `
 
 const SecondForm = styled.div`
   background-image: url(${logosample});

@@ -1,6 +1,6 @@
 import React from "react";
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 import sample from '../../assets/logosample.png';
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +9,9 @@ function RecentViewListItem(props) {
     const data = props.data;
     const navigate = useNavigate();
 
-    const deleteRecentView = () => {
+    // const deleteRecentView = () => {
       
-    }
+    // }
 
     const onClick = () => {
       navigate(`/items/${data.id}`)
