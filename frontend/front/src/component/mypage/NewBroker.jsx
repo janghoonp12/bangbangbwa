@@ -113,7 +113,7 @@ function NewBroker(props) {
           >나의 매물정보</MenuPTag>
           <MenuPTag
             onClick={() => {
-              navigate("/mypage")
+              navigate("/mypage/myBroadcast")
             }}
           >나의 방송정보</MenuPTag>
 
@@ -155,6 +155,7 @@ function NewBroker(props) {
           <div>
             <AgreePTag>개인정보 수집 동의</AgreePTag>
           </div>
+          
         </ItemDiv>
       </Container>
     </Wrapper>

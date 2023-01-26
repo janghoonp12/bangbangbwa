@@ -109,7 +109,7 @@ function MyProfile(props) {
           >나의 매물정보</MenuPTag>
           <MenuPTag
             onClick={() => {
-              navigate("/mypage")
+              navigate("/mypage/myBroadcast")
             }}
           >나의 방송정보</MenuPTag>
 

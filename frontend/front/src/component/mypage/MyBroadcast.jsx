@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import PostList from "./PostList";
+import MyBroadcastList from "./MyBroadcastList";
 import Button from "../common/ui/Button";
-import data from "../../data.json";
+import data from "../../broadcastdata.json";
 import logosample from "../../assets/logosample.png"
 
 const Wrapper = styled.div`
@@ -60,7 +60,7 @@ const NowMenuPTag = styled.p`
   cursor: pointer;
 `;
 
-function MyItem(props) {
+function MyBroadcast(props) {
 
   const navigate = useNavigate();
 
@@ -81,16 +81,16 @@ function MyItem(props) {
               navigate("/mypage/newBroker")
             }}
           >중개사 등록</MenuPTag>
-          <NowMenuPTag
+          <MenuPTag
             onClick={() => {
               navigate("/mypage/myItem")
             }}
-          >나의 매물정보</NowMenuPTag>
-          <MenuPTag
+          >나의 매물정보</MenuPTag>
+          <NowMenuPTag
             onClick={() => {
               navigate("/mypage/myBroadcast")
             }}
-          >나의 방송정보</MenuPTag>
+          >나의 방송정보</NowMenuPTag>
         </ProfileDiv>
         <ItemDiv>
           <Button
@@ -100,10 +100,10 @@ function MyItem(props) {
             navigate("/");
             }}
           />
-          <PostList
-            posts={data}
+          <MyBroadcastList
+            myBroadcasts={data}
             onClickItem={(item) => {
-              navigate(`/mypage/myItem/${item.id}`);
+              navigate(`/mypage/myBroadcast/${item.id}`);
             }}
           />
         </ItemDiv>
@@ -112,4 +112,4 @@ function MyItem(props) {
   )
 }
 
-export default MyItem;
+export default MyBroadcast;
