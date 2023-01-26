@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 const Navbar = styled.nav`
@@ -10,6 +10,7 @@ const Navbar = styled.nav`
   margin: auto;
   display: flex;
   border: solid 2px grey;
+  border-radius: 2em;
 `;
 
 const Navdiv = styled.div`
@@ -20,21 +21,26 @@ const Navdiv = styled.div`
 `;
 
 const activeStyle = {
-  'text-decoration': 'none',
+  'textDecoration': 'none',
   color: '#289951',
   fontWeight: 700,
 };
 
 const nonActiveStyle = {
-  'text-decoration': 'none',
+  'textDecoration': 'none',
   color: '#000000',
 };
 
-const InterestNav = () => {
+
+const Nav = () => {
+  const location = useLocation();
+
+  let active = location.pathname === '/interests' ? true : false;
+
   return (
     <Navbar>
       <Navdiv>
-        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests/recents">
+        <NavLink style={active ? activeStyle : nonActiveStyle} to="/interests">
           최근 본 매물
         </NavLink>
       </Navdiv>
@@ -57,4 +63,4 @@ const InterestNav = () => {
   );
 };
 
-export default InterestNav;
+export default Nav;

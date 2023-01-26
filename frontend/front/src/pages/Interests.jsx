@@ -12,13 +12,12 @@ function Interests() {
   
   return (
     <div>
-      <h1>관심 페이지</h1>
+      <h1 align="center">관심 페이지</h1>
       <hr />
       <InterestNav />
       <br />
       <Routes>
         <Route path="/" element= {<RecentView />} />
-        <Route path="recents" element={<RecentView />} />
         <Route path="items" element={<InterestItem />} />
         <Route path="areas" element={<InterestArea />} />
         <Route path="bookmarks" element={<BookmarkAll />}/>

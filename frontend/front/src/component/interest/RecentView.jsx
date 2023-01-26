@@ -8,6 +8,7 @@ function RecentView() {
 
   return (
     <div>
+      <h3 align="center">최근 본 매물</h3>
       <RecentViewList
           posts={data}
           onClickItem={(item) => {

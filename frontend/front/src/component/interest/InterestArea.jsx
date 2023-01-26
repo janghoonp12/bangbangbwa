@@ -5,7 +5,7 @@ function InterestArea() {
   
   return (
     <div>
-      <h2>관심 지역</h2>
+      <h3 align="center">관심 지역</h3>
     </div>
   )
 }
