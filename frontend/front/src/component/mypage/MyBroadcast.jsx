@@ -103,7 +103,7 @@ function MyBroadcast(props) {
           <MyBroadcastList
             myBroadcasts={data}
             onClickItem={(item) => {
-              navigate(`/mypage/myBroadcast/${item.id}`);
+              navigate(`/broadcasts/${item.id}`);
             }}
           />
         </ItemDiv>
