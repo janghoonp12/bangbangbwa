@@ -1,11 +1,11 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.SignIn;
-import com.bangbang.vo.User;
-import com.bangbang.vo.UserRepository;
-import com.exception.BaseException;
-import com.exception.ErrorMessage;
-import com.util.JwtTokenProvider;
+import com.bangbang.dto.sign.SignIn;
+import com.bangbang.domain.sign.User;
+import com.bangbang.domain.sign.UserRepository;
+import com.bangbang.exception.BaseException;
+import com.bangbang.exception.ErrorMessage;
+import com.bangbang.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

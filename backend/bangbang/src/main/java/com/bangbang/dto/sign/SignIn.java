@@ -1,4 +1,4 @@
-package com.bangbang.vo;
+package com.bangbang.dto.sign;
 
 
 import lombok.AllArgsConstructor;

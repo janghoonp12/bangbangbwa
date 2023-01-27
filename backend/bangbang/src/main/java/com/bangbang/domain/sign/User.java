@@ -1,4 +1,4 @@
-package com.bangbang.vo;
+package com.bangbang.domain.sign;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

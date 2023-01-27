@@ -1,4 +1,4 @@
-package com.bangbang.vo;
+package com.bangbang.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

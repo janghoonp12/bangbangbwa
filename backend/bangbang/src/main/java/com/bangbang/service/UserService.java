@@ -1,7 +1,7 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.SignIn;
-import com.bangbang.vo.User;
+import com.bangbang.dto.sign.SignIn;
+import com.bangbang.domain.sign.User;
 
 import java.util.Map;
 

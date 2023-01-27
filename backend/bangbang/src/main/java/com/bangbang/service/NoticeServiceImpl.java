@@ -1,7 +1,7 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.Notice;
-import com.bangbang.vo.NoticeRepository;
+import com.bangbang.domain.notice.Notice;
+import com.bangbang.domain.notice.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
