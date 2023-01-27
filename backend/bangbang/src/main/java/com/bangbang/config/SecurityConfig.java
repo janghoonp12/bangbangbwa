@@ -31,11 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic().disable()
         .authorizeRequests()
         .antMatchers("/api/v1/user/**")
-        .access("hasRole('user') or hasRole('broker') or hasRole('admin')")
+        .access("hasRole('ROLE_USER') or hasRole('ROLE_BROKER') or hasRole('ROLE_ADMIN')")
         .antMatchers("/api/v1/broker/**")
-        .access("hasRole('broker') or hasRole('admin')")
+        .access("hasRole('ROLE_BROKER') or hasRole('ROLE_ADMIN')")
         .antMatchers("/api/v1/admin/**")
-        .access("hasRole('admin')")
+        .access("hasRole('ROLE_ADMIN')")
         .anyRequest().permitAll();
   }
 }

@@ -1,6 +1,7 @@
 package com.bangbang.controller;
 
 
+import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.service.UserServiceImpl;
 import com.bangbang.dto.sign.SignIn;
 import com.bangbang.domain.sign.User;
@@ -82,6 +83,17 @@ public class UserRestController {
       // 발급 실패
       throw new RuntimeException("리프레시 토큰 발급에 실패하였습니다.");
     }
+  }
+
+  @ApiOperation(value = "비밀번호 찾기", notes = "회원의 임시 비밀번호를 메일로 전송합니다.")
+  @PostMapping("/users/find/password")
+  @RequestBody
+  public ResponseEntity<?> findPassword(FindPassword findPasswordEmail) throws Exception {
+    userService.findPassword(findPasswordEmail);
+    return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+      put("result", true);
+      put("msg", "이메일로 임시 비밀번호를 발급하였습니다.");
+    }}, HttpStatus.OK);
   }
 
 }
