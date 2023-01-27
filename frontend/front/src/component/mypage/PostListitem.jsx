@@ -17,19 +17,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const TitleText = styled.p`
+const STitleTextP = styled.p`
   font-size: 20px;
   font-weight: 500;
   justify-content: center;
   align-items: center;
 `;
 
-const ContentDiv = styled.div`
+const SContentDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
-const ContentText = styled.p`
+const SContentTextP = styled.p`
   display: flex;
   font-size: 15px;
   margin-right: 20px;
@@ -44,12 +44,12 @@ function PostListItem(props) {
 
   return (
     <Wrapper onClick={onClick}>
-      <TitleText>{post.title}</TitleText>
-      <ContentDiv>
-        <ContentText>{post.type}</ContentText>
-        <ContentText>{post.building_type}</ContentText>
-        <ContentText>{post.manage_fee}</ContentText>
-      </ContentDiv>
+      <STitleTextP>{post.title}</STitleTextP>
+      <SContentDiv>
+        <SContentTextP>{post.type}</SContentTextP>
+        <SContentTextP>{post.building_type}</SContentTextP>
+        <SContentTextP>{post.manage_fee}</SContentTextP>
+      </SContentDiv>
     </Wrapper>
   );
 }

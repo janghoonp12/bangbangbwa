@@ -16,14 +16,14 @@ const Container = styled.div`
   max-width: 70%;
 `;
 
-const ProfileDiv = styled.div`
+const SProfileDiv = styled.div`
   width: 100%;
   max-width: 30%;
   border: 1px solid grey;
   border-radius: 8px;
 `;
 
-const ItemDiv = styled.div`
+const SItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
   height: 100%;
@@ -34,37 +34,37 @@ const ItemDiv = styled.div`
   padding: 10px;
 `;
 
-const ImgTag = styled.img`
+const SImg1 = styled.img`
   width: 80%;
   margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
-const ImgTag2 = styled.img`
+const SImg2 = styled.img`
   width: 100%;
 `;
 
-const NamePTag = styled.p`
+const SNameP = styled.p`
   font-size: 20px;
 `;
 
-const EmailPTag = styled.p`
+const SEmailP = styled.p`
   margin-bottom: 5rem;
   font-size: 10px;
 `;
 
-const MenuPTag = styled.p`
+const SMenuP = styled.p`
   font-size: 15px;
   cursor: pointer;
 `;
 
-const NowMenuPTag = styled.p`
+const SNowMenuP = styled.p`
   font-size: 15px;
   text-decoration-line: underline;
   cursor: pointer;
 `;
 
-const FlexDiv = styled.div`
+const SFlexDiv = styled.div`
   display: flex;
   height: 100%;
   max-height: 40%;
@@ -73,15 +73,14 @@ const FlexDiv = styled.div`
   // justify-content: center;
   align-items: center;
   text-align: left;
-  
 `;
 
-const InfoDiv = styled.div`
+const SInfoDiv = styled.div`
   width: 100%;
   max-width: 20%;
 `;
 
-const AgreePTag = styled.p`
+const SAgreePTag = styled.p`
   font-size: 5px;
 `;
 
@@ -92,46 +91,46 @@ function NewBroker(props) {
   return (
     <Wrapper>
       <Container>
-        <ProfileDiv>   
-          <ImgTag alt="이미지" src={logosample} />
-          <NamePTag>UserName</NamePTag>
-          <EmailPTag>abcde@gmail.com</EmailPTag>
-          <MenuPTag
+        <SProfileDiv>   
+          <SImg1 alt="이미지" src={logosample} />
+          <SNameP>UserName</SNameP>
+          <SEmailP>abcde@gmail.com</SEmailP>
+          <SMenuP
             onClick={() => {
               navigate("/mypage")
             }}
-          >내 프로필</MenuPTag>
-          <NowMenuPTag
+          >내 프로필</SMenuP>
+          <SNowMenuP
             onClick={() => {
               navigate("/mypage/newbroker")
             }}
-          >중개사 등록</NowMenuPTag>
-          <MenuPTag
+          >중개사 등록</SNowMenuP>
+          <SMenuP
             onClick={() => {
               navigate("/mypage/myitem")
             }}
-          >나의 매물정보</MenuPTag>
-          <MenuPTag
+          >나의 매물정보</SMenuP>
+          <SMenuP
             onClick={() => {
               navigate("/mypage/mybroadcast")
             }}
-          >나의 방송정보</MenuPTag>
+          >나의 방송정보</SMenuP>
 
-        </ProfileDiv>
-        <ItemDiv>
+        </SProfileDiv>
+        <SItemDiv>
           <div>
             <p>기본정보</p>
           </div>
-          <FlexDiv>
-            <InfoDiv>
-              <ImgTag2 alt="이미지" src={logosample} />
-            </InfoDiv>
+          <SFlexDiv>
+            <SInfoDiv>
+              <SImg2 alt="이미지" src={logosample} />
+            </SInfoDiv>
             <div>
               <p>정진수</p>
               <p>abcde@gmail.com</p>
             </div>
 
-          </FlexDiv>
+          </SFlexDiv>
           <hr />
           <div>
             <p>중개사무소 정보</p>
@@ -140,11 +139,11 @@ function NewBroker(props) {
           <hr />
           <div>
             <p>연락처</p>
-            <FlexDiv>
+            <SFlexDiv>
               <p>010 - </p>
               <p>1234 - </p>
               <p>1234</p>
-            </FlexDiv>
+            </SFlexDiv>
           </div>
           <hr />
           <div>
@@ -153,10 +152,10 @@ function NewBroker(props) {
           </div>
           <hr />
           <div>
-            <AgreePTag>개인정보 수집 동의</AgreePTag>
+            <SAgreePTag>개인정보 수집 동의</SAgreePTag>
           </div>
           
-        </ItemDiv>
+        </SItemDiv>
       </Container>
     </Wrapper>
     )
