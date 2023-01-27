@@ -14,6 +14,7 @@ import MyPage from "./pages/MyPage";
 import Interests from "./pages/Interests";
 import NotFound from "./pages/NotFound";
 import WriteItem from "./component/common/WriteItem";
+import Notice from "./pages/Notice";
 import Login from "./component/account/Login";
 
 
@@ -29,6 +30,7 @@ function App() {
         <Route path="/mypage/*" element={<MyPage />} />
         <Route path="/writeitems" element={<WriteItem />} />
         <Route path="/interests/*" element={<Interests />} />
+        <Route path="/notices/*" element={<Notice />} />
         {/*일치하지 않는 모든 page는 NotFound */}
         <Route path="*" element={<NotFound />} />
       </Routes>
