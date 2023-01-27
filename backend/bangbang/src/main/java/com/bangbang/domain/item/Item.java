@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int item_id;
+    private long item_id;
 
     @Column(nullable = true)
     private Integer item_type;
@@ -115,7 +115,7 @@ public class Item {
     @JoinTable(name="broker",
             joinColumns = @JoinColumn(name="broker_id"),
             inverseJoinColumns = @JoinColumn(name="broker_id"))
-    private int broker_id; //FK
+    private long broker_id; //FK
 
     @Column(nullable = true)
     private Integer item_status;
