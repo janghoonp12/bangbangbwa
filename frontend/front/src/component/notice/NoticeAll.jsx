@@ -4,10 +4,10 @@ import NoticeItem from "./NoticeItem";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledTh = styled.td`
+const STh = styled.td`
   text-align: center;
 `
-const StyledTable = styled.table`
+const STable = styled.table`
   border: 1px solid black;
   width: 50%;
   margin: auto;
@@ -19,12 +19,12 @@ function Notice() {
   const navigate = useNavigate();
 
   return (
-    <StyledTable>
+    <STable>
       <thead>
         <tr>
-          <StyledTh>번호</StyledTh>
-          <StyledTh>제목</StyledTh>
-          <StyledTh>등록일</StyledTh>
+          <STh>번호</STh>
+          <STh>제목</STh>
+          <STh>등록일</STh>
         </tr>
       </thead>
       <tbody>
@@ -40,7 +40,7 @@ function Notice() {
           );
         })} 
       </tbody>
-    </StyledTable>
+    </STable>
   )
 }
 

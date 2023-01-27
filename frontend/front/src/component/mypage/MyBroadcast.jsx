@@ -19,14 +19,14 @@ const Container = styled.div`
   max-width: 70%;
 `;
 
-const ProfileDiv = styled.div`
+const SProfileDiv = styled.div`
   width: 100%;
   max-width: 30%;
   border: 1px solid grey;
   border-radius: 8px;
 `;
 
-const ItemDiv = styled.div`
+const SItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
   border: 1px solid grey;
@@ -34,27 +34,27 @@ const ItemDiv = styled.div`
   // overflow: auto;
 `;
 
-const ImgTag = styled.img`
+const SImg = styled.img`
   width: 80%;
   margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
-const NamePTag = styled.p`
+const SNameP = styled.p`
   font-size: 20px;
 `;
 
-const EmailPTag = styled.p`
+const SEmailP = styled.p`
   margin-bottom: 5rem;
   font-size: 10px;    
 `;
 
-const MenuPTag = styled.p`
+const SMenuP = styled.p`
   font-size: 15px;
   cursor: pointer;
 `;
 
-const NowMenuPTag = styled.p`
+const SNowMenuP = styled.p`
   font-size: 15px;
   text-decoration-line: underline;
   cursor: pointer;
@@ -67,32 +67,32 @@ function MyBroadcast(props) {
   return (
     <Wrapper>
       <Container>
-        <ProfileDiv>   
-          <ImgTag alt="이미지" src={logosample} />
-          <NamePTag>UserName</NamePTag>
-          <EmailPTag>abcde@gmail.com</EmailPTag>
-          <MenuPTag
+        <SProfileDiv>   
+          <SImg alt="이미지" src={logosample} />
+          <SNameP>UserName</SNameP>
+          <SEmailP>abcde@gmail.com</SEmailP>
+          <SMenuP
             onClick={() => {
               navigate("/mypage")
             }}
-          >내 프로필</MenuPTag>
-          <MenuPTag
+          >내 프로필</SMenuP>
+          <SMenuP
             onClick={() => {
               navigate("/mypage/newbroker")
             }}
-          >중개사 등록</MenuPTag>
-          <MenuPTag
+          >중개사 등록</SMenuP>
+          <SMenuP
             onClick={() => {
               navigate("/mypage/myitem")
             }}
-          >나의 매물정보</MenuPTag>
-          <NowMenuPTag
+          >나의 매물정보</SMenuP>
+          <SNowMenuP
             onClick={() => {
               navigate("/mypage/mybroadcast")
             }}
-          >나의 방송정보</NowMenuPTag>
-        </ProfileDiv>
-        <ItemDiv>
+          >나의 방송정보</SNowMenuP>
+        </SProfileDiv>
+        <SItemDiv>
           <Button
             style={{position: 'absolute', right: 0, marginRight: "30px"}}
             title="필터"
@@ -106,7 +106,7 @@ function MyBroadcast(props) {
               navigate(`/broadcasts/${item.id}`);
             }}
           />
-        </ItemDiv>
+        </SItemDiv>
       </Container>
     </Wrapper>
   )
