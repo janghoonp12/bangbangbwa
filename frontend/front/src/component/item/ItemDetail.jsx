@@ -18,14 +18,14 @@ const Container = styled.div`
   border-radius: 8px;
 `;
 
-const GridDiv = styled.div`
+const SGridDiv = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 0.4fr;
   grid-template-areas:
     "div div";
 `;
 
-const PicLeftDiv = styled.div`
+const SPicLeftDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 50vh;
@@ -33,7 +33,7 @@ const PicLeftDiv = styled.div`
   overflow: hidden;
 `;
 
-const PicRightDiv = styled.div`
+const SPicRightDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 50vh;
@@ -41,7 +41,7 @@ const PicRightDiv = styled.div`
   overflow: hidden;
 `;
 
-const PicDiv = styled.div`
+const SPicDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -50,7 +50,7 @@ const PicDiv = styled.div`
   border-radius: 8px;
 `;
 
-const PicsDiv = styled.div`
+const SPicsDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -59,7 +59,7 @@ const PicsDiv = styled.div`
   border-radius: 8px;
 `;
 
-const BroadcastDiv = styled.div`
+const SBroadcastDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 50%;
@@ -68,7 +68,7 @@ const BroadcastDiv = styled.div`
   border-radius: 8px;
 `;
 
-const MapDiv = styled.div`
+const SMapDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 50%;
@@ -77,13 +77,13 @@ const MapDiv = styled.div`
   border-radius: 8px;
 `;
 
-const InfoDiv = styled.div`
+const SInfoDiv = styled.div`
   display: grid;
   grid-template-areas:
     "div div div div"
 `;
 
-const StyledPTag = styled.p`
+const SPTag = styled.p`
   border: 1px solid grey;
   border-radius: 8px;
 `;
@@ -107,55 +107,55 @@ function ItemDetail() {
   return (
     <Wrapper>
       <Container>
-        <GridDiv>
-          <PicLeftDiv>
-            <PicDiv>
+        <SGridDiv>
+          <SPicLeftDiv>
+            <SPicDiv>
               <h1>매물사진</h1>
               {/* <ImgTag src={logosample} alt="이미지" /> */}
-            </PicDiv>
-            <PicsDiv>
+            </SPicDiv>
+            <SPicsDiv>
               <h1>자세한사진들</h1>
-            </PicsDiv>
-          </PicLeftDiv>
-          <PicRightDiv>
-            <BroadcastDiv>
+            </SPicsDiv>
+          </SPicLeftDiv>
+          <SPicRightDiv>
+            <SBroadcastDiv>
               <h1>방송정보</h1>
               {/* <ImgTag src={logosample} alt="이미지" /> */}
-            </BroadcastDiv>
-            <MapDiv>
+            </SBroadcastDiv>
+            <SMapDiv>
               <h1>지도</h1>
               {/* <ImgTag src={logosample} alt="이미지" /> */}
-            </MapDiv>
-          </PicRightDiv>
-        </GridDiv>
+            </SMapDiv>
+          </SPicRightDiv>
+        </SGridDiv>
         
         <h1>매물 상세 정보</h1>
-        <InfoDiv>
-          <StyledPTag>매물이름: {post.title}</StyledPTag>
-          <StyledPTag>매물종류: {post.type}</StyledPTag>
-          <StyledPTag>건물유형: {post.building_type}</StyledPTag>
-          <StyledPTag>관리비용: {post.manage_fee}</StyledPTag>
-          <StyledPTag>매물이름: {post.title}</StyledPTag>
-          <StyledPTag>매물종류: {post.type}</StyledPTag>
-          <StyledPTag>건물유형: {post.building_type}</StyledPTag>
-          <StyledPTag>관리비용: {post.manage_fee}</StyledPTag>
-          <StyledPTag>매물이름: {post.title}</StyledPTag>
-          <StyledPTag>매물종류: {post.type}</StyledPTag>
-          <StyledPTag>건물유형: {post.building_type}</StyledPTag>
-          <StyledPTag>관리비용: {post.manage_fee}</StyledPTag>
-          <StyledPTag>매물이름: {post.title}</StyledPTag>
-          <StyledPTag>매물종류: {post.type}</StyledPTag>
-          <StyledPTag>건물유형: {post.building_type}</StyledPTag>
-          <StyledPTag>관리비용: {post.manage_fee}</StyledPTag>
-          <StyledPTag>매물이름: {post.title}</StyledPTag>
-          <StyledPTag>매물종류: {post.type}</StyledPTag>
-          <StyledPTag>건물유형: {post.building_type}</StyledPTag>
-          <StyledPTag>관리비용: {post.manage_fee}</StyledPTag>
-          <StyledPTag>매물이름: {post.title}</StyledPTag>
-          <StyledPTag>매물종류: {post.type}</StyledPTag>
-          <StyledPTag>건물유형: {post.building_type}</StyledPTag>
-          <StyledPTag>관리비용: {post.manage_fee}</StyledPTag>
-        </InfoDiv>
+        <SInfoDiv>
+          <SPTag>매물이름: {post.title}</SPTag>
+          <SPTag>매물종류: {post.type}</SPTag>
+          <SPTag>건물유형: {post.building_type}</SPTag>
+          <SPTag>관리비용: {post.manage_fee}</SPTag>
+          <SPTag>매물이름: {post.title}</SPTag>
+          <SPTag>매물종류: {post.type}</SPTag>
+          <SPTag>건물유형: {post.building_type}</SPTag>
+          <SPTag>관리비용: {post.manage_fee}</SPTag>
+          <SPTag>매물이름: {post.title}</SPTag>
+          <SPTag>매물종류: {post.type}</SPTag>
+          <SPTag>건물유형: {post.building_type}</SPTag>
+          <SPTag>관리비용: {post.manage_fee}</SPTag>
+          <SPTag>매물이름: {post.title}</SPTag>
+          <SPTag>매물종류: {post.type}</SPTag>
+          <SPTag>건물유형: {post.building_type}</SPTag>
+          <SPTag>관리비용: {post.manage_fee}</SPTag>
+          <SPTag>매물이름: {post.title}</SPTag>
+          <SPTag>매물종류: {post.type}</SPTag>
+          <SPTag>건물유형: {post.building_type}</SPTag>
+          <SPTag>관리비용: {post.manage_fee}</SPTag>
+          <SPTag>매물이름: {post.title}</SPTag>
+          <SPTag>매물종류: {post.type}</SPTag>
+          <SPTag>건물유형: {post.building_type}</SPTag>
+          <SPTag>관리비용: {post.manage_fee}</SPTag>
+        </SInfoDiv>
         <button onClick={goBack}>뒤로가기</button>
       </Container>
     </Wrapper>
