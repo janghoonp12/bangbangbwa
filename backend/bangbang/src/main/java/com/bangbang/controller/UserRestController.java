@@ -2,7 +2,7 @@ package com.bangbang.controller;
 
 
 import com.bangbang.service.UserServiceImpl;
-import com.bangbang.dto.sign.SignIn;
+import com.bangbang.dto.SignIn;
 import com.bangbang.domain.sign.User;
 
 import io.swagger.annotations.Api;

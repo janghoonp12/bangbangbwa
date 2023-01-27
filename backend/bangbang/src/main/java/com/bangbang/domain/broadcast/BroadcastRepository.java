@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface BroadcastRepository extends JpaRepository<Broadcast, Integer> {
+public interface BroadcastRepository extends JpaRepository<Broadcast, Long> {
     List<Broadcast> findAll();
-    Broadcast findByBroadcastid(Integer broadcastid);
+    Broadcast findByBroadcastid(Long broadcastId);
 
 }

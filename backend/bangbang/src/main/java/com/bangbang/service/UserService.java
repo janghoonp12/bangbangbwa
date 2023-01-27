@@ -1,6 +1,6 @@
 package com.bangbang.service;
 
-import com.bangbang.dto.sign.SignIn;
+import com.bangbang.dto.SignIn;
 import com.bangbang.domain.sign.User;
 
 import java.util.Map;
