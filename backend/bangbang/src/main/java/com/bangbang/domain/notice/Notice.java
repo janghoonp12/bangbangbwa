@@ -1,4 +1,4 @@
-package com.bangbang.vo;
+package com.bangbang.domain.notice;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.bangbang.domain.Datetime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @Entity(name = "notice")
-public class Notice extends Datetime{
+public class Notice extends Datetime {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "notice_id")

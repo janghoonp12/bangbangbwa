@@ -1,6 +1,6 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.Notice;
+import com.bangbang.domain.notice.Notice;
 import java.util.List;
 
 public interface NoticeService {

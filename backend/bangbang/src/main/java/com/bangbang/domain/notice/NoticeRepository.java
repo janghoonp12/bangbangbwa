@@ -1,5 +1,6 @@
-package com.bangbang.vo;
+package com.bangbang.domain.notice;
 
+import com.bangbang.domain.notice.Notice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

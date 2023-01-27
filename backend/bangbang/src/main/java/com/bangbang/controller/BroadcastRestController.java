@@ -1,23 +1,17 @@
 package com.bangbang.controller;
 
 import com.bangbang.service.BroadcastServiceImpl;
-import com.bangbang.vo.Broadcast;
-import com.bangbang.vo.BroadcastRepository;
+import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broadcast.BroadcastRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 //@CrossOrigin("*")
@@ -31,13 +25,13 @@ public class BroadcastRestController {
 
   @ApiOperation(value = "방송 등록", notes = "방송을 등록합니다.")
   @PostMapping(value = "/broadcasts/new")
-  public Broadcast newBroadcast(@RequestBody Broadcast broadcast) {
+  public Broadcast newBroadcast(){
     final Broadcast params = Broadcast.builder()
-        .broadcast_title(broadcast.getBroadcast_title())
-        .broadcast_description(broadcast.getBroadcast_description())
-        .broadcast_status(broadcast.getBroadcast_status())
-        .item_id(broadcast.getItem_id())
-        .image_id(broadcast.getImage_id())
+        .broadcast_title("풍무동1")
+        .broadcast_description("30평!!")
+        .broadcast_status(0)
+        .item_id(1)
+        .image_id(1)
         .build();
 
     return repository.save(params);
@@ -85,8 +79,9 @@ public class BroadcastRestController {
 
   @ApiOperation(value = "방송 삭제(비활성화)", notes = "삭제하고 싶은 방송을 하나 삭제(비활성화)합니다.")
   @PatchMapping(value = "/broadcasts/deactive/{broadcast_id}")
-  public ResponseEntity<?> deactiveBroadcast(@PathVariable("broadcast_id") int broadcastid) {
-    Broadcast broadcast_list = service.deactivateBroadcast(broadcastid);
+  public ResponseEntity<?> deactiveBroadcast(@PathVariable("broadcast_id") int broadcastid,
+     @RequestBody Broadcast broadcast) {
+    Broadcast broadcast_list = service.deactivateBroadcast(broadcastid, broadcast);
     if(broadcast_list != null) {
       ResponseEntity<Broadcast> response = new ResponseEntity<Broadcast>(broadcast_list, HttpStatus.OK);
       return response;
@@ -97,13 +92,14 @@ public class BroadcastRestController {
   }
 
   @ApiOperation(value = "방송 내용수정", notes = "수정이 필요한 방송을 수정합니다.")
-  @Transactional
-  @PutMapping(value = "/broadcasts/modify/{broadcast_id}")
-  public ResponseEntity<?> modifyBroadcast(@PathVariable("broadcast_id") int broadcastid, @RequestBody Broadcast broadcast){
+  @PatchMapping(value = "/broadcasts/modify/{broadcast_id}")
+  public ResponseEntity<?> modifyBroadcast(@PathVariable("broadcast_id") int broadcastid){
     Broadcast broadcastList = repository.findByBroadcastid(broadcastid);
     if(broadcastList != null) {
-      broadcastList.setBroadcast_title(broadcast.getBroadcast_title());
-      broadcastList.setBroadcast_description(broadcast.getBroadcast_description());
+//      if(broadcastList.getBroadcast_status() == 0){
+//        broadcastList.setBroadcast_status(1);
+//        repository.save(broadcastList);
+//      }
       ResponseEntity<Broadcast> response = new ResponseEntity<Broadcast>(broadcastList, HttpStatus.OK);
       return response;
     }

@@ -1,7 +1,8 @@
 package com.bangbang;
 
-import com.bangbang.vo.Broadcast;
-import com.bangbang.vo.BroadcastRepository;
+import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broadcast.BroadcastRepository;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class BroadcastTests {
 
   @Autowired
-  BroadcastRepository broadcastRepository;
-
-  @Autowired
-  ImageRepository imageRepository;
+  BroadcastRepository repository;
 
   @Test
   public void InsertDummy(){
@@ -27,7 +25,7 @@ public class BroadcastTests {
             .item_id(1)
             .image_id(1)
             .build();
-    broadcastRepository.save(broadcast);
+    repository.save(broadcast);
   }
   
 //  @Test

@@ -1,5 +1,6 @@
-package com.bangbang.vo;
+package com.bangbang.domain.sign;
 
+import com.bangbang.domain.sign.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

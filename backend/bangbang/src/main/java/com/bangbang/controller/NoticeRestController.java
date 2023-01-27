@@ -2,8 +2,8 @@ package com.bangbang.controller;
 
 import com.bangbang.service.NoticeService;
 import com.bangbang.service.NoticeServiceImpl;
-import com.bangbang.vo.Notice;
-import com.bangbang.vo.NoticeRepository;
+import com.bangbang.domain.notice.Notice;
+import com.bangbang.domain.notice.NoticeRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;

@@ -1,9 +1,9 @@
 package com.bangbang;
 
-import com.bangbang.vo.Broadcast;
-import com.bangbang.vo.BroadcastRepository;
-import com.bangbang.vo.Replay;
-import com.bangbang.vo.ReplayRepository;
+import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broadcast.BroadcastRepository;
+import com.bangbang.domain.replay.Replay;
+import com.bangbang.domain.replay.ReplayRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

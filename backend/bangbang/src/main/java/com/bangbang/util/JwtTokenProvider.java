@@ -1,7 +1,7 @@
-package com.util;
+package com.bangbang.util;
 
-import com.exception.BaseException;
-import com.exception.ErrorMessage;
+import com.bangbang.exception.BaseException;
+import com.bangbang.exception.ErrorMessage;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,7 +26,6 @@ import org.springframework.util.StringUtils;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
