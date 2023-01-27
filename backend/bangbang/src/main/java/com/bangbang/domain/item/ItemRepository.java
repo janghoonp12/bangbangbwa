@@ -1,4 +1,4 @@
-package com.bangbang.vo;
+package com.bangbang.domain.item;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

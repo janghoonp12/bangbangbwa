@@ -1,7 +1,7 @@
 package com.bangbang.controller;
 
 import com.bangbang.service.ItemService;
-import com.bangbang.vo.Item;
+import com.bangbang.domain.item.Item;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;

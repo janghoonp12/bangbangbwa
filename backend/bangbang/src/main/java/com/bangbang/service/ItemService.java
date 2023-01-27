@@ -1,6 +1,6 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.Item;
+import com.bangbang.domain.item.Item;
 
 import java.util.List;
 

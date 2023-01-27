@@ -1,6 +1,7 @@
-package com.bangbang.vo;
+package com.bangbang.domain.item;
 
 import javax.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

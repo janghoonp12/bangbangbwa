@@ -1,10 +1,12 @@
 package com.bangbang.service;
 
-import com.bangbang.vo.*;
+import com.bangbang.domain.item.*;
 
 import java.util.List;
 import javax.transaction.Transactional;
 
+import com.bangbang.domain.item.Item;
+import com.bangbang.domain.item.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
