@@ -16,20 +16,20 @@ const Container = styled.div`
   max-width: 70%;
 `;
 
-const PostContainer = styled.div`
+const SPostContainerDiv = styled.div`
   padding: 8px 16px;
   border: 1px solid grey;
   border-radius: 8px;
 `;
 
-const TitleText = styled.p`
+const STitleTextP = styled.p`
   font-size: 30px;
   font-weight: 500;
   align-items: center;
   justify-content: center;
 `;
 
-const ContentText = styled.p`
+const SContentTextP = styled.p`
   font-size: 20px;
   white-space: pre-wrap;
   align-items: center;
@@ -52,12 +52,12 @@ function PostViewPage() {
             navigate(-1);
           }}
         />
-        <PostContainer>
-          <TitleText>{post.title}</TitleText>
-          <ContentText>{post.type}</ContentText>
-          <ContentText>{post.building_type}</ContentText>
-          <ContentText>{post.manage_fee}</ContentText>
-        </PostContainer>
+        <SPostContainerDiv>
+          <STitleTextP>{post.title}</STitleTextP>
+          <SContentTextP>{post.type}</SContentTextP>
+          <SContentTextP>{post.building_type}</SContentTextP>
+          <SContentTextP>{post.manage_fee}</SContentTextP>
+        </SPostContainerDiv>
         <Button
           title="방송 등록"
           onClick={() => {
