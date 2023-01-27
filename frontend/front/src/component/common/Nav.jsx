@@ -54,6 +54,11 @@ const Nav = () => {
         </NavLink>
       </Navdiv>
       <Navdiv>
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
+          공지
+        </NavLink>
+      </Navdiv>
+      <Navdiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           MyPage
         </NavLink>
