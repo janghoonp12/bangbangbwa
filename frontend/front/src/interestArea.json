@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "user_id": 1,
+      "si_name": "서울특별시",
+      "gugun_name": "강남구",
+      "dong_name": "역삼동",
+      "dong_code": "133"
+    },
+    {
+        "id": 2,
+        "user_id": 1,
+        "si_name": "수원시",
+        "gugun_name": "영통구",
+        "dong_name": "영통동",
+        "dong_code": "271"
+    },
+    {
+        "id": 3,
+        "user_id": 1,
+        "si_name": "인천광역시",
+        "gugun_name": "미추홀구",
+        "dong_name": "숭의동",
+        "dong_code": "7741"
+    }
+]
