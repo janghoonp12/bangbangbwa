@@ -3,18 +3,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import data from "../../noticeData.json";
 import styled from "styled-components";
 
-const StyledBtn = styled.button`
+const SButton = styled.button`
   margin: auto;
   display: block;
 `
 
-const StyledP = styled.p`
+const SP = styled.p`
   margin-right: 20px;
   text-align: right;
   font-size: 20px;
 `
 
-const StyledHr = styled.hr`
+const SHr = styled.hr`
   border: 0;
   height: 3px;
   background: #000000;
@@ -35,12 +35,12 @@ function ItemDetail() {
     <div>
       <h1 align="center">[{post.type}] {post.title}</h1>
       <hr />
-      <StyledP align="right">{post.regidate}</StyledP>
+      <SP align="right">{post.regidate}</SP>
       <hr />
       <br />
       <p align="center">{post.contents}</p>
-      <StyledHr />
-      <StyledBtn onClick={goBack}>뒤로가기</StyledBtn>
+      <SHr />
+      <SButton onClick={goBack}>뒤로가기</SButton>
     </div>
   )
 }

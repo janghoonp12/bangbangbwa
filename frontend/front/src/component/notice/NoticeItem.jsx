@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-const StyledTd = styled.td`
+const Std = styled.td`
   cursor: pointer;
   :hover {
     text-decoration: underline;
@@ -19,7 +19,7 @@ function NoticeItem(props) {
     return (
       <tr>
         <td><center>{data.id}</center></td>
-        <StyledTd onClick={onClick}>[{data.type}] {data.title}</StyledTd>
+        <Std onClick={onClick}>[{data.type}] {data.title}</Std>
         <td><center>{data.regidate}</center></td>
       </tr>
     )
