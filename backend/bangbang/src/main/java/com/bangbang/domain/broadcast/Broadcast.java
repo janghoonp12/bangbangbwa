@@ -1,37 +1,56 @@
 package com.bangbang.domain.broadcast;
 
+import com.bangbang.domain.image.Image;
+import com.bangbang.domain.item.Item;
 import javax.persistence.*;
 
 import com.bangbang.domain.Datetime;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-@SuperBuilder
+@Getter
 @NoArgsConstructor
-@Entity(name = "broadcast")
+@Entity
+@Table(name = "broadcast")
 public class Broadcast extends Datetime {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "broadcast_id")
-  private int broadcastid; //PK
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long broadcastId; //PK
 
-  @Column(length = 10, nullable = true)
-  private String broadcast_description;       //방송설명
+  @Column(name = "broadcast_description",length = 10, nullable = true)
+  private String broadcastDescription;       //방송설명
 
-  @Column(length = 1, nullable = true)
-  private int broadcast_status;               //방송상태
+  @Column(name = "broadcast_status",length = 1, nullable = true)
+  private Integer broadcastStatus;               //방송상태
 
-  @Column(length = 30, nullable = true)
-  private String broadcast_title;             //방송제목
-
-  @Column(length = 2, nullable = false)
-  private int item_id;      //FK
-  @Column(length = 2, nullable = false)
-  private int image_id;     //FK
+  @Column(name = "broadcast_title",length = 30, nullable = true)
+  private String broadcastTitle;             //방송제목
 
 
+  @JoinColumn(name = "item_id")
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Item item;      //FK
+  @JoinColumn(name="image_id")
+  @OneToOne(fetch = FetchType.LAZY)
+  private Image image;     //FK
+
+
+  @Builder
+  public Broadcast(Long broadcastId, String broadcastDescription, Integer broadcastStatus,
+      String broadcastTitle, Item item, Image image){
+    this.broadcastId = broadcastId;
+    this.broadcastDescription = broadcastDescription;
+    this.broadcastStatus = broadcastStatus;
+    this.broadcastTitle = broadcastTitle;
+    this.item = item;
+    this.image = image;
+  }
+
+  public void update(Long broadcastId, String broadcastDescription, String broadcastTitle){
+    this.broadcastId = broadcastId;
+    this.broadcastDescription = broadcastDescription;
+    this.broadcastTitle = broadcastTitle;
+  }
   //  @PrePersist
 //  public void prePersist(){
 //    this.broadcast_reservation_time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

@@ -1,6 +1,5 @@
 package com.bangbang.controller;
 
-import com.bangbang.service.BroadcastServiceImpl;
 import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.broadcast.BroadcastRepository;
 import io.swagger.annotations.Api;
