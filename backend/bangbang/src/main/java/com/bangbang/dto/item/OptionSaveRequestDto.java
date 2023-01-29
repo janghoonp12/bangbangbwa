@@ -4,7 +4,9 @@ import com.bangbang.domain.item.Option;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Getter
 @NoArgsConstructor
 public class OptionSaveRequestDto {
@@ -23,7 +25,7 @@ public class OptionSaveRequestDto {
     private boolean option_bed;
     private boolean option_table;
     private boolean option_shoe;
-    private boolean option_bidet;)
+    private boolean option_bidet;
     private boolean option_gasrange;
     private boolean option_refrigerator;
     private boolean option_doorlock;

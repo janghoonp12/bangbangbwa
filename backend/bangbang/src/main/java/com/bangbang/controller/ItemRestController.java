@@ -1,7 +1,15 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.item.ItemPrice;
+import com.bangbang.dto.item.ItemPriceSaveRequestDto;
+import com.bangbang.dto.item.ItemSaveRequestDto;
+import com.bangbang.dto.item.ManageOptionSaveRequestDto;
+import com.bangbang.dto.item.OptionSaveRequestDto;
 import com.bangbang.service.ItemService;
 import com.bangbang.domain.item.Item;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -27,9 +35,18 @@ public class ItemRestController {
 
     @ApiOperation(value="매물 등록")
     @PostMapping("/items/new")
-    public ResponseEntity<?> newItem(@RequestBody Item item) {
+    public ResponseEntity<?> newItem(@RequestBody ObjectNode item) throws JsonProcessingException {
         try {
-            itemService.newItem(item);
+            ObjectMapper mapper = new ObjectMapper();
+            ItemSaveRequestDto itemDto = mapper.treeToValue(item.get("item"), ItemSaveRequestDto.class);
+            ItemPriceSaveRequestDto itemPrice = mapper.treeToValue(item.get("itemPrice"), ItemPriceSaveRequestDto.class);
+            ManageOptionSaveRequestDto manage = mapper.treeToValue(item.get("manage"), ManageOptionSaveRequestDto.class);
+            OptionSaveRequestDto option = mapper.treeToValue(item.get("option"), OptionSaveRequestDto.class);
+
+            long item_id = itemService.newItem(itemDto);
+            itemService.newItemPrice(itemPrice, item_id);
+            itemService.newManageOption(manage, item_id);
+            itemService.newOption(option, item_id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
