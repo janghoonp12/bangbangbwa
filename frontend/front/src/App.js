@@ -16,9 +16,12 @@ import NotFound from "./pages/NotFound";
 import WriteItem from "./component/common/WriteItem";
 import Notice from "./pages/Notice";
 import Login from "./component/account/Login";
+import Alarm from "./pages/Alarm";
+
 
 
 function App() {
+
   return (
     <BrowserRouter>
       <Nav />
@@ -31,6 +34,7 @@ function App() {
         <Route path="/writeitems" element={<WriteItem />} />
         <Route path="/interests/*" element={<Interests />} />
         <Route path="/notices/*" element={<Notice />} />
+        <Route path="/alarm/*" element={<Alarm />} />
         {/*일치하지 않는 모든 page는 NotFound */}
         <Route path="*" element={<NotFound />} />
       </Routes>
