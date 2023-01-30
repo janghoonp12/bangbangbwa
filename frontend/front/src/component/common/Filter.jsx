@@ -77,102 +77,106 @@ const SPriceDiv = styled.div`
   text-align: center;
 `;
 
+const SP = styled.p`
+ margin-bottom: 0px;
+`;
+
 function Filter() {
   return (
     <Wrapper>
       <Container>
         <STypeDiv>
-          <p>주거형태</p>
+          <SP>주거형태</SP>
           <SElemDiv>
-            <p>전체</p>
+            <SP>전체</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>아파트</p>
+            <SP>아파트</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>오피스텔</p>
+            <SP>오피스텔</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>빌라</p>
+            <SP>빌라</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>주택</p>
+            <SP>주택</SP>
           </SElemDiv>
         </STypeDiv>
 
         <SDealTypeDiv>
-          <p>거래방식</p>
+          <SP>거래방식</SP>
           <SElemDiv>
-            <p>전체</p>
+            <SP>전체</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>매매</p>
+            <SP>매매</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>전세</p>
+            <SP>전세</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>월세</p>
+            <SP>월세</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>단기임대</p>
+            <SP>단기임대</SP>
           </SElemDiv>
         </SDealTypeDiv>
 
         <SSupplyAreaDiv>
-          <p>면적</p>
+          <SP>면적</SP>
           <SElemDiv>
-            <p>전체</p>
+            <SP>전체</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>10평 이하</p>
+            <SP>10평 이하</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>10평</p>
+            <SP>10평</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>20평</p>
+            <SP>20평</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>30평</p>
+            <SP>30평</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>40평</p>
+            <SP>40평</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>50평 이상</p>
+            <SP>50평 이상</SP>
           </SElemDiv>
         </SSupplyAreaDiv>
 
         <SMoveInDataDiv>
-          <p>사용 승인일</p>
+          <SP>사용 승인일</SP>
           <SElemDiv>
-            <p>전체</p>
+            <SP>전체</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>입주 예정</p>
+            <SP>입주 예정</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>5년</p>
+            <SP>5년</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>10년</p>
+            <SP>10년</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>15년</p>
+            <SP>15년</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>20년</p>
+            <SP>20년</SP>
           </SElemDiv>
           <SElemDiv>
-            <p>25년 이상</p>
+            <SP>25년 이상</SP>
           </SElemDiv>
         </SMoveInDataDiv>
 
         <SPriceDiv>
-          <p>가격</p>
+          <SP>가격</SP>
           <SElemDiv>
-            <p>bar</p>
+            <SP>bar</SP>
           </SElemDiv>
         </SPriceDiv>
       </Container>
