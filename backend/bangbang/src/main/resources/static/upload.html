@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Insert Title</title>
+</head>
+<body>
+  <h1>file upload</h1>
+<!--  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>-->
+  <form method="post" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="uploadfile" multiple="multiple">
+    <input type="submit">
+  </form>
+</body>
+</html>

@@ -22,6 +22,7 @@ public enum ErrorMessage {
   EXIST_EMAIL(201, "이미 가입된 이메일입니다.", HttpStatus.BAD_REQUEST),
   EXIST_ID(202, "이미 가입된 아이디입니다.", HttpStatus.BAD_REQUEST),
 
+  EXIST_DONGCODE(203, "이미 존재하는 동코드입니다.", HttpStatus.BAD_REQUEST),
   NOT_USER_INFO_MATCH(210, "유저 정보가 옳바르지 않습니다.", HttpStatus.BAD_REQUEST),
 
 
