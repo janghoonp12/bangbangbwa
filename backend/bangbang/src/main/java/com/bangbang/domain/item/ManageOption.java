@@ -7,14 +7,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
 @Table(name="manage_option")
+@SuperBuilder
+@NoArgsConstructor
 public class ManageOption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int manage_option_id;
+    private long manage_option_id;
 
     @Column(nullable = true)
     private boolean manage_option_internet;
@@ -38,5 +42,5 @@ public class ManageOption {
     private String manage_option_etc;
 
     @Column(nullable = false)
-    private int item_id; //FK
+    private long item_id; //FK
 }

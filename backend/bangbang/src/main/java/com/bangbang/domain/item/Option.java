@@ -7,14 +7,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
 @Table(name="options")
+@SuperBuilder
+@NoArgsConstructor
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int option_id;
+    private long option_id;
 
     @Column(nullable = true)
     private boolean option_elevator;
@@ -71,5 +75,5 @@ public class Option {
     private boolean option_doorlock;
 
     @Column(nullable = false)
-    private int item_id; //FK
+    private long item_id; //FK
 }
