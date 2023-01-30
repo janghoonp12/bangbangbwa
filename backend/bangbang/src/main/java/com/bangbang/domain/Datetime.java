@@ -1,5 +1,6 @@
 package com.bangbang.domain;
 
+import javax.persistence.EntityListeners;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -8,25 +9,19 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Data
 @MappedSuperclass
-@SuperBuilder
-@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Datetime {
+    @CreatedDate
     private LocalDateTime broadcast_reservation_time;
+
+    @CreatedDate
     private LocalDateTime broadcast_start_time;
+
+    @LastModifiedDate
     private LocalDateTime broadcast_end_time;
-
-    @PrePersist
-    public void prePersist() {
-        this.broadcast_reservation_time = LocalDateTime.now();
-        this.broadcast_start_time = this.broadcast_reservation_time;
-        this.broadcast_end_time = this.broadcast_reservation_time;
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        this.broadcast_end_time = LocalDateTime.now();
-    }
 }

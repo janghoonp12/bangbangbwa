@@ -1,35 +1,45 @@
 package com.bangbang.domain.replay;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.bangbang.domain.broadcast.Broadcast;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Entity(name = "replay")
-@Data
-@SuperBuilder
+@Getter
 @NoArgsConstructor
+@Entity
 public class Replay {
 
   @Id
+  @Column(name = "replay_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int replayid;
+  private Long replayId;
 
-  @Column(length = 200, nullable = true)
-  private String replay_storage_location;
-  @Column(length = 1, nullable = true)
-  private int replay_status;
+  @Column(name = "replay_storage_location",length = 200, nullable = true)
+  private String replayStorageLocation;
+  @Column(name = "replay_status",length = 1, nullable = true)
+  private Integer replayStatus;
 
-  @OneToOne
-  @JoinColumn(name = "broadcast_id")
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(nullable = false, name = "broadcast_id")
   private Broadcast broadcast;
+
+  @Builder
+  public Replay(Long replayId, String replayStorageLocation, Integer replayStatus, Broadcast broadcast){
+    this.replayId = replayId;
+    this.replayStorageLocation = replayStorageLocation;
+    this.replayStatus = replayStatus;
+    this.broadcast = broadcast;
+  }
+
+//  public void update(Long replayId, String replayStorageLocation, Integer replayStatus){
+//    this.replayId = replayId;
+//    this.replayStorageLocation = replayStorageLocation;
+//    this.replayStatus = replayStatus;
+//  }
 
 }
