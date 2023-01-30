@@ -10,13 +10,13 @@ pipeline {
         stage('Git Pull') {
             steps {
                 // Get some code from a GitLab repository
-                git credentialsId: 'jenkins_deloy', url: 'http://[GitLab주소]/[그룹명]/[프로젝트명].git'
+                git credentialsId: 'gitlab', url: 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405.git'
 
             }
         }
         stage('Build') {
             steps {
-                // Run Maven on a Unix agent.
+                dir(./backend/bangbang)
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
             }
