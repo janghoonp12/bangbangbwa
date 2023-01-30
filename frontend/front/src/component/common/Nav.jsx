@@ -12,11 +12,14 @@ const Navbar = styled.nav`
   border: solid 2px;
 `;
 
-const Navdiv = styled.div`
+const NavDiv = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  :hover {
+    background: #DFD3C3;
+  }
 `;
 
 const activeStyle = {
@@ -30,39 +33,45 @@ const nonActiveStyle = {
   color: '#000000',
 };
 
+
 const Nav = () => {
   return (
     <Navbar>
-      <Navdiv>
+      <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/">
           홈
         </NavLink>
-      </Navdiv>
-      <Navdiv>
+      </NavDiv>
+      <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/broadcasts">
           방송
         </NavLink>
-      </Navdiv>
-      <Navdiv>
+      </NavDiv>
+      <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/items">
           매물
         </NavLink>
-      </Navdiv>
-      <Navdiv>
+      </NavDiv>
+      <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests">
           관심
         </NavLink>
-      </Navdiv>
-      <Navdiv>
+      </NavDiv>
+      <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
           공지
         </NavLink>
-      </Navdiv>
-      <Navdiv>
+      </NavDiv>
+      <NavDiv>
+        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
+          알람
+        </NavLink>
+      </NavDiv>
+      <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           MyPage
         </NavLink>
-      </Navdiv>
+      </NavDiv>
     </Navbar>
   );
 };
