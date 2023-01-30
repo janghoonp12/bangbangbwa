@@ -1,17 +1,18 @@
 package com.bangbang.domain.broadcast;
 
+import com.bangbang.domain.BroadcastDatetime;
 import com.bangbang.domain.image.Image;
 import com.bangbang.domain.item.Item;
 import javax.persistence.*;
 
-import com.bangbang.domain.Datetime;
+import com.bangbang.domain.BroadcastDatetime;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "broadcast")
-public class Broadcast extends Datetime {
+public class Broadcast extends BroadcastDatetime {
   @Id
   @Column(name = "broadcast_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
