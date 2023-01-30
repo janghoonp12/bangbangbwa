@@ -64,7 +64,7 @@ const Nav = () => {
       </NavDiv>
       <NavDiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
-          알람
+          알림
         </NavLink>
       </NavDiv>
       <NavDiv>
