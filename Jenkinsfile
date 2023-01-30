@@ -23,9 +23,8 @@ pipeline {
                         sh "docker stop spring"
                         sh "docker rm spring"
                         echo "container none"
-                    } //8083 포트에서 spring이라는 이미지를 spring이라는 컨테이너이름으로 설정해서 실행
-                    sh "docker run -d -p 3000:3000 --name spring spring "
-                }
+                } //8083 포트에서 spring이라는 이미지를 spring이라는 컨테이너이름으로 설정해서 실행
+                sh "docker run -d -p 3000:3000 --name spring spring "
             }
         }
     }
