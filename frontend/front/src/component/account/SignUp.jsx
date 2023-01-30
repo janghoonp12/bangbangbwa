@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png"
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,17 +36,24 @@ const SLeftDiv = styled.div`
   display: inline-block;
   width: 100%;
   height: 100%;
-`
+`;
 
 const SRightDiv = styled.form`
   width: 100%;
   height: 100%;
   padding: 20px;
-`
+`;
+
+const STextDiv = styled.div`
+  text-align: left;
+  margin-left: 10%;
+`; 
 
 const SCustomInput = styled.input`
   width: 80%;
-`
+  background: lightgrey;
+  border: 1px;
+`;
 
 const SNormalButton = styled.button`
   background: #F8EDE3;
@@ -53,41 +61,44 @@ const SNormalButton = styled.button`
   width: 60%;
 `;
 
-const SKakaoButton = styled.button`
-  background: yellow;
-  margin-top: 0.25rem;
-  width: 60%;
+const SGoLoginP = styled.p`
+  font-size: 0.25rem;
+  color: blue;
+  cursor: pointer;
 `;
 
-const SNaverButton = styled.button`
-  background: lightgreen;
-  margin-top: 0.25rem;
-  width: 60%;
-  
-`;
+function SignUp() {
 
-function Login() {
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Container>
         <SLeftDiv />
         <SRightDiv style={{textAlign:"center"}}>
-          <div style={{fontSize: "6rem"}}>logo</div>
-          <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div>
-          <div style={{textAlign: "left", marginTop: "3rem", marginLeft: "10%"}}>이메일</div>
+          <div style={{fontSize: "2rem"}}>계정 만들기</div>
+          {/* <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div> */}
+          <STextDiv style={{ marginTop: "10%"}}>이메일</STextDiv>
           <SCustomInput/>
-          <div style={{textAlign: "left", marginLeft: "10%"}}>비밀번호</div>
+          <STextDiv>닉네임</STextDiv>
           <SCustomInput />
-          <div style={{textAlign: "left", marginLeft: "10%"}}>
-            <a href="#">비밀번호를 잊으셨나요?</a>
-          </div>
+          <STextDiv>비밀번호</STextDiv>
+          <SCustomInput />
+          <STextDiv>비밀번호 확인</STextDiv>
+          <SCustomInput />
+          <STextDiv style={{ marginTop: "10%"}}>
+            <SGoLoginP
+              onClick={() => {
+                navigate("/login")
+              }}
+            >이미 계정이 있으신가요?</SGoLoginP>
+          </STextDiv>
           <SNormalButton>로그인</SNormalButton>
-          <SKakaoButton>카카오</SKakaoButton>
-          <SNaverButton>네이버</SNaverButton>
+          
         </SRightDiv>
       </Container>
     </Wrapper>
   );
 }
 
-export default Login;
+export default SignUp;

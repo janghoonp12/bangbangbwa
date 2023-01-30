@@ -17,6 +17,7 @@ import WriteItem from "./component/common/WriteItem";
 import Notice from "./pages/Notice";
 import Login from "./component/account/Login";
 import Alarm from "./pages/Alarm";
+import SignUp from "./component/account/SignUp";
 
 
 
@@ -28,6 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />}/>
+        <Route path="/signup" element={<SignUp/>}/>
         <Route path="/items/*" element={<Items />} />
         <Route path="/broadcasts/*" element={<Broadcasts />} />
         <Route path="/mypage/*" element={<MyPage />} />
