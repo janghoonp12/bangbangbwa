@@ -17,10 +17,8 @@ pipeline {
         stage('Build') {
             steps {
 
-                sh "mvn -Dmaven.test.failure.ignore=true -f ./backend/bangbang/ clean package docker:build"
-                sh "docker stop spring"
-                sh "docker rm spring"
-                sh "docker run -d -p 3000:3000 --name spring spring "
+                sh "mvn -Dmaven.test.failure.ignore=true -f ./backend/bangbang/ clean package"
+
             }
         }
     }
