@@ -20,7 +20,7 @@ pipeline {
                 dir('backend') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행 
                     script{
                         try{
-                            sh "mvn -Dmaven.test.failure.ignore=true -f ./backend/bangbang/ clean package docker:build"
+                            sh "mvn -f ./backend/bangbang/ clean package docker:build"
                         } catch(e){
                             echo "fail build"
                         }
