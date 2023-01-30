@@ -2,10 +2,8 @@ package com.bangbang.service;
 
 import com.bangbang.domain.item.*;
 
-import com.bangbang.dto.item.ItemPriceSaveRequestDto;
-import com.bangbang.dto.item.ItemSaveRequestDto;
-import com.bangbang.dto.item.ManageOptionSaveRequestDto;
-import com.bangbang.dto.item.OptionSaveRequestDto;
+import com.bangbang.dto.item.*;
+
 import java.util.List;
 import javax.transaction.Transactional;
 
@@ -25,6 +23,13 @@ public class ItemServiceImpl implements ItemService {
     private ManageOptionRepository manageOptionRepository;
     @Autowired
     private ItemPriceRepository itemPriceRepository;
+    @Autowired
+    private SidoCodeRepository sidoCodeRepository;
+    @Autowired
+    private GugunCodeRepository gugunCodeRepository;
+    @Autowired
+    private DongCodeRepository dongCodeRepository;
+
 
     @Transactional
     @Override
@@ -59,8 +64,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> searchItemFilter() {
-        return null;
+    public List<SidoDto> getSido() {
+        return sidoCodeRepository.getSido();
+    }
+
+    @Override
+    public List<GugunDto> getGugunInSido(String sidoCode) {
+        return gugunCodeRepository.getGugunInSido(sidoCode);
+    }
+
+    @Override
+    public List<DongDto> getDongInGugun(String gugunCode) {
+        return dongCodeRepository.getDongInGugun(gugunCode);
+    }
+
+    @Override
+    public SiGuDongDto getAddressName(String dongCode) {
+        return dongCodeRepository.getAddressName(dongCode);
     }
 
     @Override
