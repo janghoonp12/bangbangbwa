@@ -16,8 +16,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                dir(./backend/bangbang)
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+                sh "mvn -Dmaven.test.failure.ignore=true -f ./backend/bangbang/ clean package"
 
             }
         }
