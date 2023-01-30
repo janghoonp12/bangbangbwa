@@ -1,6 +1,5 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.item.ItemPrice;
 import com.bangbang.dto.item.ItemPriceSaveRequestDto;
 import com.bangbang.dto.item.ItemSaveRequestDto;
 import com.bangbang.dto.item.ManageOptionSaveRequestDto;
@@ -37,10 +36,21 @@ public class ItemRestController {
     @PostMapping("/items/new")
     public ResponseEntity<?> newItem(@RequestBody ObjectNode item) throws JsonProcessingException {
         try {
+            /*
+            데이터 입력 형식
+            "item": {
+            },
+            "itemPrice": {
+            },
+            "manageOption": {
+            },
+            "option" {
+            }
+            * */
             ObjectMapper mapper = new ObjectMapper();
             ItemSaveRequestDto itemDto = mapper.treeToValue(item.get("item"), ItemSaveRequestDto.class);
             ItemPriceSaveRequestDto itemPrice = mapper.treeToValue(item.get("itemPrice"), ItemPriceSaveRequestDto.class);
-            ManageOptionSaveRequestDto manage = mapper.treeToValue(item.get("manage"), ManageOptionSaveRequestDto.class);
+            ManageOptionSaveRequestDto manage = mapper.treeToValue(item.get("manageOption"), ManageOptionSaveRequestDto.class);
             OptionSaveRequestDto option = mapper.treeToValue(item.get("option"), OptionSaveRequestDto.class);
 
             long item_id = itemService.newItem(itemDto);
@@ -70,7 +80,7 @@ public class ItemRestController {
 
     @ApiOperation(value="매물 상세 정보")
     @GetMapping("/items/{item_id}")
-    public ResponseEntity<?> itemDetail(@PathVariable("item_id") int itemId) {
+    public ResponseEntity<?> itemDetail(@PathVariable("item_id") long itemId) {
         try {
             Item item = itemService.itemDetail(itemId);
             if (item != null)
@@ -84,7 +94,7 @@ public class ItemRestController {
     //매물 삭제 구현
     @ApiOperation(value="매물 삭제(비활성화)")
     @PatchMapping("/items/deactivate")
-    public ResponseEntity<?> deactivateItem(@RequestParam("itemId") int itemId) {
+    public ResponseEntity<?> deactivateItem(@RequestParam("itemId") long itemId) {
         try {
             itemService.deactivateItem(itemId);
             return new ResponseEntity(HttpStatus.OK);
@@ -106,7 +116,7 @@ public class ItemRestController {
 
     @ApiOperation(value="매물 거래완료")
     @PatchMapping("/items/sold")
-    public ResponseEntity<?> itemSold(@RequestParam("itemId") int itemId) {
+    public ResponseEntity<?> itemSold(@RequestParam("itemId") long itemId) {
         try {
             itemService.itemSold(itemId);
             return new ResponseEntity(HttpStatus.OK);
