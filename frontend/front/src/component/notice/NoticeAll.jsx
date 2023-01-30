@@ -19,28 +19,34 @@ function Notice() {
   const navigate = useNavigate();
 
   return (
-    <STable>
-      <thead>
-        <tr>
-          <STh>번호</STh>
-          <STh>제목</STh>
-          <STh>등록일</STh>
-        </tr>
-      </thead>
-      <tbody>
-        {noticeData.map((post, index) => {
-          return (
-            <NoticeItem
+    <div>
+      <h1 align="center">
+        공지사항
+      </h1>
+      <br />
+      <STable>
+        <thead>
+          <tr>
+            <STh>번호</STh>
+            <STh>제목</STh>
+            <STh>등록일</STh>
+          </tr>
+        </thead>
+        <tbody>
+          {noticeData.map((post, index) => {
+            return (
+              <NoticeItem
               key={post.id}
               post={post}
               onClick={() => {
-                  navigate(`/notices/${post.id}`);
+                navigate(`/notices/${post.id}`);
               }}
-            />
-          );
-        })} 
-      </tbody>
-    </STable>
+              />
+            );
+          })} 
+        </tbody>
+      </STable>
+    </div>
   )
 }
 

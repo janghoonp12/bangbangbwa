@@ -21,7 +21,12 @@ function Home() {
       <hr/>
       <h2>인기 급상승 매물</h2>
       <div>
-
+        <ItemList
+            posts={data}
+            onClickItem={(item) => {
+                navigate(`/items/${item.id}`);
+            }}
+        />
       </div>
     </div>
   )
