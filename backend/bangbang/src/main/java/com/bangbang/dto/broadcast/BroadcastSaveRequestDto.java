@@ -14,25 +14,27 @@ public class BroadcastSaveRequestDto {
   private String broadcastDescription;
   private Integer broadcastStatus;
   private String broadcastTitle;
-  private Item item;
-  private Image image;
+
+//  private Item item;
+  private Long imageId;
   @Builder
-  public BroadcastSaveRequestDto(String broadcastDescription, Integer broadcastStatus, String broadcastTitle){
+  public BroadcastSaveRequestDto(String broadcastDescription, Integer broadcastStatus, String broadcastTitle, Long imageId){
     this.broadcastDescription = broadcastDescription;
     this.broadcastStatus = broadcastStatus;
     this.broadcastTitle = broadcastTitle;
+    this.imageId = imageId;
   }
 
-  public void setItem(Item item){this.item = item;}
-  public void setImage(Image image){this.image = image;}
+//  public void setItem(Item item){this.item = item;}
+//  public void setImage(Image image){this.image = image;}
 
-  public Broadcast toEntity(){
+  public Broadcast toEntity(Image image){
     return Broadcast.builder()
         .broadcastId(broadcastId)
         .broadcastDescription(broadcastDescription)
         .broadcastStatus(broadcastStatus)
         .broadcastTitle(broadcastTitle)
-        .item(item)
+//        .item(item)
         .image(image)
         .build();
   }

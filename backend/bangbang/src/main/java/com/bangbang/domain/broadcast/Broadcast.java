@@ -27,9 +27,9 @@ public class Broadcast extends Datetime {
   private String broadcastTitle;             //방송제목
 
 
-  @JoinColumn(name = "item_id")
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Item item;      //FK
+//  @JoinColumn(name = "item_id")
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  private Item item;      //FK
   @JoinColumn(name="image_id")
   @OneToOne(fetch = FetchType.LAZY)
   private Image image;     //FK
@@ -37,12 +37,11 @@ public class Broadcast extends Datetime {
 
   @Builder
   public Broadcast(Long broadcastId, String broadcastDescription, Integer broadcastStatus,
-      String broadcastTitle, Item item, Image image){
+      String broadcastTitle, Image image){
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastStatus = broadcastStatus;
     this.broadcastTitle = broadcastTitle;
-    this.item = item;
     this.image = image;
   }
 
@@ -50,6 +49,10 @@ public class Broadcast extends Datetime {
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
+  }
+  public void deactive(Long broadcastId, Integer broadcastStatus){
+    this.broadcastId = broadcastId;
+    this.broadcastStatus = broadcastStatus;
   }
   //  @PrePersist
 //  public void prePersist(){

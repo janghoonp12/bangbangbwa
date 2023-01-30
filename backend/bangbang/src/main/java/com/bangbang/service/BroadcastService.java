@@ -1,22 +1,70 @@
 package com.bangbang.service;
 
 import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broadcast.BroadcastRepository;
+import com.bangbang.domain.image.Image;
+import com.bangbang.domain.image.ImageRepository;
+import com.bangbang.dto.broadcast.*;
+import com.bangbang.exception.BaseException;
+import com.bangbang.exception.ErrorMessage;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-public interface BroadcastService {
-
-  String newBroadcast(Broadcast broadCast);         //방송등록
+import java.util.stream.Collectors;
 
 
-  List<Broadcast> searchBroadcastAll();             //방송전체검색
+@Service
+@RequiredArgsConstructor
+public class BroadcastService {
+  private final BroadcastRepository broadcastRepository;
+  private final ImageRepository imageRepository;
 
+  // 방송 등록
+  @Transactional
+  public void newBroadcast(BroadcastSaveRequestDto requestDto) throws Exception{
+    Image image = imageRepository.findByImageId(requestDto.getImageId())
+            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
+    broadcastRepository.save(requestDto.toEntity(image));
+  }
 
-  List<Broadcast> searchBroadcastFilter();          //방송필터검색
+  //방송 조회
+  public List<BroadcastListResponseDto> searchBroadcastAll(){
+    return broadcastRepository.findAll().stream()
+            .map(BroadcastListResponseDto::new)
+            .collect(Collectors.toList());
+  }
 
-  Broadcast deactivateBroadcast(int broadcastid, Broadcast broadcast);    //방송삭제(비활성화)
+  //해당 방송 조회
+  public BroadcastResponseDto broadcastDetail(Long broadcastId){
+    Broadcast entity = broadcastRepository.findByBroadcastId(broadcastId)
+            .orElseThrow(() -> new IllegalArgumentException("해당 방송이 존재하지 않습니다."));
+    return new BroadcastResponseDto(entity);
+  }
 
+  //방송 수정
+  @Transactional
+  public void modifyBroadcast(Long id, BroadcastUpdateRequestDto requestDto){
+    try {
+      Broadcast broadcast = broadcastRepository.findByBroadcastId(id).orElseThrow(()
+      -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
+      broadcast.update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle());
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
 
-  Broadcast modifyBroadcast(int broadcastid, Broadcast broadcast);        //방송내용수정
-
+  //방송 삭제
+  @Transactional
+  public void deactivateBroadcast(Long id, BroadcastDeactiveRequestDto requestDto){
+    try {
+      Broadcast broadcast = broadcastRepository.findByBroadcastId(id).orElseThrow(()
+              -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
+      broadcast.deactive(requestDto.getBroadcastId(), requestDto.getBroadcastStatus());
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
 }

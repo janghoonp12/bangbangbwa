@@ -24,11 +24,20 @@ public class Image {
   @Column(name = "image_storage_location", length = 100, nullable = false)
   private String imageStorageLocation;
 
+  @Column(name = "image_type", nullable = false)
+  private Integer imageType;
+
+  @Column(name = "image_use_id", nullable = false)
+  private Long imageUseId;
+
 
   @Builder
-  public Image(String imageStorageLocation){
+  public Image(Long imageId, String imageStorageLocation, Integer imageType, Long imageUseId){
+    this.imageId = imageId;
     this.imageStorageLocation = imageStorageLocation;
+    this.imageType = imageType;
+    this.imageUseId = imageUseId;
   }
 
-  public void update(String imageStorageLocation) {this.imageStorageLocation = imageStorageLocation;}
+//  public void update(String imageStorageLocation) {this.imageStorageLocation = imageStorageLocation;}
 }
