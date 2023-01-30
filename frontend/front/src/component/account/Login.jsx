@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png"
 
-const LoginContainer = styled.div`
+const Wrapper = styled.div`
   display: flex;
   background-color: #F8EDE3;
   height: 100%;
@@ -10,10 +10,12 @@ const LoginContainer = styled.div`
 
 `
 
-const LoginWrapper = styled.div`
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
   background-color: white;
-  width: 50%;
-  height: 500px;
+  width: 60%;
+  height: 50%;
   border-radius: 10px;
   margin: 200px auto;
 `
@@ -24,17 +26,16 @@ const LoginWrapper = styled.div`
 //   height: 100%;
 // `
 
-const SecondForm = styled.div`
+const SLeftDiv = styled.div`
   background-image: url(${logosample});
-  background-size: cover;
+  background-size: contain;
   display: inline-block;
-  width: 40%;
+  width: 100%;
   height: 100%;
 `
 
-const LoginForm = styled.form`
-  display: inline-block;
-  width: 60%;
+const SRightDiv = styled.form`
+  width: 100%;
   height: 100%;
   padding: 20px;
 `
@@ -43,33 +44,46 @@ const CustomInput = styled.input`
   width: 100%;
 `
 
+const SNormalButton = styled.button`
+  background: #F8EDE3;
+  margin-top: 1.5rem;
+  width: 60%;
+`;
+
+const SKakaoButton = styled.button`
+  background: yellow;
+  margin-top: 0.25rem;
+  width: 60%;
+`;
+
+const SNaverButton = styled.button`
+  background: lightgreen;
+  margin-top: 0.25rem;
+  width: 60%;
+  
+`;
+
 function Login() {
   return (
-    <LoginContainer>
-      <LoginWrapper>
-        <SecondForm />
-        <LoginForm style={{textAlign:"center"}}>
-          <div>logo</div>
-          <lable>돌아 오신걸 환영해요</lable>
-          <div style={{textAlign: "left"}}>이메일</div>
+    <Wrapper>
+      <Container>
+        <SLeftDiv />
+        <SRightDiv style={{textAlign:"center"}}>
+          <div style={{fontSize: "6rem"}}>logo</div>
+          <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div>
+          <div style={{textAlign: "left", marginTop: "3rem"}}>이메일</div>
           <CustomInput/>
           <div style={{textAlign: "left"}}>비밀번호</div>
           <CustomInput />
           <div style={{textAlign: "left"}}>
             <a href="#">비밀번호를 잊으셨나요?</a>
           </div>
-          <div>
-            <button>로그인</button>
-          </div>
-          <div>
-            <button>카카오</button>
-          </div>
-          <div>
-            <button>네이버</button>
-          </div>
-        </LoginForm>
-      </LoginWrapper>
-    </LoginContainer>
+          <SNormalButton>로그인</SNormalButton>
+          <SKakaoButton>카카오</SKakaoButton>
+          <SNaverButton>네이버</SNaverButton>
+        </SRightDiv>
+      </Container>
+    </Wrapper>
   );
 }
 
