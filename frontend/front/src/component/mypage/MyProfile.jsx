@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import logosample from "../../assets/logosample.png"
+import logosample from "../../assets/logosample.png";
+import QuitModal from "../common/ui/QuitModal";
 
 const Wrapper = styled.div`
   display: flex;
@@ -136,6 +137,9 @@ function MyProfile(props) {
           <SFlexDiv>
             <p>비밀번호: </p>
             <p>zx************</p>
+          </SFlexDiv>
+          <SFlexDiv>
+            <QuitModal />
           </SFlexDiv>
         </SItemDiv>
       </Container>

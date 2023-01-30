@@ -3,6 +3,7 @@ import BroadcastList from "./BroadcastList";
 import data from "../../data.json";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import Filter from "../common/Filter";
 
 function BroadcastAll() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ function BroadcastAll() {
   return (
     <div>
       <Button variant="info" onClick={broadcastItem}>방송 등록</Button>
+      <Filter />
       <h2>실시간 방송</h2>
       <BroadcastList
         posts = {data}
