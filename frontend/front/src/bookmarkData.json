@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "title": "회사",
+      "description": "서울특별시 강남구 역삼동 인근",
+      "img_url": "/static/media/yeoksam.9af1ae5142a42d857a1b.png"
+    },
+    {
+      "id": 2,
+      "title": "영통역",
+      "description": "경기도 수원시 영통동 인근",
+      "img_url": "/static/media/yeongtong.4dbfb415495c5356b60c.png"
+    },
+    {
+      "id": 3,
+      "title": "청라 호수공원",
+      "description": "인천광역시 청라동 인근",
+      "img_url": "/static/media/cheongla.b7629978985251e5fa19.png"
+    },
+    {
+      "id": 4,
+      "title": "네이버 드가자",
+      "description": "경기도 성남시 분당구 인근",
+      "img_url": "/static/media/bundang.75d9f88340e33ef25215.png"
+    }
+  ]
