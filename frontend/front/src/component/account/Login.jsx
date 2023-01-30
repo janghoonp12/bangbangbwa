@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png"
+import { useNavigate } from "react-router";
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,6 +68,11 @@ const SNaverButton = styled.button`
 `;
 
 function Login() {
+  const navigate = useNavigate();
+  const onClick = () => {
+    navigate("/")
+  }
+
   return (
     <Wrapper>
       <Container>
