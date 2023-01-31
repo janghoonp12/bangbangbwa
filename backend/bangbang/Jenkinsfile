@@ -41,25 +41,29 @@ pipeline {
                     image "node:18.12.1"
                 }
             }
-            script{
-                sh "ls -a"
-                dir('frontend') {
-                    dir('front') {
-                        sh 'npm install'
-                        sh 'npm run build'
+            steps {
+                script{
+                    sh "ls -a"
+                    dir('frontend') {
+                        dir('front') {
+                            sh 'npm install'
+                            sh 'npm run build'
+                        }
                     }
                 }
             }
         }
         stage('front run') {
             agent any
-            script {
-                sh 'docker build -t react:latest.'
-            }
-            script {
-                sh 'docker stop react'
-                sh 'docker rm react'
-                sh 'docker run -d --name react -p 80:80 react:latest'
+                steps {
+                    script {
+                    sh 'docker build -t react:latest.'
+                }
+                script {
+                    sh 'docker stop react'
+                    sh 'docker rm react'
+                    sh 'docker run -d --name react -p 80:80 react:latest'
+                }
             }
         }
     }
