@@ -85,7 +85,7 @@ function Login() {
           <div style={{textAlign: "left", marginLeft: "10%"}}>비밀번호</div>
           <SCustomInput />
           <div style={{textAlign: "left", marginLeft: "10%"}}>
-            <a>비밀번호를 잊으셨나요?</a>
+            // <a>비밀번호를 잊으셨나요?</a>
           </div>
           <SNormalButton>로그인</SNormalButton>
           <SKakaoButton>카카오</SKakaoButton>
