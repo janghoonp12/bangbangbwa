@@ -57,7 +57,7 @@ pipeline {
             agent any
                 steps {
                     script {
-                    sh 'docker build -t react:latest.'
+                    sh 'docker build react:latest.'
                 }
                 script {
                     sh 'docker stop react'
