@@ -1,9 +1,6 @@
 package com.bangbang.dto.item;
 
-import lombok.Getter;
-
-@Getter
-public class GugunDto {
-    private String gugunCode; //5개로 자른
-    private String gugnName;
+public interface GugunDto {
+    String getGugunCode(); //5개로 자른
+    String getGugunName();
 }

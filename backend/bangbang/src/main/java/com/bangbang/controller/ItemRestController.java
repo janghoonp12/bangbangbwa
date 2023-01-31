@@ -161,6 +161,19 @@ public class ItemRestController {
         }
     }
 
+    @ApiOperation(value="시,구,동 조회")
+    @GetMapping("/items/sigudong")
+    public ResponseEntity<?> sigudong(@RequestParam("dongCode") String dongCode) {
+        try {
+            SiGuDongDto s = itemService.getAddressName(dongCode);
+            if (s != null)
+                return new ResponseEntity<SiGuDongDto>(s, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
     private ResponseEntity exceptionHandling() {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
