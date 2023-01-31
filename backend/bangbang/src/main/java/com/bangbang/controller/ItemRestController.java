@@ -1,9 +1,6 @@
 package com.bangbang.controller;
 
-import com.bangbang.dto.item.ItemPriceSaveRequestDto;
-import com.bangbang.dto.item.ItemSaveRequestDto;
-import com.bangbang.dto.item.ManageOptionSaveRequestDto;
-import com.bangbang.dto.item.OptionSaveRequestDto;
+import com.bangbang.dto.item.*;
 import com.bangbang.service.ItemService;
 import com.bangbang.domain.item.Item;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -120,6 +117,58 @@ public class ItemRestController {
         try {
             itemService.itemSold(itemId);
             return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="시,도 가져오기")
+    @GetMapping("/items/sido")
+    public ResponseEntity<List<SidoDto>> sido() {
+        try {
+            List<SidoDto> list = itemService.getSido();
+            if (list != null && !list.isEmpty())
+                return new ResponseEntity<List<SidoDto>>(list, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="구,군 가져오기")
+    @GetMapping("/items/gugun")
+    public ResponseEntity<List<GugunDto>> gugun(@RequestParam("sidoCode") String sidoCode) {
+        try {
+            List<GugunDto> list = itemService.getGugunInSido(sidoCode);
+            if (list != null && !list.isEmpty())
+                return new ResponseEntity<List<GugunDto>>(list, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="동 가져오기")
+    @GetMapping("/items/dong")
+    public ResponseEntity<List<DongDto>> dong(@RequestParam("dongCode") String dongCode) {
+        try {
+            List<DongDto> list = itemService.getDongInGugun(dongCode);
+            if (list != null && !list.isEmpty())
+                return new ResponseEntity<List<DongDto>>(list, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="시,구,동 조회")
+    @GetMapping("/items/sigudong")
+    public ResponseEntity<?> sigudong(@RequestParam("dongCode") String dongCode) {
+        try {
+            SiGuDongDto s = itemService.getAddressName(dongCode);
+            if (s != null)
+                return new ResponseEntity<SiGuDongDto>(s, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
         }
