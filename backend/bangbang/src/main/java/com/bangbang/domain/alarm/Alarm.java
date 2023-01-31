@@ -3,6 +3,7 @@ package com.bangbang.domain.alarm;
 import com.bangbang.domain.AlarmDatetime;
 import com.bangbang.domain.AlarmDatetime;
 import com.bangbang.domain.sign.User;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +31,8 @@ public class Alarm extends AlarmDatetime {
   @Column(name = "alarm_status", nullable = false)
   private Integer alarmStatus;
 
+  @Column(name = "alarm_start_time", insertable = false, updatable = false)
+  private LocalDateTime alarmStartTime;
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;

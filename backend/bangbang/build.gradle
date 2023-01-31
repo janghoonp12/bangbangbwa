@@ -5,6 +5,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'org.springframework.boot' version '2.7.6'
 }
 
 repositories {
@@ -37,7 +38,7 @@ dependencies {
 }
 
 group = 'com.bangbang'
-version = '0.0.1-SNAPSHOT'
+version = '0.1'
 description = 'bangbang'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 

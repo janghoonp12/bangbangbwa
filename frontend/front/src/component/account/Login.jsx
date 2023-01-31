@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png"
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,10 +68,10 @@ const SNaverButton = styled.button`
 `;
 
 function Login() {
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate("/")
-  }
+  // const navigate = useNavigate();
+  // const onClick = () => {
+  //   navigate("/")
+  // }
 
   return (
     <Wrapper>
@@ -85,7 +85,7 @@ function Login() {
           <div style={{textAlign: "left", marginLeft: "10%"}}>비밀번호</div>
           <SCustomInput />
           <div style={{textAlign: "left", marginLeft: "10%"}}>
-            <a href="javascript:void(0)" onClick={onClick}>비밀번호를 잊으셨나요?</a>
+            
           </div>
           <SNormalButton>로그인</SNormalButton>
           <SKakaoButton>카카오</SKakaoButton>
