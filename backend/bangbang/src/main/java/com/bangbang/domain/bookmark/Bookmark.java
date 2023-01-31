@@ -1,20 +1,10 @@
 package com.bangbang.domain.bookmark;
 
-import com.bangbang.domain.dongcode.Dongcode;
-import com.bangbang.domain.sign.User;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -45,20 +35,21 @@ public class Bookmark {
   @Column(name = "bookmark_item_max_price")
   private Integer bookmarkItemMaxPrice;
 
-  @ManyToOne
-  @JoinColumn(name = "user_id", nullable = false)
-  private User user;
+  @JoinTable(name="user",
+          joinColumns = @JoinColumn(name="user_id"),
+          inverseJoinColumns = @JoinColumn(name="user_id"))
+  private Long userId;
 
-  @OneToOne
-  @JoinColumn(name = "dongcode_id", nullable = false)
-  private Dongcode dongcode;
+  @JoinTable(name="dongcode",
+          joinColumns = @JoinColumn(name="dongCode"),
+          inverseJoinColumns = @JoinColumn(name="dongCode"))
+  private String dongcode;
 
   @Builder
-  public Bookmark(Long bookmarkId, String bookmarkTitle, String bookmarkComment, Integer bookmarkItemType,
+  public Bookmark(String bookmarkTitle, String bookmarkComment, Integer bookmarkItemType,
       Integer bookmarkBuildingType, Double bookmarkArea, Integer bookmarkItemBuildMinYear, Integer bookmarkItemBuildMaxYear,
-      Integer bookmarkItemMinPrice, Integer bookmarkItemMaxPrice, User user, Dongcode dongcode) {
+      Integer bookmarkItemMinPrice, Integer bookmarkItemMaxPrice, Long userId, String dongcode) {
 
-    this.bookmarkId = bookmarkId;
     this.bookmarkTitle = bookmarkTitle;
     this.bookmarkComment = bookmarkComment;
     this.bookmarkItemType = bookmarkItemType;
@@ -68,7 +59,7 @@ public class Bookmark {
     this.bookmarkItemBuildMaxYear = bookmarkItemBuildMaxYear;
     this.bookmarkItemMinPrice = bookmarkItemMinPrice;
     this.bookmarkItemMaxPrice = bookmarkItemMaxPrice;
-    this.user = user;
+    this.userId = userId;
     this.dongcode = dongcode;
   }
 
@@ -81,5 +72,4 @@ public class Bookmark {
     this.bookmarkItemMinPrice = bookmarkItemMinPrice;
     this.bookmarkItemMaxPrice = bookmarkItemMaxPrice;
   }
-
 }

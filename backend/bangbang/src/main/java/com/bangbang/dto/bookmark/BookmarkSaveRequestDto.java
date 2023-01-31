@@ -1,9 +1,6 @@
 package com.bangbang.dto.bookmark;
 
 import com.bangbang.domain.bookmark.Bookmark;
-import com.bangbang.domain.dongcode.Dongcode;
-import com.bangbang.domain.sign.User;
-import java.awt.print.Book;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +20,12 @@ public class BookmarkSaveRequestDto {
   private Integer bookmarkItemMinPrice;
   private Integer bookmarkItemMaxPrice;
   private Long userId;
-  private String dongcodeId;
+  private String dongCode;
 
   @Builder
   public BookmarkSaveRequestDto(String bookmarkTitle, String bookmarkComment, Integer bookmarkItemType, Double bookmarkArea,
       Integer bookmarkBuildingType, Integer bookmarkItemBuildMinYear, Integer bookmarkItemBuildMaxYear,
-      Integer bookmarkItemMinPrice, Integer bookmarkItemMaxPrice, Long userId, String dongcodeId){
+      Integer bookmarkItemMinPrice, Integer bookmarkItemMaxPrice, Long userId, String dongCode){
     this.bookmarkTitle = bookmarkTitle;
     this.bookmarkComment = bookmarkComment;
     this.bookmarkItemType = bookmarkItemType;
@@ -39,12 +36,11 @@ public class BookmarkSaveRequestDto {
     this.bookmarkItemMinPrice = bookmarkItemMinPrice;
     this.bookmarkItemMaxPrice = bookmarkItemMaxPrice;
     this.userId = userId;
-    this.dongcodeId = dongcodeId;
+    this.dongCode = dongCode;
   }
 
-  public Bookmark toEntity(User user, Dongcode dongcode){
+  public Bookmark toEntity(){
     return Bookmark.builder()
-        .bookmarkId(bookmarkId)
         .bookmarkTitle(bookmarkTitle)
         .bookmarkComment(bookmarkComment)
         .bookmarkItemType(bookmarkItemType)
@@ -54,8 +50,8 @@ public class BookmarkSaveRequestDto {
         .bookmarkItemBuildMaxYear(bookmarkItemBuildMaxYear)
         .bookmarkItemMinPrice(bookmarkItemMinPrice)
         .bookmarkItemMaxPrice(bookmarkItemMaxPrice)
-        .user(user)
-        .dongcode(dongcode)
+        .userId(userId)
+        .dongcode(dongCode)
         .build();
   }
 
