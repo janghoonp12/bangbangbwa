@@ -10,8 +10,8 @@ pipeline {
         stage('build') {
             steps{
                 sh "ls -a"
-                sh "cd ./backend/bangbang"
-                dir('backend') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행 
+                sh "cd ./backend"
+                dir('bangbang') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행 
                     script{
                         try{
                             sh "chmod +x gradlew"
