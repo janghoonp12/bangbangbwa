@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script{
                     sh "ls -a"
-                    sh "docker build -t /backend/bangbang/build/libs/bangbang-0.1.jar"
+                    sh "docker build . -t /backend/bangbang/build/libs/bangbang-0.1.jar"
                 }
             }
         }
