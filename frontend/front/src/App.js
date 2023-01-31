@@ -17,6 +17,7 @@ import WriteItem from "./component/common/WriteItem";
 import Notice from "./pages/Notice";
 import Login from "./component/account/Login";
 import Alarm from "./pages/Alarm";
+import Admin from "./pages/Admin";
 import SignUp from "./component/account/SignUp";
 
 
@@ -37,6 +38,7 @@ function App() {
         <Route path="/interests/*" element={<Interests />} />
         <Route path="/notices/*" element={<Notice />} />
         <Route path="/alarm/*" element={<Alarm />} />
+        <Route path="/admin/*" element={<Admin />} />
         {/*일치하지 않는 모든 page는 NotFound */}
         <Route path="*" element={<NotFound />} />
       </Routes>
