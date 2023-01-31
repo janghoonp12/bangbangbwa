@@ -18,7 +18,7 @@ import Notice from "./pages/Notice";
 import Login from "./component/account/Login";
 import Alarm from "./pages/Alarm";
 import SignUp from "./component/account/SignUp";
-
+import FilterDetail from "./component/common/FilterDetail";
 
 
 function App() {
@@ -30,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />}/>
         <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/filterdetail" element={<FilterDetail />}/>
         <Route path="/items/*" element={<Items />} />
         <Route path="/broadcasts/*" element={<Broadcasts />} />
         <Route path="/mypage/*" element={<MyPage />} />
