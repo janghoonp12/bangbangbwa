@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script{
                     sh "ls -a"
-                    sh "docker build spring /var/jenkins_home/workspace/backend/backend/bangbang/build/libs/bangbang-0.1.jar"
+                    sh "docker build spring:latest /var/jenkins_home/workspace/backend/backend/bangbang/build/libs/bangbang-0.1.jar"
                 }
             }
         }
