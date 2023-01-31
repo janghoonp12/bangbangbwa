@@ -16,21 +16,21 @@ pipeline {
                             sh "ls -a"
                             try{
                                 sh "chmod +x gradlew"
-                                sh "./gradlew clean build"
-                            } catch(e){
-                                echo "fail build"
-                            }
+                                sh "./gradlew bootBuildImage --imageName=spring"
+                        } catch(e){
+                            echo "fail build"
                         }
                     }
-                }
-            }
-        }
-
-        stage('start') {
-            steps {
-                script{
-                    sh "ls -a"
-                    sh "docker build spring:latest /var/jenkins_home/workspace/backend/backend/bangbang/build/libs/bangbang-0.1.jar"
+                    script{ //이미 실행 중인 컨테이너가 있으면 중지 후 삭제
+                        try{
+                            sh "docker stop spring"
+                            sh "docker rm spring"
+                        } catch(e){
+                            echo "container none"
+                        }
+                    } //8083 포트에서 spring이라는 이미지를 spring이라는 컨테이너이름으로 설정해서 실행
+                    sh "docker run -d -p 8083:8083 --name spring spring "
+                    }
                 }
             }
         }
