@@ -29,7 +29,10 @@ pipeline {
         stage('start') {
             steps {
                 sh "ls -a"
-                sh "docker run --rm -i -p 3000:3000 --name spring openjdk:11.0.10-jre-slim-buster java -jar /backend/bangbang/build/libs/bangbang-0.1.jar"
+                sh "docker build -t /backend/bangbang/build/libs/bangbang-0.1.jar"
+            }
+            steps {
+                
             }
         }
     }
