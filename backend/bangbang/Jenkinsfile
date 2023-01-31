@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage("git"){ //git에 브랜치 url, credentialsId는 젠킨스에 등록한 인증으로 
             steps{
-                git credentialsId: 'gitlab', url: 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405.git'
+                git branch: 'develop', credentialsId: 'gitlab', url: 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405.git'
             }
         }
         stage('build') {
