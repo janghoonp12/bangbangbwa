@@ -10,11 +10,11 @@ pipeline {
         stage('build') {
             steps{
                 sh "ls -a"
-                sh "cd ./backend"
+                sh "cd ./backend/backend"
+                sh "ls -a"
                 dir('bangbang') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행 
                     script{
                         try{
-                            sh "ls -a"
                             sh "chmod +x gradlew"
                             sh "./gradlew bootBuildImage --imageName=spring"
                         } catch(e){
