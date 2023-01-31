@@ -48,6 +48,7 @@ pipeline {
                         dir('front') {
                             sh 'npm install'
                             sh 'npm run build'
+                            sh 'docker build -t react:latest .'
                         }
                     }
                 }
@@ -57,12 +58,9 @@ pipeline {
             agent any
                 steps {
                     script {
-                    sh 'docker build react .'
-                }
-                script {
                     sh 'docker stop react'
                     sh 'docker rm react'
-                    sh 'docker run -d --name react -p 80:80 Dockerfile:latest'
+                    sh 'docker run -d --name react -p 80:80 react:latest'
                 }
             }
         }
