@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export default function* rootSaga() {
-  yield all([
+  // yield all([
     
-  ])
+  // ])
 }
