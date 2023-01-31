@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "./ui/Button";
+import { useNavigate } from "react-router-dom";
 
 
 const Wrapper = styled.div`
@@ -77,11 +79,19 @@ const SPriceDiv = styled.div`
   text-align: center;
 `;
 
+const SFilterDiv = styled.div`
+  display: grid;
+  grid-template-columns: 10fr 2fr;
+`;
+
 const SP = styled.p`
  margin-bottom: 0px;
 `;
 
 function Filter() {
+
+  const navigate = useNavigate();
+
   return (
     <Wrapper>
       <Container>
@@ -179,6 +189,16 @@ function Filter() {
             <SP>bar</SP>
           </SElemDiv>
         </SPriceDiv>
+        <SFilterDiv>
+          <div></div>
+          <Button
+          style={{right: 0}}
+          title="상세 필터"
+          onClick={() => {
+            navigate("/filterdetail");
+          }}
+          />
+        </SFilterDiv>
       </Container>
     </Wrapper>
   );
