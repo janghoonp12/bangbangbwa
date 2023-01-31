@@ -50,7 +50,7 @@ pipeline {
                 }
             }
         }
-        stage('front docker build') {
+        stage('build') {
             agent any
             steps {
                 sh 'docker build -t react:latest.'
