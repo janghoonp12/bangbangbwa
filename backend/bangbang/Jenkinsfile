@@ -41,7 +41,7 @@ pipeline {
                     image "node:18.12.1"
                 }
             }
-            steps{
+            script{
                 sh "ls -a"
                 dir('frontend') {
                     dir('front') {
@@ -51,12 +51,12 @@ pipeline {
                 }
             }
         }
-        stage('run') {
+        stage('front run') {
             agent any
-            steps {
+            script {
                 sh 'docker build -t react:latest.'
             }
-            steps {
+            script {
                 sh 'docker stop react'
                 sh 'docker rm react'
                 sh 'docker run -d --name react -p 80:80 react:latest'
