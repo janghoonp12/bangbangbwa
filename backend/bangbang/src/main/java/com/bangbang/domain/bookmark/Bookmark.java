@@ -72,4 +72,14 @@ public class Bookmark {
     this.dongcode = dongcode;
   }
 
+  public void update(String bookmarkTitle, String bookmarkComment,
+      Integer bookmarkItemType, Integer bookmarkBuildingType, Integer bookmarkItemMinPrice, Integer bookmarkItemMaxPrice){
+    this.bookmarkTitle = bookmarkTitle;
+    this.bookmarkComment = bookmarkComment;
+    this.bookmarkItemType = bookmarkItemType;
+    this.bookmarkBuildingType = bookmarkBuildingType;
+    this.bookmarkItemMinPrice = bookmarkItemMinPrice;
+    this.bookmarkItemMaxPrice = bookmarkItemMaxPrice;
+  }
+
 }
