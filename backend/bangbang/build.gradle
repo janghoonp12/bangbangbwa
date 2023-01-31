@@ -37,7 +37,7 @@ dependencies {
 }
 
 group = 'com.bangbang'
-version = '0.0.1-SNAPSHOT'
+version = '0.1'
 description = 'bangbang'
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
