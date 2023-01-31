@@ -16,6 +16,7 @@ pipeline {
                             sh "ls -a"
                             try{
                                 sh "chmod +x gradlew"
+                                sh "./gradlew clean
                                 sh "./gradlew bootBuildImage --imageName=spring"
                             } catch(e){
                                 echo "fail build"
