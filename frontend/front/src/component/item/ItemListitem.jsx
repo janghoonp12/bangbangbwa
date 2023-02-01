@@ -5,9 +5,10 @@ import styled from "styled-components";
 const SCardDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 200px;
-  height: 300px;
-  margin-left: 50px;
+  width: 250px;
+  height: 400px;
+  margin-right: 50px;
+  margin-bottom: 0px;
   border: 1px solid grey;
   border-radius: 8px;
   cursor: pointer;
@@ -15,10 +16,12 @@ const SCardDiv = styled.div`
   :hover {
     background: lightgrey;
   }
+  text-align: center;
 `;
 
 const SCardImg = styled.img`
-  // width: 100%;
+  width: 250px;
+  height: 250px;
 `;
 
 const SCardBodyDiv = styled.div`
@@ -26,18 +29,19 @@ const SCardBodyDiv = styled.div`
 `;
 
 const SCardTitleP = styled.p`
-  // width: 100%;
+  margin-top: 10px;
+  font-size: 30px;
 `;
 
 const SCardContentP = styled.p`
-  // width: 100%;
+  font-size: 20px;
 `;
 
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function ItemListItem(props) {
     const { post, onClick } = props;
     return (
-      <SCardDiv onClick={onClick}>
+      <SCardDiv onDoubleClick={onClick}>
         <SCardImg variant="top" src="logo512.png" alt="이미지" />
         <SCardBodyDiv>
           <SCardTitleP>{post.title}</SCardTitleP>
