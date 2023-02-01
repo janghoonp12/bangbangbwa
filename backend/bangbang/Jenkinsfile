@@ -47,8 +47,6 @@ pipeline {
                     }
                 }
             }
-        }
-        stage('front run') {
             steps {
                 script {
                     sh 'docker stop front'
