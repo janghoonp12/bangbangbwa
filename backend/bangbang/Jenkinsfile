@@ -36,11 +36,6 @@ pipeline {
         }
 
         stage('front') {
-            agent {
-                docker {
-                    image "node:18.12.1"
-                }
-            }
             steps {
                 script{
                     sh "ls -a"
@@ -53,9 +48,8 @@ pipeline {
             }
         }
         stage('front run') {
-            agent any
-                steps {
-                    script {
+            steps {
+                script {
                     sh 'docker stop front'
                     sh 'docker rm front'
                     sh 'docker run -d --name front -p 80:80 front'
