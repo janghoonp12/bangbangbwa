@@ -46,8 +46,6 @@ pipeline {
                         }
                     }
                 }
-            }
-            steps {
                 script {
                     sh 'docker stop front'
                     sh 'docker rm front'
