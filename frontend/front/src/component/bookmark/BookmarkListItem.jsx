@@ -15,6 +15,8 @@ const SImg = styled.img`
   width: 290px;
   height: 200px;
   cursor: pointer;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 `;
 
 const SButton = styled.button`

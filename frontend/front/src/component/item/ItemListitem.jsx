@@ -22,6 +22,8 @@ const SCardDiv = styled.div`
 const SCardImg = styled.img`
   width: 250px;
   height: 250px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 `;
 
 const SCardBodyDiv = styled.div`
