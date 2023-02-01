@@ -50,8 +50,8 @@ function ItemList(props) {
 
         if (scrollLeft === 0) {
           setStartX(e.pageX);
-        } else if (scrollWidth < clientWidth + scrollLeft) {
-          setStartX(e.page + scrollLeft);
+        } else if (scrollWidth <= clientWidth + scrollLeft) {
+          setStartX(e.pageX + scrollLeft);
         }
       }
     };

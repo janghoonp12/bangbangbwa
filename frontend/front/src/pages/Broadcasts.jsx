@@ -5,21 +5,34 @@ import BroadcastLive from "../component/broadcast/BroadcastLive";
 import BroadcastWrite from "../component/broadcast/BroadcastWrite";
 import LiveBroadcastList from "../component/broadcast/LiveBroadcastList";
 import NonLiveBroadcastList from "../component/broadcast/NonLiveBroadcastList";
+import styled from "styled-components";
 
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 70%;
+`;
 
 function Broadcasts() {
   return (
-    <div>
-      <h1>Broadcast</h1>
-      <hr/>
-      <Routes>
-        <Route index element={<BroadcastAll />} />
-        <Route path=":postId" element={<BroadcastLive />} />
-        <Route path="new" element={<BroadcastWrite />} />
-        <Route path="live" element={<LiveBroadcastList />} />
-        <Route path="nonlive" element={<NonLiveBroadcastList />} />
-      </Routes>
-    </div>
+    <Wrapper>
+      <Container>
+        <h1>Broadcast</h1>
+        <hr/>
+        <Routes>
+          <Route index element={<BroadcastAll />} />
+          <Route path=":postId" element={<BroadcastLive />} />
+          <Route path="new" element={<BroadcastWrite />} />
+          <Route path="live" element={<LiveBroadcastList />} />
+          <Route path="nonlive" element={<NonLiveBroadcastList />} />
+        </Routes>
+      </Container>
+    </Wrapper>
   )
 }
 
