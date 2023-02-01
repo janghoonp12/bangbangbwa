@@ -6,7 +6,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: center;
+    // justify-content: center;
+    overflow-x: auto;
+    white-space: nowrap;
 
     & > * {
         :not(:last-child) {

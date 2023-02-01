@@ -33,6 +33,7 @@ const SItemDiv = styled.div`
   border-radius: 8px;
   text-align: left;
   padding: 10px;
+  margin-left: 10px;
 `;
 
 const SImg1 = styled.img`
