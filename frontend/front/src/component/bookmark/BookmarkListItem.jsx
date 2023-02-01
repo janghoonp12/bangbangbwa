@@ -42,6 +42,22 @@ const SP = styled.p`
   text-align: center;
 `;
 
+function checkName(name){
+  //name의 마지막 음절의 유니코드(UTF-16) 
+  const charCode = name.charCodeAt(name.length - 1);
+
+  //유니코드의 한글 범위 내에서 해당 코드의 받침 확인
+  const consonantCode = (charCode - 44032) % 28;
+  
+  if(consonantCode === 0){
+      //0이면 받침 없음 -> 를
+      return `${name}를`;
+  }
+  //1이상이면 받침 있음 -> 을
+  return `${name}을`;
+}
+
+
 
 function BookmarkListItem(props) {
   const bookmark = props.post;
@@ -50,7 +66,9 @@ function BookmarkListItem(props) {
     navigate('/')
   }
   const deleteBookmaark = () => {
-    if (window.confirm(`${bookmark.title}을 삭제하시겠습니까?`)) {
+    const josa = checkName(bookmark.title)
+
+    if (window.confirm(`즐겨찾기에서 ${josa} 삭제하시겠습니까?`)) {
       alert("삭제되었습니다.");
     }
   };

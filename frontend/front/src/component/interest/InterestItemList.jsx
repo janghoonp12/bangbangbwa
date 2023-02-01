@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import RecentViewListItem from "./RecentViewListItem";
+import InterestItemListItem from "./InterestItemListItem";
 
 const Wrapper = styled.div`
     display: flex;
@@ -16,14 +16,14 @@ const Wrapper = styled.div`
     }
 `;
 
-function RecentViewList(props) {
+function InterestItemList(props) {
     const { posts, onClickItem } = props;
 
     return (
         <Wrapper>
             {posts.map((post, index) => {
                 return (
-                    <RecentViewListItem
+                    <InterestItemListItem
                         key={post.id}
                         post={post}
                         onClick={() => {
@@ -36,4 +36,4 @@ function RecentViewList(props) {
     );
 }
 
-export default RecentViewList;
+export default InterestItemList;
