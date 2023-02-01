@@ -4,5 +4,6 @@ RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY . .
-RUN npm install --silent
-RUN npm install react-scripts@5.0.1 -g --silent
+RUN npm install
+RUN npm run build
+CMD npm run start
