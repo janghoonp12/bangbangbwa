@@ -7,7 +7,7 @@ pipeline {
                 git credentialsId: 'gitlab', url: 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12A405.git'
             }
         }
-        stage('build') {
+        stage('Backend') {
             steps{
                 sh "ls -a"
                 dir('backend') { //gradle 권한 설정 후 gradle로 도커 이미지 빌드하는 명령어 실행 
@@ -46,9 +46,7 @@ pipeline {
                     sh "ls -a"
                     dir('frontend') {
                         dir('front') {
-                            sh 'npm install'
-                            sh 'npm run build'
-                            sh 'docker build -t react:latest .'
+                            sh 'docker build -t front ./'
                         }
                     }
                 }
@@ -58,9 +56,9 @@ pipeline {
             agent any
                 steps {
                     script {
-                    sh 'docker stop react'
-                    sh 'docker rm react'
-                    sh 'docker run -d --name react -p 80:80 react:latest'
+                    sh 'docker stop front'
+                    sh 'docker rm front'
+                    sh 'docker run -d --name front -p 80:80 front'
                 }
             }
         }
