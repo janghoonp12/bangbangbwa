@@ -47,8 +47,12 @@ pipeline {
                     }
                 }
                 script {
-                    sh 'docker stop front'
-                    sh 'docker rm front'
+                    try {
+                        sh 'docker stop front'
+                        sh 'docker rm front'
+                    } catch(e) {
+                        echo "container none"
+                    }
                     sh 'docker run -d --name front -p 80:80 front'
                 }
             }
