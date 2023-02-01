@@ -41,6 +41,7 @@ pipeline {
                     sh "ls -a"
                     dir('frontend') {
                         dir('front') {
+                            sh "ls -a"
                             sh 'docker build -t front ./'
                         }
                     }
