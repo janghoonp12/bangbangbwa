@@ -58,11 +58,11 @@ public class BroadcastService {
 
   //방송 삭제
   @Transactional
-  public void deactivateBroadcast(Long id, BroadcastDeactiveRequestDto requestDto){
+  public void deactivateBroadcast(Long id){
     try {
       Broadcast broadcast = broadcastRepository.findByBroadcastId(id).orElseThrow(()
               -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
-      broadcast.deactive(requestDto.getBroadcastId(), requestDto.getBroadcastStatus());
+      broadcast.deactive(id);
     } catch (Exception e){
       e.printStackTrace();
     }

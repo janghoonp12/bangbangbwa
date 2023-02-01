@@ -4,6 +4,7 @@ import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.broadcast.BroadcastRepository;
 import com.bangbang.domain.replay.Replay;
 import com.bangbang.domain.replay.ReplayRepository;
+import com.bangbang.dto.replay.ReplayDeactiveRequestDto;
 import com.bangbang.dto.replay.ReplayListResponseDto;
 import com.bangbang.dto.replay.ReplayResponseDto;
 import com.bangbang.dto.replay.ReplaySaveRequestDto;
@@ -40,5 +41,18 @@ public class ReplayService {
         Replay entity = replayRepository.findByReplayId(replayId)
             .orElseThrow(() -> new IllegalArgumentException("해당 다시보기가 존재하지 않습니다."));
         return new ReplayResponseDto(entity);
+    }
+
+    //다시보기 삭제(비활성화)
+    @Transactional
+    public void deactiveReplay(Long replayId){
+        try{
+            Replay replay = replayRepository.findByReplayId(replayId).orElseThrow(
+                () -> new IllegalArgumentException("해당 다시보기가 없습니다.")
+            );
+            replay.deactive(replayId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

@@ -60,8 +60,8 @@ public class BroadcastRestController {
   //방송 삭제(비활성화)
   @PatchMapping(value = "/broadcasts/deactive/{broadcastId}")
   @ApiOperation(value = "해당 방송 삭제", notes = "해당 방송을 비활성화합니다.")
-  public ResponseEntity<?> deactivateBroadcast(@PathVariable Long broadcastId, @RequestBody BroadcastDeactiveRequestDto requestDto){
-    broadcastService.deactivateBroadcast(broadcastId, requestDto);
+  public ResponseEntity<?> deactivateBroadcast(@PathVariable Long broadcastId){
+    broadcastService.deactivateBroadcast(broadcastId);
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
       put("result", true);
       put("msg", "방송비활성화를 완료했습니다.");

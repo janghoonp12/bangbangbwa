@@ -42,4 +42,9 @@ public class Replay {
 //    this.replayStatus = replayStatus;
 //  }
 
+  public void deactive(Long replayId){
+    this.replayId = replayId;
+    this.replayStatus = 0;
+  }
+
 }

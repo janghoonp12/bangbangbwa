@@ -51,9 +51,9 @@ public class Broadcast extends BroadcastDatetime {
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
   }
-  public void deactive(Long broadcastId, Integer broadcastStatus){
+  public void deactive(Long broadcastId){
     this.broadcastId = broadcastId;
-    this.broadcastStatus = broadcastStatus;
+    this.broadcastStatus = 0;
   }
   //  @PrePersist
 //  public void prePersist(){
