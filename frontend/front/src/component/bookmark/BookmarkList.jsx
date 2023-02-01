@@ -8,10 +8,11 @@ const Wrapper = styled.div`
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
+    flex-wrap: wrap;
 
     & > * {
         :not(:last-child) {
-            margin-bottom: 16px;
+            margin-bottom: 50px;
         }
     }
 `;
