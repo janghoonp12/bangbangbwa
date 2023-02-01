@@ -152,7 +152,7 @@ function NewBroker(props) {
           </div>
           <hr />
           <div>
-            <SAgreePTag>개인정보 수집 동의</SAgreePTag>
+            <SAgreePTag><input type="checkbox" />개인정보 수집 동의</SAgreePTag>
           </div>
           
         </SItemDiv>
