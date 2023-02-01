@@ -9,6 +9,7 @@ const Wrapper = styled.div`
     align-items: flex-start;
     justify-content: center;
     flex-wrap: wrap;
+    width: 80%;
 
     & > * {
         :not(:last-child) {

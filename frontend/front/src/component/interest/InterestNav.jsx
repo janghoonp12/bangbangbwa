@@ -10,7 +10,6 @@ const Navbar = styled.nav`
   margin: auto;
   display: flex;
   border: solid 2px grey;
-  border-radius: 2em;
 `;
 
 const Navdiv = styled.div`
@@ -18,6 +17,9 @@ const Navdiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  :hover {
+    background-color: lightgrey;
+  }
 `;
 
 const activeStyle = {
