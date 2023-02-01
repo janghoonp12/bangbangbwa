@@ -2,22 +2,6 @@ import React from "react";
 import sample from '../../assets/logosample.png';
 import styled from "styled-components";
 
-const SCardDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  height: 400px;
-  margin-right: 50px;
-  margin-bottom: 0px;
-  border: 1px solid grey;
-  border-radius: 8px;
-  cursor: pointer;
-  background: white;
-  :hover {
-    background: lightgrey;
-  }
-  text-align: center;
-`;
 
 const SCardDiv = styled.div`
   display: flex;
@@ -88,18 +72,6 @@ function checkName(name){
   return `${name}을`;
 }
 
-const SCardBodyDiv = styled.div`
-  // width: 100%;
-`;
-
-const SCardTitleP = styled.p`
-  margin-top: 10px;
-  font-size: 30px;
-`;
-
-const SCardContentP = styled.p`
-  font-size: 20px;
-`;
 
 function RecentViewListItem(props) {
   const { post, onClick } = props;
