@@ -50,6 +50,16 @@ const NavRightDiv = styled.div`
   margin-right: 20px;
 `;
 
+const NavNameDiv = styled.div`
+  width: 50px;
+  height: 60px;
+  margin-left: 15px;
+  margin-right: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  color: rgba(214, 174, 242, 1);
+`;
+
 
 const activeStyle = {
   'textDecoration': 'none',
@@ -102,15 +112,15 @@ const Nav = () => {
           <SLogoImg src={logo} alt="#" />
           </NavLink>
         </NavDiv>
-        <div>
-          <h3 style={{lineHeight: '60px', marginLeft: '10px', marginRight: '10px'}}>방방</h3>
-        </div>
+        <NavNameDiv>
+          <p style={{lineHeight: '60px'}}>방방</p>
+        </NavNameDiv>
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/broadcasts">
             방송
           </NavLink>
         </NavDiv>
-        <p style={{lineHeight: '60px'}}>|</p>
+          <p style={{lineHeight: '60px'}}>|</p>
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/items">
             매물
