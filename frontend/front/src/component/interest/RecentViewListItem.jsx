@@ -1,9 +1,13 @@
 import React from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import sample from '../../assets/logosample.png'
+import sample from '../../assets/logosample.png';
+import styled from "styled-components";
 
-// TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
+
+
+
+
 function RecentViewListItem(props) {
     const { post, onClick } = props;
     const deleteRecentView = () => {
