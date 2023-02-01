@@ -10,13 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReplaySaveRequestDto {
     private String replayStorageLocation;
-    private Integer replayStatus;
     private Long broadcastId;
 
     @Builder
-    public ReplaySaveRequestDto(String replayStorageLocation,Integer replayStatus, Long broadcastId){
+    public ReplaySaveRequestDto(String replayStorageLocation, Long broadcastId){
         this.replayStorageLocation = replayStorageLocation;
-        this.replayStatus = replayStatus;
         this.broadcastId = broadcastId;
     }
 
@@ -24,7 +22,7 @@ public class ReplaySaveRequestDto {
     public Replay toEntity(Broadcast broadcast){
         return Replay.builder()
                 .replayStorageLocation(replayStorageLocation)
-                .replayStatus(replayStatus)
+                .replayStatus(1)
                 .broadcast(broadcast)
                 .build();
     }

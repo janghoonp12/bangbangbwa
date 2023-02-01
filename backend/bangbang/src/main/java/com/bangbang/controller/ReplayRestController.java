@@ -2,6 +2,7 @@ package com.bangbang.controller;
 
 import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.replay.Replay;
+import com.bangbang.dto.replay.ReplayDeactiveRequestDto;
 import com.bangbang.dto.replay.ReplayListResponseDto;
 import com.bangbang.dto.replay.ReplayResponseDto;
 import com.bangbang.dto.replay.ReplaySaveRequestDto;
@@ -45,5 +46,17 @@ public class ReplayRestController {
     @GetMapping(value = "/replays/{replayId}")
     public ReplayResponseDto replayDetail(@PathVariable Long replayId){
         return replayService.replayDetail(replayId);
+    }
+
+    //다시보기 삭제(비활성화)
+    @PatchMapping(value = "replays/deactive/{replayId}")
+    @ApiOperation(value = "해당 다시보기 삭제(비활성화)", notes = "해당 다시보기를 비활성화합니다.")
+    public ResponseEntity<?> deactiveReplay(@PathVariable Long replayId){
+        replayService.deactiveReplay(replayId);
+
+        return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+            put("result", true);
+            put("msg", "다시보기 비활성화를 완료했습니다.");
+        }}, HttpStatus.OK);
     }
 }

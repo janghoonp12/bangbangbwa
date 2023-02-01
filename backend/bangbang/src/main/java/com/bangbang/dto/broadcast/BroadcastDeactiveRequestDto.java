@@ -11,8 +11,8 @@ public class BroadcastDeactiveRequestDto {
     private Integer broadcastStatus;
 
     @Builder
-    public BroadcastDeactiveRequestDto(Long broadcastId, Integer broadcastStatus){
+    public BroadcastDeactiveRequestDto(Long broadcastId){
         this.broadcastId = broadcastId;
-        this.broadcastStatus = broadcastStatus;
+        this.broadcastStatus = 0;
     }
 }

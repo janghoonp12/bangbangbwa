@@ -12,15 +12,13 @@ import lombok.NoArgsConstructor;
 public class BroadcastSaveRequestDto {
   private Long broadcastId;
   private String broadcastDescription;
-  private Integer broadcastStatus;
   private String broadcastTitle;
 
 //  private Item item;
   private Long imageId;
   @Builder
-  public BroadcastSaveRequestDto(String broadcastDescription, Integer broadcastStatus, String broadcastTitle, Long imageId){
+  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long imageId){
     this.broadcastDescription = broadcastDescription;
-    this.broadcastStatus = broadcastStatus;
     this.broadcastTitle = broadcastTitle;
     this.imageId = imageId;
   }
@@ -32,7 +30,7 @@ public class BroadcastSaveRequestDto {
     return Broadcast.builder()
         .broadcastId(broadcastId)
         .broadcastDescription(broadcastDescription)
-        .broadcastStatus(broadcastStatus)
+        .broadcastStatus(1)
         .broadcastTitle(broadcastTitle)
 //        .item(item)
         .image(image)
