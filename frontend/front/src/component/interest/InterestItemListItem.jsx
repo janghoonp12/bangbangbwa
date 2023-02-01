@@ -73,13 +73,12 @@ function checkName(name){
 }
 
 
-
-function RecentViewListItem(props) {
+function InterestItemListItem(props) {
   const { post, onClick } = props;
   const deleteRecentView = () => {
     const josa = checkName(post.title)
 
-    if (window.confirm(`최근 본 매물 목록에서 ${josa} 삭제하시겠습니까?`)) {
+    if (window.confirm(`관심 매물 목록에서 ${josa} 삭제하시겠습니까?`)) {
       alert("삭제되었습니다.");
     }
   }
@@ -102,4 +101,4 @@ function RecentViewListItem(props) {
   )
 }
 
-export default RecentViewListItem;
+export default InterestItemListItem;
