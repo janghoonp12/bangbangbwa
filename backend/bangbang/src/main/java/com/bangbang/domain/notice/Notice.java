@@ -1,17 +1,18 @@
 package com.bangbang.domain.notice;
 
+import com.bangbang.domain.NoticeDatetime;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
 @Table(name = "notice")
-@SuperBuilder
 @NoArgsConstructor
-public class Notice {
+public class Notice extends NoticeDatetime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notice_id; //PK
@@ -22,12 +23,20 @@ public class Notice {
     private long user_id; //FK
     @Column(nullable = false, length = 40)
     private String notice_title;
-    @Column(nullable = false)
-    private String notice_regidate;
+    @Column(name="noticeRegidate", insertable = false, updatable = false)
+    private LocalDateTime notice_regidate;
     @Column(nullable = false, length = 20)
     private String notice_type;
     @Column(nullable = false, length = 100)
     private String notice_comment;
     @Column(nullable = false)
     private int notice_status;
+
+    @Builder
+    public Notice(long user_id, String notice_title, String notice_type, String notice_comment) {
+        this.user_id = user_id;
+        this.notice_title = notice_title;
+        this.notice_type = notice_type;
+        this.notice_comment = notice_comment;
+    }
 }

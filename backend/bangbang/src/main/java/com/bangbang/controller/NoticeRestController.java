@@ -22,8 +22,6 @@ public class NoticeRestController {
 
     @Autowired
     private final NoticeService noticeService;
-    @Autowired
-    private NoticeRepository noticeRepository;
 
     @ApiOperation(value="공지사항 등록")
     @PostMapping("/notices/new")
@@ -32,6 +30,7 @@ public class NoticeRestController {
             noticeService.newNotice(notice);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e);
             return exceptionHandling();
         }
     }

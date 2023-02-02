@@ -3,12 +3,14 @@ package com.bangbang.dto.notice;
 import com.bangbang.domain.notice.Notice;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class NoticeResponseDto {
     private long notice_id; //PK
     private long user_id; //FK
     private String notice_title;
-    private String notice_regidate;
+    private LocalDateTime notice_regidate;
     private String notice_type;
     private String notice_comment;
     private int notice_status;  //0 비활성화 1 활성화, db에서 1로 default
