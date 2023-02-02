@@ -71,10 +71,12 @@ function InterestAreaAdd() {
   };
 
   const adding = () => {
-    const josa = checkName(area)
-    alert(`즐겨찾기에 ${josa} 등록되었습니다.`)
-    setArea('')
-    setOnAdd(false)
+    if (area) {
+      const josa = checkName(area)
+      alert(`즐겨찾기에 ${josa} 등록되었습니다.`)
+      setArea('')
+      setOnAdd(false)
+    }
   }
 
   const activeEnter = (e) => {
@@ -87,7 +89,7 @@ function InterestAreaAdd() {
     <SDiv>
       {!onAdd && <SImg src={addimg} alt="#" onClick={onClick} />}
       {onAdd && <SInput type="text" value={area} onChange={onChange} placeholder=" 찾으시는 지역을 입력해주세요." onKeyDown={(e) => activeEnter(e)} />}
-      {onAdd && <SButton onClick={adding}>등록</SButton>}
+      {onAdd && <SButton disabled={(area) ? false : true} onClick={adding}>등록</SButton>}
     </SDiv>
   )
 }
