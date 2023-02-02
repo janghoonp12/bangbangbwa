@@ -4,6 +4,7 @@ import com.bangbang.dto.SignIn;
 import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
+import com.bangbang.dto.sign.SignUp;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
 import com.bangbang.util.EmailHandler;
@@ -28,17 +29,18 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void signUp(User user) throws Exception {
-        if (userRepository.findByUserEmail(user.getUserEmail()).isPresent()) {
+    public void signUp(SignUp SignUpInfo) throws Exception {
+        if (userRepository.findByUserEmail(SignUpInfo.getUserEmail()).isPresent()) {
             throw new BaseException(ErrorMessage.EXIST_ID);
         }
 
-        if (userRepository.findByUserNickname(user.getUserNickname()).isPresent()) {
+        if (userRepository.findByUserNickname(SignUpInfo.getUserPassword()).isPresent()) {
             throw  new BaseException(ErrorMessage.EXIST_EMAIL);
         }
-
-        user.setUser_password(passwordEncoder.encode(user.getUser_password()));
-        user.setUser_status("1");
+        User user = new User();
+        user.setUserEmail(SignUpInfo.getUserEmail());
+        user.setUserNickname(SignUpInfo.getUserNickname());
+        user.setUserPassword(passwordEncoder.encode(SignUpInfo.getUserPassword()));
         user.setUser_role("ROLE_USER");
         userRepository.save(user);
 
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
             throw new BaseException(ErrorMessage.DONT_EXIST_ACCOUNT);
         }
 
-        if (!passwordEncoder.matches(signIn.getPw(), user.getUser_password())) {
+        if (!passwordEncoder.matches(signIn.getPw(), user.getUserPassword())) {
             throw new BaseException(ErrorMessage.NOT_PASSWORD);
         }
 
@@ -107,7 +109,7 @@ public class UserServiceImpl implements UserService {
                     }
                 }
                 String epw = passwordEncoder.encode(temp_pw);
-                signUser.setUser_password(epw);
+                signUser.setUserPassword(epw);
                 userRepository.save(signUser);
 
                 emailHandler.sendMail(signUser.getUserEmail(), "임시 비밀번호입니다.", "임시 비밀번호는 " + temp_pw + " 입니다.", false);
