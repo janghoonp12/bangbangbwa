@@ -12,6 +12,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +40,7 @@ public class JwtTokenProvider {
   private final UserDetailsService userDetailsService;
   private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-  @Value("${jwt.secret}")
+  @Value("A405_SUN_SU_SUNG_BIN_HUN_NEUONGASDSADASDASDA")
   private String secretKey;
 
   @Value("${jwt.token-validity-in-minutes}")
@@ -57,12 +60,16 @@ public class JwtTokenProvider {
     // setsubject 메서드를 통하여 sub속성에 값을 추가하고자 할시에 User의 uid를 사용합니다
     claims.put("roles", roles);//해당 부분은 해당 토큰을 사용하는 사용자의 권한을 확인 할수 있는 role값을 추가한 부분입니다.
     Date now = new Date();
+    System.out.println(roles);
+
+    byte[] keyBytes = Decoders.BASE64URL.decode(secretKey);
+    Key key = Keys.hmacShaKeyFor(keyBytes);
 
     return Jwts.builder()//Jwts.builder를통해서 토큰을 생성합니다.
         .setClaims(claims)
         .setIssuedAt(now)
         .setExpiration(new Date(now.getTime() + expire)) // 토큰 만료일 설정
-        .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화
+        .signWith(key) // 암호화
         .compact();
   }
 

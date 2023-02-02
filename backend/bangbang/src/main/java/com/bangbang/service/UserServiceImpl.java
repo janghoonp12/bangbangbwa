@@ -37,10 +37,12 @@ public class UserServiceImpl implements UserService {
         if (userRepository.findByUserNickname(SignUpInfo.getUserPassword()).isPresent()) {
             throw  new BaseException(ErrorMessage.EXIST_EMAIL);
         }
+
         User user = new User();
         user.setUserEmail(SignUpInfo.getUserEmail());
         user.setUserNickname(SignUpInfo.getUserNickname());
         user.setUserPassword(passwordEncoder.encode(SignUpInfo.getUserPassword()));
+        user.setUser_status("1");
         user.setUser_role("ROLE_USER");
         userRepository.save(user);
 
@@ -48,19 +50,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, Object> login(SignIn signIn) throws Exception {
-        User user = userRepository.findByUserEmail(signIn.getId()).orElseThrow(() -> new BaseException(ErrorMessage.NOT_EXIST_ID));
+        User user = userRepository.findByUserEmail(signIn.getUserEmail()).orElseThrow(() -> new BaseException(ErrorMessage.NOT_EXIST_ID));
+        System.out.println(user);
 
         if (user.getUser_status() == "0") {
             throw new BaseException(ErrorMessage.DONT_EXIST_ACCOUNT);
         }
 
-        if (!passwordEncoder.matches(signIn.getPw(), user.getUserPassword())) {
+        if (!passwordEncoder.matches(signIn.getUserPassword(), user.getUserPassword())) {
             throw new BaseException(ErrorMessage.NOT_PASSWORD);
         }
 
         // 존재할시
         String accessToken = jwtTokenProvider.createToken(user.getUserId(), Collections.singletonList(user.getUser_role()));
         String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), Collections.singletonList(user.getUser_role()));
+        System.out.println(accessToken);
+        System.out.println(refreshToken);
         user.setUser_refresh_token(refreshToken);
         userRepository.save(user);
 
