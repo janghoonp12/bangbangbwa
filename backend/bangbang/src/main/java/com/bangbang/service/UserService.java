@@ -4,11 +4,12 @@ import com.bangbang.dto.SignIn;
 import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.domain.sign.User;
 
+import com.bangbang.dto.sign.SignUp;
 import java.util.Map;
 
 public interface UserService {
 
-    void signUp(User user) throws Exception;
+    void signUp(SignUp SignUpInfo) throws Exception;
 
     Map<String, Object> login(SignIn signInResult) throws Exception;
 

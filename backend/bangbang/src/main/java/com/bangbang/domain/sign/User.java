@@ -18,8 +18,8 @@ public class User {
   @Column(length = 40, nullable = false, name = "user_email")
   private String userEmail;       // 유저 이메일
 
-  @Column(length = 100, nullable = false)
-  private String user_password;               // 유저 비밀번호
+  @Column(length = 100, nullable = false, name = "user_password")
+  private String userPassword;               // 유저 비밀번호
 
   @Column(length = 10, nullable = false, name = "user_nickname")
   private String userNickname;             // 유저 닉네임
@@ -30,7 +30,7 @@ public class User {
   @Column(length = 10, nullable = false)
   private String user_role;             // 유저 등급
 
-  @Column(length = 1, nullable = false)
+  @Column(length = 1, nullable = true)
   private String user_status;             // 유저 상태
 
 }

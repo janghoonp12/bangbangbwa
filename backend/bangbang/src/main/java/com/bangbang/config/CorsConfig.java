@@ -14,11 +14,11 @@ public class CorsConfig {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = new CorsConfiguration();
     config.setAllowCredentials(true);
-    config.addAllowedOrigin("*"); // e.g. http://domain1.com
-    config.addAllowedHeader("*");
+    config.addAllowedOriginPattern("*"); //
+    config.addAllowedOriginPattern("http://i8a405.p.ssafy.io:3000"); //
     config.addAllowedMethod("*");
 
-    source.registerCorsConfiguration("/api/**", config);
+    source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);
   }
 }

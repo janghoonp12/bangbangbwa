@@ -3,12 +3,14 @@ package com.bangbang.controller;
 
 import com.bangbang.dto.SignIn;
 import com.bangbang.dto.sign.FindPassword;
+import com.bangbang.dto.sign.SignUp;
 import com.bangbang.service.UserServiceImpl;
 import com.bangbang.domain.sign.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,11 +37,11 @@ public class UserRestController {
   }
 
   @ApiOperation(value = "회원 등록", notes = "회원을 등록합니다.")
-  @PostMapping("/signup")
-  @RequestBody
-  public ResponseEntity<?> signUp(User user) throws Exception {
+  @PostMapping("/users/new")
+  public ResponseEntity<?> signUp(@RequestBody SignUp SignUpInfo) throws Exception {
+    System.out.println(SignUpInfo);
 
-    userService.signUp(user);
+    userService.signUp(SignUpInfo);
 
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
       put("result", true);
@@ -50,8 +52,7 @@ public class UserRestController {
 
   @ApiOperation(value="로그인", notes = "req_data : [id, pw]")
   @PostMapping("/login")
-  @RequestBody
-  public ResponseEntity<?> login(SignIn user) throws Exception {
+  public ResponseEntity<?> login(@RequestBody SignIn user) throws Exception {
     Map<String, Object> token = userService.login(user);
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
       put("result", true);
@@ -67,8 +68,7 @@ public class UserRestController {
 
   @ApiOperation(value = "Access Token 재발급", notes = "만료된 access token을 재발급받는다.")
   @PostMapping("/refresh")
-  @RequestBody
-  public ResponseEntity<?> refreshToken(Long uid, HttpServletRequest request) throws Exception {
+  public ResponseEntity<?> refreshToken(@RequestBody Long uid, HttpServletRequest request) throws Exception {
     HttpStatus status = HttpStatus.ACCEPTED;
     String token = request.getHeader("refresh-token");
     String result = userService.refreshToken(uid, token);
@@ -87,8 +87,7 @@ public class UserRestController {
 
   @ApiOperation(value = "비밀번호 찾기", notes = "회원의 임시 비밀번호를 메일로 전송합니다.")
   @PostMapping("/users/find/password")
-  @RequestBody
-  public ResponseEntity<?> findPassword(FindPassword findPasswordEmail) throws Exception {
+  public ResponseEntity<?> findPassword(@RequestBody FindPassword findPasswordEmail) throws Exception {
     userService.findPassword(findPasswordEmail);
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
       put("result", true);
