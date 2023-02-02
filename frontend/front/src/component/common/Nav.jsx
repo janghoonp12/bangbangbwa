@@ -112,9 +112,11 @@ const Nav = () => {
 
   const navigate = useNavigate();
   const onClick = () => {
-    alert(`${search} 검색`)
-    setSearch('')
-    navigate('/')
+    if (search) {
+      alert(`${search} 검색`)
+      setSearch('')
+      navigate('/')
+    }
   }
 
 
@@ -150,7 +152,7 @@ const Nav = () => {
       <NavRightDiv>
         <NavSearchBarDiv>
            <SInput type="text" value={search} onChange={onChange} onKeyDown={(e) => activeEnter(e)} placeholder=" 검색어를 입력하세요" />
-           <SButton><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
+           <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
         </NavSearchBarDiv>
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
