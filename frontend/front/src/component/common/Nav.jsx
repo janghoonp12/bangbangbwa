@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import noticelogo from "../../assets/noticelogo.png"
 import alarmlogo from "../../assets/alarmlogo.png"
@@ -103,6 +103,20 @@ const Nav = () => {
   const onChange = (e) => {
           setSearch(e.target.value)
       }
+ 
+  const activeEnter = (e) => {
+    if (e.key === 'Enter') {
+      onClick()
+    }
+  }
+
+  const navigate = useNavigate();
+  const onClick = () => {
+    alert(`${search} 검색`)
+    setSearch('')
+    navigate('/')
+  }
+
 
   return (
     <Navbar>
@@ -135,8 +149,8 @@ const Nav = () => {
       </NavLeftDiv>
       <NavRightDiv>
         <NavSearchBarDiv>
-           <SInput type="text" value={search} onChange={onChange} placeholder=" 검색어를 입력하세요" />
-           <SButton><SImg src={searchbutton} alt="#" /></SButton>
+           <SInput type="text" value={search} onChange={onChange} onKeyDown={(e) => activeEnter(e)} placeholder=" 검색어를 입력하세요" />
+           <SButton><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
         </NavSearchBarDiv>
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
