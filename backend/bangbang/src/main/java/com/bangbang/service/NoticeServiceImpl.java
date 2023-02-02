@@ -4,6 +4,7 @@ import com.bangbang.domain.notice.Notice;
 import com.bangbang.domain.notice.NoticeRepository;
 import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class NoticeServiceImpl implements NoticeService{
 
     @Autowired
