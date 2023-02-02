@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png";
 import QuitModal from "../common/ui/QuitModal";
+import nicknamelogo from "../../assets/nicknamelogo.png";
+import passwordlogo from "../../assets/pwlogo.png";
+import updatelogo from "../../assets/updatelogo.png";
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,6 +23,7 @@ const Container = styled.div`
 const SProfileDiv = styled.div`
   width: 100%;
   max-width: 30%;
+  height: 700px;
   border: 1px solid grey;
   border-radius: 8px;
 `;
@@ -40,10 +44,6 @@ const SImg1 = styled.img`
   width: 80%;
   margin-top: 2rem;
   margin-bottom: 1rem;
-`;
-
-const SImg2 = styled.img`
-  width: 100%;
 `;
 
 const SNameP = styled.p`
@@ -78,9 +78,29 @@ const SFlexDiv = styled.div`
   
 `;
 
-const SInfoDiv = styled.div`
-  width: 100%;
-  max-width: 20%;
+const SGridDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 7fr 1fr;
+  align-items: center;
+`;
+
+const SLogoDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const SLogoImg = styled.img`
+  width: 20px;
+  height: 20px;
+`;
+
+const SInfoP = styled.p`
+  margin-bottom: 0px;
+`;
+
+const SQuitDiv = styled.div`
+  margin-top: 3rem;
+  float: right;
 `;
 
 function MyProfile(props) {
@@ -90,11 +110,12 @@ function MyProfile(props) {
   return (
     <Wrapper>
       <Container>
-        <SProfileDiv>   
+        <SProfileDiv>
           <SImg1 alt="이미지" src={logosample} />
           <SNameP>UserName</SNameP>
           <SEmailP>abcde@gmail.com</SEmailP>
           <SNowMenuP
+            style={{ marginTop: "10rem" }}
             onClick={() => {
               navigate("/mypage")
             }}
@@ -121,9 +142,6 @@ function MyProfile(props) {
             <p>기본정보</p>
           </div>
           <SFlexDiv>
-            <SInfoDiv>
-              <SImg2 alt="이미지" src={logosample} />
-            </SInfoDiv>
             <div>
               <p>정진수</p>
               <p>abcde@gmail.com</p>
@@ -131,17 +149,29 @@ function MyProfile(props) {
 
           </SFlexDiv>
           <hr />
-          <SFlexDiv>
-            <p>닉네임: </p>
-            <p>정진츄</p>
-          </SFlexDiv>
-          <SFlexDiv>
-            <p>비밀번호: </p>
-            <p>zx************</p>
-          </SFlexDiv>
-          <SFlexDiv>
+          <SGridDiv>
+            <SLogoDiv>
+            < SLogoImg src={nicknamelogo} alt="닉네임로고" />
+            </SLogoDiv>
+            <SInfoP>닉 네 임 : </SInfoP>
+            <SInfoP>정진츄</SInfoP>
+            <SLogoDiv>
+            < SLogoImg src={updatelogo} alt="수정로고" />
+            </SLogoDiv>
+          </SGridDiv>
+          <SGridDiv style={{ marginTop: "5px" }}>
+          <SLogoDiv>
+            < SLogoImg src={passwordlogo} alt="비밀번호로고" />
+            </SLogoDiv>
+            <SInfoP>비밀번호: </SInfoP>
+            <SInfoP>zx************</SInfoP>
+            <SLogoDiv>
+            < SLogoImg src={updatelogo} alt="수정로고" />
+            </SLogoDiv>
+          </SGridDiv>
+          <SQuitDiv>
             <QuitModal />
-          </SFlexDiv>
+          </SQuitDiv>
         </SItemDiv>
       </Container>
     </Wrapper>
