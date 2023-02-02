@@ -7,6 +7,7 @@ import throttle from "../../utils/Throttle"
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
+    margin-top: 30px;
     align-items: flex-start;
     overflow-x: auto;
     white-space: nowrap;
