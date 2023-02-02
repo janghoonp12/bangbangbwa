@@ -8,6 +8,10 @@ const StyledButton = styled.button`
     border-width: 1px;
     border-radius: 8px;
     cursor: pointer;
+
+    :hover {
+        background-color: lightgrey;
+    }
 `;
 
 // Button컴포넌트에서 props로 받은 title이 버튼 목록에 표시되도록 함

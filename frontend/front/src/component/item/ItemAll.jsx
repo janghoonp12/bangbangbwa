@@ -12,7 +12,7 @@ function Items() {
   }
   return (
     <div>
-      <Button variant="info" onClick={writeItem}>매물 등록</Button>
+      <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button>
       <Filter />
       <ItemList
           posts={data}

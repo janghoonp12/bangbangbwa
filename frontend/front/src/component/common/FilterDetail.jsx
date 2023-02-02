@@ -132,12 +132,14 @@ function FilterDetail() {
           </SGridListDiv>
         </SGridDiv>
         <hr />
-        <Button
-          title="검색"
-          onClick={() => {
-            navigate("/items");
-          }}
-        />
+        <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Button
+            title="적용하기"
+            onClick={() => {
+              navigate("/items");
+            }}
+          />
+        </div>
       </Container>
     </Wrapper>
   )
