@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png"
 import { useNavigate } from "react-router-dom";
+import useInput from '../../hooks/useInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useCallback, useEffect } from "react";
+import { SIGN_UP_REQUEST } from "../../reducers/user";
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,8 +72,52 @@ const SGoLoginP = styled.p`
 `;
 
 function SignUp() {
+  const [userEmail, onChangeEmail] = useInput('');
+  const [userNickname, onChangeNickname] = useInput('');
+  const [userPassword, onChangePassword] = useInput('');
 
+  const [passwordCheck, setPasswordCheck] = useState('')
+  const [passwordError, setPasswordError] = useState(false);
+
+  const { signUpDone } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+
+  useEffect(() => {
+    if (signUpDone) {
+      navigate('/signin');
+    }
+  })
+
+  const signUpButtonClick = useCallback(() => {
+    if (!regex.test(userEmail)) {
+      alert('이메일 형식으로 입력해주세요!')
+      return
+    }
+    if (userPassword.length < 8 && userPassword.length > 30) {
+      alert('패스워드는 8자 이상 30자 이하로 입력해주세요!')
+      return
+    }
+    if (userPassword !== passwordCheck) {
+      alert('비밀번호가 일치하지 않습니다.')
+      return setPasswordError(true);
+    }
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: {
+        userEmail: userEmail,
+        userPassword: userPassword,
+        userNickname: userNickname
+      },
+    });
+  })
+
+  const onChangePasswordCheck = useCallback((e) => {
+    setPasswordError(e.target.value !== userPassword);
+    setPasswordCheck(e.target.value);
+  }, [userPassword]);
 
   return (
     <Wrapper>
@@ -79,13 +127,13 @@ function SignUp() {
           <div style={{fontSize: "2rem"}}>계정 만들기</div>
           {/* <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div> */}
           <STextDiv style={{ marginTop: "10%"}}>이메일</STextDiv>
-          <SCustomInput/>
+          <SCustomInput  placeholder="이메일를 입력해주세요!" value={userEmail} required onChange={onChangeEmail}/>
           <STextDiv>닉네임</STextDiv>
-          <SCustomInput />
+          <SCustomInput placeholder="닉네입을 입력해주세요!" value={userNickname} required onChange={onChangeNickname}/>
           <STextDiv>비밀번호</STextDiv>
-          <SCustomInput />
+          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword}/>
           <STextDiv>비밀번호 확인</STextDiv>
-          <SCustomInput />
+          <SCustomInput placeholder="비밀번호 확인을 입력해주세요!" value={passwordCheck} required onChange={onChangePasswordCheck}/>
           <STextDiv style={{ marginTop: "10%"}}>
             <SGoLoginP
               onClick={() => {
@@ -93,8 +141,7 @@ function SignUp() {
               }}
             >이미 계정이 있으신가요?</SGoLoginP>
           </STextDiv>
-          <SNormalButton>로그인</SNormalButton>
-          
+          <SNormalButton type="button" onClick={() => {signUpButtonClick()}}>회원가입</SNormalButton>
         </SRightDiv>
       </Container>
     </Wrapper>
