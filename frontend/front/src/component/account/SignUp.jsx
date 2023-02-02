@@ -137,7 +137,7 @@ function SignUp() {
           <STextDiv style={{ marginTop: "10%"}}>
             <SGoLoginP
               onClick={() => {
-                navigate("/login")
+                navigate("/signin")
               }}
             >이미 계정이 있으신가요?</SGoLoginP>
           </STextDiv>

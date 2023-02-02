@@ -15,7 +15,7 @@ import Interests from "./pages/Interests";
 import NotFound from "./pages/NotFound";
 import WriteItem from "./component/common/WriteItem";
 import Notice from "./pages/Notice";
-import Login from "./component/account/Login";
+import SignIn from "./component/account/SignIn";
 import Alarm from "./pages/Alarm";
 import Admin from "./pages/Admin";
 import SignUp from "./component/account/SignUp";
@@ -29,7 +29,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />}/>
+        <Route path="/signin" element={<SignIn/>}/>
         <Route path="/signup" element={<SignUp/>}/>
         <Route path="/filterdetail" element={<FilterDetail />}/>
         <Route path="/items/*" element={<Items />} />
