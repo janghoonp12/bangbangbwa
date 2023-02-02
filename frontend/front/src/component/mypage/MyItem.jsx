@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "./PostList";
-import Button from "../common/ui/Button";
 import data from "../../data.json";
 import logosample from "../../assets/logosample.png"
 import Pagination from "../common/ui/Pagination";
@@ -109,7 +108,7 @@ function MyItem(props) {
               navigate("/mypage/mybroadcast")
             }}
           >나의 방송정보</MenuPTag>
-          <SSearchInput />
+          <SSearchInput  placeholder="제목을 검색하세요."/>
         </ProfileDiv>
         <ItemDiv>
           <PostList

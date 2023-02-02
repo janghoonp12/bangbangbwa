@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MyBroadcastList from "./MyBroadcastList";
-import Button from "../common/ui/Button";
 import data from "../../broadcastdata.json";
 import logosample from "../../assets/logosample.png"
 import Pagination from "../common/ui/Pagination";
 
 const Wrapper = styled.div`
   display: flex;
-  min-width: 500px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -110,7 +108,7 @@ function MyBroadcast(props) {
               navigate("/mypage/mybroadcast")
             }}
           >나의 방송정보</SNowMenuP>
-          <SSearchInput />
+          <SSearchInput placeholder="제목을 검색하세요."/>
         </SProfileDiv>
         <SItemDiv>
           <MyBroadcastList
