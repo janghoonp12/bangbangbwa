@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "./PostList";
 import Button from "../common/ui/Button";
 import data from "../../data.json";
 import logosample from "../../assets/logosample.png"
+import Pagination from "../common/ui/Pagination";
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,7 +31,8 @@ const ProfileDiv = styled.div`
 const ItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
-  border: 1px solid grey;
+  height: 700px;
+  // border: 1px solid grey;
   border-radius: 8px;
   margin-left: 10px;
   // overflow: auto;
@@ -62,9 +64,22 @@ const NowMenuPTag = styled.p`
   cursor: pointer;
 `;
 
+const SSearchInput = styled.input`
+  width: 90%;
+  margin-top: 30px;
+`;
+
 function MyItem(props) {
 
   const navigate = useNavigate();
+
+  // Pagination을 위한 작업
+  // const [data, setData] = useState([]); // 총 매물 수
+  const limit = 5 // 한 페이지에 나올 매물 수
+  const [page, setPage] = useState(1); // 페이지
+  const offset = (page - 1) * limit; // 페이지별 매물들을 받아오기 위한 index offset
+
+  // useEffect로 BE에 data를 요청해야 하는 것 같음. 일단은 더미데이터로
 
   return (
     <Wrapper>
@@ -94,20 +109,20 @@ function MyItem(props) {
               navigate("/mypage/mybroadcast")
             }}
           >나의 방송정보</MenuPTag>
+          <SSearchInput />
         </ProfileDiv>
         <ItemDiv>
-          <Button
-            style={{position: 'absolute', right: 0, marginRight: "30px"}}
-            title="필터"
-            onClick={() => {
-            navigate("/");
-            }}
-          />
           <PostList
-            posts={data}
+            posts={data.slice(offset, offset+limit)}
             onClickItem={(item) => {
               navigate(`/mypage/myitem/${item.id}`);
             }}
+          />
+          <Pagination
+            total={data.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
           />
         </ItemDiv>
       </Container>

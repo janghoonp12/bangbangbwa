@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import itemImage from "../../assets/logo.png"
 
 const Wrapper = styled.div`
   width: calc(100% - 32px);
   padding: 16px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
-  justify-content: center;
+  // justify-content: center;
   border: 1px solid grey;
   border-radius: 8px;
   cursor: pointer;
@@ -38,18 +39,35 @@ const SContentTextP = styled.p`
   text-align: center;
 `;
 
+const SItemImg = styled.img`
+  height: 100px;
+  width: 100px;
+`;
+
+const STextDiv = styled.div`
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 20px;
+`;
+
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function PostListItem(props) {
   const { post, onClick } = props;
 
   return (
     <Wrapper onClick={onClick}>
-      <STitleTextP>{post.title}</STitleTextP>
-      <SContentDiv>
-        <SContentTextP>{post.type}</SContentTextP>
-        <SContentTextP>{post.building_type}</SContentTextP>
-        <SContentTextP>{post.manage_fee}</SContentTextP>
-      </SContentDiv>
+      <div>
+        <SItemImg src={itemImage} alt="이미지샘플"/>
+      </div>
+      <STextDiv>
+        <STitleTextP>{post.title}</STitleTextP>
+        <SContentDiv>
+          <SContentTextP>{post.type}</SContentTextP>
+          <SContentTextP>{post.building_type}</SContentTextP>
+          <SContentTextP>{post.manage_fee}</SContentTextP>
+        </SContentDiv>
+      </STextDiv>
+      
     </Wrapper>
   );
 }

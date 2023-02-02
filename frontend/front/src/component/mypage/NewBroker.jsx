@@ -99,6 +99,10 @@ function NewBroker(props) {
 
   const navigate = useNavigate();
 
+  const onClickSubmit = () => {
+    alert('제출이 완료되었습니다.')
+  }
+
   return (
     <Wrapper>
       <Container>
@@ -166,7 +170,7 @@ function NewBroker(props) {
             <SAgreePTag><input type="checkbox" />개인정보 수집 동의</SAgreePTag>
             <SSubmitDiv>
               {/* <input type="button" value="신청하기"/> */}
-              <SButton>신청하기</SButton>
+              <SButton onClick={onClickSubmit}>신청하기</SButton>
             </SSubmitDiv>
           </div>
           
