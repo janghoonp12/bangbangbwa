@@ -10,7 +10,8 @@ const SCardDiv = styled.div`
   flex-direction: column;
   width: 250px;
   height: 400px;
-  margin-right: 50px;
+  margin-right: 25px;
+  margin-left: 25px;
   margin-bottom: 0px;
   border: 1px solid grey;
   border-radius: 8px;
@@ -23,7 +24,7 @@ const SCardDiv = styled.div`
 `;
 
 const SCardImg = styled.img`
-  width: 250px;
+  width: 248px;
   height: 250px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -45,11 +46,7 @@ const SCardContentP = styled.p`
 
 function RecentViewListItem(props) {
     const data = props.data;
-    const navigate = useNavigate();
-
-    // const deleteRecentView = () => {
-      
-    // }
+    const navigate = useNavigate(); 
 
     const onClick = () => {
       navigate(`/items/${data.id}`)

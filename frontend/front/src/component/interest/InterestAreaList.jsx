@@ -24,15 +24,39 @@ const Wrapper = styled.div`
 
 const H3 = styled.h3`
  text-align: center;
- margin-top: 20px;
+ padding-top: 20px;
+ padding-bottom: 20px;
+ padding-left: 20px;
 `
 
 
 const AreaDiv = styled.div`
- background-color: #DFD3C3;
+ background-color: rgba(223, 211, 195, 0.5);
  border-radius: 2em;
  margin-bottom: 100px;
 `;
+
+const SButton = styled.button`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  width: 100px;
+  height: 40px;
+  border-radius: 8px;
+  border: 0.5px solid lightgrey;
+  background-color: rgba(255, 0, 0, 0.2);
+  
+  :hover {
+    border: 1px solid black;
+    background-color: rgba(255, 0, 0, 0.5);
+  }
+`;
+
+const SHeadDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 
 
 function InterestAreaList(props) {
@@ -73,10 +97,18 @@ function InterestAreaList(props) {
     const delay = 10;
     const onThrottleDragMove = throttle(onDragMove, delay);
 
+  
+  const onClick = () => {
+    alert('삭제되었습니다.')
+  }
+
+
   return (
     <AreaDiv>
-      <H3>{area.si_name} {area.gugun_name} {area.dong_name}</H3>
-      <hr />
+      <SHeadDiv>
+        <H3>{area.si_name} {area.gugun_name} {area.dong_name}</H3>
+        <SButton onClick={onClick}>삭제</SButton>
+      </SHeadDiv>
       <Wrapper
         onMouseDown={onDragStart}
         onMouseMove={isDrag ? onThrottleDragMove : null}
