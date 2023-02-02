@@ -22,6 +22,7 @@ const Container = styled.div`
 const ProfileDiv = styled.div`
   width: 100%;
   max-width: 30%;
+  height: 700px;
   border: 1px solid grey;
   border-radius: 8px;
 `;
@@ -31,6 +32,7 @@ const ItemDiv = styled.div`
   max-width: 70%;
   border: 1px solid grey;
   border-radius: 8px;
+  margin-left: 10px;
   // overflow: auto;
 `;
 
@@ -72,6 +74,7 @@ function MyItem(props) {
           <NamePTag>UserName</NamePTag>
           <EmailPTag>abcde@gmail.com</EmailPTag>
           <MenuPTag
+            style={{ marginTop: "10rem" }}
             onClick={() => {
               navigate("/mypage")
             }}

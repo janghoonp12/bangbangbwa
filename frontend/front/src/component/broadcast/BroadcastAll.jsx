@@ -14,9 +14,11 @@ const SButton = styled.button`
   float: left;
   margin: 5px;
   border-radius: 5px;
-  background-color: transparent;
+  border: 0.5px solid lightgrey;
+  background-color: rgba(251, 255, 0, 0.2);
   :hover {
-    background-color: lightgrey;
+    background-color: rgba(251, 255, 0, 0.4);
+    border: 1px solid black;
   }
 `;
 
