@@ -1,39 +1,34 @@
 import React from "react";
-import styled from "styled-components";
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
 import broadcastdata from "../../broadcastdata.json";
 
-const SH3 = styled.h3`
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;
 
 
-function AdminLive(props) {
-  const text = props.text
-  let filteredLive = broadcastdata.filter((broadcast) => {
-    const arr = [broadcast.title, broadcast.description, broadcast.reservation_time]
-    let have = false
-    arr.forEach((i) => {
-      if (i.toLocaleLowerCase().includes(text.toLocaleLowerCase())) {
-        have = true
-      }
-    })
-    return have ? broadcast : null;
-  })
+function AdminLive() {
+  const columns = [
+    {field: 'id', headerName: 'ID', width: '100'},
+    {field: 'title', headerName: '방송 제목', width: '300'},
+    {field: 'description', headerName: '방송 설명', width: '650'},
+    {field: 'reservation_time', headerName: '예약 시간', width: '200'}
+  ]
 
   return (
-    <div>
-      <SH3>라이브 방송 관리</SH3>
-      {filteredLive.map((data, index) => {
-              return (
-                <p key={data.id} style={{textAlign: 'center'}}>
-                  방송 제목 : {data.title} | 방송 내용 : {data.description} | 방송 시간 : {data.reservation_time}
-                </p>
-              );
-          })}
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <Box sx={{ height: 400, width: '70%'}}>
+        <DataGrid
+          style={{fontSize: '18px'}}
+          rows={broadcastdata}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          disableSelectionOnClick
+          experimentalFeatures={{ newEditingApi: true }}
+        />
+      </Box>
     </div>
-  )
+  );
 }
 
 export default AdminLive;
