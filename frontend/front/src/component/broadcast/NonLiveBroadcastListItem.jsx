@@ -22,7 +22,7 @@ const SCardDiv = styled.div`
 `;
 
 const SCardImg = styled.img`
-  width: 250px;
+  width: 248px;
   height: 250px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
