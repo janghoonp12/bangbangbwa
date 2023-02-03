@@ -1,39 +1,35 @@
 import React from "react";
-import styled from "styled-components";
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
 import itemData from "../../data.json";
 
-const SH3 = styled.h3`
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;
 
 
-function AdminItem(props) {
-  const text = props.text
-  let filteredItem = itemData.filter((item) => {
-    const arr = [item.title, item.type, item.building_type, item.manage_fee]
-    let have = false
-    arr.forEach((i) => {
-      if (i.toLocaleLowerCase().includes(text.toLocaleLowerCase())) {
-        have = true
-      }
-    })
-    return have ? item : null;
-  })
+function AdminItem() {
+  const columns = [
+    {field: 'id', headerName: 'ID', width: '100'},
+    {field: 'title', headerName: '제목', width: '600'},
+    {field: 'type', headerName: '거래 유형', width: '200'},
+    {field: 'building_type', headerName: '종류', width: '200'},
+    {field: 'manage_fee', headerName: '가격', width: '150'}
+  ]
 
   return (
-    <div>
-      <SH3>매물 관리</SH3>
-      {filteredItem.map((data, index) => {
-              return (
-                <p key={data.id} style={{textAlign: 'center'}}>
-                  제목 : {data.title} | 종류 : {data.type} | 건물 유형 : {data.building_type} | 금액 : {data.manage_fee}
-                </p>
-              );
-          })}
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <Box sx={{ height: 400, width: '70%'}}>
+        <DataGrid
+          style={{fontSize: '18px'}}
+          rows={itemData}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          disableSelectionOnClick
+          experimentalFeatures={{ newEditingApi: true }}
+        />
+      </Box>
     </div>
-  )
+  );
 }
 
 export default AdminItem;

@@ -1,39 +1,40 @@
 import React from "react";
-import styled from "styled-components";
 import users from "../../userData.json";
-
-const SH3 = styled.h3`
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
 
 
-function AdminBroker(props) {
-    const text = props.text
-    let filterdUser = users.filter((user) => {
-      const arr = [user.email, user.nickname]
-      let have = false
-      arr.forEach((i) => {
-        if (user.level === "1" && i.toLocaleLowerCase().includes(text.toLocaleLowerCase())) {
-          have = true
-        }
-      })
-      return have ? user : null;
-    })
+
+
+function AdminBroker() {
+  const columns = [
+    {field: 'id', headerName: 'ID', width: '100'},
+    {field: 'email', headerName: 'E-mail', width: '300'},
+    {field: 'nickname', headerName: '닉네임', width: '300'},
+    {field: 'level', headerName: '유저 등급', width: '150'},
+    {field: 'status', headerName: '활성화 여부', width: '150'}
+  ]
+
+  let filterdUser = users.filter((user) => {
+    return (user.level === "1") ? user : null;
+  })
   
-    return (
-      <div>
-        <SH3>중개사 관리</SH3>
-        {filterdUser.map((data, index) => {
-                return (
-                  <p key={data.id} style={{textAlign: 'center'}}>
-                    Email : {data.email} | Nickname : {data.nickname}
-                  </p>
-                );
-            })}
-      </div>
-    )
-  }
+  return (
+    <div style={{display: 'flex', justifyContent: 'center'}}>
+      <Box sx={{ height: 400, width: '70%'}}>
+        <DataGrid
+          style={{fontSize: '18px'}}
+          rows={filterdUser}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+          disableSelectionOnClick
+          experimentalFeatures={{ newEditingApi: true }}
+        />
+      </Box>
+    </div>
+  );
+}
 
 export default AdminBroker;

@@ -21,7 +21,7 @@ function NoticeItem(props) {
     return (
     <tr style={{fontSize: '20px'}}>
       <td style={{width: '10%'}}><center>{data.id}</center></td>
-      <Std onClick={onClick} style={{width: '70%', fontWeight: '600', color: 'blue'}}>{data.type} {data.title}</Std>
+      <Std onClick={onClick} style={{width: '70%', fontWeight: '600', color: 'blue'}}>[{data.type}] {data.title}</Std>
       <td style={{width: '20%'}}><center>{data.regidate}</center></td>
     </tr>
     )

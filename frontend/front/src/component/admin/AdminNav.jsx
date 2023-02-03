@@ -11,6 +11,7 @@ const Navbar = styled.nav`
   display: flex;
   border: solid 2px grey;
   border-radius: 2em;
+  margin-bottom: 30px;
 `;
 
 const Navdiv = styled.div`
