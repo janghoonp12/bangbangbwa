@@ -1,26 +1,22 @@
 import React from "react";
-import noticeData from "../../noticeData.json";
-import NoticeItem from "./NoticeItem";
+import NoticeList from "./NoticeList";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const STh = styled.td`
-  text-align: center;
-`
-const STable = styled.table`
-  border: 1px solid black;
-  width: 50%;
-  margin: auto;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-`
 
 const SButton = styled.button`
   float: right;
-  width: 100px;
-  height: 40px;
+  width: 120px;
+  height: 50px;
   border-radius: 5px;
   background-color: rgba(180, 191, 240, 0.3);
+  font-size: 20px;
+  border: 0.5px solid lightgrey;
+
+  :hover {
+    border: 1px solid black;
+  }
+  
 `;
 
 const SH1 = styled.h1`
@@ -30,10 +26,20 @@ const SH1 = styled.h1`
 
 const SDiv = styled.div`
   padding: 20px;
-  margin-right: 365px;
-  margin-bottom: 20px;
+  margin-right: 50px;
+  margin-bottom: 30px;
   text-align: center;
 `
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const SSDiv = styled.div`
+  width: 70%;
+`;
+
 
 
 function Notice() {
@@ -43,37 +49,16 @@ function Notice() {
   }
 
   return (
-    <div>
-      <SH1 align="center">공지사항</SH1>
-      <SDiv>
-        <SButton
-          onClick={onClick}
-        >공지 작성</SButton>
-      </SDiv>
-      <br />
-      <STable>
-        <thead>
-          <tr>
-            <STh>번호</STh>
-            <STh>제목</STh>
-            <STh>등록일</STh>
-          </tr>
-        </thead>
-        <tbody>
-          {noticeData.map((post, index) => {
-            return (
-              <NoticeItem
-              key={post.id}
-              post={post}
-              onClick={() => {
-                navigate(`/notices/${post.id}`);
-              }}
-              />
-            );
-          })} 
-        </tbody>
-      </STable>
-    </div>
+    <Wrapper>
+      <SSDiv>
+        <SH1 align="center">공지사항</SH1>
+        <SDiv>
+          <SButton onClick={onClick}>공지 작성</SButton>
+        </SDiv>
+        <NoticeList />
+        <br />
+      </SSDiv>
+    </Wrapper>
   )
 }
 
