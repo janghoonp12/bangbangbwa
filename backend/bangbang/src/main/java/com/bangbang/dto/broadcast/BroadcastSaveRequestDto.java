@@ -14,12 +14,13 @@ public class BroadcastSaveRequestDto {
   private String broadcastDescription;
   private String broadcastTitle;
 
-//  private Item item;
+  private Long itemId;
   private Long imageId;
   @Builder
-  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long imageId){
+  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long itemId, Long imageId){
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
+    this.itemId = itemId;
     this.imageId = imageId;
   }
 
@@ -32,9 +33,8 @@ public class BroadcastSaveRequestDto {
         .broadcastDescription(broadcastDescription)
         .broadcastStatus(1)
         .broadcastTitle(broadcastTitle)
-//        .item(item)
+        .itemId(itemId)
         .image(image)
         .build();
   }
-
 }
