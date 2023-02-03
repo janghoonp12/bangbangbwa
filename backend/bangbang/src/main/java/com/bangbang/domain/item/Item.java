@@ -3,7 +3,9 @@ package com.bangbang.domain.item;
 import javax.persistence.*;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -120,6 +122,12 @@ public class Item {
     @Column(nullable = true)
     private Integer item_status;
 
+    @Column(nullable = true)
+    private Integer item_room;
+
+    @Column(nullable = true)
+    private Integer item_toilet;
+
     @OneToOne
     @JoinTable(name="item_price",
             joinColumns = @JoinColumn(name="item_id"),
@@ -137,4 +145,6 @@ public class Item {
             joinColumns = @JoinColumn(name="item_id"),
             inverseJoinColumns =  @JoinColumn(name="item_id"))
     private Option option;
+
+
 }

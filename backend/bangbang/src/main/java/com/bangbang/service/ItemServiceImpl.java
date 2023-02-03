@@ -59,8 +59,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> searchItemAll() {
-        return itemRepository.findTop100By();
+    public List<ItemDto> searchItemAll() {
+        return itemRepository.findAllItem100();
+    }
+
+    @Override
+    public List<ItemDto> searchSiGuDongAll(String dongCode) {
+        return itemRepository.findByDongCode(dongCode);
     }
 
     @Override
@@ -84,8 +89,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item itemDetail(long itemId) {
-        return itemRepository.findById(itemId);
+    public ItemResponseDto itemDetail(long itemId) {
+        Item item = itemRepository.findById(itemId);
+        item.setManageOption(manageOptionRepository.findByItemId(itemId));
+        item.setItemPrice(itemPriceRepository.findByItemId(itemId));
+        item.setOption(optionRepository.findByItemId(itemId));
+        return new ItemResponseDto(item);
     }
 
     @Transactional
