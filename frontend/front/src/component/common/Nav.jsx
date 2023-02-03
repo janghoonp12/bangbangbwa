@@ -6,6 +6,7 @@ import alarmlogo from "../../assets/alarmlogo.png"
 import mypagelogo from "../../assets/mypagelogo.png"
 import logo from "../../assets/logo.png"
 import searchbutton from "../../assets/searchbutton.png"
+import AlarmList from "../alarm/AlarmList";
 
 const Navbar = styled.nav`
   position: flex;
@@ -97,8 +98,18 @@ const SInput = styled.input`
   border: 0 solid black;
 `;
 
+const TestDiv = styled.div`
+  position: absolute;
+  top: 65px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+`;
+
 
 const Nav = () => {
+  const [alarmBar, setAlarmBar] = useState(false);
   const [search, setSearch] = useState("");
   const onChange = (e) => {
           setSearch(e.target.value)
@@ -159,10 +170,21 @@ const Nav = () => {
             <SImg src={noticelogo} alt="#" />
           </NavLink>
         </NavDiv>
-        <NavDiv>
+        <NavDiv
+          onMouseEnter={() => setAlarmBar(true)}
+          onMouseLeave={() => setAlarmBar(false)}
+        >
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
           <SImg src={alarmlogo} alt="#" />
           </NavLink>
+          {alarmBar && (
+            <TestDiv
+              onMouseEnter={() => setAlarmBar(true)}
+              onMouseLeave={() => setAlarmBar(false)}
+            >
+              <AlarmList />
+            </TestDiv>
+          )}
         </NavDiv>
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">

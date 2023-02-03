@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+
 const Std = styled.td`
   cursor: pointer;
   :hover {
@@ -9,19 +10,20 @@ const Std = styled.td`
  }
 `
 
+
 function NoticeItem(props) {
-    const data = props.post
+    const data = props.notice
     const navigate = useNavigate();
     const onClick = () => {
         navigate(`/notices/${data.id}`)
     }
 
     return (
-      <tr>
-        <td><center>{data.id}</center></td>
-        <Std onClick={onClick}>[{data.type}] {data.title}</Std>
-        <td><center>{data.regidate}</center></td>
-      </tr>
+    <tr style={{fontSize: '20px'}}>
+      <td style={{width: '10%'}}><center>{data.id}</center></td>
+      <Std onClick={onClick} style={{width: '70%', fontWeight: '600', color: 'blue'}}>{data.type} {data.title}</Std>
+      <td style={{width: '20%'}}><center>{data.regidate}</center></td>
+    </tr>
     )
   }
   
