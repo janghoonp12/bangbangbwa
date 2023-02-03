@@ -120,7 +120,7 @@ function WriteItem() {
         <SGridDiv>
           <STitleP>매매가</STitleP>
           <div>
-            <input type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3  ') ? false : true} />&nbsp;만원
+            <input type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
