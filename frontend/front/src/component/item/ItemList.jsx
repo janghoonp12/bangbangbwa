@@ -6,10 +6,11 @@ import throttle from "../../utils/Throttle"
 
 const Wrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     margin-top: 30px;
     align-items: flex-start;
-    overflow-x: auto;
+    justify-content: center;
     white-space: nowrap;
     // border: 1px solid grey;
     & > * {

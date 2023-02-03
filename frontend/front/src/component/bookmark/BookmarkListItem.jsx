@@ -6,7 +6,8 @@ const SDiv = styled.div`
   border: 1px solid gold;
   width: 350x;
   height: 350px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
   border-radius: 5px;
 `;
 
