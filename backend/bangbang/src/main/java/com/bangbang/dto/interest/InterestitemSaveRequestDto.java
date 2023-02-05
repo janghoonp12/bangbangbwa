@@ -2,7 +2,11 @@ package com.bangbang.dto.interest;
 
 import com.bangbang.domain.interest.Interestitem;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
 public class InterestitemSaveRequestDto {
     private Long userId;
     private Long itemId;
