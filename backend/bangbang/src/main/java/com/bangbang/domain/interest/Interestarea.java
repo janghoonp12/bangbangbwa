@@ -27,5 +27,5 @@ public class Interestarea {
             joinColumns = @JoinColumn(name="dongCode"),
             inverseJoinColumns = @JoinColumn(name="dongCode"))
     @Column(name="dongCode", length = 10, nullable = false)
-    private Long dongCode;
+    private String dongCode;
 }

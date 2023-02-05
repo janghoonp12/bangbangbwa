@@ -1,13 +1,11 @@
 package com.bangbang.service;
 
+import com.bangbang.domain.interest.Interestarea;
 import com.bangbang.domain.interest.InterestareaRepository;
+import com.bangbang.domain.interest.Interestitem;
 import com.bangbang.domain.interest.InterestitemRepository;
-import com.bangbang.dto.interest.InterestareaResponseDto;
 import com.bangbang.dto.interest.InterestareaSaveRequestDto;
-import com.bangbang.dto.interest.InterestitemResponseDto;
 import com.bangbang.dto.interest.InterestitemSaveRequestDto;
-import io.swagger.annotations.Api;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +29,12 @@ public class InterestServiceImpl implements InterestService{
     }
 
     @Override
-    public List<InterestareaResponseDto> searchInterestArea(Long userId) {
+    public List<Interestarea> searchInterestArea(Long userId) {
         return interestareaRepository.findByUserId(userId);
     }
 
     @Override
-    public List<InterestitemResponseDto> searchInterestItem(Long userId) {
+    public List<Interestitem> searchInterestItem(Long userId) {
         return interestitemRepository.findByUserId(userId);
     }
 

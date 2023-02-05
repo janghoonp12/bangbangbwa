@@ -26,6 +26,6 @@ public class Interestitem {
     @JoinTable(name="item",
             joinColumns = @JoinColumn(name="item_id"),
             inverseJoinColumns = @JoinColumn(name="item_id"))
-    @Column(name="dongCode", nullable = false)
+    @Column(name="item_id", nullable = false)
     private Long itemId;
 }
