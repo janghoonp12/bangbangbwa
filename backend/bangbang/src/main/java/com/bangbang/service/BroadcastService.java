@@ -7,6 +7,19 @@ import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.dto.broadcast.*;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
+import io.openvidu.java.client.Connection;
+import io.openvidu.java.client.ConnectionProperties;
+import io.openvidu.java.client.ConnectionType;
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.OpenViduRole;
+import io.openvidu.java.client.Session;
+import io.openvidu.java.client.SessionProperties;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,20 +29,37 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.ui.Model;
 
 
 @Service
 @RequiredArgsConstructor
 public class BroadcastService {
-  private final BroadcastRepository broadcastRepository;
-  private final ImageRepository imageRepository;
+  @Autowired
+  BroadcastRepository broadcastRepository;
+  @Autowired
+  ImageRepository imageRepository;
 
   // 방송 등록
   @Transactional
   public void newBroadcast(BroadcastSaveRequestDto requestDto) throws Exception{
     Image image = imageRepository.findByImageId(requestDto.getImageId())
             .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
-    broadcastRepository.save(requestDto.toEntity(image));
+    int leftLimit = 48; // numeral '0'
+    int rightLimit = 122; // letter 'z'
+    int targetStringLength = 45;
+    Random random = new Random();
+    String generatedString = random.ints(leftLimit,rightLimit + 1)
+        .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+        .limit(targetStringLength)
+        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+        .toString();
+    if (generatedString == broadcastRepository.findByBroadcastRoomId(generatedString)){
+      new Exception(new IllegalArgumentException("해당 세션 ID가 존재합니다."));
+    }
+    else {
+      broadcastRepository.save(requestDto.toEntity(image, generatedString));
+    }
   }
 
 //  //방송 조회

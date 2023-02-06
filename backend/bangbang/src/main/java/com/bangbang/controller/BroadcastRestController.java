@@ -2,14 +2,28 @@ package com.bangbang.controller;
 
 import com.bangbang.dto.broadcast.*;
 import com.bangbang.service.BroadcastService;
+import io.openvidu.java.client.ConnectionProperties;
+import io.openvidu.java.client.ConnectionType;
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.OpenViduRole;
+import io.openvidu.java.client.Session;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import java.net.URISyntaxException;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,7 +35,8 @@ import java.util.List;
 @Api(value="BroadcastRestController-Version 1")
 public class BroadcastRestController {
 
-  private final BroadcastService broadcastService;
+  @Autowired
+  BroadcastService broadcastService;
 
   //방송 등록
   @ApiOperation(value = "방송 등록", notes = "방송을 등록합니다.")
