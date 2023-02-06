@@ -287,6 +287,7 @@ class Openvidu extends Component {
                     headers: {
                         Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
                         'Content-Type': 'application/json',
+                        withCredentials: true
                     },
                 })
                 .then((response) => {
