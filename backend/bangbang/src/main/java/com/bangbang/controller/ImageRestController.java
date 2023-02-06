@@ -36,12 +36,23 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @Api(value="ImageRestController-Version 1")
 public class ImageRestController {
+
   private final ImageService imageService;
 
   //사진 등록
   @PostMapping(value = "/images/new")
   @ApiOperation(value = "사진 등록", notes = "사진을 등록합니다.")
-  public ResponseEntity<?> newImage(@RequestBody ImageSaveRequestDto requestDto) throws Exception{
+  public ResponseEntity<?> newImage(@RequestParam("file") MultipartFile file,
+      @RequestParam("imageType") Integer imageType,
+      @RequestParam("imageUseId") Long imageUseId) throws Exception {
+
+    String imageStorageLocation = saveUploadedFile(file);
+    ImageSaveRequestDto requestDto = ImageSaveRequestDto.builder()
+        .imageStorageLocation(imageStorageLocation)
+        .imageType(imageType)
+        .imageUseId(imageUseId)
+        .build();
+
     imageService.newImage(requestDto);
 
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
@@ -50,37 +61,18 @@ public class ImageRestController {
     }}, HttpStatus.OK);
   }
 
-//  @GetMapping(value = "/upload")
-//  public String upload(@RequestParam MultipartFile[] uploadFile, Model model) throws IllegalStateException, IOException{
-//    List<FileDto> list = new ArrayList<>();
-//    for(MultipartFile file: uploadFile){
-//      if(!file.isEmpty()){
-//        FileDto dto = new FileDto(UUID.randomUUID().toString(),
-//                                  file.getOriginalFilename(),
-//                                  file.getContentType());
-//        list.add(dto);
-//        File newFileName = new File(dto.getUuid() + "_"+dto.getFileName());
-//        file.transferTo(newFileName);
-//      }
-//    }
-//    model.addAttribute("files", list);
-//    return "result";
-//  }
-//
-//  @Value("${spring.servlet.multipart.location}")
-//  String filePath;
+  private String saveUploadedFile(MultipartFile file) throws IOException {
+    String fileName = file.getOriginalFilename();
+    String uniqueFileName = UUID.randomUUID() + fileName;
+    Path path = Paths.get("/파일/저장/경로/" + uniqueFileName);
 
-//  @GetMapping(value = "/download")
-//  public ResponseEntity<Resource> download(@ModelAttribute FileDto dto) throws IOException {
-//    Path path = Paths.get(filePath+"/"+dto.getUuid()+ "_" + dto.getFileName());
-//    String contentType = Files.probeContentType(path);
-//    HttpHeaders headers = new HttpHeaders();
-//    headers.setContentDisposition(ContentDisposition.builder("attachment")
-//        .filename(dto.getFileName(), StandardCharsets.UTF_8)
-//        .build());
-//    headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-//
-//    Resource resource = new InputStreamResource(Files.newInputStream(path));
-//    return new ResponseEntity<>(resource, headers, HttpStatus.OK);
-//  }
+    while (Files.exists(path)) {
+      uniqueFileName = UUID.randomUUID() + fileName;
+      path = Paths.get("/파일/저장/경로/" + uniqueFileName);
+    }
+
+    Files.write(path, file.getBytes());
+    return uniqueFileName;
+  }
+
 }

@@ -1,16 +1,19 @@
 import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import ItemListitem from "./ItemListitem";
+import ItemListItem from "./ItemListitem";
 import throttle from "../../utils/Throttle"
 
 const Wrapper = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     margin-top: 30px;
     align-items: flex-start;
-    overflow-x: auto;
+    justify-content: center;
     white-space: nowrap;
+    // flex-wrap: nowrap;
+    // overflow-x: auto;
     // border: 1px solid grey;
     & > * {
         :not(:last-child) {
@@ -71,7 +74,7 @@ function ItemList(props) {
       >
         {posts.map((post, index) => {
           return (
-            <ItemListitem
+            <ItemListItem
               key={post.id}
               post={post}
               onClick={() => {

@@ -18,8 +18,9 @@ import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -49,11 +50,19 @@ public class BroadcastRestController {
     }}, HttpStatus.OK);
   }
 
-  //모두 조회
+//  //모두 조회
+//  @GetMapping(value = "/broadcasts")
+//  @ApiOperation(value = "방송 조회", notes = "모든 방송을 조회합니다.")
+//  public List<BroadcastListResponseDto> searchBroadcastAll() {
+//    return broadcastService.searchBroadcastAll();
+//  }
+
+  //방송 조회(페이지)
   @GetMapping(value = "/broadcasts")
-  @ApiOperation(value = "방송 조회", notes = "모든 방송을 조회합니다.")
-  public List<BroadcastListResponseDto> searchBroadcastAll() {
-    return broadcastService.searchBroadcastAll();
+  @ApiOperation(value = "방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
+  public Page<BroadcastListResponseDto> searchBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    return broadcastService.searchBroadcastAll(pageable);
   }
 
   //해당 방송 조회

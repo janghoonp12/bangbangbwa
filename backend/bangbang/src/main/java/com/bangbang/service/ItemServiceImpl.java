@@ -30,7 +30,6 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private DongCodeRepository dongCodeRepository;
 
-
     @Transactional
     @Override
     public long newItem(ItemSaveRequestDto item) {
@@ -101,7 +100,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void deactivateItem(long itemId) {
         Item item =  itemRepository.findById(itemId);
-        item.setItem_status(1);
+        item.setItem_status(0);
         itemRepository.save(item);
     }
 

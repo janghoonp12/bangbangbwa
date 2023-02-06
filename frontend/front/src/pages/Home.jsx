@@ -1,5 +1,6 @@
 import React from "react";
-import ItemList from "../component/item/ItemList";
+import HotItemList from "../component/home/HotItemList";
+import HotBroadcastList from "../component/home/HotBroadcastList";
 import data from "../data.json";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -25,7 +26,7 @@ function Home() {
         <div>
           <h2>지금 핫한 방송</h2>
           <hr />
-          <ItemList
+          <HotBroadcastList
             posts={data}
             onClickItem={(item) => {
               navigate(`/broadcasts/${item.id}`);
@@ -33,9 +34,9 @@ function Home() {
             />
         </div>
         <hr/>
-        <h2>인기 급상승 매물</h2>
+        <h2>인기 매물</h2>
         <div>
-          <ItemList
+          <HotItemList
               posts={data}
               onClickItem={(item) => {
                 navigate(`/items/${item.id}`);

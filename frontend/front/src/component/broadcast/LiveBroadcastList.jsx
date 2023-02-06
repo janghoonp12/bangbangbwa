@@ -3,7 +3,8 @@ import LiveBroadcastListItem from "./LiveBroadcastListItem";
 import datas from "../../data.json";
 import styled from "styled-components";
 import Filter from "../common/Filter";
-import LoadMore from "../common/ui/LoadMore"
+import LoadMore from "../common/ui/LoadMore";
+import FilterButton from "../common/FilterButton";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,6 +28,11 @@ const SButtonDiv = styled.div`
   margin-top: 30px;
 `;
 
+const SButtonLineDiv = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 8fr 2fr;
+`;
+
 function LiveBroadcastList() {
 
   const limit = 12; // 한 페이지에 나올 방송 수
@@ -35,7 +41,14 @@ function LiveBroadcastList() {
 
   return (
     <div>
-      <Filter />
+      <SButtonLineDiv>
+        <div />
+        <div />
+        <FilterButton />
+      </SButtonLineDiv>
+      <div id="filterDiv" style={{ display: "none" }}>
+        <Filter />
+      </div>
       <h2 style={{marginTop : '10px'}}>라이브 방송 목록</h2>
       <Wrapper>
         {datas.slice(0, offset).map((data, index) => {

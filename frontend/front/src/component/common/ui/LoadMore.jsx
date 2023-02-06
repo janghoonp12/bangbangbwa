@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 const SButton = styled.button`
   border-radius: 8px;
@@ -11,9 +12,20 @@ const SButton = styled.button`
   margin-bottom: 30px;
 `;
 
+
+function judge(hap, perPage) {
+  if (hap <= perPage) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function LoadMore({ total, limit, loads, setLoads }) {
   const totalLoads = Math.ceil(total / limit);
-  
+
+  const isShow = judge(total, limit)
+
   function clickLoads() {
     if (loads+1 < totalLoads) {
       setLoads(loads + 1)
@@ -26,10 +38,11 @@ function LoadMore({ total, limit, loads, setLoads }) {
   }
 
   return (
-    <SButton
-      id="button"
-      onClick={clickLoads}
-    >Load More</SButton>
+        <SButton  
+        style={isShow ? {display:'none'} : {display:'inline'}}
+        id="button"
+        onClick={clickLoads}
+        >Load More</SButton>
   )
 }
 
