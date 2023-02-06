@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import ItemListItem from "./ItemListItem";
+import ItemListItem from "./ItemListitem";
 import throttle from "../../utils/Throttle"
 
 const Wrapper = styled.div`
