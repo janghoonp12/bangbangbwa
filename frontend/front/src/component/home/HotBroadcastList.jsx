@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import ItemListItem from "./ItemListItem";
+import HotBroadcastListItem from "./HotBroadcastListItem";
 import throttle from "../../utils/Throttle"
 
 const Wrapper = styled.div`
@@ -10,10 +10,9 @@ const Wrapper = styled.div`
     flex-direction: row;
     margin-top: 30px;
     align-items: flex-start;
-    justify-content: center;
     white-space: nowrap;
-    // flex-wrap: nowrap;
-    // overflow-x: auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     // border: 1px solid grey;
     & > * {
         :not(:last-child) {
@@ -25,7 +24,7 @@ const Wrapper = styled.div`
     }
 `;
 
-function ItemList(props) {
+function HotBroadcastList(props) {
     const { posts, onClickItem } = props;
 
     // 좌우 스크롤 움직임은 해당 DOM의 scrollLeft로 움직임
@@ -74,7 +73,7 @@ function ItemList(props) {
       >
         {posts.map((post, index) => {
           return (
-            <ItemListItem
+            <HotBroadcastListItem
               key={post.id}
               post={post}
               onClick={() => {
@@ -87,4 +86,4 @@ function ItemList(props) {
     );
 }
 
-export default ItemList;
+export default HotBroadcastList;
