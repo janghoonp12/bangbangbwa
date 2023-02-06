@@ -8,6 +8,8 @@ import com.bangbang.dto.broadcast.*;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +32,16 @@ public class BroadcastService {
     broadcastRepository.save(requestDto.toEntity(image));
   }
 
+//  //방송 조회
+//  public List<BroadcastListResponseDto> searchBroadcastAll(){
+//    return broadcastRepository.findAll().stream()
+//            .map(BroadcastListResponseDto::new)
+//            .collect(Collectors.toList());
+//  }
+
   //방송 조회
-  public List<BroadcastListResponseDto> searchBroadcastAll(){
-    return broadcastRepository.findAll().stream()
-            .map(BroadcastListResponseDto::new)
-            .collect(Collectors.toList());
+  public Page<BroadcastListResponseDto> searchBroadcastAll(Pageable pageable){
+    return broadcastRepository.findAll(pageable).map(BroadcastListResponseDto::new);
   }
 
   //해당 방송 조회
