@@ -21,7 +21,7 @@ public interface MypageRepository extends JpaRepository <User, Long>{
 
     @Query("select new com.bangbang.dto.item.ItemDto(i, ip, m, o) " +
             "from Item i, ItemPrice ip, ManageOption m, Option o " +
-            "where i.item_id = ip.item_id and i.item_id = m.item_id and i.item_id = o.item_id and i.broker_id =:brokerId " +
+            "where i.item_id = ip.item_id and i.item_id = m.item_id and i.item_id = o.item_id and i.broker_id =:brokerId and i.item_status = 1 " +
             "order by i.item_id desc")
     List<ItemDto> searchItemByBrokerId(Long brokerId);
 }
