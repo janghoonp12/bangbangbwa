@@ -287,8 +287,8 @@ class Openvidu extends Component {
                     headers: {
                         Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
                         'Content-Type': 'application/json',
-                        withCredentials: true
                     },
+                    withCredentials: false
                 })
                 .then((response) => {
                     console.log('CREATE SESION', response);
@@ -330,6 +330,7 @@ class Openvidu extends Component {
                         Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
                         'Content-Type': 'application/json',
                     },
+                    withCredentials: false
                 })
                 .then((response) => {
                     console.log('TOKEN', response);
