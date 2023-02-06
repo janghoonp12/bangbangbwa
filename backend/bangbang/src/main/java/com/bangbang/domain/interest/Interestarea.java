@@ -26,6 +26,6 @@ public class Interestarea {
     @JoinTable(name="dongcode",
             joinColumns = @JoinColumn(name="dongCode"),
             inverseJoinColumns = @JoinColumn(name="dongCode"))
-    @Column(name="dongCode", length = 10, nullable = false)
+    @Column(name="interest_dongcode", length = 10, nullable = false)
     private String dongCode;
 }

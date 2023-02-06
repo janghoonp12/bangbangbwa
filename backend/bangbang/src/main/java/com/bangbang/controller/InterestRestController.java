@@ -38,6 +38,7 @@ public class InterestRestController {
             interestService.newInterestArea(area);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }
