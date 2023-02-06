@@ -10,4 +10,6 @@ public interface BroadcastRepository extends JpaRepository<Broadcast, Long> {
     List<Broadcast> findAll();
     Optional<Broadcast> findByBroadcastId(Long broadcastId);
 
+    String findByBroadcastRoomId(String broadcastRoomId);
+
 }

@@ -11,10 +11,10 @@ public class BroadcastResponseDto {
     private String broadcastDescription;
     private String broadcastTitle;
 
-
     public BroadcastResponseDto(Broadcast entity){
         this.broadcastId = entity.getBroadcastId();
         this.broadcastDescription = entity.getBroadcastDescription();
         this.broadcastTitle = entity.getBroadcastTitle();
+
     }
 }
