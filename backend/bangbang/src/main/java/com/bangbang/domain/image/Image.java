@@ -39,5 +39,4 @@ public class Image {
     this.imageUseId = imageUseId;
   }
 
-//  public void update(String imageStorageLocation) {this.imageStorageLocation = imageStorageLocation;}
 }
