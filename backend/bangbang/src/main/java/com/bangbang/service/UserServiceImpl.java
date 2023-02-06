@@ -38,12 +38,12 @@ public class UserServiceImpl implements UserService {
             throw  new BaseException(ErrorMessage.EXIST_EMAIL);
         }
 
-        User user = new User();
-        user.setUserEmail(SignUpInfo.getUserEmail());
-        user.setUserNickname(SignUpInfo.getUserNickname());
-        user.setUserPassword(passwordEncoder.encode(SignUpInfo.getUserPassword()));
-        user.setUser_status("1");
-        user.setUser_role("ROLE_USER");
+        User user = User.builder()
+                .userEmail(SignUpInfo.getUserEmail())
+                .userNickname(SignUpInfo.getUserNickname())
+                .userPassword(passwordEncoder.encode(SignUpInfo.getUserPassword()))
+                .user_roles(Collections.singletonList("ROLE_USER"))
+                .user_status("1").build();
         userRepository.save(user);
 
     }
@@ -62,8 +62,8 @@ public class UserServiceImpl implements UserService {
         }
 
         // 존재할시
-        String accessToken = jwtTokenProvider.createToken(user.getUserId(), Collections.singletonList(user.getUser_role()));
-        String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), Collections.singletonList(user.getUser_role()));
+        String accessToken = jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());
+        String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), user.getUser_roles());
         System.out.println(accessToken);
         System.out.println(refreshToken);
         user.setUser_refresh_token(refreshToken);
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
             User user = object.get();
             if (token.equals(user.getUser_refresh_token())) {
                 if (jwtTokenProvider.validateToken(token)) {
-                    return jwtTokenProvider.createToken(user.getUserId(), Collections.singletonList(user.getUser_role()));
+                    return jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());
                 } else {
                     throw new BaseException(ErrorMessage.ACCESS_TOKEN_EXPIRE);
                 }
