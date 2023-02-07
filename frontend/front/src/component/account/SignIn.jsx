@@ -98,6 +98,11 @@ function Login() {
     navigate("http://localhost:8081/api/oauth2/authoriztation/kakao")
   }
 
+  const NaverLogin = () => {
+    navigate("http://localhost:8081/api/oauth2/authoriztation/naver")
+  }
+  
+
   const signInButtonClick = useCallback(() => {
     if (!regex.test(userEmail)) {
       alert('이메일 형식으로 입력해주세요!')
@@ -138,8 +143,9 @@ function Login() {
           </div>
           <SNormalButton type="button" onClick={() => {signInButtonClick()}}>로그인</SNormalButton>
           <a type="button" href="http://localhost:8081/api/oauth2/authorization/kakao">카카오</a>
-          {/* <SKakaoButton type="button" onClick={() => {KakaoLogin()}}>카카오</SKakaoButton> */}
-          <SNaverButton>네이버</SNaverButton>
+          <a type="button" href="http://localhost:8081/api/oauth2/authorization/naver">네이버</a>
+          {/* <SKakaoButton type="button" onClick={() => {KakaoLogin()}}>카카오</SKakaoButton>
+          <SNaverButton type="button" onClick={() => {NaverLogin()}}>네이버</SNaverButton> */}
           <div style={{textAlign: "left", marginLeft: "10%"}}>
             <label>계정이 필요하신가요?</label>
             <SSGignuP
