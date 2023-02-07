@@ -21,6 +21,7 @@ import Alarm from "./pages/Alarm";
 import Admin from "./pages/Admin";
 import SignUp from "./component/account/SignUp";
 import FilterDetail from "./component/common/FilterDetail";
+import OauthRedirect from "./component/account/OauthRedirect";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
         <Route path="/notices/*" element={<Notice />} />
         <Route path="/alarm/*" element={<Alarm />} />
         <Route path="/admin/*" element={<Admin />} />
+        <Route path="/oauth2/redirect/" element={<OauthRedirect />} />
         <Route path="/openvidu" element={<Openvidu />} />
         {/*일치하지 않는 모든 page는 NotFound */}
         <Route path="*" element={<NotFound />} />
