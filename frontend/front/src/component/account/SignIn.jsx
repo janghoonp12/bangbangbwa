@@ -94,6 +94,10 @@ function Login() {
     }
   })
 
+  const KakaoLogin = () => {
+    navigate("http://localhost:8081/api/oauth2/authoriztation/kakao")
+  }
+
   const signInButtonClick = useCallback(() => {
     if (!regex.test(userEmail)) {
       alert('이메일 형식으로 입력해주세요!')
@@ -133,7 +137,8 @@ function Login() {
             }}>아직 회원이 아니신가요?</SSGignuP>
           </div>
           <SNormalButton type="button" onClick={() => {signInButtonClick()}}>로그인</SNormalButton>
-          <SKakaoButton>카카오</SKakaoButton>
+          <a type="button" href="http://localhost:8081/api/oauth2/authorization/kakao">카카오</a>
+          {/* <SKakaoButton type="button" onClick={() => {KakaoLogin()}}>카카오</SKakaoButton> */}
           <SNaverButton>네이버</SNaverButton>
           <div style={{textAlign: "left", marginLeft: "10%"}}>
             <label>계정이 필요하신가요?</label>
