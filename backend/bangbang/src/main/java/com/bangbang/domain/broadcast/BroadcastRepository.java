@@ -19,4 +19,6 @@ public interface BroadcastRepository extends PagingAndSortingRepository<Broadcas
     Page<Broadcast> findAll(Pageable pageable);
     Optional<Broadcast> findByBroadcastId(Long broadcastId);
 
+    String findByBroadcastRoomId(String broadcastRoomId);
+
 }

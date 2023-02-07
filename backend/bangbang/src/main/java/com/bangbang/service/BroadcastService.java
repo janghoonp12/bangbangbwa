@@ -7,20 +7,10 @@ import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.dto.broadcast.*;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
-import io.openvidu.java.client.Connection;
-import io.openvidu.java.client.ConnectionProperties;
-import io.openvidu.java.client.ConnectionType;
-import io.openvidu.java.client.OpenVidu;
-import io.openvidu.java.client.OpenViduHttpException;
-import io.openvidu.java.client.OpenViduJavaClientException;
-import io.openvidu.java.client.OpenViduRole;
-import io.openvidu.java.client.Session;
-import io.openvidu.java.client.SessionProperties;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.springframework.ui.Model;
 
 
 @Service
@@ -62,12 +51,6 @@ public class BroadcastService {
     }
   }
 
-//  //방송 조회
-//  public List<BroadcastListResponseDto> searchBroadcastAll(){
-//    return broadcastRepository.findAll().stream()
-//            .map(BroadcastListResponseDto::new)
-//            .collect(Collectors.toList());
-//  }
 
   //방송 조회
   public Page<BroadcastListResponseDto> searchBroadcastAll(Pageable pageable){
