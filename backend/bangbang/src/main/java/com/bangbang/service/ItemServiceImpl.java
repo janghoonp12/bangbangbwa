@@ -10,6 +10,10 @@ import javax.transaction.Transactional;
 import com.bangbang.domain.item.Item;
 import com.bangbang.domain.item.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -58,8 +62,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemDto> searchItemAll() {
-        return itemRepository.findAllItem100();
+    public Page<ItemDto> searchItemAll(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "item_id");
+        return itemRepository.findAllItem100(pageable);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.bangbang.domain.item.ItemPrice;
 import com.bangbang.domain.item.ManageOption;
 import com.bangbang.domain.item.Option;
 import com.bangbang.dto.item.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface ItemService {
     void newOption(OptionSaveRequestDto option, long item_id);
     void newManageOption(ManageOptionSaveRequestDto manageOption, long item_id);
     void newItemPrice(ItemPriceSaveRequestDto itemPrice, long item_id);
-    List<ItemDto> searchItemAll();
+    Page<ItemDto> searchItemAll(Integer page, Integer size);
     List<ItemDto> searchSiGuDongAll(String dongCode);
     List<SidoDto> getSido();
     List<GugunDto> getGugunInSido(String sidoCode);

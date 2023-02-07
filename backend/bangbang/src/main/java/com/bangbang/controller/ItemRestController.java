@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,19 +66,19 @@ public class ItemRestController {
         }
     }
 
-    @ApiOperation(value="매물 전체 검색")
+    @ApiOperation(value="매물 전체 검색 (pagination)")
     @GetMapping("/items")
-    public ResponseEntity<?> searchItemAll() {
+    public ResponseEntity<?> searchItemAll(@RequestParam(defaultValue="0") Integer page,
+                                           @RequestParam(defaultValue="10") Integer size) {
         try {
-            List<ItemDto> item = itemService.searchItemAll();
-            if (item != null && !item.isEmpty())
-                return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
+            Page<ItemDto> item = itemService.searchItemAll(page, size);
+            if (item != null && item.hasContent())
+                return new ResponseEntity<Page<ItemDto>>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
         }
     }
-
     //필터 만들기
 
     @ApiOperation(value="매물 상세 정보")
