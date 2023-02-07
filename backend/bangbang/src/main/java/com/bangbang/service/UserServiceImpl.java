@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signUp(SignUp SignUpInfo) throws Exception {
-        if (userRepository.findByUserEmail(SignUpInfo.getUserEmail()).isPresent()) {
+        if (userRepository.findByUserEmail(SignUpInfo.getUserEmail()) != null) {
             throw new BaseException(ErrorMessage.EXIST_ID);
         }
 
@@ -50,7 +50,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, Object> login(SignIn signIn) throws Exception {
-        User user = userRepository.findByUserEmail(signIn.getUserEmail()).orElseThrow(() -> new BaseException(ErrorMessage.NOT_EXIST_ID));
+        User user = userRepository.findByUserEmail(signIn.getUserEmail());
+            if (user == null) {
+                throw new BaseException(ErrorMessage.NOT_EXIST_ID);
+            }
         System.out.println(user);
 
         if (user.getUser_status() == "0") {
@@ -64,8 +67,6 @@ public class UserServiceImpl implements UserService {
         // 존재할시
         String accessToken = jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());
         String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), user.getUser_roles());
-        System.out.println(accessToken);
-        System.out.println(refreshToken);
         user.setUser_refresh_token(refreshToken);
         userRepository.save(user);
 
@@ -99,7 +100,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void findPassword(FindPassword findPasswordEmail) throws Exception {
-        User signUser = userRepository.findByUserEmail(findPasswordEmail.getId()).get();
+        User signUser = userRepository.findByUserEmail(findPasswordEmail.getId());
 
         if (signUser != null) {
             if (signUser.getUserEmail().equals(findPasswordEmail.getId())) {

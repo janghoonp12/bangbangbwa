@@ -1,5 +1,6 @@
 package com.bangbang.config;
 
+import com.bangbang.service.OauthService;
 import com.bangbang.util.JwtTokenProvider;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import org.springframework.web.filter.CorsFilter;
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final OAuthService oAuthService;
+  private final OauthService oauthService;
   private final CorsFilter corsFilter;
   private final JwtTokenProvider jwtTokenProvider;
 
@@ -34,9 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .addFilter(corsFilter) // @CrossOrigin(인증x), 시큐리티 필터에 등록 인증(O)
         .formLogin().disable()
         .httpBasic().disable()
-            .oauth2Login() // OAuth2 로그인 설정 시작점
-            .userInfoEndpoint()
-            .userService()
         .authorizeRequests()
         .antMatchers("/api/v1/user/**")
         .access("hasRole('ROLE_USER') or hasRole('ROLE_BROKER') or hasRole('ROLE_ADMIN')")
@@ -45,7 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/v1/admin/**")
         .access("hasRole('ROLE_ADMIN')")
             .anyRequest().permitAll()
-            .and()
-            .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+        .and()
+        .oauth2Login() // OAuth2 로그인 설정 시작점
+        .defaultSuccessUrl("/login-success")
+//        .successHandler()
+        .userInfoEndpoint()
+        .userService(oauthService);
+//            .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
   }
 }
