@@ -32,6 +32,7 @@ public class OauthServiceImpl extends DefaultOAuth2UserService {
   public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
     OAuth2User oAuth2User = super.loadUser(userRequest);
     OAuth2UserInfo oAuth2UserInfo = null;
+    System.out.println(oAuth2User.getAttributes());
 
     String provider = userRequest.getClientRegistration().getRegistrationId();
 
@@ -40,7 +41,6 @@ public class OauthServiceImpl extends DefaultOAuth2UserService {
     } else if (provider.equals("kakao")) {
       oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
     }
-
     String providerId = oAuth2UserInfo.getProviderId();
     String userName = oAuth2UserInfo.getProvider() + oAuth2UserInfo.getName();
     String passw = UUID.randomUUID().toString().substring(0, 6);

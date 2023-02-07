@@ -40,10 +40,10 @@ public class JwtTokenProvider {
   private final UserDetailsService userDetailsService;
   private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
-  @Value("A405_SUN_SU_SUNG_BIN_HUN_NEUONGASDSADASDASDA")
+  @Value("A405SUNSUSUNGBINHUNNEUONGASDSADASDASDASSAFYA405")
   private String secretKey;
 
-  @Value("${jwt.token-validity-in-minutes}")
+  @Value("${jwt.token-validity-in-minutes}0000")
   private long tokenValidMinutes;
 
   @Value("${jwt.refresh-validity-in-minutes}")
@@ -60,7 +60,6 @@ public class JwtTokenProvider {
     // setsubject 메서드를 통하여 sub속성에 값을 추가하고자 할시에 User의 uid를 사용합니다
     claims.put("roles", roles);//해당 부분은 해당 토큰을 사용하는 사용자의 권한을 확인 할수 있는 role값을 추가한 부분입니다.
     Date now = new Date();
-    System.out.println(roles);
 
     byte[] keyBytes = Decoders.BASE64URL.decode(secretKey);
     Key key = Keys.hmacShaKeyFor(keyBytes);
@@ -88,6 +87,7 @@ public class JwtTokenProvider {
   //해당 부분은 필터에서 인증이 성공을 하였을시에, securitycontextholder에 저장할 authentication을 생성하여 줍니다.
   //usernamePasswordAuthenticationToken을 사용하여 Authentication을 구현 하였습니다.
   public Authentication getAuthentication(String token) {
+    System.out.println(this.getUserId(token));
     UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
 
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -106,21 +106,21 @@ public class JwtTokenProvider {
   // Request header에 Authorization 의 값에서 token 꺼내옴
   //즉 클라이언트가 헤더를 통해 jwt토큰값을 제대로 전달 했는지 파악 가능한 메서드
   public String resolveToken(HttpServletRequest request) {
-    String token = request.getHeader("Authorization");
+    return request.getHeader("X-AUTH-TOKEN");
 
     // 가져온 Authorization Header 가 문자열이고, Bearer 로 시작해야 가져옴
-    if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
-      return token.substring(7);
-    }
-
-    return null;
+//    if (StringUtils.hasText(token) && token.startsWith("X-AUTH-TOKEN")) {
+//      return token.substring(7);
+//    }
+//
+//    return null;
   }
 
   // JWT 토큰 유효성 체크
 
   public boolean validateToken(String token) {
     try {
-      Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+      Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
 
       return !claims.getBody().getExpiration().before(new Date());
     } catch (SecurityException | MalformedJwtException | IllegalArgumentException exception) {

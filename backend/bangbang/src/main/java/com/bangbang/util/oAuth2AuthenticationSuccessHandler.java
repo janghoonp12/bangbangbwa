@@ -27,15 +27,15 @@ public class oAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) throws IOException {
     OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-    OAuth2UserInfo oAuth2UserInfo = null;
-
+    Object userEmail = null;
     if (oAuth2User.getAttributes().get("kakao_account") != null) {
+      KakaoUserInfo oAuth2UserInfo;
       oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
+      userEmail = oAuth2UserInfo.getEmail();
     } else {
-      oAuth2UserInfo = new NaverUserInfo(oAuth2User.getAttributes());
+      userEmail = oAuth2User.getAttributes().get("email");
     }
-
-    User user = userRepository.findByUserEmail(oAuth2UserInfo.getEmail());
+    User user = userRepository.findByUserEmail((String)userEmail);
 
     String accessToken = jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());
     String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), user.getUser_roles());
@@ -43,9 +43,8 @@ public class oAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     userRepository.save(user);
 
     String url = makeRedirectUrl(accessToken, refreshToken, user.getUserEmail(), user.getUserNickname());
-    System.out.println(url);
-    getRedirectStrategy().sendRedirect(request, response, url);
 
+    getRedirectStrategy().sendRedirect(request, response, url);
   }
 
   private String makeRedirectUrl(String accessToken, String refreshToken, String email, String nickname) {

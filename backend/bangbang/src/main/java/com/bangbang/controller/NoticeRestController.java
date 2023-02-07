@@ -6,6 +6,8 @@ import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
 import com.bangbang.service.NoticeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +25,11 @@ public class NoticeRestController {
     @Autowired
     private final NoticeService noticeService;
 
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="공지사항 등록")
-    @PostMapping("/notices/new")
+    @PostMapping("/admin/notices/new")
     public ResponseEntity<?> newNotice(@RequestBody NoticeSaveRequestDto notice) {
         try {
             noticeService.newNotice(notice);
