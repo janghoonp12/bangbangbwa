@@ -39,21 +39,32 @@ public class AlarmRestController {
   @PostMapping(value = "/alarms/new")
   @ApiOperation(value = "알림 등록", notes = "알림을 등록합니다.")
   public ResponseEntity<?> newAlarm(@RequestBody AlarmSaveRequestDto requestDto){
-    alarmService.newAlarm(requestDto);
+    try{
+      alarmService.newAlarm(requestDto);
 
-    return new ResponseEntity<Object>(new HashMap<String, Object>() {{
-      put("result", true);
-      put("msg", "알람 등록을 성공하였습니다.");
-    }}, HttpStatus.OK);
+      return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+        put("result", true);
+        put("msg", "알람 등록을 성공하였습니다.");
+      }}, HttpStatus.OK);
+    } catch (Exception e){
+      e.printStackTrace();
+      return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
   }
 
   @DeleteMapping(value = "/alarms/{alarmId}")
   @ApiOperation(value = "알림 삭제", notes = "알림을 삭제합니다.")
   public ResponseEntity<?> deleteAlarm(@PathVariable Long alarmId){
-    alarmService.deleteAlarm(alarmId);
-    return new ResponseEntity<Object>(new HashMap<String, Object>() {{
-      put("result", true);
-      put("msg", "알람 삭제를 성공하였습니다.");
-    }}, HttpStatus.OK);
+    try {
+      alarmService.deleteAlarm(alarmId);
+      return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+        put("result", true);
+        put("msg", "알람 삭제를 성공하였습니다.");
+      }}, HttpStatus.OK);
+    } catch (Exception e){
+      e.printStackTrace();
+      return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
   }
 }

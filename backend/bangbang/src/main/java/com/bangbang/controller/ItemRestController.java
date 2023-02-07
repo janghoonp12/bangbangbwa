@@ -1,5 +1,8 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.item.ItemPrice;
+import com.bangbang.domain.item.ManageOption;
+import com.bangbang.domain.item.Option;
 import com.bangbang.dto.item.*;
 import com.bangbang.service.ItemService;
 import com.bangbang.domain.item.Item;
@@ -35,14 +38,16 @@ public class ItemRestController {
         try {
             /*
             데이터 입력 형식
-            "item": {
-            },
-            "itemPrice": {
-            },
-            "manageOption": {
-            },
-            "option" {
-            }
+            {
+                "item": {
+                },
+                "itemPrice": {
+                },
+                "manageOption": {
+                },
+                "option" {
+                }
+              }
             * */
             ObjectMapper mapper = new ObjectMapper();
             ItemSaveRequestDto itemDto = mapper.treeToValue(item.get("item"), ItemSaveRequestDto.class);
@@ -64,9 +69,9 @@ public class ItemRestController {
     @GetMapping("/items")
     public ResponseEntity<?> searchItemAll() {
         try {
-            List<Item> item = itemService.searchItemAll();
+            List<ItemDto> item = itemService.searchItemAll();
             if (item != null && !item.isEmpty())
-                return new ResponseEntity<List<Item>>(item, HttpStatus.OK);
+                return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
@@ -79,9 +84,9 @@ public class ItemRestController {
     @GetMapping("/items/{item_id}")
     public ResponseEntity<?> itemDetail(@PathVariable("item_id") long itemId) {
         try {
-            Item item = itemService.itemDetail(itemId);
+            ItemResponseDto item = itemService.itemDetail(itemId);
             if (item != null)
-                return new ResponseEntity<Item>(item, HttpStatus.OK);
+                return new ResponseEntity<ItemResponseDto>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
@@ -90,8 +95,8 @@ public class ItemRestController {
 
     //매물 삭제 구현
     @ApiOperation(value="매물 삭제(비활성화)")
-    @PatchMapping("/items/deactivate")
-    public ResponseEntity<?> deactivateItem(@RequestParam("itemId") long itemId) {
+    @PatchMapping("/items/deactivate/{item_id}")
+    public ResponseEntity<?> deactivateItem(@PathVariable("item_id") long itemId) {
         try {
             itemService.deactivateItem(itemId);
             return new ResponseEntity(HttpStatus.OK);
@@ -112,8 +117,8 @@ public class ItemRestController {
     }
 
     @ApiOperation(value="매물 거래완료")
-    @PatchMapping("/items/sold")
-    public ResponseEntity<?> itemSold(@RequestParam("itemId") long itemId) {
+    @PatchMapping("/items/sold/{item_id}")
+    public ResponseEntity<?> itemSold(@PathVariable("item_id") long itemId) {
         try {
             itemService.itemSold(itemId);
             return new ResponseEntity(HttpStatus.OK);
@@ -136,8 +141,8 @@ public class ItemRestController {
     }
 
     @ApiOperation(value="구,군 가져오기")
-    @GetMapping("/items/gugun")
-    public ResponseEntity<List<GugunDto>> gugun(@RequestParam("sidoCode") String sidoCode) {
+    @GetMapping("/items/gugun/{sidoCode}")
+    public ResponseEntity<List<GugunDto>> gugun(@PathVariable("sidoCode") String sidoCode) {
         try {
             List<GugunDto> list = itemService.getGugunInSido(sidoCode);
             if (list != null && !list.isEmpty())
@@ -149,8 +154,8 @@ public class ItemRestController {
     }
 
     @ApiOperation(value="동 가져오기")
-    @GetMapping("/items/dong")
-    public ResponseEntity<List<DongDto>> dong(@RequestParam("dongCode") String dongCode) {
+    @GetMapping("/items/dong/{dongCode}")
+    public ResponseEntity<List<DongDto>> dong(@PathVariable("dongCode") String dongCode) {
         try {
             List<DongDto> list = itemService.getDongInGugun(dongCode);
             if (list != null && !list.isEmpty())
@@ -161,13 +166,26 @@ public class ItemRestController {
         }
     }
 
-    @ApiOperation(value="시,구,동 조회")
-    @GetMapping("/items/sigudong")
-    public ResponseEntity<?> sigudong(@RequestParam("dongCode") String dongCode) {
+    @ApiOperation(value="시,구,동 조회 후 이름 return")
+    @GetMapping("/items/sigudong/{dongCode}")
+    public ResponseEntity<?> sigudong(@PathVariable("dongCode") String dongCode) {
         try {
             SiGuDongDto s = itemService.getAddressName(dongCode);
             if (s != null)
                 return new ResponseEntity<SiGuDongDto>(s, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="시,구,동 기준으로 매물 조회")
+    @GetMapping("/items/sigudongAll/{dongCode}")
+    public ResponseEntity<?> sigudongAll(@PathVariable("dongCode") String dongCode) {
+        try {
+            List<ItemDto> list = itemService.searchSiGuDongAll(dongCode);
+            if (list != null)
+                return new ResponseEntity<List<ItemDto>>(list, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();

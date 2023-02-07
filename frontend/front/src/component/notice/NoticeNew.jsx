@@ -1,51 +1,89 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "react-bootstrap/Button"
+import Button from "../common/ui/Button";
 
 
-const SDiv = styled.div`
-  text-align: center;
-  border: 1px solid black;
+const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
 `;
 
-const SSelect = styled.select`
-  width: 500px;
-  height: 30px;
-  margin-bottom: 20px;
-`
+const Container = styled.div`
+  // display: flex;
+  width: 100%;
+  max-width: 70%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+`;
 
-const SInput = styled.input`
-  width: 500px;
-  margin-bottom: 20px;
+const SGridDiv = styled.div`
+  display: grid;
+  grid-template-columns: 0.25fr 0.75fr;
+`;
+
+
+const SSelect = styled.select`
+  width: 200px;
+  height: 40px;
+
+  :invalid {
+    color: red;
+  }
+`;
+
+const STitleP = styled.p`
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
 `;
 
 
 function NoticeNew() {
-  return (
-    <SDiv>
-      <h1>공지사항 작성</h1>
-      <hr />
-      <form>
-        <h3>공지 제목</h3>
-        <SInput type="text" placeholder="공지 제목을 입력하세요." /><br />
+  const navigate = useNavigate();
 
-        <h3>공지 분류</h3>
-        <SSelect>
+  return (
+    <Wrapper>
+      <Container>
+        <h1>공지사항 작성</h1>
+        <SGridDiv style={{marginTop: "5%"}}>
+          <STitleP>분류</STitleP>
+          <SSelect required>
+          <option value="" disabled selected style={{display: "none"}}>분류를 선택하세요</option>
           <option value="점검">점검</option>
           <option value="안내">안내</option>
           <option value="회식">회식</option>
           <option value="기타">기타</option>
-        </SSelect><br />
-
-        <h3>공지 내용</h3>
-        <SInput type="textarea" style={{height: '100px'}} placeholder="공지 내용을 입력하세요." /><br />
-
-        <h3>첨부 파일</h3>
-        <SInput type="file" multiple={true} /><br />
-      </form>
-      <Button block variant="outline-success" style={{width: '500px', margin: '10px'}} class="mt-3">공지 등록</Button>
-    </SDiv>
-
+          </SSelect>
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>공지 제목</STitleP>
+          <input placeholder=" 제목을 입력하세요." />
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>공지 내용</STitleP>
+          <textarea rows="8" placeholder=" 내용을 입력하세요." />
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>첨부 파일</STitleP>
+          <input type="file" multiple={true} />
+        </SGridDiv>
+        <hr />
+        <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
+          <Button
+            title="등록하기"
+            onClick={() => {
+              navigate("/notices");
+            }}
+            />
+        </div>
+      </Container>
+    </Wrapper>
   )
 }
 

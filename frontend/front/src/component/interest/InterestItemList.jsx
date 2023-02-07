@@ -17,23 +17,23 @@ const Wrapper = styled.div`
 `;
 
 function InterestItemList(props) {
-    const { posts, onClickItem } = props;
+  const { posts, onClickItem } = props;
 
-    return (
-        <Wrapper>
-            {posts.map((post, index) => {
-                return (
-                    <InterestItemListItem
-                        key={post.id}
-                        post={post}
-                        onClick={() => {
-                            onClickItem(post);
-                        }}
-                    />
-                );
-            })}
-        </Wrapper>
-    );
+  return (
+    <Wrapper>
+      {posts.map((post, index) => {
+        return (
+          <InterestItemListItem
+            key={post.id}
+            post={post}
+            onClick={() => {
+              onClickItem(post);
+            }}
+          />
+        );
+      })}
+    </Wrapper>
+  );
 }
 
 export default InterestItemList;

@@ -8,7 +8,8 @@ const SCardDiv = styled.div`
   flex-direction: column;
   width: 250px;
   height: 400px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
   margin-bottom: 0px;
   border: 1px solid grey;
   border-top-left-radius: 8px;
@@ -22,7 +23,7 @@ const SCardDiv = styled.div`
 `;
 
 const SCardImg = styled.img`
-  width: 249px;
+  width: 248px;
   height: 250px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
@@ -47,10 +48,12 @@ const SCardContentP = styled.p`
 const SButton = styled.button`
   width: 250px;
   height: 40px;
+  margin-left: 25px;
+  margin-right: 25px;
   margin-bottom: 30px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  color: balck;
+  color: black;
   border: 0.5px solid lightgrey;
   :hover {
     border: 1px solid black;

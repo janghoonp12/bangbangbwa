@@ -51,14 +51,14 @@ public class UserRestController {
   }
 
   @ApiOperation(value="로그인", notes = "req_data : [id, pw]")
-  @PostMapping("/login")
+  @PostMapping("/users/auth")
   public ResponseEntity<?> login(@RequestBody SignIn user) throws Exception {
     Map<String, Object> token = userService.login(user);
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
       put("result", true);
       put("msg", "로그인을 성공하였습니다.");
-      put("access-token", token.get("access-token"));
-      put("refresh-token", token.get("refresh-token"));
+      put("accesstoken", token.get("access-token"));
+      put("refreshtoken", token.get("refresh-token"));
       put("nickname", token.get("nickname"));
       put("email", token.get("email"));
       put("id", token.get("id"));

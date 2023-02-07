@@ -27,23 +27,28 @@ public class Broadcast extends BroadcastDatetime {
   @Column(name = "broadcast_title",length = 30, nullable = true)
   private String broadcastTitle;             //방송제목
 
+  @JoinTable(name="item",
+          joinColumns = @JoinColumn(name="item_id"),
+          inverseJoinColumns = @JoinColumn(name="item_id"))
+  private Long itemId;      //FK
 
-//  @JoinColumn(name = "item_id")
-//  @ManyToOne(fetch = FetchType.LAZY)
-//  private Item item;      //FK
   @JoinColumn(name="image_id")
   @OneToOne(fetch = FetchType.LAZY)
   private Image image;     //FK
 
+  @Column(name = "broadcast_room_id", length = 45, nullable = false)
+  private String broadcastRoomId;
 
   @Builder
   public Broadcast(Long broadcastId, String broadcastDescription, Integer broadcastStatus,
-      String broadcastTitle, Image image){
+      String broadcastTitle, Long itemId, Image image, String broadcastRoomId){
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastStatus = broadcastStatus;
     this.broadcastTitle = broadcastTitle;
+    this.itemId = itemId;
     this.image = image;
+    this.broadcastRoomId = broadcastRoomId;
   }
 
   public void update(Long broadcastId, String broadcastDescription, String broadcastTitle){

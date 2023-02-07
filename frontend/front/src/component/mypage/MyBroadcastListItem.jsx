@@ -1,22 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import Button from "../common/ui/Button";
+import itemImage from "../../assets/logosample.png"
+
 
 const Wrapper = styled.div`
   width: calc(100% - 32px);
   padding: 16px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 2fr 10fr;
   // align-items: center;
-  justify-content: center;
+  // justify-content: center;
   border: 1px solid grey;
   border-radius: 8px;
-  cursor: pointer;
   background: white;
-  :hover {
-    background: lightgrey;
-  }
 `;
 
 const TitleDiv = styled.div`
@@ -29,10 +26,14 @@ const ButtonDiv = styled.div`
 `;
 
 const TitleText = styled.p`
-font-size: 20px;
-font-weight: 500;
+  font-size: 20px;
+  font-weight: 500;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 const ContentDiv = styled.div`
@@ -46,7 +47,31 @@ const ContentText = styled.p`
   margin-right: 20px;
   align-items: center;
   justify-content: center;
-  text-align: center;
+`;
+
+const SLiveButton = styled.button`
+  // position: absolute;
+  // right: 0;
+  // margin-right: 0px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid red;
+  color: red;
+  :hover {
+    background-color: red;
+    color: white;
+  }
+`;
+
+const SItemImg = styled.img`
+  height: 100px;
+  width: 100px;
+`;
+
+const STextDiv = styled.div`
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 20px;
 `;
 
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
@@ -55,23 +80,26 @@ function MyBroadcastListItem(props) {
   const navigate = useNavigate();
 
   return (
-    <Wrapper onClick={onClick}>
-      <TitleDiv>
-        <TitleText>{myBroadcast.title}</TitleText>
-        <ButtonDiv>
-          <Button
-            style={{position: 'absolute', right: 0, marginRight: "0px"}}
-            title="Go Live"
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-        </ButtonDiv>
-      </TitleDiv>
-      <ContentDiv>
-        <ContentText>{myBroadcast.description}</ContentText>
-        <ContentText>{myBroadcast.reservation_time}</ContentText>
-      </ContentDiv>
+    <Wrapper>
+      <div>
+        <SItemImg src={itemImage} alt="이미지샘플"/>
+      </div>
+      <STextDiv>
+        <TitleDiv>
+          <TitleText onClick={onClick}>{myBroadcast.title}</TitleText>
+          <ButtonDiv>
+            <SLiveButton
+              onClick={() => {
+                navigate("/");
+              }}
+              >Go Live</SLiveButton>
+          </ButtonDiv>
+        </TitleDiv>
+        <ContentDiv>
+          <ContentText>{myBroadcast.description}</ContentText>
+          <ContentText>{myBroadcast.reservation_time}</ContentText>
+        </ContentDiv>
+      </STextDiv>
     </Wrapper>
   );
 }

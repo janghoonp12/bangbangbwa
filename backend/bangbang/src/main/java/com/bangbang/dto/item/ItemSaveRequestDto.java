@@ -43,9 +43,11 @@ public class ItemSaveRequestDto {
     private boolean item_deal_complete;
     private long broker_id; //FK
     private Integer item_status; //0 비활성화 1 활성화 2 임시저장
+    private Integer item_room;
+    private Integer item_toilet;
 
     @Builder
-    public ItemSaveRequestDto(Integer item_type, Integer item_building_type, Integer item_zonecode, Integer item_deal_type, Integer item_supply_area, Integer item_exclusive_area, Integer item_total_floor, Integer item_floor, Integer item_heating, Integer item_move_in_type, String item_move_in_date, Integer item_manage_fee, Integer item_manage_type, String item_title, String item_description, String item_buildingcode, String item_build_year, String item_road_name, String item_road_name_bonbun, String item_roadname_bubun, String item_roadname_code, String item_dong, String item_bonbun, String item_bubun, String item_sigungucode, String item_eubmyundongcode, String item_dongcode, String item_building_name, String item_jibun, String item_lng, String item_lat, boolean item_deal_complete, long broker_id, Integer item_status) {
+    public ItemSaveRequestDto(Integer item_type, Integer item_building_type, Integer item_zonecode, Integer item_deal_type, Integer item_supply_area, Integer item_exclusive_area, Integer item_total_floor, Integer item_floor, Integer item_heating, Integer item_move_in_type, String item_move_in_date, Integer item_manage_fee, Integer item_manage_type, String item_title, String item_description, String item_buildingcode, String item_build_year, String item_road_name, String item_road_name_bonbun, String item_roadname_bubun, String item_roadname_code, String item_dong, String item_bonbun, String item_bubun, String item_sigungucode, String item_eubmyundongcode, String item_dongcode, String item_building_name, String item_jibun, String item_lng, String item_lat, boolean item_deal_complete, long broker_id, Integer item_status, Integer item_room, Integer item_toilet) {
         this.item_type = item_type;
         this.item_building_type = item_building_type;
         this.item_zonecode = item_zonecode;
@@ -80,6 +82,8 @@ public class ItemSaveRequestDto {
         this.item_deal_complete = item_deal_complete;
         this.broker_id = broker_id;
         this.item_status = item_status;
+        this.item_room = item_room;
+        this.item_toilet = item_toilet;
     }
 
     public Item toEntity() {
@@ -93,6 +97,7 @@ public class ItemSaveRequestDto {
                 .item_total_floor(item_total_floor)
                 .item_floor(item_floor)
                 .item_heating(item_heating)
+                .item_move_in_type(item_move_in_type)
                 .item_move_in_date(item_move_in_date)
                 .item_manage_fee(item_manage_fee)
                 .item_manage_type(item_manage_type)
@@ -117,6 +122,8 @@ public class ItemSaveRequestDto {
                 .item_deal_complete(item_deal_complete)
                 .broker_id(broker_id)
                 .item_status(item_status)
+                .item_room(item_room)
+                .item_toilet(item_toilet)
                 .build();
     }
 }

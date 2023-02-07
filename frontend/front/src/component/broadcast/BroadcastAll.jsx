@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Filter from "../common/Filter";
 import styled from "styled-components";
+import FilterButton from "../common/FilterButton";
 
 const SH2 = styled.h2`
   float: left;
@@ -14,12 +15,18 @@ const SButton = styled.button`
   float: left;
   margin: 5px;
   border-radius: 5px;
-  background-color: transparent;
+  border: 0.5px solid lightgrey;
+  background-color: rgba(251, 255, 0, 0.2);
   :hover {
-    background-color: lightgrey;
+    background-color: rgba(251, 255, 0, 0.4);
+    border: 1px solid black;
   }
 `;
 
+const SButtonLineDiv = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 8fr 2fr;
+`;
 
 function BroadcastAll() {
   const navigate = useNavigate();
@@ -36,26 +43,20 @@ function BroadcastAll() {
   }
 
   return (
+  <div>
+    <SButtonLineDiv>
+      <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button>
+      <div />
+      <FilterButton />
+    </SButtonLineDiv>
+    <div id="filterDiv" style={{ display: "none" }}>
+      <Filter />
+    </div>
+    <div style={{height: '50px', marginTop: '10px'}}>
+      <SH2>실시간 방송</SH2>
+      <SButton onClick={liveBroadcast}>더보기</SButton>
+    </div>
     <div>
-        <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button>
-        <Filter />
-        <div style={{height: '50px', marginTop: '10px'}}>
-          <SH2>실시간 방송</SH2>
-          <SButton onClick={liveBroadcast}>더보기</SButton>
-        </div>
-        <div>
-          <BroadcastList
-            posts = {data}
-            onClickItem = {(item) => {
-                navigate(`/broadcasts/${item.id}`)
-            }}
-          />
-        </div>
-      <hr />
-      <div style={{height: '50px'}}>
-        <SH2>지난 방송</SH2>
-        <SButton onClick={NonLiveBroadcast}>더보기</SButton>
-      </div>
       <BroadcastList
         posts = {data}
         onClickItem = {(item) => {
@@ -63,6 +64,18 @@ function BroadcastAll() {
         }}
       />
     </div>
+    <hr />
+    <div style={{height: '50px'}}>
+      <SH2>지난 방송</SH2>
+      <SButton onClick={NonLiveBroadcast}>더보기</SButton>
+    </div>
+    <BroadcastList
+      posts = {data}
+      onClickItem = {(item) => {
+          navigate(`/broadcasts/${item.id}`)
+      }}
+    />
+  </div>
   )
 }
 

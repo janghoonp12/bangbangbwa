@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MyBroadcastList from "./MyBroadcastList";
-import Button from "../common/ui/Button";
 import data from "../../broadcastdata.json";
 import logosample from "../../assets/logosample.png"
+import Pagination from "../common/ui/Pagination";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,6 +22,7 @@ const Container = styled.div`
 const SProfileDiv = styled.div`
   width: 100%;
   max-width: 30%;
+  height: 700px;
   border: 1px solid grey;
   border-radius: 8px;
 `;
@@ -29,8 +30,10 @@ const SProfileDiv = styled.div`
 const SItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
-  border: 1px solid grey;
+  // height: 700px;
+  // border: 1px solid grey;
   border-radius: 8px;
+  margin-left: 10px;
   // overflow: auto;
 `;
 
@@ -60,9 +63,22 @@ const SNowMenuP = styled.p`
   cursor: pointer;
 `;
 
+const SSearchInput = styled.input`
+  width: 90%;
+  margin-top: 30px;
+`;
+
 function MyBroadcast(props) {
 
   const navigate = useNavigate();
+
+  // Pagination을 위한 작업
+  // const [data, setData] = useState([]); // 총 매물 수
+  const limit = 5 // 한 페이지에 나올 매물 수
+  const [page, setPage] = useState(1); // 페이지
+  const offset = (page - 1) * limit; // 페이지별 매물들을 받아오기 위한 index offset
+
+  // useEffect로 BE에 data를 요청해야 하는 것 같음. 일단은 더미데이터로
 
   return (
     <Wrapper>
@@ -72,6 +88,7 @@ function MyBroadcast(props) {
           <SNameP>UserName</SNameP>
           <SEmailP>abcde@gmail.com</SEmailP>
           <SMenuP
+            style={{ marginTop: "10rem" }}
             onClick={() => {
               navigate("/mypage")
             }}
@@ -91,20 +108,20 @@ function MyBroadcast(props) {
               navigate("/mypage/mybroadcast")
             }}
           >나의 방송정보</SNowMenuP>
+          <SSearchInput placeholder="제목을 검색하세요."/>
         </SProfileDiv>
         <SItemDiv>
-          <Button
-            style={{position: 'absolute', right: 0, marginRight: "30px"}}
-            title="필터"
-            onClick={() => {
-            navigate("/");
-            }}
-          />
           <MyBroadcastList
-            myBroadcasts={data}
+            myBroadcasts={data.slice(offset, offset+limit)}
             onClickItem={(item) => {
               navigate(`/broadcasts/${item.id}`);
             }}
+          />
+          <Pagination
+            total={data.length}
+            limit={limit}
+            page={page}
+            setPage={setPage}
           />
         </SItemDiv>
       </Container>

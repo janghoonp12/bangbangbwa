@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 
 //Pages
+import Openvidu from "./pages/Openvidu";
 import Nav from "./component/common/Nav";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
@@ -42,6 +43,7 @@ function App() {
         <Route path="/alarm/*" element={<Alarm />} />
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/oauth2/redirect/" element={<OauthRedirect />} />
+        <Route path="/openvidu" element={<Openvidu />} />
         {/*일치하지 않는 모든 page는 NotFound */}
         <Route path="*" element={<NotFound />} />
       </Routes>

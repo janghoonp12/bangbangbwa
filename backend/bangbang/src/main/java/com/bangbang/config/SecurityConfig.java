@@ -1,6 +1,8 @@
 package com.bangbang.config;
 
-import lombok.RequiredArgsConstructor;
+import com.bangbang.service.OauthServiceImpl;
+import com.bangbang.util.JwtTokenProvider;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,15 +14,17 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+  private final OauthServiceImpl oauthServiceImpl;
   private final CorsFilter corsFilter;
+  private final JwtTokenProvider jwtTokenProvider;
 
-  @Bean
-  public BCryptPasswordEncoder encoderPwd() {
-    return new BCryptPasswordEncoder();
-  }
+  private final BCryptBeanConfig authenticationProvider;
+
+  private com.bangbang.util.oAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable();
@@ -36,6 +40,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .access("hasRole('ROLE_BROKER') or hasRole('ROLE_ADMIN')")
         .antMatchers("/api/v1/admin/**")
         .access("hasRole('ROLE_ADMIN')")
-        .anyRequest().permitAll();
+            .anyRequest().permitAll()
+        .and()
+        .oauth2Login() // OAuth2 로그인 설정 시작점
+        .defaultSuccessUrl("http://localhost:3000/")
+        .successHandler(oAuth2AuthenticationSuccessHandler)
+        .userInfoEndpoint()
+        .userService(oauthServiceImpl);
+//            .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
   }
 }
