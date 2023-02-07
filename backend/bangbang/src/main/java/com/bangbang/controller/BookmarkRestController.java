@@ -42,11 +42,19 @@ public class BookmarkRestController {
   @PostMapping(value = "/bookmarks/new")
   @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기를 등록합니다.")
   public ResponseEntity<?> newBookmark(@RequestBody BookmarkSaveRequestDto requestDto){
-    bookmarkService.newBookmark(requestDto);
-    return new ResponseEntity<Object>(new HashMap<String, Object>() {{
-      put("result", true);
-      put("msg", "즐겨찾기 등록을 성공하였습니다.");
-    }}, HttpStatus.OK);
+    try{
+      bookmarkService.newBookmark(requestDto);
+      return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+        put("result", true);
+        put("msg", "즐겨찾기 등록을 성공하였습니다.");
+      }}, HttpStatus.OK);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+
   }
 
   @PatchMapping(value = "/bookmarks/modify/{bookmarkId}")
@@ -64,10 +72,17 @@ public class BookmarkRestController {
   @DeleteMapping(value = "/bookmarks/{bookmarkId}")
   @ApiOperation(value = "즐겨찾기 삭제", notes = "즐겨찾기를 삭제합니다.")
   public ResponseEntity<?> deleteBookmark(@PathVariable Long bookmarkId){
-    bookmarkService.deleteBookmark(bookmarkId);
-    return new ResponseEntity<Object>(new HashMap<String, Object>() {{
-      put("result", true);
-      put("msg", "즐겨찾기 삭제를 성공하였습니다.");
-    }}, HttpStatus.OK);
+    try{
+      bookmarkService.deleteBookmark(bookmarkId);
+      return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+        put("result", true);
+        put("msg", "즐겨찾기 삭제를 성공하였습니다.");
+      }}, HttpStatus.OK);
+
+    } catch (Exception e){
+      e.printStackTrace();
+      return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
   }
 }
