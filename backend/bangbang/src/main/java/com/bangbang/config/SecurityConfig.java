@@ -35,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .formLogin().disable()
             .httpBasic().disable()
-            .addFilter(corsFilter) // @CrossOrigin(인증x), 시큐리티 필터에 등록 인증(O)
         .authorizeRequests() // 경로에 권한, 인증 설정 한다.
         .antMatchers("/user/**")
         .access("hasRole('USER') or hasRole('BROKER') or hasRole('ADMIN')")
@@ -49,9 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())//인증과정에서 예외가 발생할 경우 예외를 전달한다.
             .and()
+        .addFilter(corsFilter) // @CrossOrigin(인증x), 시큐리티 필터에 등록 인증(O)
             .addFilterBefore(new JwtFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
             .oauth2Login() // OAuth2 로그인 설정 시작점
-            .defaultSuccessUrl("http://localhost:3000/")
+            .defaultSuccessUrl("https://i8a405.p.ssafy.io/")
             .successHandler(oAuth2AuthenticationSuccessHandler)
             .userInfoEndpoint()
             .userService(oauthServiceImpl);

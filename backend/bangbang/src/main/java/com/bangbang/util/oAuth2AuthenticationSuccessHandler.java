@@ -48,7 +48,7 @@ public class oAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
   }
 
   private String makeRedirectUrl(String accessToken, String refreshToken, String email, String nickname) {
-    return UriComponentsBuilder.fromUriString("http://localhost:3000/oauth2/redirect?accessToken="+accessToken +"&refreshToken=" + refreshToken +"&email=" + email + "&nickname=" +nickname)
+    return UriComponentsBuilder.fromUriString("https://i8a405.p.ssafy.io/oauth2/redirect?accessToken="+accessToken +"&refreshToken=" + refreshToken +"&email=" + email + "&nickname=" +nickname)
         .build().toUriString();
   }
 }

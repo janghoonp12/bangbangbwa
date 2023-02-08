@@ -8,6 +8,8 @@ import com.bangbang.dto.replay.ReplayResponseDto;
 import com.bangbang.dto.replay.ReplaySaveRequestDto;
 import com.bangbang.service.ReplayService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,8 +26,11 @@ public class ReplayRestController {
     private final ReplayService replayService;
 
     //다시보기 등록
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value = "다시보기 등록", notes = "다시보기를 등록합니다.")
-    @PostMapping(value = "/replays/new")
+    @PostMapping(value = "/broker/replays/new")
     public ResponseEntity<?> newReplay(@RequestBody ReplaySaveRequestDto requestDto) throws Exception {
 
         replayService.newReplay(requestDto);
@@ -49,7 +54,10 @@ public class ReplayRestController {
     }
 
     //다시보기 삭제(비활성화)
-    @PatchMapping(value = "replays/deactive/{replayId}")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    @PatchMapping(value = "/broker/replays/deactive/{replayId}")
     @ApiOperation(value = "해당 다시보기 삭제(비활성화)", notes = "해당 다시보기를 비활성화합니다.")
     public ResponseEntity<?> deactiveReplay(@PathVariable Long replayId){
         replayService.deactiveReplay(replayId);

@@ -3,6 +3,8 @@ package com.bangbang.controller;
 import com.bangbang.dto.broadcast.*;
 import com.bangbang.service.BroadcastService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,11 @@ public class BroadcastRestController {
   BroadcastService broadcastService;
 
   //방송 등록
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
   @ApiOperation(value = "방송 등록", notes = "방송을 등록합니다.")
-  @PostMapping(value = "/broadcasts/new")
+  @PostMapping(value = "/broker/broadcasts/new")
   public ResponseEntity<?> newBroadcast(@RequestBody BroadcastSaveRequestDto requestDto) throws Exception{
 
     try {
@@ -67,7 +72,10 @@ public class BroadcastRestController {
   }
 
   //방송 제목, 설명 수정
-  @PatchMapping(value = "/broadcasts/modify/{broadcastId}")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @PatchMapping(value = "/broker/broadcasts/modify/{broadcastId}")
   @ApiOperation(value = "해당 방송 수정", notes = "해당 방송의 제목, 내용을 수정합니다.")
   public ResponseEntity<?> modifyBroadcast(@PathVariable Long broadcastId, @RequestBody BroadcastUpdateRequestDto requestDto){
 
@@ -85,7 +93,10 @@ public class BroadcastRestController {
   }
 
   //방송 삭제(비활성화)
-  @PatchMapping(value = "/broadcasts/deactive/{broadcastId}")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @PatchMapping(value = "/broker/broadcasts/deactive/{broadcastId}")
   @ApiOperation(value = "해당 방송 삭제", notes = "해당 방송을 비활성화합니다.")
   public ResponseEntity<?> deactivateBroadcast(@PathVariable Long broadcastId){
     try{

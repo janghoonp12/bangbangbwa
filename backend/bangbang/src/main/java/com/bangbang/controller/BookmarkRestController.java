@@ -6,6 +6,8 @@ import com.bangbang.dto.bookmark.BookmarkSaveRequestDto;
 import com.bangbang.dto.bookmark.BookmarkUpdateRequestDto;
 import com.bangbang.service.BookmarkService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
@@ -26,20 +28,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookmarkRestController {
   private final BookmarkService bookmarkService;
 
-  @GetMapping(value = "/bookmarks")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @GetMapping(value = "/user/bookmarks")
   @ApiOperation(value = "모든 즐겨찾기 조회", notes = "즐겨찾기를 모두 조회합니다.")
   public List<BookmarkListResponseDto> searchBookmarkAll(){
     return bookmarkService.searchBookmarkAll();
   }
 
-  @GetMapping(value = "/bookmarks/{bookmarkId}")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @GetMapping(value = "/user/bookmarks/{bookmarkId}")
   @ApiOperation(value = "해당 즐겨찾기 조회", notes = "해당 즐겨찾기를 조회합니다.")
   public BookmarkResponseDto bookmarkDetail(@PathVariable Long bookmarkId){
     return bookmarkService.bookmarkDetail(bookmarkId);
   }
 
 
-  @PostMapping(value = "/bookmarks/new")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @PostMapping(value = "/user/bookmarks/new")
   @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기를 등록합니다.")
   public ResponseEntity<?> newBookmark(@RequestBody BookmarkSaveRequestDto requestDto){
     try{
@@ -57,7 +68,10 @@ public class BookmarkRestController {
 
   }
 
-  @PatchMapping(value = "/bookmarks/modify/{bookmarkId}")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @PatchMapping(value = "/user/bookmarks/modify/{bookmarkId}")
   @ApiOperation(value = "즐겨찾기 수정", notes = "즐겨찾기를 수정합니다.")
   public ResponseEntity<?> modifyBookmark(@PathVariable Long bookmarkId, @RequestBody
       BookmarkUpdateRequestDto requestDto){
@@ -69,7 +83,10 @@ public class BookmarkRestController {
     }}, HttpStatus.OK);
   }
 
-  @DeleteMapping(value = "/bookmarks/{bookmarkId}")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @DeleteMapping(value = "/user/bookmarks/{bookmarkId}")
   @ApiOperation(value = "즐겨찾기 삭제", notes = "즐겨찾기를 삭제합니다.")
   public ResponseEntity<?> deleteBookmark(@PathVariable Long bookmarkId){
     try{

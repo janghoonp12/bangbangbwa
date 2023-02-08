@@ -21,4 +21,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
     }
+
+    public UserDetails loadUserByUserId(Long userId) throws UsernameNotFoundException {
+        User user = userRepository.findByUserId(userId);
+        if (user != null) {
+            return user;
+        }
+        throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
+    }
 }
