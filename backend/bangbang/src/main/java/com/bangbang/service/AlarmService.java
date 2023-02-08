@@ -35,8 +35,11 @@ public class AlarmService {
 
   //알람 등록
   public void newAlarm(AlarmSaveRequestDto requestDto){
-    User user = userRepository.findByUserId(requestDto.getUserId())
-        .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+    User user = userRepository.findByUserId(requestDto.getUserId());
+
+    if (user == null) {
+      new IllegalArgumentException("유저 정보가 존재하지 않습니다.");
+    }
 
     alarmRepository.save(requestDto.toEntity(user));
   }

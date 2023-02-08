@@ -10,6 +10,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +34,11 @@ public class ItemRestController {
     @Autowired
     private final ItemService itemService;
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="매물 등록")
-    @PostMapping("/items/new")
+    @PostMapping("/broker/items/new")
     public ResponseEntity<?> newItem(@RequestBody ObjectNode item) throws JsonProcessingException {
         try {
             /*
@@ -93,9 +98,12 @@ public class ItemRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     //매물 삭제 구현
     @ApiOperation(value="매물 삭제(비활성화)")
-    @PatchMapping("/items/deactivate/{item_id}")
+    @PatchMapping("/broker/items/deactivate/{item_id}")
     public ResponseEntity<?> deactivateItem(@PathVariable("item_id") long itemId) {
         try {
             itemService.deactivateItem(itemId);
@@ -105,8 +113,11 @@ public class ItemRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="매물 수정")
-    @PatchMapping("/items/modify")
+    @PatchMapping("/broker/items/modify")
     public ResponseEntity<?> modifyItem(@RequestBody Item item) {
         try {
             itemService.modifyItem(item);
@@ -116,8 +127,11 @@ public class ItemRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="매물 거래완료")
-    @PatchMapping("/items/sold/{item_id}")
+    @PatchMapping("/broker/items/sold/{item_id}")
     public ResponseEntity<?> itemSold(@PathVariable("item_id") long itemId) {
         try {
             itemService.itemSold(itemId);

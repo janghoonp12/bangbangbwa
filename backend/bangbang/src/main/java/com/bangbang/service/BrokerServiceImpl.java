@@ -40,18 +40,18 @@ public class BrokerServiceImpl implements BrokerService{
     @Transactional
     @Override
     public boolean registerBroker(Long brokerId, Long userId) {
-        Optional<User> user = userRepository.findByUserId(userId);
+        User user = userRepository.findByUserId(userId);
 
-        if (user.get().getUser_roles().equals("ADMIN")) { //관리자인 경우에만
+        if (user.getUser_roles().equals("ADMIN")) { //관리자인 경우에만
             //중개사 활성화
             Broker broker = brokerRepository.findByBrokerId(brokerId);
             broker.setBrokerStatus(1);
             brokerRepository.save(broker);
 
             //중개사 유저 역할 변경
-            Optional<User> bUser = userRepository.findByUserId(broker.getUserId());
+            User bUser = userRepository.findByUserId(broker.getUserId());
 //            bUser.get().setUser_roles("ROLE_BROKER");
-            userRepository.save(bUser.get());
+            userRepository.save(bUser);
             return true;
         }
         else return false;

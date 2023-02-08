@@ -1,7 +1,9 @@
 package com.bangbang.util;
 
+import com.bangbang.domain.sign.User;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
+import com.bangbang.service.CustomUserDetailsService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,16 +39,16 @@ import java.util.Map;
 @Component
 @RequiredArgsConstructor
 public class JwtTokenProvider {
-  private final UserDetailsService userDetailsService;
+  private final CustomUserDetailsService customUserDetailsService;
   private final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
 
   @Value("A405SUNSUSUNGBINHUNNEUONGASDSADASDASDASSAFYA405")
   private String secretKey;
 
-  @Value("${jwt.token-validity-in-minutes}0000")
+  @Value("1")
   private long tokenValidMinutes;
 
-  @Value("${jwt.refresh-validity-in-minutes}")
+  @Value("100000")
   private long refreshValidMinutes;
 
 
@@ -87,10 +89,9 @@ public class JwtTokenProvider {
   //해당 부분은 필터에서 인증이 성공을 하였을시에, securitycontextholder에 저장할 authentication을 생성하여 줍니다.
   //usernamePasswordAuthenticationToken을 사용하여 Authentication을 구현 하였습니다.
   public Authentication getAuthentication(String token) {
-    System.out.println(this.getUserId(token));
-    UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
+    User user = (User) customUserDetailsService.loadUserByUserId(Long.valueOf(this.getUserId(token)));
 
-    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    return new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
   }
 
   // 유저 이름 추출

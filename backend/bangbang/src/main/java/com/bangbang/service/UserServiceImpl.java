@@ -81,9 +81,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String refreshToken(Long uid, String token) throws Exception {
-        Optional<User> object = userRepository.findByUserId(uid);
-        if (object.isPresent()) {
-            User user = object.get();
+        User object = userRepository.findByUserId(uid);
+        if (object != null) {
+            User user = object;
             if (token.equals(user.getUser_refresh_token())) {
                 if (jwtTokenProvider.validateToken(token)) {
                     return jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());
