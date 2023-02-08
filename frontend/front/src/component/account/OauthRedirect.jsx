@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
-import { OAUTH2_SIGN_IN_REQUEST } from "../../reducers/user";
+import { oauth2SignInAsync } from "../../reducers/userSlice";
 import { useSearchParams } from 'react-router-dom'
 
 
@@ -9,23 +9,25 @@ function OauthRedirect() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams()
-  const { oauth2SignInDone, me } = useSelector((state) => state.user);
+  const { signInDone } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
-    dispatch({
-      type: OAUTH2_SIGN_IN_REQUEST,
-      data: {
+    dispatch(oauth2SignInAsync(
+      {
         userEmail: searchParams.get("email"),
         userNickname: searchParams.get("nickname"),
         accessToken: searchParams.get("accessToken"),
         refreshToken: searchParams.get("refreshToken"),
-      },
-    });
+      })
+    );
   }, []);
 
   useEffect(() => {
-    if (oauth2SignInDone) {
-      navigate('/');
+    if (signInDone) {
+      setTimeout(() => {
+        alert("로그인에 성공하였습니다.")
+        navigate('/');
+      }, 100);
     }
   });
 

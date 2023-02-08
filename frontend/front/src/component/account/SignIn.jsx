@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect } from "react";
-import { SIGN_IN_REQUEST } from "../../reducers/user";
+import { signInAsync } from "../../reducers/userSlice";
 
 const Wrapper = styled.div`
   display: flex;
@@ -81,7 +81,7 @@ function Login() {
   const navigate = useNavigate();
   const [userEmail, onChangeEmail] = useInput('');
   const [userPassword, onChangePassword] = useInput('');
-  const { signInDone, me } = useSelector((state) => state.user);
+  const { signInDone, me } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
 
   const regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
@@ -112,13 +112,12 @@ function Login() {
       alert('패스워드는 8자 이상 30자 이하로 입력해주세요!')
       return
     }
-    dispatch({
-      type: SIGN_IN_REQUEST,
-      data: {
+    dispatch(signInAsync(
+      {
         userEmail: userEmail,
         userPassword: userPassword,
-      },
-    });
+      }
+    ));
   })
   // const onClick = () => {
   //   navigate("/")
@@ -142,8 +141,8 @@ function Login() {
             }}>아직 회원이 아니신가요?</SSGignuP>
           </div>
           <SNormalButton type="button" onClick={() => {signInButtonClick()}}>로그인</SNormalButton>
-          <a type="button" href="http://localhost:8081/api/oauth2/authorization/kakao">카카오</a>
-          <a type="button" href="http://localhost:8081/api/oauth2/authorization/naver">네이버</a>
+          <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/kakao">카카오</a>
+          <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/naver">네이버</a>
           {/* <SKakaoButton type="button" onClick={() => {KakaoLogin()}}>카카오</SKakaoButton>
           <SNaverButton type="button" onClick={() => {NaverLogin()}}>네이버</SNaverButton> */}
           <div style={{textAlign: "left", marginLeft: "10%"}}>
