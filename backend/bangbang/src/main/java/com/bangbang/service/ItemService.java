@@ -25,4 +25,5 @@ public interface ItemService {
     void deactivateItem(long itemId);
     void modifyItem(Item item);
     void itemSold(long itemId);
+    List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter);
 }

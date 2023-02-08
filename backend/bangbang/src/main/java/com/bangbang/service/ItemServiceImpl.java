@@ -122,4 +122,12 @@ public class ItemServiceImpl implements ItemService {
         item.setItem_deal_complete(true);
         itemRepository.save(item);
     }
+
+    @Autowired
+    ItemQueryRepository itemQueryRepository;
+
+    @Override
+    public List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter) {
+        return itemQueryRepository.searchItemByFilter(filter);
+    }
 }

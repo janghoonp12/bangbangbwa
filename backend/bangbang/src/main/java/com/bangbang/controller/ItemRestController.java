@@ -79,7 +79,20 @@ public class ItemRestController {
             return exceptionHandling();
         }
     }
-    //필터 만들기
+
+    @ApiOperation(value = "매물 필터 검색")
+    @PostMapping("/items/filter")
+    public ResponseEntity<?> searchItemFilter(@RequestBody ItemFilterRequestDto filter) {
+        try {
+            List<ItemDto> item = itemService.searchItemByFilter(filter);
+            if (item != null && !item.isEmpty())
+                return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+
+    }
 
     @ApiOperation(value="매물 상세 정보")
     @GetMapping("/items/{item_id}")
@@ -94,7 +107,6 @@ public class ItemRestController {
         }
     }
 
-    //매물 삭제 구현
     @ApiOperation(value="매물 삭제(비활성화)")
     @PatchMapping("/items/deactivate/{item_id}")
     public ResponseEntity<?> deactivateItem(@PathVariable("item_id") long itemId) {
