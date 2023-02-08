@@ -1,11 +1,12 @@
 package com.bangbang.service;
 
+import com.bangbang.domain.sign.User;
 import com.bangbang.dto.SignIn;
 import com.bangbang.dto.sign.FindPassword;
-import com.bangbang.domain.sign.User;
 
 import com.bangbang.dto.sign.SignUp;
 import java.util.Map;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -17,5 +18,5 @@ public interface UserService {
 
     void findPassword(FindPassword signIn) throws Exception;
 
-
+    Optional<User> findUser(Long userId) throws Exception;
 }

@@ -126,4 +126,11 @@ public class UserServiceImpl implements UserService {
             throw new BaseException(ErrorMessage.NOT_USER_INFO);
         }
     }
+
+    @Override
+    public Optional<User> findUser(Long userId) throws Exception {
+        Optional<User> user = userRepository.findByUserId(userId);
+
+        return user;
+    }
 }
