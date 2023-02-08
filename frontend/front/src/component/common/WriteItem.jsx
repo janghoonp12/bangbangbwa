@@ -136,7 +136,7 @@ function WriteItem() {
 
     const data = {
       "item": {
-        "broker_id": 3,
+        "broker_id": 1,
         "item_bonbun": bon,
         "item_bubun": bu,                                      
         "item_build_year": buildYear,
@@ -165,7 +165,7 @@ function WriteItem() {
         "item_roadname_code": postCode.roadnameCode,
         "item_room": roomNum,
         "item_sigungucode": postCode.sigunguCode,
-        "item_status": 0,
+        "item_status": 1,
         "item_supply_area": supplyArea,
         "item_toilet": toiletNum,
         "item_title": itemName,
