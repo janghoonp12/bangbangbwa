@@ -7,9 +7,11 @@ import styled from 'styled-components';
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
 
-let chatting = []
+
+let chattings = []
 
 class Openvidu extends Component {
+  
     constructor(props) {
         super(props);
 
@@ -20,6 +22,7 @@ class Openvidu extends Component {
             mainStreamManager: undefined,
             publisher: undefined,
             subscribers: [],
+            chat: "",
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -83,7 +86,7 @@ class Openvidu extends Component {
                   "session": "SessionA",
                   "to": [],
                   "type":"MY_TYPE",
-                  "data":"This is my signal data"
+                  "data":`${this.state.myUserName}: ${this.state.chat}`
               },
               {
                   headers: {
@@ -95,10 +98,17 @@ class Openvidu extends Component {
           )
           .then((response) => {
               console.log('Send Message Success', response);
+              // chattings.push(`you: ${this.state.chat}`)
+              console.log(chattings)
           })
           .catch((response) => {
               console.log('Send Message Fail', response)
           })
+    }
+
+    onChange = (e) => {
+      // setSearch(e.target.value)
+      this.setState({chat:e.target.value})
     }
 
     activeEnter = (e) => {
@@ -106,6 +116,13 @@ class Openvidu extends Component {
         this.chatAxios()
       }
     }
+
+    // onClick = () => {
+    //   if (search) {
+    //     alert(`${search} 채팅`)
+    //     setSearch('')
+    //   }
+    // }
 
     joinSession() {
         // --- 1) Get an OpenVidu object ---
@@ -195,6 +212,7 @@ class Openvidu extends Component {
                 // 채팅
                 mySession.on('signal', (event) => {
                   console.log('Received message', event.data);
+                  chattings.unshift(event.data);
                 });
             },
         );
@@ -225,6 +243,8 @@ class Openvidu extends Component {
     render() {
       const mySessionId = this.state.mySessionId;
       const myUserName = this.state.myUserName;
+    
+      let chatbox = chattings.map((chatting, index) => <SChatP index={index}>{chatting}</SChatP>)
 
       return (
         <Wrapper>
@@ -286,15 +306,15 @@ class Openvidu extends Component {
                 ) : null}
                 <SChatDiv>
                   <SChatAreaDiv>
-                    <SChatP>채팅창</SChatP>
-                    <SChatP>채팅창</SChatP>
-                    <SChatP>채팅창</SChatP>
-                    <SChatP>채팅창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창창</SChatP>
-                    <SChatP>채팅창</SChatP>
-                    <SChatP>채팅창</SChatP>
+                    
+                    {chatbox}
+                    
                   </SChatAreaDiv>
                 </SChatDiv>
-                <SInput type="text" onKeyDown={(e) => this.activeEnter(e)}/>
+                {/* <SInput type="text" onKeyDown={(e) => this.activeEnter(e)}/> */}
+                <SInput type="text" onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
+                {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
+                
                 {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
@@ -400,7 +420,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 50vw;
+  width: 45vh;
   height: 90vh;
   background-color: white;
 `;
@@ -426,9 +446,9 @@ const SChatDiv = styled.div`
 
 const SChatAreaDiv = styled.div`
   border: 1px solid black;
-  // display: flex;
+  display: flex;
   overflow-y: auto;
-  // flex-direction: column_reverse;
+  flex-direction: column-reverse;
   word-wrap: break-word;
 `;
 
@@ -438,4 +458,17 @@ const SInput = styled.input`
 
 const SChatP = styled.p`
   margin-bottom: 0px;
+`;
+
+const SButton = styled.button`
+  border-radius: 10px;
+  margin-left: 10px;
+  height: 35px;
+  border: 0 solid black;
+  background-color: #00ff0000; 
+`;
+
+const SImg = styled.img`
+  width: 30px;
+  height: 30px;
 `;
