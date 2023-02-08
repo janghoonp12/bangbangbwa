@@ -212,13 +212,17 @@ function WriteItem() {
 
     // axios 체크
     
-    // axios.post('/api/items/new', data)
-    // .then(response => {
-    //   console.log(response);
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    // })
+    axios.post('/api/items/new', data, {
+      headers: {
+        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+      }
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.error(error);
+    })
   }
 
 
