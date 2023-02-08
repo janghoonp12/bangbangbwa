@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import userSaga from './user'
 
-axios.defaults.baseURL = "http://localhost:8081/api"
-//axios.defaults.baseURL = "https://i8a405.p.ssafy.io/api"
+//axios.defaults.baseURL = "http://localhost:8081/api"
+axios.defaults.baseURL = "https://i8a405.p.ssafy.io/api"
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
