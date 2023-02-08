@@ -62,19 +62,20 @@ function NoticeNew() {
   }
 
   const createNotice = () => {
-    let today = new Date();   
+    // let today = new Date();   
 
-    let year = today.getFullYear(); // 년도
-    let month = today.getMonth() + 1;  // 월
-    let date = today.getDate();  // 날짜  
+    // let year = today.getFullYear(); // 년도
+    // let month = today.getMonth() + 1;  // 월
+    // let date = today.getDate();  // 날짜  
 
-    let realToday = `${year}-${month}-${date}`
+    // let realToday = `${year}-${month}-${date}`
 
     const data = {
       'notice_type': type,
       'notice_title': title,
       'notice_comment': comment,
-      'notice_regidate': realToday
+      // 'notice_regidate': realToday,
+      'notice_status': 1
     }
 
     axios.post('/admin/notices/new', data, {
