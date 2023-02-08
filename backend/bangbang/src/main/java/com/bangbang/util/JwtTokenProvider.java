@@ -45,7 +45,7 @@ public class JwtTokenProvider {
   @Value("A405SUNSUSUNGBINHUNNEUONGASDSADASDASDASSAFYA405")
   private String secretKey;
 
-  @Value("1")
+  @Value("10000")
   private long tokenValidMinutes;
 
   @Value("100000")
