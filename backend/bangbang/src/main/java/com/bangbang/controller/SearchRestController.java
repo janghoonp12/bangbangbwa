@@ -21,9 +21,20 @@ public class SearchRestController {
   @Autowired
   private final SearchService searchService;
 
+  @ApiOperation(value="키워드 검색")
   @GetMapping("/search")
-  public ResponseEntity<SearchResultDto> search(@RequestParam("keyword") String keyword) {
-    SearchResultDto result = searchService.search(keyword);
-    return ResponseEntity.ok(result);
+  public ResponseEntity<?> search(@RequestParam("keyword") String keyword) {
+    try {
+      SearchResultDto result = searchService.search(keyword);
+      if (result != null)
+        return new ResponseEntity<SearchResultDto>(result, HttpStatus.OK);
+      else return new ResponseEntity(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
+      return exceptionHandling();
+    }
+  }
+
+  private ResponseEntity exceptionHandling() {
+    return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
