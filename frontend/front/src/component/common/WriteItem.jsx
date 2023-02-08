@@ -136,7 +136,7 @@ function WriteItem() {
 
     const data = {
       "item": {
-        "broker_id": 1,
+        // "broker_id": 1,
         "item_bonbun": bon,
         "item_bubun": bu,                                      
         "item_build_year": buildYear,
