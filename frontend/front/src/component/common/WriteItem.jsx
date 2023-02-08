@@ -212,7 +212,7 @@ function WriteItem() {
 
     // axios 체크
     
-    axios.post('/items/new', data, {
+    axios.post('/broker/items/new', data, {
       headers: {
         "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
       }
