@@ -100,6 +100,8 @@ class Openvidu extends Component {
               console.log('Send Message Success', response);
               // chattings.push(`you: ${this.state.chat}`)
               console.log(chattings)
+              this.setState({chat:""})
+              console.log(this.state.chat)
           })
           .catch((response) => {
               console.log('Send Message Fail', response)
@@ -198,12 +200,26 @@ class Openvidu extends Component {
                             // --- 6) Publish your stream ---
 
                             mySession.publish(publisher);
-
                             // Set the main video in the page to display our webcam and store our Publisher
-                            this.setState({
+                            if (this.state.subscribers.length === 0) {
+                              this.setState({
                                 mainStreamManager: publisher,
                                 publisher: publisher,
-                            });
+                              });
+                            } else {
+                              for (let i=0; i<this.state.subscribers.length; i++) {
+                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
+                                  this.setState({
+                                    mainStreamManager: this.state.subscribers[i]
+                                  })
+                                  console.log("이밑을봐라")
+                                  console.log(this.state.subscribers[i])
+                                }
+                              }
+                              this.setState({
+                                publisher: publisher,
+                              })
+                            }                           
                         })
                         .catch((error) => {
                             console.log('There was an error connecting to the session:', error.code, error.message);
@@ -213,6 +229,8 @@ class Openvidu extends Component {
                 mySession.on('signal', (event) => {
                   console.log('Received message', event.data);
                   chattings.unshift(event.data);
+                  this.setState({chat:""})
+                  
                 });
             },
         );
@@ -312,10 +330,10 @@ class Openvidu extends Component {
                   </SChatAreaDiv>
                 </SChatDiv>
                 {/* <SInput type="text" onKeyDown={(e) => this.activeEnter(e)}/> */}
-                <SInput type="text" onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
+                <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
                 {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
                 
-                {/* <div id="video-container" className="col-md-6">
+                <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                       <UserVideoComponent streamManager={this.state.publisher} />
@@ -326,7 +344,7 @@ class Openvidu extends Component {
                       <UserVideoComponent streamManager={sub} />
                     </div>
                   ))}    
-                </div> */}
+                </div>
               </div>
             ) : null}
           </Container>
