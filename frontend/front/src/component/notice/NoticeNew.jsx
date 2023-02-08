@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../common/ui/Button";
+import axios from "axios";
 
 
 const Wrapper = styled.div`
@@ -41,8 +42,54 @@ const STitleP = styled.p`
 `;
 
 
+
+
 function NoticeNew() {
   const navigate = useNavigate();
+  
+  const [type, setType] = useState();
+  const [title, setTitle] = useState();
+  const [comment, setComment] = useState();
+
+  const typeChange = (e) => {
+    setType(e.target.value)
+  }
+  const titleChange = (e) => {
+    setTitle(e.target.value)
+  }
+  const commentChange = (e) => {
+    setComment(e.target.value)
+  }
+
+  const createNotice = () => {
+    let today = new Date();   
+
+    let year = today.getFullYear(); // 년도
+    let month = today.getMonth() + 1;  // 월
+    let date = today.getDate();  // 날짜  
+
+    let realToday = `${year}-${month}-${date}`
+
+    const data = {
+      'notice_type': type,
+      'notice_title': title,
+      'notice_comment': comment,
+      'notice_regidate': realToday
+    }
+
+    axios.post('/admin/notices/new', data, {
+      headers: {
+        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+      }
+    })
+    .then(response => {
+      console.log(response);
+      navigate('/notices')
+    })
+    .catch(error => {
+      console.error(error);
+    })
+  }
 
   return (
     <Wrapper>
@@ -50,7 +97,7 @@ function NoticeNew() {
         <h1>공지사항 작성</h1>
         <SGridDiv style={{marginTop: "5%"}}>
           <STitleP>분류</STitleP>
-          <SSelect required>
+          <SSelect onChange={typeChange} required>
           <option value="" disabled selected style={{display: "none"}}>분류를 선택하세요</option>
           <option value="점검">점검</option>
           <option value="안내">안내</option>
@@ -61,12 +108,12 @@ function NoticeNew() {
         <hr />
         <SGridDiv>
           <STitleP>공지 제목</STitleP>
-          <input placeholder=" 제목을 입력하세요." />
+          <input onChange={titleChange} placeholder=" 제목을 입력하세요." />
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>공지 내용</STitleP>
-          <textarea rows="8" placeholder=" 내용을 입력하세요." />
+          <textarea onChange={commentChange} rows="8" placeholder=" 내용을 입력하세요." />
         </SGridDiv>
         <hr />
         <SGridDiv>
@@ -77,9 +124,7 @@ function NoticeNew() {
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
           <Button
             title="등록하기"
-            onClick={() => {
-              navigate("/notices");
-            }}
+            onClick={createNotice}
             />
         </div>
       </Container>
