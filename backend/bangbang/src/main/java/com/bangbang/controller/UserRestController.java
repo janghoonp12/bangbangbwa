@@ -8,6 +8,8 @@ import com.bangbang.service.UserServiceImpl;
 import com.bangbang.domain.sign.User;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
 import javax.validation.Valid;
@@ -66,18 +68,22 @@ public class UserRestController {
     }}, HttpStatus.OK);
   }
 
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 refresh_token", required = true, dataType = "String", paramType = "header")
+  })
   @ApiOperation(value = "Access Token 재발급", notes = "만료된 access token을 재발급받는다.")
-  @PostMapping("/refresh")
-  public ResponseEntity<?> refreshToken(@RequestBody Long uid, HttpServletRequest request) throws Exception {
+  @PostMapping("/user/users/refresh")
+  public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
     HttpStatus status = HttpStatus.ACCEPTED;
-    String token = request.getHeader("refresh-token");
+    String token = request.getHeader("X-AUTH-TOKEN");
+    Long uid = userService.findUserId(token);
     String result = userService.refreshToken(uid, token);
     if (result != null && !result.equals("")) {
       // 발급 성공
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
         put("result", true);
         put("msg", "토큰이 발급되었습니다.");
-        put("access-token", result);
+        put("accesstoken", result);
       }}, status);
     } else {
       // 발급 실패
