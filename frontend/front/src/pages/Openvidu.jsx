@@ -2,12 +2,16 @@ import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
 import UserVideoComponent from '../component/openvidu/UserVideoComponent';
+import styled from 'styled-components';
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
 
 
+let chattings = []
+
 class Openvidu extends Component {
+  
     constructor(props) {
         super(props);
 
@@ -18,6 +22,7 @@ class Openvidu extends Component {
             mainStreamManager: undefined,
             publisher: undefined,
             subscribers: [],
+            chat: "",
         };
 
         this.joinSession = this.joinSession.bind(this);
@@ -70,6 +75,56 @@ class Openvidu extends Component {
             });
         }
     }
+
+    
+    
+    // 채팅 기능
+    chatAxios() {
+      axios
+          .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+              {
+                  "session": `${this.state.mySessionId}`,
+                  "to": [],
+                  "type":"MY_TYPE",
+                  "data":`${this.state.myUserName}: ${this.state.chat}`
+              },
+              {
+                  headers: {
+                      Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: false
+              }
+          )
+          .then((response) => {
+              console.log('Send Message Success', response);
+              // chattings.push(`you: ${this.state.chat}`)
+              console.log(chattings)
+              this.setState({chat:""})
+              console.log(this.state.chat)
+          })
+          .catch((response) => {
+              console.log('Send Message Fail', response)
+          })
+    }
+
+    onChange = (e) => {
+      // setSearch(e.target.value)
+      this.setState({chat:e.target.value})
+    }
+
+    activeEnter = (e) => {
+      if (e.key === 'Enter') {
+        this.chatAxios()
+      }
+    }
+
+    // onClick = () => {
+    //   if (search) {
+    //     alert(`${search} 채팅`)
+    //     setSearch('')
+    //   }
+    // }
 
     joinSession() {
         // --- 1) Get an OpenVidu object ---
@@ -145,16 +200,37 @@ class Openvidu extends Component {
                             // --- 6) Publish your stream ---
 
                             mySession.publish(publisher);
-
                             // Set the main video in the page to display our webcam and store our Publisher
-                            this.setState({
+                            if (this.state.subscribers.length === 0) {
+                              this.setState({
                                 mainStreamManager: publisher,
                                 publisher: publisher,
-                            });
+                              });
+                            } else {
+                              for (let i=0; i<this.state.subscribers.length; i++) {
+                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
+                                  this.setState({
+                                    mainStreamManager: this.state.subscribers[i]
+                                  })
+                                  console.log("이밑을봐라")
+                                  console.log(this.state.subscribers[i])
+                                }
+                              }
+                              this.setState({
+                                publisher: publisher,
+                              })
+                            }                           
                         })
                         .catch((error) => {
                             console.log('There was an error connecting to the session:', error.code, error.message);
                         });
+                });
+                // 채팅
+                mySession.on('signal', (event) => {
+                  console.log('Received message', event.data);
+                  chattings.unshift(event.data);
+                  this.setState({chat:""})
+                  
                 });
             },
         );
@@ -183,84 +259,101 @@ class Openvidu extends Component {
     }
 
     render() {
-        const mySessionId = this.state.mySessionId;
-        const myUserName = this.state.myUserName;
+      const mySessionId = this.state.mySessionId;
+      const myUserName = this.state.myUserName;
+    
+      let chatbox = chattings.map((chatting, index) => <SChatP index={index}>{chatting}</SChatP>)
 
-        return (
-            <div className="container">
-                {this.state.session === undefined ? (
-                    <div id="join">
-                        <div id="img-div">
-                            <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
-                        </div>
-                        <div id="join-dialog" className="jumbotron vertical-center">
-                            <h1> Join a video session </h1>
-                            <form className="form-group" onSubmit={this.joinSession}>
-                                <p>
-                                    <label>Participant: </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="userName"
-                                        value={myUserName}
-                                        onChange={this.handleChangeUserName}
-                                        required
-                                    />
-                                </p>
-                                <p>
-                                    <label> Session: </label>
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        id="sessionId"
-                                        value={mySessionId}
-                                        onChange={this.handleChangeSessionId}
-                                        required
-                                    />
-                                </p>
-                                <p className="text-center">
-                                    <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
-                                </p>
-                            </form>
-                        </div>
+      return (
+        <Wrapper>
+          <Container className="container">
+            {this.state.session === undefined ? (
+              <div id="join">
+                <div id="img-div">
+                    <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
+                </div>
+                <div id="join-dialog" className="jumbotron vertical-center">
+                  <h1> Join a video session </h1>
+                  <form className="form-group" onSubmit={this.joinSession}>
+                    <p>
+                      <label>Participant: </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="userName"
+                        value={myUserName}
+                        onChange={this.handleChangeUserName}
+                        required
+                      />
+                    </p>
+                    <p>
+                      <label> Session: </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="sessionId"
+                        value={mySessionId}
+                        onChange={this.handleChangeSessionId}
+                        required
+                      />
+                    </p>
+                    <p className="text-center">
+                      <input className="btn btn-lg btn-success" name="commit" type="submit" value="JOIN" />
+                    </p>
+                  </form>
+                </div>
+              </div>
+            ) : null}
+
+            {this.state.session !== undefined ? (
+              <div id="session">
+                <STitleDiv id="session-header">
+                  <h1 id="session-title">{mySessionId}</h1>
+                  <input
+                    className="btn btn-large btn-danger"
+                    type="button"
+                    id="buttonLeaveSession"
+                    onClick={this.leaveSession}
+                    value="나가기"
+                  />
+                </STitleDiv>
+                {this.state.mainStreamManager !== undefined ? (
+                  <SScreenDiv id="main-video" className="col-md-6">
+                    <UserVideoComponent streamManager={this.state.mainStreamManager} />
+                  </SScreenDiv>
+                ) : (
+                  <SLiveEndDiv>
+                    <p>방송이 종료되었습니다.</p>
+                  </SLiveEndDiv>
+                )}
+                <SChatDiv>
+                  <SChatAreaDiv>
+                    
+                    {chatbox}
+                    
+                  </SChatAreaDiv>
+                </SChatDiv>
+                {/* <SInput type="text" onKeyDown={(e) => this.activeEnter(e)}/> */}
+                <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
+                {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
+                
+                {/* <div id="video-container" className="col-md-6">
+                  {this.state.publisher !== undefined ? (
+                    <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                      <UserVideoComponent streamManager={this.state.publisher} />
                     </div>
-                ) : null}
-
-                {this.state.session !== undefined ? (
-                    <div id="session">
-                        <div id="session-header">
-                            <h1 id="session-title">{mySessionId}</h1>
-                            <input
-                                className="btn btn-large btn-danger"
-                                type="button"
-                                id="buttonLeaveSession"
-                                onClick={this.leaveSession}
-                                value="Leave session"
-                            />
-                        </div>
-
-                        {this.state.mainStreamManager !== undefined ? (
-                            <div id="main-video" className="col-md-6">
-                                <UserVideoComponent streamManager={this.state.mainStreamManager} />
-                            </div>
-                        ) : null}
-                        <div id="video-container" className="col-md-6">
-                            {this.state.publisher !== undefined ? (
-                                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                                    <UserVideoComponent
-                                        streamManager={this.state.publisher} />
-                                </div>
-                            ) : null}
-                            {this.state.subscribers.map((sub, i) => (
-                                <div key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
-                                    <UserVideoComponent streamManager={sub} />
-                                </div>
-                            ))}
-                        </div>
+                  ) : null}
+                  {this.state.subscribers.map((sub, i) => (
+                    <div key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
+                      <UserVideoComponent streamManager={sub} />
                     </div>
-                ) : null}
-            </div>
-        );
+                  ))}    
+                </div> */}
+              </div>
+            ) : null}
+          </Container>
+        </Wrapper>
+      );
     }
 
     /**
@@ -342,3 +435,66 @@ class Openvidu extends Component {
 }
 
 export default Openvidu;
+
+const Wrapper = styled.div`
+  display: flex;
+  background-color: black;
+`;
+
+const Container = styled.div`
+  width: 45vh;
+  height: 90vh;
+  background-color: white;
+`;
+
+const STitleDiv = styled.div`
+  display: grid;
+  grid-template-columns: 10fr 2fr;
+`;
+
+const SScreenDiv = styled.div`
+  width: 100%;
+  height: 65vh;
+`;
+
+const SChatDiv = styled.div`
+  display: grid;
+  grid-direction: row;
+  grid-template-row: 5fr 1fr;
+  width: 100%;
+  height: 15vh;
+  border: 1px solid black;
+`;
+
+const SChatAreaDiv = styled.div`
+  border: 1px solid black;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column-reverse;
+  word-wrap: break-word;
+`;
+
+const SInput = styled.input`
+  width: 100%;
+`;
+
+const SChatP = styled.p`
+  margin-bottom: 0px;
+`;
+
+const SButton = styled.button`
+  border-radius: 10px;
+  margin-left: 10px;
+  height: 35px;
+  border: 0 solid black;
+  background-color: #00ff0000; 
+`;
+
+const SImg = styled.img`
+  width: 30px;
+  height: 30px;
+`;
+
+const SLiveEndDiv = styled.div`
+  background-color: black;
+`;

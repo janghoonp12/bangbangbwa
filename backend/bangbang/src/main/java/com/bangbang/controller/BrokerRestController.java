@@ -4,6 +4,8 @@ import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
 import com.bangbang.service.BrokerService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,11 @@ public class BrokerRestController {
     @Autowired
     private final BrokerService brokerService;
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="중개사 신청")
-    @PostMapping("/brokers/new")
+    @PostMapping("/user/brokers/new")
     public ResponseEntity<?> newBroker(@RequestBody BrokerSaveRequestDto broker) {
         try {
             brokerService.newBroker(broker);
@@ -31,8 +36,11 @@ public class BrokerRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="중개사 신청 조회")
-    @GetMapping("/brokers")
+    @GetMapping("/user/brokers")
     public ResponseEntity<?> searchBrokerAll() {
         try {
             List<BrokerResponseDto> list = brokerService.searchBrokerAll();
@@ -44,8 +52,11 @@ public class BrokerRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="중개사 등록")
-    @PatchMapping("/brokers/register")
+    @PatchMapping("/user/brokers/register")
     public ResponseEntity<?> registerBroker(@RequestParam("brokerId") Long brokerId, @RequestParam("userId") Long userId) {
         try {
             boolean flag = brokerService.registerBroker(brokerId, userId);
@@ -58,6 +69,9 @@ public class BrokerRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="중개사 비활성화")
     @PatchMapping("/brokers/deactive/{brokerId}")
     public ResponseEntity<?> deactiveBroker(@PathVariable Long brokerId) {

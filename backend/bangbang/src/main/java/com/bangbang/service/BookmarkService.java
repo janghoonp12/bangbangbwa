@@ -45,8 +45,11 @@ public class BookmarkService {
    Optional<SiGuDongDto> dongcode = Optional.of(dongCodeRepository.getAddressName(requestDto.getDongCode()));
    dongcode.orElseThrow(() -> new IllegalArgumentException("해당 동코드가 없습니다."));
 
-    User user = userRepository.findByUserId(requestDto.getUserId())
-        .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
+    User user = userRepository.findByUserId(requestDto.getUserId());
+
+    if (user == null) {
+      new IllegalArgumentException("유저 정보가 존재하지 않습니다.");
+    }
 
     bookmarkRepository.save(requestDto.toEntity());
   }
