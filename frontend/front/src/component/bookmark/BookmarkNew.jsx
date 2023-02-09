@@ -24,16 +24,6 @@ const SGridDiv = styled.div`
   grid-template-columns: 0.25fr 0.75fr;
 `;
 
-
-const SSelect = styled.select`
-  width: 200px;
-  height: 40px;
-
-  :invalid {
-    color: red;
-  }
-`;
-
 const STitleP = styled.p`
   margin-bottom: 0px;
   display: flex;
@@ -86,13 +76,29 @@ function BookmarkNew() {
   }
 
   // 가격
-  const [minPrice, setMinPrice] = useState();
-  const minPriceChange = (e) => {
-    setMinPrice(parseInt(e.target.value))
+  const [monthMinPrice, setMonthMinPrice] = useState();
+  const monthMinPriceChange = (e) => {
+    setMonthMinPrice(parseInt(e.target.value))
   }
-  const [maxPrice, setMaxPrice] = useState();
-  const maxPriceChange = (e) => {
-    setMaxPrice(parseInt(e.target.value))
+  const [monthMaxPrice, setMonthMaxPrice] = useState();
+  const monthMaxPriceChange = (e) => {
+    setMonthMaxPrice(parseInt(e.target.value))
+  }
+  const [minDeposit, setMinDeposit] = useState();
+  const minDepositChange = (e) => {
+    setMinDeposit(parseInt(e.target.value))
+  }
+  const [maxDeposit, setMaxDeposit] = useState();
+  const maxDepositChange = (e) => {
+    setMaxDeposit(parseInt(e.target.value))
+  }
+  const [minBuyPrice, setMinBuyPrice] = useState();
+  const minBuyPriceChange = (e) => {
+    setMinBuyPrice(parseInt(e.target.value))
+  }
+  const [maxBuyPrice, setMaxBuyPrice] = useState();
+  const maxBuyPriceChange = (e) => {
+    setMaxBuyPrice(parseInt(e.target.value))
   }
 
   // 면적
@@ -129,8 +135,12 @@ function BookmarkNew() {
       'bookmark_item_build_min_year': buildMinYear,
       'bookmark_item_build_max_year': buildMaxYear,
       'dongCode': "string",
-      'bookmark_item_min_price': minPrice,
-      'bookmark_item_max_price': maxPrice
+      'bookmark_item_month_min_price': (dealType === '1') ? monthMinPrice : null,
+      'bookmark_item_month_max_price': (dealType === '1') ? monthMaxPrice : null,
+      'bookmark_item_min_deposit': (dealType === '1' || dealType === '2') ? minDeposit : null,
+      'bookmark_item_max_deposit': (dealType === '1' || dealType === '2') ? maxDeposit : null,
+      'bookmark_item_buy_min_price': (dealType === '3') ? minBuyPrice : null,
+      'bookmark_item_buy_max_price': (dealType === '3') ? maxBuyPrice : null
     }
 
     axios.post('/user/bookmarks/new', data, {
@@ -189,18 +199,34 @@ function BookmarkNew() {
         </SGridDiv>
         <hr />
         <SGridDiv>
-          <STitleP>가격</STitleP>
-            <SGridListDiv>
-              <input onChange={minPriceChange} placeholder=" 00" min="0" step="100" type="number"/> &nbsp; 만원 이상
-              <input onChange={maxPriceChange} placeholder=" 00" min="0" step="100" type="number"/> &nbsp; 만원 이하
-            </SGridListDiv>
+          <STitleP>보증금/전세가</STitleP>
+          <div>
+            <input onChange={minDepositChange} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === '1' || dealType === '2') ? false : true} />&nbsp;만원부터
+            <input onChange={maxDepositChange} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === '1' || dealType === '2') ? false : true} />&nbsp;만원까지
+          </div>
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>월세</STitleP>
+          <div>
+            <input onChange={monthMinPriceChange} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === '1') ? false : true} />&nbsp;만원부터
+            <input onChange={monthMaxPriceChange} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === '1') ? false : true} />&nbsp;만원까지
+          </div>
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>매매가</STitleP>
+          <div>
+            <input onChange={minBuyPriceChange}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원부터
+            <input onChange={maxBuyPriceChange}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원까지
+          </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>사용 승인일</STitleP>
             <SGridListDiv>
-              <input onChange={minDateChange} type="date"/> &nbsp; 부터
-              <input onChange={maxDateChange} type="date"/> &nbsp; 까지
+              <input onChange={minDateChange} type="month"/> &nbsp; 부터
+              <input onChange={maxDateChange} type="month"/> &nbsp; 까지
             </SGridListDiv>
         </SGridDiv>
         <hr />
