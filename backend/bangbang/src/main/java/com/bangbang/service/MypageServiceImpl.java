@@ -21,12 +21,12 @@ public class MypageServiceImpl implements MypageService{
     }
 
     @Override
-    public List<ItemDto> searchMyItem(Long brokerId) {
-        return mypageRepository.searchItemByBrokerId(brokerId);
+    public List<ItemDto> searchMyItem(Long userId) {
+        return mypageRepository.searchItemByBrokerId(userId);
     }
 
     @Override
-    public List<BroadcastListResponseDto> searchMyBroadcast(Long brokerId) {
-        return mypageRepository.searchBroadcastByBrokerId(brokerId);
+    public List<BroadcastListResponseDto> searchMyBroadcast(Long userId) {
+        return mypageRepository.searchBroadcastByBrokerId(userId);
     }
 }
