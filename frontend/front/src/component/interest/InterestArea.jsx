@@ -7,6 +7,7 @@ import InterestAreaAdd from "./InterestAreaAdd";
 
 function InterestArea() {
 
+
   return (
     <div>
       <h3 align="center">관심 지역 추가하기</h3>
