@@ -15,14 +15,14 @@ function NoticeItem(props) {
     const data = props.notice
     const navigate = useNavigate();
     const onClick = () => {
-        navigate(`/notices/${data.id}`)
+        navigate(`/notices/${data.notice_id}`)
     }
 
     return (
     <tr style={{fontSize: '20px'}}>
-      <td style={{width: '10%'}}><center>{data.id}</center></td>
-      <Std onClick={onClick} style={{width: '70%', fontWeight: '600', color: 'blue'}}>[{data.type}] {data.title}</Std>
-      <td style={{width: '20%'}}><center>{data.regidate}</center></td>
+      <td style={{width: '10%'}}><center>{props.num}</center></td>
+      <Std onClick={onClick} style={{width: '70%', fontWeight: '600', color: 'blue'}}>{data.notice_title}</Std>
+      <td style={{width: '20%'}}><center>{data.notice_regidate}</center></td>
     </tr>
     )
   }

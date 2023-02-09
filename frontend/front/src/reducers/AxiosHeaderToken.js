@@ -1,7 +1,8 @@
 import axios from 'axios';
 import Swal from "sweetalert2";
 
-const BASE_URL = "https://localhost/api"
+//const BASE_URL = "http://localhost:8081/api"
+const BASE_URL = "https://i8a405.p.ssafy.io/api"
 
 const AxiosHeaderToken = axios.create({
   baseURL: BASE_URL,
@@ -13,11 +14,11 @@ const AxiosHeaderToken = axios.create({
 
 AxiosHeaderToken.interceptors.request.use(
   function (config) {
-    const accessToken = sessionStorage.getItem("access-token");
+        const accessToken = sessionStorage.getItem("access-token");
       // before send request logic
     if(accessToken) {
         // config.headers.Authorization = `Bearer ${accessToken}`;
-        config.headers.post['X-AUTH-TOKEN'] = `Bearer ${accessToken}`;
+        config.headers['X-AUTH-TOKEN'] = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -27,7 +28,7 @@ AxiosHeaderToken.interceptors.request.use(
   }
 );
 
-jwtApi.interceptors.response.use(
+AxiosHeaderToken.interceptors.response.use(
   function(response) {
       // response data 가공
   return response;
@@ -107,3 +108,5 @@ function ErrorCode(response) {
           return;
   }
 }
+
+export default AxiosHeaderToken;
