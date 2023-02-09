@@ -20,6 +20,7 @@ const SCardDiv = styled.div`
   text-align: center;
 `;
 
+
 const SCardImg = styled.img`
   width: 248px;
   height: 250px;

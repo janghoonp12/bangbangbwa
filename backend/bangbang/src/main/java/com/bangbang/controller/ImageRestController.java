@@ -4,6 +4,8 @@ import com.bangbang.dto.file.FileDto;
 import com.bangbang.dto.image.ImageSaveRequestDto;
 import com.bangbang.service.ImageService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +42,10 @@ public class ImageRestController {
   private final ImageService imageService;
 
   //사진 등록
-  @PostMapping(value = "/images/new")
+  @ApiImplicitParams({
+      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+  })
+  @PostMapping(value = "/broker/images/new")
   @ApiOperation(value = "사진 등록", notes = "사진을 등록합니다.")
   public ResponseEntity<?> newImage(@RequestParam("file") MultipartFile file,
       @RequestParam("imageType") Integer imageType,

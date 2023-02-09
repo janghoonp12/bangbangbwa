@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useCallback, useEffect } from "react";
-import { SIGN_UP_REQUEST } from "../../reducers/user";
+import { signUpAsync } from "../../reducers/userSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -79,7 +79,7 @@ function SignUp() {
   const [passwordCheck, setPasswordCheck] = useState('')
   const [passwordError, setPasswordError] = useState(false);
 
-  const { signUpDone } = useSelector((state) => state.user);
+  const { signUpDone } = useSelector((state) => state.userSlice);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,14 +104,13 @@ function SignUp() {
       alert('비밀번호가 일치하지 않습니다.')
       return setPasswordError(true);
     }
-    dispatch({
-      type: SIGN_UP_REQUEST,
-      data: {
+    dispatch(signUpAsync(
+      {
         userEmail: userEmail,
         userPassword: userPassword,
         userNickname: userNickname
-      },
-    });
+      }),
+    );
   })
 
   const onChangePasswordCheck = useCallback((e) => {

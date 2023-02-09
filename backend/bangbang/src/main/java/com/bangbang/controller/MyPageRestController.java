@@ -6,6 +6,8 @@ import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.dto.item.ItemDto;
 import com.bangbang.service.MypageService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,11 @@ public class MyPageRestController {
     @Autowired
     private final MypageService mypageService;
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="유저 정보 조회")
-    @GetMapping("/mypage/{userId}")
+    @GetMapping("/user/mypage/{userId}")
     public ResponseEntity<?> searchUser(@PathVariable Long userId) {
         try {
             User user = mypageService.searchUser(userId);
@@ -37,8 +42,11 @@ public class MyPageRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="나의 매물 정보 조회")
-    @GetMapping("/mypage/item/{brokerId}")
+    @GetMapping("/user/mypage/item/{brokerId}")
     public ResponseEntity<?> searchMyItem(@PathVariable Long brokerId) {
         try {
             List<ItemDto> item = mypageService.searchMyItem(brokerId);
@@ -50,8 +58,11 @@ public class MyPageRestController {
         }
     }
 
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
     @ApiOperation(value="나의 방송 정보 조회")
-    @GetMapping("/mypage/broadcast/{brokerId}")
+    @GetMapping("/user/mypage/broadcast/{brokerId}")
     public ResponseEntity<?> searchMyBroadcast(@PathVariable Long brokerId) {
         try {
             List<BroadcastListResponseDto> broadcasts = mypageService.searchMyBroadcast(brokerId);

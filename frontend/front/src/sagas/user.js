@@ -8,6 +8,9 @@ import {
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_IN_FAILURE,
+  OAUTH2_SIGN_IN_REQUEST,
+  OAUTH2_SIGN_IN_SUCCESS,
+  OAUTH2_SIGN_IN_FAILURE
 } from '../reducers/user'
 
 function signUpAPI(data) {
@@ -49,6 +52,21 @@ function* signIn(action) {
   }
 }
 
+function* oauth2SignIn(action) {
+  try {
+    yield put({
+      type: OAUTH2_SIGN_IN_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: OAUTH2_SIGN_IN_FAILURE,
+      error: err.response.data,
+    })
+  }
+}
+
 function* watchSignUp() {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
@@ -57,9 +75,14 @@ function* watchSignIn() {
   yield takeLatest(SIGN_IN_REQUEST, signIn);
 }
 
+function* watchOauth2SignIn() {
+  yield takeLatest(OAUTH2_SIGN_IN_REQUEST, oauth2SignIn);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchSignUp),
     fork(watchSignIn),
+    fork(watchOauth2SignIn),
   ]);
 }
