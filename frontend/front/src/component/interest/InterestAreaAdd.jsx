@@ -65,7 +65,7 @@ function InterestAreaAdd() {
 
   // 페이지 렌더링 시 시군구 코드 받아오기
   useEffect(() => {
-    axios.get('/api/items/sido')
+    axios.get('/items/sido')
     .then(res => {
       console.log(res)
     })
