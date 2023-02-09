@@ -38,8 +38,8 @@ public class AuthCheckRestController {
 
     if(jwtTokenProvider.validateToken(request.getHeader("refresh-token"))){
       try {
-        Optional<User> user = userService.findUser(userId);
-        resultMap.put("userinfo", user.get().getUser_roles().equals("USER"));
+        User user = userService.findUser(userId);
+        resultMap.put("userinfo", user.getUser_roles().equals("USER"));
         resultMap.put("message", "success");
         status = HttpStatus.ACCEPTED;
       } catch (Exception e){
