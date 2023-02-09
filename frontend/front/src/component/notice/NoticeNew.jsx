@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../common/ui/Button";
-import axios from "axios";
-
+import { writeNoticeAsync } from "../../reducers/noticeSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -51,6 +51,16 @@ function NoticeNew() {
   const [title, setTitle] = useState();
   const [comment, setComment] = useState();
 
+  const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (writeNoticeDone) {
+      navigate('/notices');
+    }
+  })
+
   const typeChange = (e) => {
     setType(e.target.value)
   }
@@ -62,6 +72,15 @@ function NoticeNew() {
   }
 
   const createNotice = () => {
+    dispatch(writeNoticeAsync(
+      {
+        'notice_type': type,
+        'notice_title': title,
+        'notice_comment': comment,
+        // 'notice_regidate': realToday,
+        'notice_status': 1
+      }
+    ))
     // let today = new Date();   
 
     // let year = today.getFullYear(); // 년도
@@ -70,26 +89,18 @@ function NoticeNew() {
 
     // let realToday = `${year}-${month}-${date}`
 
-    const data = {
-      'notice_type': type,
-      'notice_title': title,
-      'notice_comment': comment,
-      // 'notice_regidate': realToday,
-      'notice_status': 1
-    }
-
-    axios.post('/admin/notices/new', data, {
-      headers: {
-        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
-      }
-    })
-    .then(response => {
-      console.log(response);
-      navigate('/notices')
-    })
-    .catch(error => {
-      console.error(error);
-    })
+    // axios.post('/admin/notices/new', data, {
+    //   headers: {
+    //     "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+    //   }
+    // })
+    // .then(response => {
+    //   console.log(response);
+    //   navigate('/notices')
+    // })
+    // .catch(error => {
+    //   console.error(error);
+    // })
   }
 
   return (
