@@ -167,10 +167,10 @@ public class ItemRestController {
     }
 
     @ApiOperation(value="동 가져오기")
-    @GetMapping("/items/dong/{dongCode}")
-    public ResponseEntity<List<DongDto>> dong(@PathVariable("dongCode") String dongCode) {
+    @GetMapping("/items/dong/{gugunCode}")
+    public ResponseEntity<List<DongDto>> dong(@PathVariable("gugunCode") String gugunCode) {
         try {
-            List<DongDto> list = itemService.getDongInGugun(dongCode);
+            List<DongDto> list = itemService.getDongInGugun(gugunCode);
             if (list != null && !list.isEmpty())
                 return new ResponseEntity<List<DongDto>>(list, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);

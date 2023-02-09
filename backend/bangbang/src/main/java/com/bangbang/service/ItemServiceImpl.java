@@ -64,7 +64,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Page<ItemDto> searchItemAll(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "item_id");
-        return itemRepository.findAllItem100(pageable);
+        return itemRepository.findAllItem(pageable);
     }
 
     @Override
