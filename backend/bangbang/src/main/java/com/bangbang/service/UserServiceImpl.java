@@ -128,8 +128,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUser(Long userId) throws Exception {
-        Optional<User> user = userRepository.findByUserId(userId);
+    public User findUser(Long userId) throws Exception {
+        User user = userRepository.findByUserId(userId);
 
         return user;
     }
