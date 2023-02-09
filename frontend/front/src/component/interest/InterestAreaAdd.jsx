@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import addimg from "../../assets/addimg.png"
@@ -21,16 +21,8 @@ const SImg = styled.img`
   }
 `;
 
-const SInput = styled.input`
-  width: 40%;
-  height: 60px;
-  border-radius: 8px;
-  border: 0.5px solid lightgrey;
-`;
-
 const SButton = styled.button`
   border-radius: 8px;
-  margin-left: 10px;
   width: 10%;
   height: 60px;
   font-size: 30px;
@@ -43,61 +35,116 @@ const SButton = styled.button`
   }
 `;
 
-// 한글 조사 처리 함수
-function checkName(name){
-  const charCode = name.charCodeAt(name.length - 1);
-
-  const consonantCode = (charCode - 44032) % 28;
-  
-  if(consonantCode === 0){
-      return `${name}가`;
-  }
-  return `${name}이`;
-}
+const SSelect = styled.select`
+  margin-right: 50px;
+  height: 50px;
+  width: 200px;
+`;
 
 
 function InterestAreaAdd() {
-  const [area, setArea] = useState('')
+
   const [onAdd, setOnAdd] = useState(false)
-  const onChange = (e) => {
-    setArea(e.target.value)
+  // 시도 고르기
+  const [sidoAll, setSidoAll] = useState('')
+  const [sido, setSido] = useState('')
+  const sidoSelect = (e) => {
+    setSido(e.target.value)
+    axios.get(`/items/gugun/${e.target.value}`)
+    .then(res => {
+      setGugunAll(res.data)
+    })
+    .catch(err => {
+      alert('지역 정보를 받아오는데 실패하였습니다.')
+      console.log(err)
+    })
   };
 
-  // 페이지 렌더링 시 시군구 코드 받아오기
-  useEffect(() => {
+  // 구군 고르기
+  const [gugunAll, setGugunAll] = useState('')
+  const [gugun, setGugun] = useState('')
+  const gugunSelect = (e) => {
+    setGugun(e.target.value)
+    axios.get(`/items/dong/${e.target.value}`)
+    .then(res => {
+      setDongAll(res.data)
+    })
+    .catch(err => {
+      alert('지역 정보를 받아오는데 실패하였습니다.')
+      console.log(err)
+    })
+  };
+
+  // 동 고르기
+  const [dongAll, setDongAll] = useState('')
+  const [dong, setDong] = useState('')
+  const dongSelect = (e) => {
+    setDong(e.target.value)
+  };
+
+  const onClick = () => {
     axios.get('/items/sido')
     .then(res => {
-      console.log(res)
+      setSidoAll(res.data)
     })
     .catch(err => {
       console.log(err)
     })
-  })
-
-  const onClick = () => {
     setOnAdd(true)
   };
 
   const adding = () => {
-    if (area) {
-      const josa = checkName(area)
-      alert(`즐겨찾기에 ${josa} 등록되었습니다.`)
-      setArea('')
-      setOnAdd(false)
-    }
-  }
-
-  const activeEnter = (e) => {
-    if (e.key === 'Enter') {
-      adding()
+    if (dong) {
+      const data = {
+        'interest_dongcode': dong
+      }
+      axios.post('/user/interest/areas/new', data, {
+        headers: {
+          "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+        }
+      })
+      .then(response => {
+        console.log(response);
+        alert(`${sido} ${gugun} ${dong}이 관심지역에 추가되었습니다.`)
+        setOnAdd(false)
+        setSidoAll('')
+        setGugunAll('')
+        setDongAll('')
+      })
+      .catch(error => {
+        console.error(error);
+      })
     }
   }
 
   return (
     <SDiv>
       {!onAdd && <SImg src={addimg} alt="#" onClick={onClick} />}
-      {onAdd && <SInput type="text" value={area} onChange={onChange} placeholder=" 찾으시는 지역을 입력해주세요." onKeyDown={(e) => activeEnter(e)} />}
-      {onAdd && <SButton disabled={(area) ? false : true} onClick={adding}>등록</SButton>}
+      {onAdd && 
+      <div>
+        <SSelect onChange={sidoSelect}>
+          {(sidoAll) ? sidoAll.map((sido, index) => {
+            return (
+              <option key={sido.sidoCode} value={sido.sidoCode}>{sido.sidoName}</option>
+            )
+          }) : null}
+        </SSelect>
+        <SSelect onChange={gugunSelect}>
+          {(gugunAll) ? gugunAll.map((gugun, index) => {
+            return (
+              <option key={gugun.gugunCode} value={gugun.gugunCode}>{gugun.gugunName}</option>
+            )
+          }) : null}
+        </SSelect>
+        <SSelect onChange={dongSelect}>
+          {(dongAll) ? dongAll.map((dong, index) => {
+            return (
+              <option key={dong.dongCode} value={dong.dongCode}>{dong.dongName}</option>
+            )
+          }) : null}
+        </SSelect>
+      </div>}
+      {onAdd && <SButton disabled={(dong) ? false : true} onClick={adding}>등록</SButton>}
     </SDiv>
   )
 }
