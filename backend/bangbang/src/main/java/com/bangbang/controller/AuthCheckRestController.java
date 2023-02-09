@@ -1,6 +1,7 @@
 package com.bangbang.controller;
 
 import com.bangbang.domain.sign.User;
+import com.bangbang.service.CustomUserDetailsService;
 import com.bangbang.service.UserServiceImpl;
 import com.bangbang.util.JwtTokenProvider;
 import io.swagger.annotations.Api;
@@ -25,53 +26,45 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthCheckRestController {
 
   private final JwtTokenProvider jwtTokenProvider;
-  private final UserServiceImpl userService;
+
+  private final CustomUserDetailsService customUserDetailsService;
 
   @ApiImplicitParams({
       @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
   })
   @ApiOperation(value = "일반 사용자 판별", notes = "로그인 상태인지 아닌지 판별합니다.")
-  @GetMapping(value = "/checks/{userId}")
-  public ResponseEntity<Map<String, Object>> checkCommonUser(@PathVariable("userId") Long userId, HttpServletRequest request){
-    Map<String, Object> resultMap = new HashMap<>();
+  @GetMapping(value = "/checks")
+  public ResponseEntity<?> checkCommonUser(HttpServletRequest request){
+    String re = "";
     HttpStatus status = HttpStatus.UNAUTHORIZED;
 
-    if(jwtTokenProvider.validateToken(request.getHeader("refresh-token"))){
+    System.out.println("액세스 토큰 : " + request.getHeader("X-AUTH-TOKEN"));
+    String token = request.getHeader("X-AUTH-TOKEN");
+
+    if(jwtTokenProvider.validateToken(token)){
       try {
-        Optional<User> user = userService.findUser(userId);
-        resultMap.put("userinfo", user.get().getUser_roles().equals("USER"));
-        resultMap.put("message", "success");
+        User user = (User) customUserDetailsService.loadUserByUserId(Long.valueOf(jwtTokenProvider.getUserId(token)));
+
+        if(user.getUser_roles().get(0).equals("ROLE_USER")) {
+          re = "/";
+        }
+        else if(user.getUser_roles().get(0) == "ROLE_BROKER"){
+          re = "/broker";
+        }
+        else if(user.getUser_roles().get(0) == "ROLE_ADMIN"){
+          re = "/admin";
+        }
         status = HttpStatus.ACCEPTED;
+
       } catch (Exception e){
-        resultMap.put("info", "정보조회 실패");
-        resultMap.put("message", e.getMessage());
+        re = "권한 없음";
         status = HttpStatus.INTERNAL_SERVER_ERROR;
       }
     }
     else {
-      resultMap.put("info", "사용 불가능 토큰");
-      resultMap.put("message", "fail");
+      re = "사용 불가능 토큰";
       status = HttpStatus.UNAUTHORIZED;
     }
-    return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    return new ResponseEntity<>(re, status);
   }
-
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
-  @ApiOperation(value = "중개사 판별", notes = "로그인 상태인지 아닌지 판별합니다.")
-  @GetMapping(value = "/checks/broker")
-  public String checkBrokerUser(){
-    return "success";
-  }
-
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
-  @ApiOperation(value = "관리자 판별", notes = "로그인 상태인지 아닌지 판별합니다.")
-  @PostMapping(value = "/checks/admin")
-  public String checkAdminUser(){
-    return "success";
-  }
-
 }

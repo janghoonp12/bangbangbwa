@@ -59,9 +59,10 @@ public class BookmarkService {
   public void modifyBookmark(Long id, BookmarkUpdateRequestDto requestDto){
     Bookmark bookmark = bookmarkRepository.findByBookmarkId(id).orElseThrow(
         () -> new IllegalArgumentException("즐겨찾기가 없습니다."));
-    bookmark.update(requestDto.getBookmarkTitle(), requestDto.getBookmarkComment(),
-        requestDto.getBookmarkItemType(), requestDto.getBookmarkBuildingType(), requestDto.getBookmarkItemMinPrice(),
-        requestDto.getBookmarkItemMaxPrice());
+    bookmark.update(requestDto.getBookmarkTitle(), requestDto.getBookmarkComment(), requestDto.getBookmarkItemType(), requestDto.getBookmarkBuildingType(),
+        requestDto.getBookmarkItemBuildMinYear(), requestDto.getBookmarkItemBuildMaxYear(), requestDto.getBookmarkMinArea(), requestDto.getBookmarkMaxArea(),
+        requestDto.getBookmarkItemMonthMinPrice(), requestDto.getBookmarkItemMonthMaxPrice(), requestDto.getBookmarkItemBuyMinPrice(), requestDto.getBookmarkItemBuyMaxPrice(),
+        requestDto.getBookmarkItemMinDeposit(), requestDto.getBookmarkItemMaxDeposit());
   }
 
   //즐겨찾기 삭제
