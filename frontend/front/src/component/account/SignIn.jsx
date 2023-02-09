@@ -133,7 +133,7 @@ function Login() {
           <div style={{textAlign: "left", marginTop: "3rem", marginLeft: "10%"}}>이메일</div>
           <SCustomInput placeholder="이메일를 입력해주세요!" value={userEmail} required onChange={onChangeEmail}/>
           <div style={{textAlign: "left", marginLeft: "10%"}}>비밀번호</div>
-          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword}/>
+          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword} type="password"/>
           <div style={{textAlign: "left", marginLeft: "10%"}}>
             <SSGignuP
             onClick={() => {

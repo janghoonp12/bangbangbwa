@@ -16,7 +16,7 @@ export const initialState = {
 
 export const signUpAsync = createAsyncThunk(
   'user/SIGN_UP',
-  async (data) => {
+  async (data, thunkAPI) => {
     try {
       const response = await axios.post(
         '/users/new',
@@ -25,34 +25,33 @@ export const signUpAsync = createAsyncThunk(
  
       return response.data
     } catch (err) {
-      return err
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
 
 export const signInAsync = createAsyncThunk(
   'user/SIGN_IN',
-  async (data) => {
+  async (data, thunkAPI) => {
     try {
       const response = await axios.post(
         '/users/auth',
         data
       );
- 
       return response.data
     } catch (err) {
-      return err
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
 
 export const oauth2SignInAsync = createAsyncThunk(
   'user/OAUTH_SIGN_IN',
-  async (data) => {
+  async (data, thunkAPI) => {
     try {
       return data
     } catch (err) {
-      return err
+      return thunkAPI.rejectWithValue(err);
     }
   }
 );
@@ -115,7 +114,7 @@ const userSlice = createSlice({
     });
     builder.addCase(signInAsync.rejected, (state, action) => {
       state.signInLoading = false;
-      state.signInError = action.payload
+      state.signInError = action.error
       alert('로그인에 실패했습니다.');
     });
     builder.addCase(oauth2SignInAsync.pending, (state, action) => {
