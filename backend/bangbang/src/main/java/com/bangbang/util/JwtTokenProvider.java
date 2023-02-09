@@ -107,14 +107,14 @@ public class JwtTokenProvider {
   // Request header에 Authorization 의 값에서 token 꺼내옴
   //즉 클라이언트가 헤더를 통해 jwt토큰값을 제대로 전달 했는지 파악 가능한 메서드
   public String resolveToken(HttpServletRequest request) {
-    return request.getHeader("X-AUTH-TOKEN");
+    String token = request.getHeader("X-AUTH-TOKEN");
 
     // 가져온 Authorization Header 가 문자열이고, Bearer 로 시작해야 가져옴
-//    if (StringUtils.hasText(token) && token.startsWith("X-AUTH-TOKEN")) {
-//      return token.substring(7);
-//    }
-//
-//    return null;
+    if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+      return token.substring(7);
+    }
+
+    return null;
   }
 
   // JWT 토큰 유효성 체크

@@ -5,6 +5,7 @@ import RecentView from "../component/interest/RecentView";
 import InterestItem from "../component/interest/InterestItem";
 import InterestArea from "../component/interest/InterestArea";
 import BookmarkAll from "../component/bookmark/BookmarkAll";
+import BookmarkNew from "../component/bookmark/BookmarkNew";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -32,6 +33,7 @@ function Interests() {
           <Route path="items" element={<InterestItem />} />
           <Route path="areas" element={<InterestArea />} />
           <Route path="bookmarks" element={<BookmarkAll />}/>
+          <Route path="bookmarks/new" element={<BookmarkNew />}/>
         </Routes>
       </Container>
     </Wrapper>

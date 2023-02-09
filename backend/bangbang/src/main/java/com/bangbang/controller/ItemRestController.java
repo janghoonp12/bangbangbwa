@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,20 +71,33 @@ public class ItemRestController {
         }
     }
 
-    @ApiOperation(value="매물 전체 검색")
+    @ApiOperation(value="매물 전체 검색 (pagination)")
     @GetMapping("/items")
-    public ResponseEntity<?> searchItemAll() {
+    public ResponseEntity<?> searchItemAll(@RequestParam(defaultValue="0") Integer page,
+                                           @RequestParam(defaultValue="10") Integer size) {
         try {
-            List<ItemDto> item = itemService.searchItemAll();
-            if (item != null && !item.isEmpty())
-                return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
+            Page<ItemDto> item = itemService.searchItemAll(page, size);
+            if (item != null && item.hasContent())
+                return new ResponseEntity<Page<ItemDto>>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
         }
     }
 
-    //필터 만들기
+    @ApiOperation(value = "매물 필터 검색")
+    @PostMapping("/items/filter")
+    public ResponseEntity<?> searchItemFilter(@RequestBody ItemFilterRequestDto filter) {
+        try {
+            List<ItemDto> item = itemService.searchItemByFilter(filter);
+            if (item != null && !item.isEmpty())
+                return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+
+    }
 
     @ApiOperation(value="매물 상세 정보")
     @GetMapping("/items/{item_id}")
@@ -101,7 +115,6 @@ public class ItemRestController {
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
     })
-    //매물 삭제 구현
     @ApiOperation(value="매물 삭제(비활성화)")
     @PatchMapping("/broker/items/deactivate/{item_id}")
     public ResponseEntity<?> deactivateItem(@PathVariable("item_id") long itemId) {

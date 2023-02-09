@@ -27,7 +27,6 @@ public class JwtFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) servletRequest);//jwt토큰을 통해 토큰을 추출함
         String requestURI = ((HttpServletRequest) servletRequest).getRequestURI();
-        System.out.println(token);
         try {
             if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {//토큰에 대한 유효성을 검사를 함
                 Authentication authentication = jwtTokenProvider.getAuthentication(token);//토큰이 유효할시 Authentication객체를 생성해서 SecurityContextHolder에 추가함

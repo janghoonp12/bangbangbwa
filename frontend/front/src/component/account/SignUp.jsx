@@ -130,9 +130,9 @@ function SignUp() {
           <STextDiv>닉네임</STextDiv>
           <SCustomInput placeholder="닉네입을 입력해주세요!" value={userNickname} required onChange={onChangeNickname}/>
           <STextDiv>비밀번호</STextDiv>
-          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword}/>
+          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword} type="password"/>
           <STextDiv>비밀번호 확인</STextDiv>
-          <SCustomInput placeholder="비밀번호 확인을 입력해주세요!" value={passwordCheck} required onChange={onChangePasswordCheck}/>
+          <SCustomInput placeholder="비밀번호 확인을 입력해주세요!" value={passwordCheck} required onChange={onChangePasswordCheck} type="password"/>
           <STextDiv style={{ marginTop: "10%"}}>
             <SGoLoginP
               onClick={() => {

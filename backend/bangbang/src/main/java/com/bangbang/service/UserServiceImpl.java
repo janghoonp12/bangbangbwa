@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, Object> login(SignIn signIn) throws Exception {
+        System.out.println(signIn);
         User user = userRepository.findByUserEmail(signIn.getUserEmail());
             if (user == null) {
                 throw new BaseException(ErrorMessage.NOT_EXIST_ID);
@@ -128,9 +129,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findUser(Long userId) throws Exception {
-        Optional<User> user = userRepository.findByUserId(userId);
+    public User findUser(Long userId) throws Exception {
+        User user = userRepository.findByUserId(userId);
 
         return user;
     }
+
+    @Override
+    public Long findUserId(String token) throws Exception {
+        return Long.valueOf(jwtTokenProvider.getUserId(token));
+    }
+
+
 }
