@@ -19,4 +19,6 @@ public interface UserService {
     void findPassword(FindPassword signIn) throws Exception;
 
     User findUser(Long userId) throws Exception;
+
+    Long findUserId(String token) throws  Exception;
 }
