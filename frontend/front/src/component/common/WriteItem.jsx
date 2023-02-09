@@ -408,7 +408,6 @@ function WriteItem() {
           <STitleP>주소</STitleP>
           <div>
           <DaumPostcode
-            style={{height: '600px'}}
             onComplete={selectAddress}  // 값을 선택할 경우 실행되는 이벤트
             autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
           />
@@ -497,7 +496,7 @@ function WriteItem() {
             <SP><input onChange={optInternetChange} type="checkbox"/> 인터넷</SP>
             <SP><input onChange={optTvChange} type="checkbox"/> 유선TV</SP>
             <SP><input onChange={optWaterChange} type="checkbox"/> 수도</SP>
-            <SP><input onChange={optEtcChange} type="text"/> 기타</SP>
+            <SP>기타 &nbsp;<input onChange={optEtcChange} type="text"/></SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />

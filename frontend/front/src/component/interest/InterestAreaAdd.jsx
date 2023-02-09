@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import addimg from "../../assets/addimg.png"
 
@@ -42,19 +43,15 @@ const SButton = styled.button`
   }
 `;
 
-
+// 한글 조사 처리 함수
 function checkName(name){
-  //name의 마지막 음절의 유니코드(UTF-16) 
   const charCode = name.charCodeAt(name.length - 1);
 
-  //유니코드의 한글 범위 내에서 해당 코드의 받침 확인
   const consonantCode = (charCode - 44032) % 28;
   
   if(consonantCode === 0){
-      //0이면 받침 없음 -> 를
       return `${name}가`;
   }
-  //1이상이면 받침 있음 -> 을
   return `${name}이`;
 }
 
@@ -65,6 +62,17 @@ function InterestAreaAdd() {
   const onChange = (e) => {
     setArea(e.target.value)
   };
+
+  // 페이지 렌더링 시 시군구 코드 받아오기
+  useEffect(() => {
+    axios.get('/api/items/sido')
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  })
 
   const onClick = () => {
     setOnAdd(true)
