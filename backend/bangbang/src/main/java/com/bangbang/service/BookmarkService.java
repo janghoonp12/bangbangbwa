@@ -10,9 +10,13 @@ import com.bangbang.dto.bookmark.BookmarkResponseDto;
 import com.bangbang.dto.bookmark.BookmarkSaveRequestDto;
 import com.bangbang.dto.item.SiGuDongDto;
 import com.bangbang.dto.bookmark.BookmarkUpdateRequestDto;
+import com.bangbang.util.JwtTokenProvider;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +25,15 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class BookmarkService {
-  private final UserRepository userRepository;
-  private final DongCodeRepository dongCodeRepository;
-  private final BookmarkRepository bookmarkRepository;
+  @Autowired
+  UserRepository userRepository;
+
+  private final JwtTokenProvider jwtTokenProvider;
+  @Autowired
+  DongCodeRepository dongCodeRepository;
+
+  @Autowired
+  BookmarkRepository bookmarkRepository;
 
   //즐겨찾기 전체 조회
   public List<BookmarkListResponseDto> searchBookmarkAll(){
@@ -41,9 +51,9 @@ public class BookmarkService {
 
   //즐겨찾기 등록
   @Transactional
-  public void newBookmark(BookmarkSaveRequestDto requestDto){
-   Optional<SiGuDongDto> dongcode = Optional.of(dongCodeRepository.getAddressName(requestDto.getDongCode()));
-   dongcode.orElseThrow(() -> new IllegalArgumentException("해당 동코드가 없습니다."));
+  public void newBookmark(BookmarkSaveRequestDto requestDto, long uId){
+    Optional<SiGuDongDto> dongcode = Optional.of(dongCodeRepository.getAddressName(requestDto.getDongCode()));
+    dongcode.orElseThrow(() -> new IllegalArgumentException("해당 동코드가 없습니다."));
 
     User user = userRepository.findByUserId(requestDto.getUserId());
 
@@ -51,7 +61,7 @@ public class BookmarkService {
       new IllegalArgumentException("유저 정보가 존재하지 않습니다.");
     }
 
-    bookmarkRepository.save(requestDto.toEntity());
+    bookmarkRepository.save(requestDto.toEntity(uId));
   }
 
   //즐겨찾기 수정
