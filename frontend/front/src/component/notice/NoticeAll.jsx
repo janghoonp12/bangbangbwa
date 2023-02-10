@@ -48,6 +48,7 @@ function Notice() {
     navigate('/notices/new')
   }
 
+
   return (
     <Wrapper>
       <SSDiv>

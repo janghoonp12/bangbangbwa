@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom/dist";
@@ -40,8 +40,69 @@ const SGridListDiv = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
 
+const SSelect = styled.select`
+  margin-right: 10px;
+`;
+
 function BookmarkNew() {
+  // 시도 고르기
+  const [sidoAll, setSidoAll] = useState('')
+  const [sido, setSido] = useState('')
+  const sidoSelect = (e) => {
+    setSido(e.target.value)
+    axios.get(`/items/gugun/${e.target.value}`)
+    .then(res => {
+      setGugunAll(res.data)
+      console.log(sido)
+    })
+    .catch(err => {
+      alert('지역 정보를 받아오는데 실패하였습니다.')
+      console.log(err)
+    })
+  };
+
+  // 구군 고르기
+  const [gugunAll, setGugunAll] = useState('')
+  const [gugun, setGugun] = useState('')
+  const gugunSelect = (e) => {
+    setGugun(e.target.value)
+    axios.get(`/items/dong/${e.target.value}`)
+    .then(res => {
+      setDongAll(res.data)
+      console.log(gugun)
+    })
+    .catch(err => {
+      alert('지역 정보를 받아오는데 실패하였습니다.')
+      console.log(err)
+    })
+  };
+
+  // 동 고르기
+  const [dongAll, setDongAll] = useState('')
+  const [dong, setDong] = useState('')
+  const dongSelect = (e) => {
+    setDong(e.target.value)
+  };
+
+
   const navigate = useNavigate();
+  // 페이지 렌더링 시 axios 요청해서 시도 코드 받아오기
+  const getData = async () => {
+    const res = await axios.get('/items/sido')
+    .then(response => {
+      return response.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    setSidoAll(res);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   
   // 매물 종류
   const [roomType, setRoomType] = useState('');
@@ -134,7 +195,7 @@ function BookmarkNew() {
       'bookmark_max_area': maxArea,
       'bookmark_item_build_min_year': buildMinYear,
       'bookmark_item_build_max_year': buildMaxYear,
-      'dongCode': "string",
+      'dongCode': dong,
       'bookmark_item_month_min_price': (dealType === '1') ? monthMinPrice : null,
       'bookmark_item_month_max_price': (dealType === '1') ? monthMaxPrice : null,
       'bookmark_item_min_deposit': (dealType === '1' || dealType === '2') ? minDeposit : null,
@@ -169,6 +230,33 @@ function BookmarkNew() {
         <SGridDiv>
           <STitleP>상세 설명</STitleP>
           <textarea onChange={commentChange} rows="5" placeholder=" 내용을 입력하세요." />
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>지역</STitleP>
+          <SGridListDiv>
+            <SSelect onChange={sidoSelect}>
+              {(sidoAll) ? sidoAll.map((sido, index) => {
+                return (
+                  <option key={sido.sidoCode} value={sido.sidoCode}>{sido.sidoName}</option>
+                )
+              }) : null}
+            </SSelect>
+            <SSelect onChange={gugunSelect}>
+              {(gugunAll) ? gugunAll.map((gugun, index) => {
+                return (
+                  <option key={gugun.gugunCode} value={gugun.gugunCode}>{gugun.gugunName}</option>
+                )
+              }) : null}
+            </SSelect>
+            <SSelect onChange={dongSelect}>
+              {(dongAll) ? dongAll.map((dong, index) => {
+                return (
+                  <option key={dong.dongCode} value={dong.dongCode}>{dong.dongName}</option>
+                )
+              }) : null}
+            </SSelect>
+          </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>

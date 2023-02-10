@@ -3,6 +3,9 @@ import { OpenVidu } from 'openvidu-browser';
 import React, { Component } from 'react';
 import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
+import throttle from '../utils/Throttle';
+import watchers from '../assets/eye.png';
+
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
@@ -17,13 +20,42 @@ class Openvidu extends Component {
 
         this.state = {
             mySessionId: 'SessionA',
-            myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            // myUserName: 'Participant' + Math.floor(Math.random() * 100),
+            myUserName: 'Participant1',
             session: undefined,
             mainStreamManager: undefined,
             publisher: undefined,
             subscribers: [],
             chat: "",
+            isDrag: false,
+            startX: 0,
+            toilet: 0,
+            drainage: 0,
+            sink: 0,
+            light: 0,
+            view: 0,
+            mold: 0,
+            countToilet() {
+              return `변기: ${this.toilet}`
+            },
+            countDrainage() {
+              return `배수구: ${this.drainage}`
+            },
+            countSink() {
+              return `싱크대: ${this.sink}`
+            },
+            countLight() {
+              return `채광: ${this.light}`
+            },
+            countView() {
+              return `전망: ${this.view}`
+            },
+            countMold() {
+              return `곰팡이: ${this.mold}`
+            },        
         };
+
+        this.scrollRef = React.createRef();
 
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
@@ -106,6 +138,307 @@ class Openvidu extends Component {
           .catch((response) => {
               console.log('Send Message Fail', response)
           })
+    }
+
+    // 버튼 axios
+    toiletAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"###toilet###"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    toiletClearAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"@@@toilet@@@"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    drainageAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"###drainage###"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    drainageClearAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"@@@drainage@@@"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    sinkAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"###sink###"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    sinkClearAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"@@@sink@@@"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    lightAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"###light###"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    lightClearAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"@@@light@@@"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    viewAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"###view###"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    viewClearAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"@@@view@@@"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    moldAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"###mold###"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
+    }
+
+    moldClearAxios() {
+      axios
+        .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+          {
+            "session": `${this.state.mySessionId}`,
+            "to": [],
+            "type":"MY_TYPE",
+            "data":"@@@mold@@@"
+          },
+          {
+            headers: {
+              Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+              'Content-Type': 'application/json'
+            },
+            withCredentials: false
+          }
+        )
+        .then((response) => {
+          console.log('Send Message Success', response);
+        })
+        .catch((response) => {
+          console.log('Send Message Fail', response)
+        })
     }
 
     onChange = (e) => {
@@ -227,9 +560,48 @@ class Openvidu extends Component {
                 });
                 // 채팅
                 mySession.on('signal', (event) => {
-                  console.log('Received message', event.data);
-                  chattings.unshift(event.data);
-                  this.setState({chat:""})
+                  if (event.data === "###toilet###") {
+                    console.log('Recieved toilet', event.data);
+                    this.setState({toilet:this.state.toilet+1})
+                  } else if (event.data === "###drainage###") {
+                    console.log('Recieved drainage', event.data);
+                    this.setState({drainage:this.state.drainage+1})
+                  } else if (event.data === "###sink###") {
+                    console.log('Recieved sink', event.data);
+                    this.setState({sink:this.state.sink+1})
+                  } else if (event.data === "###light###") {
+                    console.log('Recieved light', event.data);
+                    this.setState({light:this.state.light+1})
+                  } else if (event.data === "###view###") {
+                    console.log('Recieved view', event.data);
+                    this.setState({view:this.state.view+1})
+                  } else if (event.data === "###mold###") {
+                    console.log('Recieved mold', event.data);
+                    this.setState({mold:this.state.mold+1})
+                  } else if (event.data === "@@@toilet@@@") {
+                    console.log('Recieved toilet', event.data);
+                    this.setState({toilet:0})
+                  } else if (event.data === "@@@drainage@@@") {
+                    console.log('Recieved drainage', event.data);
+                    this.setState({drainage:0})
+                  } else if (event.data === "@@@sink@@@") {
+                    console.log('Recieved sink', event.data);
+                    this.setState({sink:0})
+                  } else if (event.data === "@@@light@@@") {
+                    console.log('Recieved light', event.data);
+                    this.setState({light:0})
+                  } else if (event.data === "@@@view@@@") {
+                    console.log('Recieved view', event.data);
+                    this.setState({view:0})
+                  } else if (event.data === "@@@mold@@@") {
+                    console.log('Recieved mold', event.data);
+                    this.setState({mold:0})
+                  }
+                   else {
+                    console.log('Received message', event.data);
+                    chattings.unshift(event.data);
+                    this.setState({chat:""})
+                  }
                   
                 });
             },
@@ -258,11 +630,130 @@ class Openvidu extends Component {
         });
     }
 
+    onDragStart = (e) => {
+      e.preventDefault();
+      this.setState({
+        isDrag: true,
+        startX: e.pageX + this.scrollRef.current.scrollLeft
+      })
+    };
+
+    onDragEnd = () => {
+      this.setState({
+        isDrag: false,
+      })
+    };
+    
+    // 최좌측이면 움직이고 있는 마우스의 X좌표가 곧 startX좌표
+    // 최우측이면 움직이고 있는 마우스의 X좌표에 현재 스크롤된 길이 scrollLeft를 더해 설정
+    onDragMove = (e) => {
+      if (this.state.isDrag) {
+        const { scrollWidth, clientWidth, scrollLeft } = this.scrollRef.current;
+        
+        this.scrollRef.current.scrollLeft = this.state.startX - e.pageX;
+        
+        if (scrollLeft === 0) {
+          this.setState({
+            startX: e.pageX,
+          })
+        } else if (scrollWidth <= clientWidth + scrollLeft) {
+          this.setState({
+            startX: e.pageX + scrollLeft,
+          })
+        }
+      }
+    };
+    
+    btnActive(btnName) {
+      const target = document.getElementById(btnName)
+      target.disabled = false;
+    }
+
+    btnDeactive(btnName) {
+      const target = document.getElementById(btnName)
+      target.disabled = true;
+    }
+
+    onClickToilet = () => {
+      this.toiletAxios()
+      this.btnDeactive('toilet')
+      setTimeout(() => {
+      this.btnActive('toilet')
+      }, 10000)
+    }
+
+    onClickDrainage = () => {
+      this.drainageAxios()
+      this.btnDeactive('drainage')
+      setTimeout(() => {
+      this.btnActive('drainage')
+      }, 10000)
+    }
+
+    onClickSink = () => {
+      this.sinkAxios()
+      this.btnDeactive('sink')
+      setTimeout(() => {
+      this.btnActive('sink')
+      }, 10000)
+    }
+
+    onClickLight = () => {
+      this.lightAxios()
+      this.btnDeactive('light')
+      setTimeout(() => {
+      this.btnActive('light')
+      }, 10000)
+    }
+
+    onClickView = () => {
+      this.viewAxios()
+      this.btnDeactive('view')
+      setTimeout(() => {
+      this.btnActive('view')
+      }, 10000)
+    }
+
+    onClickMold = () => {
+      this.moldAxios()
+      this.btnDeactive('mold')
+      setTimeout(() => {
+      this.btnActive('mold')
+      }, 10000)
+    }
+
+    onClickToiletClear = () => {
+      this.toiletClearAxios()
+    }
+
+    onClickDrainageClear = () => {
+      this.drainageClearAxios()
+    }
+
+    onClickSinkClear = () => {
+      this.sinkClearAxios()
+    }
+
+    onClickLightClear = () => {
+      this.lightClearAxios()
+    }
+
+    onClickViewClear = () => {
+      this.viewClearAxios()
+    }
+
+    onClickMoldClear = () => {
+      this.moldClearAxios()
+    }
+
     render() {
       const mySessionId = this.state.mySessionId;
       const myUserName = this.state.myUserName;
     
       let chatbox = chattings.map((chatting, index) => <SChatP index={index}>{chatting}</SChatP>)
+
+      const delay = 10;
+      const onThrottleDragMove = throttle(this.onDragMove, delay);
 
       return (
         <Wrapper>
@@ -308,14 +799,27 @@ class Openvidu extends Component {
             {this.state.session !== undefined ? (
               <div id="session">
                 <STitleDiv id="session-header">
-                  <h1 id="session-title">{mySessionId}</h1>
-                  <input
-                    className="btn btn-large btn-danger"
-                    type="button"
-                    id="buttonLeaveSession"
-                    onClick={this.leaveSession}
-                    value="나가기"
-                  />
+                  <STitleP id="session-title">{mySessionId}</STitleP>
+                  <SWatchersP><SWatcherImg src={watchers} alt="시청자"/> {this.state.subscribers.length}</SWatchersP>
+                  {this.state.myUserName === 'Participant1' ? (
+                    <SButtonInput
+                      // className="btn btn-large btn-danger"
+                      // style={{ height:"100%" }}
+                      type="button"
+                      id="buttonLeaveSession"
+                      onClick={this.leaveSession}
+                      value="방송종료"
+                    />
+                  ) : (
+                    <SButtonInput
+                      // className="btn btn-large btn-danger"
+                      // style={{ height:"100%" }}
+                      type="button"
+                      id="buttonLeaveSession"
+                      onClick={this.leaveSession}
+                      value="나가기"
+                    />
+                  )}
                 </STitleDiv>
                 {this.state.mainStreamManager !== undefined ? (
                   <SScreenDiv id="main-video" className="col-md-6">
@@ -325,6 +829,122 @@ class Openvidu extends Component {
                   <SLiveEndDiv>
                     <p>방송이 종료되었습니다.</p>
                   </SLiveEndDiv>
+                )}
+                
+                {this.state.myUserName === 'Participant1' ? (
+                  <SButtonDiv
+                    onMouseDown={this.onDragStart}
+                    onMouseMove={this.state.isDrag ? onThrottleDragMove : null}
+                    onMouseUp={this.onDragEnd}
+                    onMouseLeave={this.onDragEnd}
+                    ref={this.scrollRef}
+                  >
+                    <SButtonInput2 
+                      type="button"
+                      id="toilet"
+                      value={this.state.countToilet()}
+                      onClick={this.onClickToiletClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="drainage"
+                      value={this.state.countDrainage()}
+                      onClick={this.onClickDrainageClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="sink"
+                      value={this.state.countSink()}
+                      onClick={this.onClickSinkClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="light"
+                      value={this.state.countLight()}
+                      onClick={this.onClickLightClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="view"
+                      value={this.state.countView()}
+                      onClick={this.onClickViewClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="mold"
+                      value={this.state.countMold()}
+                      onClick={this.onClickMoldClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id=""
+                      value="버튼7"
+                      onClick={this.onClickToiletClear}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id=""
+                      value="버튼8"
+                      onClick={this.onClickToiletClear}
+                    />
+                  </SButtonDiv>
+                ) : (
+                  <SButtonDiv
+                    onMouseDown={this.onDragStart}
+                    onMouseMove={this.state.isDrag ? onThrottleDragMove : null}
+                    onMouseUp={this.onDragEnd}
+                    onMouseLeave={this.onDragEnd}
+                    ref={this.scrollRef}
+                  >
+                    <SButtonInput2 
+                      type="button"
+                      id="toilet"
+                      value={this.state.countToilet()}
+                      onClick={this.onClickToilet}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="drainage"
+                      value={this.state.countDrainage()}
+                      onClick={this.onClickDrainage}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="sink"
+                      value={this.state.countSink()}
+                      onClick={this.onClickSink}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="light"
+                      value={this.state.countLight()}
+                      onClick={this.onClickLight}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="view"
+                      value={this.state.countView()}
+                      onClick={this.onClickView}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id="mold"
+                      value={this.state.countMold()}
+                      onClick={this.onClickMold}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id=""
+                      value="버튼7"
+                      onClick={this.onClickToilet}
+                    />
+                    <SButtonInput2 
+                      type="button"
+                      id=""
+                      value="버튼8"
+                      onClick={this.onClickToilet}
+                    />
+                  </SButtonDiv>
                 )}
                 <SChatDiv>
                   <SChatAreaDiv>
@@ -449,12 +1069,42 @@ const Container = styled.div`
 
 const STitleDiv = styled.div`
   display: grid;
-  grid-template-columns: 10fr 2fr;
+  grid-template-columns: 10fr 2fr 2fr;
+  height: 5vh;
+  padding-bottom: 6vh;
+  align-items: center;
 `;
 
 const SScreenDiv = styled.div`
   width: 100%;
-  height: 65vh;
+  height: 60vh;
+`;
+
+// const SButtonDiv = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   height: 5vh;
+//   border: 1px solid black;
+// `;
+
+const SButtonDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 5vh;
+    align-items: flex-start;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    // border: 1px solid grey;
+    & > * {
+        :not(:last-child) {
+            margin-bottom: 16px;
+        }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
 `;
 
 const SChatDiv = styled.div`
@@ -476,25 +1126,47 @@ const SChatAreaDiv = styled.div`
 
 const SInput = styled.input`
   width: 100%;
+  height: 5vh;
 `;
 
 const SChatP = styled.p`
   margin-bottom: 0px;
 `;
 
-const SButton = styled.button`
+const SButtonInput = styled.input`
   border-radius: 10px;
   margin-left: 10px;
-  height: 35px;
+  height: 100%;
   border: 0 solid black;
-  background-color: #00ff0000; 
+  background-color: red;
+  color: white; 
 `;
 
-const SImg = styled.img`
-  width: 30px;
-  height: 30px;
+const SButtonInput2 = styled.input`
+  border-radius: 50px;
+  margin-left: 10px;
+  height: 100%;
+  border: 0 solid black;
+  // background-color: green;
+  // color: white;
+  margin-bottom: 0px;
+  margin-right:10px;
 `;
 
 const SLiveEndDiv = styled.div`
   background-color: black;
+`;
+
+const STitleP = styled.p`
+  margin-bottom: 0px;
+  font-size: 2rem;
+`;
+
+const SWatchersP = styled.p`
+  margin-bottom: 0px;
+  font-size: 1rem;
+`;
+
+const SWatcherImg = styled.img`
+  height: 1rem;
 `;

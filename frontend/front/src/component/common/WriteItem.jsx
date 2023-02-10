@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Button from "./ui/Button";
 import DaumPostcode from 'react-daum-postcode';
 import axios from "axios";
+import ImageUpload from "./ImageUpload";
 
 
 const Wrapper = styled.div`
@@ -395,6 +396,7 @@ function WriteItem() {
     setOptEtc(e.target.value)
   }
 
+
   return (
     <Wrapper>
       <Container>
@@ -553,6 +555,13 @@ function WriteItem() {
             <SP><input onChange={refrigeratorChange} type="checkbox"/> 냉장고</SP>
             <SP><input onChange={doorlockChange} type="checkbox"/> 전자도어락</SP>
             <SP><input onChange={verandaChange} type="checkbox"/> 베란다/발코니</SP>
+          </SGridListDiv>
+        </SGridDiv>
+        <hr />
+        <SGridDiv>
+          <STitleP>사진</STitleP>
+          <SGridListDiv>
+            <ImageUpload/>
           </SGridListDiv>
         </SGridDiv>
         <hr />

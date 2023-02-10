@@ -1,11 +1,15 @@
 import React from "react";
 import NoticeListItem from "./NoticeListItem";
-import noticeData from "../../noticeData.json";
 import Table from 'react-bootstrap/Table';
+
+import { useSelector } from "react-redux";
 
 
 
 function NoticeList() {
+  const { noticeData } = useSelector((state) => state.noticeSlice);
+
+
 
   return (
     <Table
@@ -19,14 +23,14 @@ function NoticeList() {
         </tr>
       </thead>
       <tbody>
-        {noticeData.map((notice) => {
-          return (
+        {noticeData ? noticeData.map((notice, index) => (
             <NoticeListItem 
-              key={notice.id}
+            key={notice.notice_id}
+            num = {index+1}
               notice={notice}
             />
           )
-        })}
+        ) : <tr><td>no</td></tr>}
       </tbody>
     </Table>
   );
