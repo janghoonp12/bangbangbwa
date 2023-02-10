@@ -56,6 +56,7 @@ function ItemDetail() {
   const goBack = () => {
     navigate(-1);
   }
+  // 임시 테스트
 
   return (
     <Wrapper>
