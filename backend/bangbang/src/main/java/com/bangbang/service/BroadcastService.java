@@ -5,20 +5,15 @@ import com.bangbang.domain.broadcast.BroadcastRepository;
 import com.bangbang.domain.image.Image;
 import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.dto.broadcast.*;
-import com.bangbang.exception.BaseException;
-import com.bangbang.exception.ErrorMessage;
-import java.util.Map;
+
+import java.util.Optional;
 import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -67,10 +62,10 @@ public class BroadcastService {
   //방송 수정
   @Transactional
   public void modifyBroadcast(Long id, BroadcastUpdateRequestDto requestDto){
+    Optional<Broadcast> broadcast = broadcastRepository.findByBroadcastId(id);
+    broadcast.orElseThrow(() -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
     try {
-      Broadcast broadcast = broadcastRepository.findByBroadcastId(id).orElseThrow(()
-      -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
-      broadcast.update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle());
+      broadcast.get().update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle());
     } catch (Exception e){
       e.printStackTrace();
     }
@@ -78,12 +73,12 @@ public class BroadcastService {
 
   //방송 삭제
   @Transactional
-  public void deactivateBroadcast(Long id){
+  public void deactivateBroadcast(Long id) {
+    Optional<Broadcast> broadcast = broadcastRepository.findByBroadcastId(id);
+    broadcast.orElseThrow(() -> new IllegalArgumentException("해당 방송이 없습니다. id = " + id));
     try {
-      Broadcast broadcast = broadcastRepository.findByBroadcastId(id).orElseThrow(()
-              -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
-      broadcast.deactive(id);
-    } catch (Exception e){
+      broadcast.get().deactive(id);
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
