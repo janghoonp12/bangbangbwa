@@ -5,7 +5,6 @@ import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
-import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
@@ -36,8 +35,8 @@ class Openvidu extends Component {
             light: 0,
             view: 0,
             mold: 0,
-            isFrontCamera: false,
-            videoDevices: [],
+            mediaStream: null,
+            myTrack: null,
             countToilet() {
               return `변기: ${this.toilet}`
             },
@@ -57,7 +56,7 @@ class Openvidu extends Component {
               return `곰팡이: ${this.mold}`
             },        
         };
-
+        
         this.scrollRef = React.createRef();
 
         this.joinSession = this.joinSession.bind(this);
@@ -68,11 +67,21 @@ class Openvidu extends Component {
         this.onbeforeunload = this.onbeforeunload.bind(this);
     }
 
-    
-
-    componentDidMount() {
+    async componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
-        this.getDevices();
+        var mediaStream = await this.OV.getUserMedia(this.state.publisher);
+        var myTrack = mediaStream.getVideoTracks()[0]
+        this.setState({
+          mediaStream: mediaStream,
+          myTrack: myTrack,
+        })
+    }
+
+    replaceTrack = () => {
+      const { publisher, myTrack } = this.state;
+      publisher.replaceTrack(myTrack)
+        .then(() => console.log('바꿔졌다'))
+        .catch(error => console.log('에러남', error));
     }
 
     componentWillUnmount() {
@@ -114,46 +123,7 @@ class Openvidu extends Component {
         }
     }
 
-    getDevices = async () => {
-      try {
-          const devices = await this.OV.getDevices();
-          // Getting only the video devices
-          const videoDevices = devices.filter(device => device.kind === 'videoinput');
-          this.setState({ videoDevices });
-      } catch (error) {
-          console.error(error);
-      }
-    };
-
-    toggleCamera = () => {
-      const { isFrontCamera, videoDevices, publisher, session } = this.state;
-      if (videoDevices && videoDevices.length > 1) {
-          // Creating a new publisher with specific videoSource
-          // In mobile devices the default and first camera is the front one
-          const newPublisher = this.OV.initPublisher('main-video', {
-              videoSource: isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
-              publishAudio: true,
-              publishVideo: true,
-              mirror: isFrontCamera // Setting mirror enable if front camera is selected
-          });
     
-          // Changing isFrontCamera value
-          this.setState({ isFrontCamera: !isFrontCamera });
-    
-          // Unpublishing the old publisher
-          session.unpublish(publisher).then(() => {
-              console.log('Old publisher unpublished!');
-    
-              // Assigning the new publisher to our global variable 'publisher'
-              this.setState({ publisher: newPublisher });
-    
-              // Publishing the new publisher
-              session.publish(publisher).then(() => {
-                  console.log('New publisher published!');
-              });
-          });
-      }
-    };
     
     // 채팅 기능
     chatAxios() {
@@ -791,7 +761,6 @@ class Openvidu extends Component {
       this.moldClearAxios()
     }
 
-
     render() {
       const mySessionId = this.state.mySessionId;
       const myUserName = this.state.myUserName;
@@ -1002,16 +971,7 @@ class Openvidu extends Component {
                 {/* <SInput type="text" onKeyDown={(e) => this.activeEnter(e)}/> */}
                 <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
                 {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
-                <div>
-                  <input 
-                    type="button"
-                    value="카메라"
-                    onClick={this.toggleCamera}
-                  />
-                </div>
-                <div>
-                  <SwitchCamera />
-                </div>
+                
                 {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
@@ -1027,6 +987,9 @@ class Openvidu extends Component {
               </div>
             ) : null}
           </Container>
+          <div>
+            <button onClick={this.replaceTrack}>화면</button>
+          </div>
         </Wrapper>
       );
     }
