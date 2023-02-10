@@ -47,14 +47,15 @@ public class BookmarkRestController {
   }
 
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+//  @ApiImplicitParams({
+//      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+//  })
   @PostMapping(value = "/user/bookmarks/new")
   @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기를 등록합니다.")
   public ResponseEntity<?> newBookmark(@RequestBody BookmarkSaveRequestDto requestDto){
     try{
       bookmarkService.newBookmark(requestDto);
+      System.out.println(requestDto.getBookmarkTitle());
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
         put("result", true);
         put("msg", "즐겨찾기 등록을 성공하였습니다.");

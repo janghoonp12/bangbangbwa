@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookmarkSaveRequestDto {
 
-  private Long bookmarkId;
+//  private Long bookmarkId;
   private String bookmarkTitle;
   private String bookmarkComment;
   private Integer bookmarkItemType;
