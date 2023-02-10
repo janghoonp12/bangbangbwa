@@ -5,6 +5,7 @@ import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
+import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
@@ -956,7 +957,9 @@ class Openvidu extends Component {
                 {/* <SInput type="text" onKeyDown={(e) => this.activeEnter(e)}/> */}
                 <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
                 {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
-                
+                <div>
+                  <SwitchCamera />
+                </div>
                 {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
