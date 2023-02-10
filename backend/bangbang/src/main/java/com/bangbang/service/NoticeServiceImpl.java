@@ -6,6 +6,10 @@ import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,10 +30,9 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public List<NoticeResponseDto> searchNoticeAll() {
-        return noticeRepository.findAll().stream()
-                .map(NoticeResponseDto::new)
-                .collect(Collectors.toList());
+    public Page<NoticeResponseDto> searchNoticeAll(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("notice_id").descending());
+        return noticeRepository.findAllNotice(pageable);
     }
 
     @Override

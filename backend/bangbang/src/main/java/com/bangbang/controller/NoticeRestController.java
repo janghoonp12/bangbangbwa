@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,11 +43,14 @@ public class NoticeRestController {
 
     @ApiOperation(value="공지사항 전체검색")
     @GetMapping("/notices")
-    public ResponseEntity<?> searchNoticeAll() {
+    public ResponseEntity<Page<NoticeResponseDto>> searchNoticeAll(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size) {
         try {
-            List<NoticeResponseDto> list =  noticeService.searchNoticeAll();
-            return new ResponseEntity<List<NoticeResponseDto>>(list, HttpStatus.OK);
+            Page<NoticeResponseDto> noticePage = noticeService.searchNoticeAll(page, size);
+            return new ResponseEntity<Page<NoticeResponseDto>>(noticePage, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }
