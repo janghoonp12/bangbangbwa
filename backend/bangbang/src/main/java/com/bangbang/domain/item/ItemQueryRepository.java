@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import static com.bangbang.domain.item.QItem.item;
@@ -73,6 +74,27 @@ public class ItemQueryRepository {
         return item.item_exclusive_area.between(area[0], area[1]);
     }
 
+    private List<BooleanExpression> eqDealType(ItemFilterRequestDto filter) {
+        List<BooleanExpression> list = new ArrayList<>();
+
+        int[] deal = filter.getItem_deal_type();
+        if (deal == null)
+            return null;
+
+        for (int i = 0; i < deal.length; i++) {
+            if (deal[i] == 0) {// 월세인 경우
+                list.add(item.item_deal_type.eq(deal[i]).in(eqMonthRent(filter.getItem_price_month_rent()), eqMonthDeposit(filter.getItem_price_month_deposit())));
+            }
+            if (deal[i] == 1) {//전세인 경우
+                list.add(item.item_deal_type.eq(deal[i]).in(eqHouseDeposit(filter.getItem_price_house_deposit())));
+            }
+            if (deal[i] == 2) {
+                list.add(item.item_deal_type.eq(deal[i]).in(eqBuyHouse(filter.getItem_price_buy_house())));
+            }
+        }
+        return list;
+    }
+
     public List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter) {
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -97,7 +119,6 @@ public class ItemQueryRepository {
                 builder.or(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
             }
         }
-        item.item_deal_type.eq(filter.getItem_deal_type()[0]).in();
 
         //매매가
         if (filter.getItem_price_buy_house() != null)
@@ -197,6 +218,13 @@ public class ItemQueryRepository {
             if (option.option_doorlock.equals(f.isOption_doorlock()))
                 builder.or(option.option_doorlock.eq(true));
         }
+        List<BooleanExpression> list = eqDealType(filter);
+        BooleanBuilder b = new BooleanBuilder();
+        System.out.println("--------------A");
+        if (list != null && !list.isEmpty())
+            for (int i = 0; i < list.size(); i++)
+                b.and(list.get(i));
+        System.out.println("--------------B");
 
         return queryFactory
                 .select(new QItemDto(item,itemPrice,manageOption, option)).distinct()
@@ -206,7 +234,8 @@ public class ItemQueryRepository {
                 .leftJoin(item.option, option)
                 .where(eqId(itemPrice.item_id),
                         eqId(manageOption.item_id),
-                        eqId(option.item_id)
+                        eqId(option.item_id),
+                        b
                 )
                 .limit(10)
                 .fetch();
