@@ -13,6 +13,7 @@ const OPENVIDU_SERVER_SECRET = 'A405';
 
 
 let chattings = []
+var isFrontCamera = false;
 
 class Openvidu extends Component {
   
@@ -747,6 +748,43 @@ class Openvidu extends Component {
       this.moldClearAxios()
     }
 
+    toggleCamera() {
+      this.OV.getDevices().then(devices => {
+        // Getting only the video devices
+        var videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+        if (videoDevices && videoDevices.length > 1){
+
+            // Creating a new publisher with specific videoSource
+            // In mobile devices the default and first camera is the front one
+            var newPublisher = this.OV.initPublisher('html-element-id', {
+                videoSource: isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
+                publishAudio: true,
+                publishVideo: true,
+                mirror: isFrontCamera // Setting mirror enable if front camera is selected
+            });
+
+            // Changing isFrontCamera value
+            isFrontCamera = !isFrontCamera;
+
+            // Unpublishing the old publisher
+            this.mySession.unpublish(this.state.publisher).then(() => {
+                console.log('Old publisher unpublished!');
+
+                // Assigning the new publisher to our global variable 'publisher'
+                this.setState({
+                  publisher: newPublisher,
+                })
+
+                // Publishing the new publisher
+                this.mySession.publish(this.state.publisher).then(() => {
+                    console.log('New publisher published!');
+                });
+            });
+        }
+    });
+    }
+
     render() {
       const mySessionId = this.state.mySessionId;
       const myUserName = this.state.myUserName;
@@ -958,7 +996,11 @@ class Openvidu extends Component {
                 <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
                 {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
                 <div>
-                  <SwitchCamera />
+                  <input 
+                    type="button"
+                    value="카메라"
+                    onClick={this.toggleCamera}
+                  />
                 </div>
                 {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
