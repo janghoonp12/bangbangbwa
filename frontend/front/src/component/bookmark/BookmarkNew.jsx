@@ -204,9 +204,13 @@ function BookmarkNew() {
       'bookmark_item_buy_max_price': (dealType === '3') ? maxBuyPrice : null
     }
 
+    console.log(data)
+
+    const accessToken = sessionStorage.getItem("access-token");
+
     axios.post('/user/bookmarks/new', data, {
       headers: {
-        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+        "X-AUTH-TOKEN" : `Bearer ${accessToken}`
       }
     })
     .then(response => {
