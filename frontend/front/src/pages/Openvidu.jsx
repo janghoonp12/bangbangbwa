@@ -757,7 +757,7 @@ class Openvidu extends Component {
 
             // Creating a new publisher with specific videoSource
             // In mobile devices the default and first camera is the front one
-            var newPublisher = this.OV.initPublisher('html-element-id', {
+            var newPublisher = this.OV.initPublisher('main-video', {
                 videoSource: isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
                 publishAudio: true,
                 publishVideo: true,
@@ -1001,6 +1001,9 @@ class Openvidu extends Component {
                     value="카메라"
                     onClick={this.toggleCamera}
                   />
+                </div>
+                <div>
+                  <SwitchCamera />
                 </div>
                 {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
