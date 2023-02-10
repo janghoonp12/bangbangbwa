@@ -206,7 +206,7 @@ function BookmarkNew() {
 
     axios.post('/user/bookmarks/new', data, {
       headers: {
-        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+        "X-AUTH-TOKEN" : `Bearer ${sessionStorage.getItem("access-token")}`
       }
     })
     .then(response => {
