@@ -4,11 +4,14 @@ import com.bangbang.dto.item.ItemDto;
 import com.bangbang.dto.item.ItemFilterRequestDto;
 import com.bangbang.dto.item.QItemDto;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import static com.bangbang.domain.item.QItem.item;
 import static com.bangbang.domain.item.QItemPrice.itemPrice;
@@ -19,10 +22,55 @@ import static com.bangbang.domain.item.QOption.option;
 public class ItemQueryRepository {
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
+    private final ManageOptionRepository manageOptionRepository;
 
-    public ItemQueryRepository(EntityManager em) {
+    public ItemQueryRepository(EntityManager em,
+                               ManageOptionRepository manageOptionRepository) {
         this.em = em;
         this.queryFactory = new JPAQueryFactory(em);
+        this.manageOptionRepository = manageOptionRepository;
+    }
+
+    private BooleanExpression eqId(NumberPath<Long> item_id) {
+        return item.item_id.eq(item_id);
+    }
+
+    private BooleanExpression eqStatus() {
+        return item.item_status.eq(1);
+    }
+
+    private BooleanExpression eqComplete() {
+        return item.item_deal_complete.eq(false);
+    }
+
+    private BooleanExpression eqBuyHouse(int[] buy) {
+        if (buy == null)
+            return null;
+        return itemPrice.item_price_buy_house.between(buy[0], buy[1]);
+    }
+
+    private BooleanExpression eqHouseDeposit(int[] deposit) {
+        if (deposit == null)
+            return null;
+        return itemPrice.item_price_house_deposit.between(deposit[0], deposit[1]);
+    }
+
+    private BooleanExpression eqMonthDeposit(int[] month) {
+        if (month == null)
+            return null;
+        return itemPrice.item_price_month_deposit.between(month[0], month[1]);
+    }
+
+    private BooleanExpression eqMonthRent(int[] month) {
+        if (month == null)
+            return null;
+        return itemPrice.item_price_month_rent.between(month[0], month[1]);
+    }
+
+    private BooleanExpression eqExclusive(int[] area) {
+        if (area == null)
+            return null;
+        return item.item_exclusive_area.between(area[0], area[1]);
     }
 
     public List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter) {
@@ -49,6 +97,7 @@ public class ItemQueryRepository {
                 builder.or(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
             }
         }
+        item.item_deal_type.eq(filter.getItem_deal_type()[0]).in();
 
         //매매가
         if (filter.getItem_price_buy_house() != null)
@@ -59,6 +108,7 @@ public class ItemQueryRepository {
         //월세
         if (filter.getItem_price_month_rent() != null)
             builder.or(itemPrice.item_price_month_rent.between(filter.getItem_price_month_rent()[0],filter.getItem_price_month_rent()[1]));
+
         //방 크기
         if (filter.getItem_exclusive_area() != null)
             builder.or(item.item_exclusive_area.between(filter.getItem_exclusive_area()[0],filter.getItem_exclusive_area()[1]));
@@ -154,8 +204,10 @@ public class ItemQueryRepository {
                 .leftJoin(item.itemPrice, itemPrice)
                 .leftJoin(item.manageOption,manageOption)
                 .leftJoin(item.option, option)
-                .where(builder)
-                .orderBy(item.item_id.desc())
+                .where(eqId(itemPrice.item_id),
+                        eqId(manageOption.item_id),
+                        eqId(option.item_id)
+                )
                 .limit(10)
                 .fetch();
     }

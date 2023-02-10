@@ -8,6 +8,6 @@ import java.util.List;
 public interface BrokerService {
     void newBroker(BrokerSaveRequestDto broker);
     List<BrokerResponseDto> searchBrokerAll();
-    boolean registerBroker(Long brokerId, Long userId);
+    void registerBroker(Long userId);
     void deactiveBroker(Long brokerId);
 }

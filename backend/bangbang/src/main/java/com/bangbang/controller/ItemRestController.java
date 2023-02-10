@@ -1,11 +1,10 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.item.ItemPrice;
-import com.bangbang.domain.item.ManageOption;
-import com.bangbang.domain.item.Option;
+import com.bangbang.domain.broker.BrokerRepository;
 import com.bangbang.dto.item.*;
 import com.bangbang.service.ItemService;
 import com.bangbang.domain.item.Item;
+import com.bangbang.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -27,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequiredArgsConstructor
 @Api(value="ItemController Version 1")
@@ -34,6 +35,12 @@ public class ItemRestController {
 
     @Autowired
     private final ItemService itemService;
+
+    @Autowired
+    private final UserService userService;
+
+    @Autowired
+    private final BrokerRepository brokerRepository;
 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
@@ -213,6 +220,25 @@ public class ItemRestController {
             List<ItemDto> list = itemService.searchSiGuDongAll(dongCode);
             if (list != null)
                 return new ResponseEntity<List<ItemDto>>(list, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value="userId를 사용해서 brokerId를 반환")
+    @GetMapping("/items/conversion")
+    public ResponseEntity<?> conversionId(HttpServletRequest request) {
+        try {
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            Long brokerId = brokerRepository.findByUserId(uid).getBrokerId();
+            if (brokerId != null)
+                return new ResponseEntity<Long>(brokerId, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();

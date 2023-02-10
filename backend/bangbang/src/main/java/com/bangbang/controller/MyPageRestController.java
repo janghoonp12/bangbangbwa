@@ -5,6 +5,7 @@ import com.bangbang.domain.sign.User;
 import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.dto.item.ItemDto;
 import com.bangbang.service.MypageService;
+import com.bangbang.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -26,18 +28,25 @@ public class MyPageRestController {
     @Autowired
     private final MypageService mypageService;
 
+    @Autowired
+    private final UserService userService;
+
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value="유저 정보 조회")
-    @GetMapping("/user/mypage/{userId}")
-    public ResponseEntity<?> searchUser(@PathVariable Long userId) {
+    @GetMapping("/user/mypage")
+    public ResponseEntity<?> searchUser(HttpServletRequest request) {
         try {
-            User user = mypageService.searchUser(userId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            User user = mypageService.searchUser(uid);
             if (user != null)
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }
@@ -46,10 +55,13 @@ public class MyPageRestController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value="나의 매물 정보 조회")
-    @GetMapping("/user/mypage/item/{brokerId}")
-    public ResponseEntity<?> searchMyItem(@PathVariable Long brokerId) {
+    @GetMapping("/broker/mypage/item")
+    public ResponseEntity<?> searchMyItem(HttpServletRequest request) {
         try {
-            List<ItemDto> item = mypageService.searchMyItem(brokerId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            List<ItemDto> item = mypageService.searchMyItem(uid);
             if (item != null && !item.isEmpty())
                 return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -62,10 +74,13 @@ public class MyPageRestController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value="나의 방송 정보 조회")
-    @GetMapping("/user/mypage/broadcast/{brokerId}")
-    public ResponseEntity<?> searchMyBroadcast(@PathVariable Long brokerId) {
+    @GetMapping("/broker/mypage/broadcast")
+    public ResponseEntity<?> searchMyBroadcast(HttpServletRequest request) {
         try {
-            List<BroadcastListResponseDto> broadcasts = mypageService.searchMyBroadcast(brokerId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            List<BroadcastListResponseDto> broadcasts = mypageService.searchMyBroadcast(uid);
             if (broadcasts != null && !broadcasts.isEmpty())
                 return new ResponseEntity<List<BroadcastListResponseDto>>(broadcasts, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);

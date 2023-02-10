@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface MypageService {
     User searchUser(Long userId);
-    List<ItemDto> searchMyItem(Long brokerId);
-    List<BroadcastListResponseDto> searchMyBroadcast(Long brokerId);
+    List<ItemDto> searchMyItem(Long userId);
+    List<BroadcastListResponseDto> searchMyBroadcast(Long userId);
 }

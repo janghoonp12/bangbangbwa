@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BrokerRepository extends JpaRepository<Broker, Long> {
-    Broker findByBrokerId(Long brokerId);
+    Broker findByUserId(Long userId);
 }
