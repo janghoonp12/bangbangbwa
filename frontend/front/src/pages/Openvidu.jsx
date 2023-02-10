@@ -5,6 +5,7 @@ import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
+import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
@@ -67,18 +68,13 @@ class Openvidu extends Component {
         this.onbeforeunload = this.onbeforeunload.bind(this);
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
-        var mediaStream = await this.OV.getUserMedia(this.state.publisher);
-        var myTrack = mediaStream.getVideoTracks()[0]
-        this.setState({
-          mediaStream: mediaStream,
-          myTrack: myTrack,
-        })
     }
 
     replaceTrack = () => {
       const { publisher, myTrack } = this.state;
+      console.log(myTrack)
       publisher.replaceTrack(myTrack)
         .then(() => console.log('바꿔졌다'))
         .catch(error => console.log('에러남', error));
@@ -473,6 +469,15 @@ class Openvidu extends Component {
     //     setSearch('')
     //   }
     // }
+    async getMedia() {
+      var mediaStream = await this.OV.getUserMedia(this.state.publisher);
+      console.log(mediaStream)
+      var myTrack = mediaStream.getVideoTracks()[0]
+      this.setState({
+        mediaStream: mediaStream,
+        myTrack: myTrack,
+      })
+    }
 
     joinSession() {
         // --- 1) Get an OpenVidu object ---
@@ -545,6 +550,7 @@ class Openvidu extends Component {
                                 mirror: false, // Whether to mirror your local video or not
                             });
 
+                            this.getMedia()
                             // --- 6) Publish your stream ---
 
                             mySession.publish(publisher);
@@ -987,9 +993,12 @@ class Openvidu extends Component {
               </div>
             ) : null}
           </Container>
-          <div>
+          {/* <div>
             <button onClick={this.replaceTrack}>화면</button>
           </div>
+          <div>
+            <SwitchCamera />
+          </div> */}
         </Wrapper>
       );
     }
