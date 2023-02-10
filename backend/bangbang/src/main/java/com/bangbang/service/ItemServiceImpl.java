@@ -111,8 +111,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public void modifyItem(Item item) {
-        itemRepository.save(item);
+    public void modifyItem(ItemUpdateDto item) {
+        itemRepository.save(item.toEntity());
     }
 
     @Transactional

@@ -23,7 +23,7 @@ public interface ItemService {
     SiGuDongDto getAddressName(String dongCode);
     ItemResponseDto itemDetail(long itemId);
     void deactivateItem(long itemId);
-    void modifyItem(Item item);
+    void modifyItem(ItemUpdateDto item);
     void itemSold(long itemId);
     List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter);
 }

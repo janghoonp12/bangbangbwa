@@ -47,7 +47,7 @@ public class ItemRestController {
     })
     @ApiOperation(value="매물 등록")
     @PostMapping("/broker/items/new")
-    public ResponseEntity<?> newItem(@RequestBody ObjectNode item) throws JsonProcessingException {
+    public ResponseEntity<?> newItem(@RequestBody ObjectNode item, HttpServletRequest request) throws JsonProcessingException {
         try {
             /*
             데이터 입력 형식
@@ -67,6 +67,11 @@ public class ItemRestController {
             ItemPriceSaveRequestDto itemPrice = mapper.treeToValue(item.get("itemPrice"), ItemPriceSaveRequestDto.class);
             ManageOptionSaveRequestDto manage = mapper.treeToValue(item.get("manageOption"), ManageOptionSaveRequestDto.class);
             OptionSaveRequestDto option = mapper.treeToValue(item.get("option"), OptionSaveRequestDto.class);
+
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            itemDto.setItem_id(uid);
 
             long item_id = itemService.newItem(itemDto);
             itemService.newItemPrice(itemPrice, item_id);
@@ -101,6 +106,7 @@ public class ItemRestController {
                 return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
 
@@ -138,7 +144,7 @@ public class ItemRestController {
     })
     @ApiOperation(value="매물 수정")
     @PatchMapping("/broker/items/modify")
-    public ResponseEntity<?> modifyItem(@RequestBody Item item) {
+    public ResponseEntity<?> modifyItem(@RequestBody ItemUpdateDto item) {
         try {
             itemService.modifyItem(item);
             return new ResponseEntity(HttpStatus.OK);
