@@ -75,7 +75,7 @@ public class UserRestController {
   @PostMapping("/user/users/refresh")
   public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
     HttpStatus status = HttpStatus.ACCEPTED;
-    String token = request.getHeader("X-AUTH-TOKEN");
+    String token = request.getHeader("X-AUTH-TOKEN").substring(7);
     Long uid = userService.findUserId(token);
     String result = userService.refreshToken(uid, token);
     if (result != null && !result.equals("")) {

@@ -85,6 +85,8 @@ public class UserServiceImpl implements UserService {
         User object = userRepository.findByUserId(uid);
         if (object != null) {
             User user = object;
+            System.out.println(token);
+            System.out.println(user.getUser_refresh_token());
             if (token.equals(user.getUser_refresh_token())) {
                 if (jwtTokenProvider.validateToken(token)) {
                     return jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());
