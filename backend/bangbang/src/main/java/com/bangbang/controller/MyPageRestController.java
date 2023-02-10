@@ -35,14 +35,18 @@ public class MyPageRestController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value="유저 정보 조회")
-    @GetMapping("/user/mypage/{userId}")
-    public ResponseEntity<?> searchUser(@PathVariable Long userId) {
+    @GetMapping("/user/mypage")
+    public ResponseEntity<?> searchUser(HttpServletRequest request) {
         try {
-            User user = mypageService.searchUser(userId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            User user = mypageService.searchUser(uid);
             if (user != null)
                 return new ResponseEntity<User>(user, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }
@@ -55,7 +59,7 @@ public class MyPageRestController {
     public ResponseEntity<?> searchMyItem(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             List<ItemDto> item = mypageService.searchMyItem(uid);
             if (item != null && !item.isEmpty())
@@ -74,7 +78,7 @@ public class MyPageRestController {
     public ResponseEntity<?> searchMyBroadcast(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             List<BroadcastListResponseDto> broadcasts = mypageService.searchMyBroadcast(uid);
             if (broadcasts != null && !broadcasts.isEmpty())
