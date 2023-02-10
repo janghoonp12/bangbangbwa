@@ -13,7 +13,6 @@ const OPENVIDU_SERVER_SECRET = 'A405';
 
 
 let chattings = []
-var isFrontCamera = false;
 
 class Openvidu extends Component {
   
@@ -37,6 +36,8 @@ class Openvidu extends Component {
             light: 0,
             view: 0,
             mold: 0,
+            isFrontCamera: false,
+            videoDevices: [],
             countToilet() {
               return `변기: ${this.toilet}`
             },
@@ -67,8 +68,11 @@ class Openvidu extends Component {
         this.onbeforeunload = this.onbeforeunload.bind(this);
     }
 
+    
+
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
+        this.getDevices();
     }
 
     componentWillUnmount() {
@@ -110,7 +114,46 @@ class Openvidu extends Component {
         }
     }
 
+    getDevices = async () => {
+      try {
+          const devices = await this.OV.getDevices();
+          // Getting only the video devices
+          const videoDevices = devices.filter(device => device.kind === 'videoinput');
+          this.setState({ videoDevices });
+      } catch (error) {
+          console.error(error);
+      }
+    };
+
+    toggleCamera = () => {
+      const { isFrontCamera, videoDevices, publisher, session } = this.state;
+      if (videoDevices && videoDevices.length > 1) {
+          // Creating a new publisher with specific videoSource
+          // In mobile devices the default and first camera is the front one
+          const newPublisher = this.OV.initPublisher('main-video', {
+              videoSource: isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
+              publishAudio: true,
+              publishVideo: true,
+              mirror: isFrontCamera // Setting mirror enable if front camera is selected
+          });
     
+          // Changing isFrontCamera value
+          this.setState({ isFrontCamera: !isFrontCamera });
+    
+          // Unpublishing the old publisher
+          session.unpublish(publisher).then(() => {
+              console.log('Old publisher unpublished!');
+    
+              // Assigning the new publisher to our global variable 'publisher'
+              this.setState({ publisher: newPublisher });
+    
+              // Publishing the new publisher
+              session.publish(publisher).then(() => {
+                  console.log('New publisher published!');
+              });
+          });
+      }
+    };
     
     // 채팅 기능
     chatAxios() {
@@ -748,42 +791,6 @@ class Openvidu extends Component {
       this.moldClearAxios()
     }
 
-    toggleCamera() {
-      this.OV.getDevices().then(devices => {
-        // Getting only the video devices
-        var videoDevices = devices.filter(device => device.kind === 'videoinput');
-
-        if (videoDevices && videoDevices.length > 1){
-
-            // Creating a new publisher with specific videoSource
-            // In mobile devices the default and first camera is the front one
-            var newPublisher = this.OV.initPublisher('main-video', {
-                videoSource: isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
-                publishAudio: true,
-                publishVideo: true,
-                mirror: isFrontCamera // Setting mirror enable if front camera is selected
-            });
-
-            // Changing isFrontCamera value
-            isFrontCamera = !isFrontCamera;
-
-            // Unpublishing the old publisher
-            this.mySession.unpublish(this.state.publisher).then(() => {
-                console.log('Old publisher unpublished!');
-
-                // Assigning the new publisher to our global variable 'publisher'
-                this.setState({
-                  publisher: newPublisher,
-                })
-
-                // Publishing the new publisher
-                this.mySession.publish(this.state.publisher).then(() => {
-                    console.log('New publisher published!');
-                });
-            });
-        }
-    });
-    }
 
     render() {
       const mySessionId = this.state.mySessionId;
