@@ -1,6 +1,7 @@
 package com.bangbang.controller;
 
 import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broker.BrokerRepository;
 import com.bangbang.domain.sign.User;
 import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.dto.item.ItemDto;
@@ -30,6 +31,9 @@ public class MyPageRestController {
 
     @Autowired
     private final UserService userService;
+
+    @Autowired
+    private final BrokerRepository brokerRepository;
 
     @ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
@@ -61,7 +65,8 @@ public class MyPageRestController {
             HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
-            List<ItemDto> item = mypageService.searchMyItem(uid);
+            Long brokerId = brokerRepository.findByUserId(uid).getBrokerId();
+            List<ItemDto> item = mypageService.searchMyItem(brokerId);
             if (item != null && !item.isEmpty())
                 return new ResponseEntity<List<ItemDto>>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);

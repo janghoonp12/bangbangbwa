@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import TextInput from "../common/ui/TextInput";
 import Button from "../common/ui/Button";
+import { useDispatch, useSelector } from 'react-redux';
+import { findMyItemAsync, writeBroadcastAsync, clearWriteBroadcastDone } from "../../reducers/broadcastSlice";
 
 const Wrapper = styled.div`
     display: flex;
@@ -20,21 +22,53 @@ const Container = styled.div`
 `;
 
 function BroadcastWrite(props) {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [item, setItem] = useState("방송 등록할 매물을 선택하세요");
+  const [item, setItem] = useState("");
   const [title, setTitle] = useState("방송 제목");
   const [outlook, setOutlook] = useState("방송 개요");
   const [startTime, setstartTime] = useState("방송 시작시간");
   const [thumbnail, setThumbnail] = useState("썸네일");
+
+  const { myItem, writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
+
+  useEffect(() => {
+    dispatch(findMyItemAsync())
+  }, [])
+
+  useEffect(() => {
+    if (writeBroadcastDone) {
+      clearWriteBroadcastDone()
+      navigate('/broadcasts');
+    }
+  })
+
+  const createBroadcast = () => {
+    dispatch(writeBroadcastAsync(
+      {
+        "broadcastDescription": outlook,
+        "broadcastReservationTime" : startTime,
+        "broadcastTitle": title,
+        "itemId": item
+      }
+    ))
+  }
+  
   return (
     <Wrapper>
-      <TextInput
+      <select required>
+        <option value="" onChange={setItem} disabled selected style={{ display: "none" }}>매물을 선택하세요</option>
+        {myItem ? myItem.map((item, index) => (
+          <option value={item.item.item_id}>{item.item.item_title}</option>
+        )): <option value="">등록된 매물이 없습니다</option>}
+      </select>
+      {/* <TextInput
         value={item}
         height={100}
         onChange={(event) => {
           setItem(event.target.value);
       }}
-      />
+      /> */}
       <br />
       <Container>
         <TextInput
@@ -67,9 +101,7 @@ function BroadcastWrite(props) {
         />
         <Button
           title="등록하기"
-          onClick={() => {
-              navigate("/broadcasts");
-          }}
+          onClick={createBroadcast}
         />
       </Container>
     </Wrapper>
