@@ -62,7 +62,7 @@ export const searchDetailItemAsync = createAsyncThunk(
 
 
 const itemSlice = createSlice({
-  name: "notice",
+  name: "item",
   initialState,
   reducers: {
     clearSearchDetailItemDone: (state) => {
