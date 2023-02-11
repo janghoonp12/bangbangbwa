@@ -108,7 +108,8 @@ const noticeSlice = createSlice({
     builder.addCase(searchAllNoticeAsync.fulfilled, (state, action) => {
       state.searchAllNoticeLoading = false;
       state.searchAllNoticeDone = true;
-      state.noticeData = action.payload
+      state.noticeData = action.payload.content
+      console.log(state.noticeData)
     });
     builder.addCase(searchAllNoticeAsync.rejected, (state, action) => {
       state.searchAllNoticeLoading = false;
