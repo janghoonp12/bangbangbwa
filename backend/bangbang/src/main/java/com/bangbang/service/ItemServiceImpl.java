@@ -111,8 +111,26 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional
     @Override
-    public void modifyItem(Item item) {
-        itemRepository.save(item);
+    public void modifyItem(ItemUpdateRequestDto item) {
+        itemRepository.save(item.toEntity());
+    }
+
+    @Transactional
+    @Override
+    public void modifyOption(OptionUpdateRequestDto option) {
+        optionRepository.save(option.toEntity());
+    }
+
+    @Transactional
+    @Override
+    public void modifyManageOption(ManageOptionUpdateRequestDto manageOption) {
+        manageOptionRepository.save(manageOption.toEntity());
+    }
+
+    @Transactional
+    @Override
+    public void modifyItemPrice(ItemPriceUpdateRequestDto itemPrice) {
+        itemPriceRepository.save(itemPrice.toEntity());
     }
 
     @Transactional

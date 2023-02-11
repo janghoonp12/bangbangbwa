@@ -4,8 +4,10 @@ import com.bangbang.domain.interest.Interestarea;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class InterestareaSaveRequestDto {
     private Long userId;
