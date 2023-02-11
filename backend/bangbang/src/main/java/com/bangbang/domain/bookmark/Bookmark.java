@@ -15,7 +15,7 @@ public class Bookmark {
   @Id
   @Column(name="bookmark_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long bookmarkId;  //PK
+  private long bookmarkId;  //PK
 
   @Column(name = "bookmark_title", length = 20, nullable = false)
   private String bookmarkTitle;
@@ -53,7 +53,7 @@ public class Bookmark {
   @JoinTable(name="user",
           joinColumns = @JoinColumn(name="user_id"),
           inverseJoinColumns = @JoinColumn(name="user_id"))
-  private Long userId;
+  private long userId;
 
   @JoinTable(name="dongcode",
           joinColumns = @JoinColumn(name="dongCode"),
@@ -64,7 +64,7 @@ public class Bookmark {
   public Bookmark(String bookmarkTitle, String bookmarkComment, Integer bookmarkItemType,
       Integer bookmarkBuildingType, Double bookmarkMinArea, Double bookmarkMaxArea, Integer bookmarkItemBuildMinYear, Integer bookmarkItemBuildMaxYear,
       Integer bookmarkItemMonthMinPrice, Integer bookmarkItemMonthMaxPrice, Integer bookmarkItemBuyMinPrice, Integer bookmarkItemBuyMaxPrice,
-      Integer bookmarkItemMinDeposit, Integer bookmarkItemMaxDeposit, Long userId, String dongcode) {
+      Integer bookmarkItemMinDeposit, Integer bookmarkItemMaxDeposit, long userId, String dongcode) {
 
     this.bookmarkTitle = bookmarkTitle;
     this.bookmarkComment = bookmarkComment;

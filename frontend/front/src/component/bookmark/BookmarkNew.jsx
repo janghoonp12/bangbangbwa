@@ -186,6 +186,23 @@ function BookmarkNew() {
 
   const createBookmark = () => {
 
+    // const data = {
+    //   'bookmarkTitle': title,
+    //   'bookmarkComment': comment,
+    //   'bookmarkItemType': dealType-1,
+    //   'bookmarkBuildingType': roomType-1,
+    //   'bookmarkMinArea': minArea,
+    //   'bookmarkMaxArea': maxArea,
+    //   'bookmarkItemBuildMinYear': buildMinYear,
+    //   'bookmarkItemBuildMaxYear': buildMaxYear,
+    //   'dongCode': dong,
+    //   'bookmarkItemMonthMinPrice': (dealType === '1') ? monthMinPrice : null,
+    //   'bookmarkItemMonthMaxPrice': (dealType === '1') ? monthMaxPrice : null,
+    //   'bookmarkItemMinDeposit': (dealType === '1' || dealType === '2') ? minDeposit : null,
+    //   'bookmarkItemMaxDeposit': (dealType === '1' || dealType === '2') ? maxDeposit : null,
+    //   'bookmarkItemBuyMinPrice': (dealType === '3') ? minBuyPrice : null,
+    //   'bookmarkItemBuyMaxPrice': (dealType === '3') ? maxBuyPrice : null
+    // }
     const data = {
       'bookmark_title': title,
       'bookmark_comment': comment,
@@ -204,9 +221,13 @@ function BookmarkNew() {
       'bookmark_item_buy_max_price': (dealType === '3') ? maxBuyPrice : null
     }
 
+    console.log(data)
+
+    const accessToken = sessionStorage.getItem("access-token");
+
     axios.post('/user/bookmarks/new', data, {
       headers: {
-        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+        "X-AUTH-TOKEN" : `Bearer ${accessToken}`
       }
     })
     .then(response => {

@@ -1,16 +1,20 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.sign.User;
 import com.bangbang.dto.bookmark.BookmarkListResponseDto;
 import com.bangbang.dto.bookmark.BookmarkResponseDto;
 import com.bangbang.dto.bookmark.BookmarkSaveRequestDto;
 import com.bangbang.dto.bookmark.BookmarkUpdateRequestDto;
 import com.bangbang.service.BookmarkService;
+import com.bangbang.service.CustomUserDetailsService;
+import com.bangbang.util.JwtTokenProvider;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value="BookmarkRestController-Version 1")
 public class BookmarkRestController {
   private final BookmarkService bookmarkService;
+  private final JwtTokenProvider jwtTokenProvider;
+  private final CustomUserDetailsService customUserDetailsService;
 
   @ApiImplicitParams({
       @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
@@ -47,14 +53,18 @@ public class BookmarkRestController {
   }
 
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+//  @ApiImplicitParams({
+//      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
+//  })
   @PostMapping(value = "/user/bookmarks/new")
   @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기를 등록합니다.")
-  public ResponseEntity<?> newBookmark(@RequestBody BookmarkSaveRequestDto requestDto){
+  public ResponseEntity<?> newBookmark(@RequestBody BookmarkSaveRequestDto requestDto, HttpServletRequest request){
     try{
-      bookmarkService.newBookmark(requestDto);
+
+      String token = jwtTokenProvider.resolveToken(request);
+      Long uId = Long.valueOf(jwtTokenProvider.getUserId(token));
+
+      bookmarkService.newBookmark(requestDto, uId);
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
         put("result", true);
         put("msg", "즐겨찾기 등록을 성공하였습니다.");

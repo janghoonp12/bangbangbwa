@@ -9,8 +9,6 @@ import { useSelector } from "react-redux";
 function NoticeList() {
   const { noticeData } = useSelector((state) => state.noticeSlice);
 
-
-
   return (
     <Table
       style={{width: '100%', marginTop: '50px', borderSpacing: '0px 10px', borderCollapse: 'separate', borderTop: '1px solid black'}}

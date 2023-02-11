@@ -7,6 +7,7 @@ import mypagelogo from "../../assets/mypagelogo.png"
 import logo from "../../assets/logo.png"
 import searchbutton from "../../assets/searchbutton.png"
 import AlarmList from "../alarm/AlarmList";
+import { useSelector } from "react-redux";
 
 const Navbar = styled.nav`
   position: flex;
@@ -109,6 +110,9 @@ const TestDiv = styled.div`
 
 
 const Nav = () => {
+  const isLogin = !!sessionStorage.getItem('access-token')
+
+
   const [alarmBar, setAlarmBar] = useState(false);
   const [search, setSearch] = useState("");
   const onChange = (e) => {
@@ -187,9 +191,16 @@ const Nav = () => {
           )}
         </NavDiv>
         <NavDiv>
+          {isLogin &&
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           <SImg src={mypagelogo} alt="#" />
           </NavLink>
+          }
+          {!isLogin &&
+          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
+            로그인  
+          </NavLink>
+          }
         </NavDiv>
       </NavRightDiv>
     </Navbar>

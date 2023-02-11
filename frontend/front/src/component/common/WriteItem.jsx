@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { writeItemAsync } from "../../reducers/itemSlice"
 import styled from "styled-components";
 import Button from "./ui/Button";
 import DaumPostcode from 'react-daum-postcode';
 import axios from "axios";
 import ImageUpload from "./ImageUpload";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Wrapper = styled.div`
@@ -42,6 +44,9 @@ const STitleP = styled.p`
 `;
 
 function WriteItem() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { writeItemDone } = useSelector((state) => state.itemSlice);
   // 카카오 주소 검색 API
   const [postCode, setPostCode] = useState('');
   const [lat, setLat] = useState('');
@@ -62,6 +67,12 @@ function WriteItem() {
       }
     })
   }
+
+  useEffect(() => {
+    if (writeItemDone) {
+      navigate('/notices');
+    }
+  })
 
   
 
@@ -210,20 +221,8 @@ function WriteItem() {
           "option_washer": washer
         }
     }
-
-    // axios 체크
     
-    axios.post('/broker/items/new', data, {
-      headers: {
-        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
-      }
-    })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.error(error);
-    })
+    dispatch(writeItemAsync(data))
   }
 
 

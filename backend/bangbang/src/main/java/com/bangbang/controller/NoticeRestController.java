@@ -5,16 +5,19 @@ import com.bangbang.domain.notice.NoticeRepository;
 import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
 import com.bangbang.service.NoticeService;
+import com.bangbang.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -24,14 +27,20 @@ public class NoticeRestController {
 
     @Autowired
     private final NoticeService noticeService;
+    @Autowired
+    private final UserService userService;
+
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value="공지사항 등록")
     @PostMapping("/admin/notices/new")
-    public ResponseEntity<?> newNotice(@RequestBody NoticeSaveRequestDto notice) {
+    public ResponseEntity<?> newNotice(@RequestBody NoticeSaveRequestDto notice, HttpServletRequest request) {
         try {
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            notice.setUser_id(uid);
             noticeService.newNotice(notice);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -42,11 +51,14 @@ public class NoticeRestController {
 
     @ApiOperation(value="공지사항 전체검색")
     @GetMapping("/notices")
-    public ResponseEntity<?> searchNoticeAll() {
+    public ResponseEntity<Page<NoticeResponseDto>> searchNoticeAll(
+        @RequestParam(defaultValue = "0") Integer page,
+        @RequestParam(defaultValue = "10") Integer size) {
         try {
-            List<NoticeResponseDto> list =  noticeService.searchNoticeAll();
-            return new ResponseEntity<List<NoticeResponseDto>>(list, HttpStatus.OK);
+            Page<NoticeResponseDto> noticePage = noticeService.searchNoticeAll(page, size);
+            return new ResponseEntity<Page<NoticeResponseDto>>(noticePage, HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }

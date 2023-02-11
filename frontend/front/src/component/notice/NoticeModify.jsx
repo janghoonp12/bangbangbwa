@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../common/ui/Button";
-import { writeNoticeAsync } from "../../reducers/noticeSlice"
+import { modifyNoticeAsync, deleteNoticeAsync, clearModifyNoticeDone, clearDeleteNoticeDone } from "../../reducers/noticeSlice"
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import useInput from '../../hooks/useInput';
 
 const Wrapper = styled.div`
   display: flex;
@@ -44,63 +47,51 @@ const STitleP = styled.p`
 
 
 
-function NoticeNew() {
+function NoticeModify() {
   const navigate = useNavigate();
-  
-  const [type, setType] = useState();
-  const [title, setTitle] = useState();
-  const [comment, setComment] = useState();
+  const { noticeDetail, modifyNoticeDone, deleteNoticeDone } = useSelector((state) => state.noticeSlice);
+  const [type, setType] = useInput(noticeDetail ? noticeDetail.notice_type : '');
+  const [title, setTitle] = useInput(noticeDetail ? noticeDetail.notice_title : '');
+  const [comment, setComment] = useState(noticeDetail ? noticeDetail.notice_comment : '');
 
-  const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
+  // const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
 
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
-    if (writeNoticeDone) {
-      navigate('/notices');
+    if (modifyNoticeDone) {
+      dispatch(clearModifyNoticeDone())
+      navigate(-1)
     }
-  }, [writeNoticeDone])
 
-  const typeChange = (e) => {
-    setType(e.target.value)
-  }
-  const titleChange = (e) => {
-    setTitle(e.target.value)
-  }
-  const commentChange = (e) => {
-    setComment(e.target.value)
-  }
+    if (deleteNoticeDone) {
+      dispatch(clearDeleteNoticeDone())
+      navigate(-1)
+    }
+  })
 
-  const createNotice = () => {
-    dispatch(writeNoticeAsync(
+  // useEffect(() => {
+  //   if (writeNoticeDone) {
+  //     navigate('/notices');
+  //   }
+  // })
+
+  const ModifyNotice = () => {
+    dispatch(modifyNoticeAsync(
       {
         'notice_type': type,
         'notice_title': title,
         'notice_comment': comment,
-        // 'notice_regidate': realToday,
-        'notice_status': 1
       }
     ))
-    // let today = new Date();   
-
-    // let year = today.getFullYear(); // 년도
-    // let month = today.getMonth() + 1;  // 월
-    // let date = today.getDate();  // 날짜  
-
-    // let realToday = `${year}-${month}-${date}`
-
-    // axios.post('/admin/notices/new', data, {
-    //   headers: {
-    //     "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
-    //   }
-    // })
-    // .then(response => {
-    //   console.log(response);
-    //   navigate('/notices')
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    // })
+  }
+    const DeleteNotice = () => {
+      dispatch(deleteNoticeAsync(
+        {
+          'notice_id' : noticeDetail.notice_id
+        }
+      ))
   }
 
   return (
@@ -109,8 +100,8 @@ function NoticeNew() {
         <h1>공지사항 작성</h1>
         <SGridDiv style={{marginTop: "5%"}}>
           <STitleP>분류</STitleP>
-          <SSelect onChange={typeChange} required>
-          <option value="" disabled selected style={{display: "none"}}>분류를 선택하세요</option>
+          <SSelect value={type} required onChange={setType}>
+          <option value="default" style={{display: "none"}}>분류를 선택하세요</option>
           <option value="점검">점검</option>
           <option value="안내">안내</option>
           <option value="회식">회식</option>
@@ -120,12 +111,12 @@ function NoticeNew() {
         <hr />
         <SGridDiv>
           <STitleP>공지 제목</STitleP>
-          <input onChange={titleChange} placeholder=" 제목을 입력하세요." />
+          <input value={title} required onChange={setTitle} placeholder=" 제목을 입력하세요." />
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>공지 내용</STitleP>
-          <textarea onChange={commentChange} rows="8" placeholder=" 내용을 입력하세요." />
+          <ReactQuill value={comment} required onChange={setComment}/>
         </SGridDiv>
         <hr />
         <SGridDiv>
@@ -133,10 +124,16 @@ function NoticeNew() {
           <input type="file" multiple={true} />
         </SGridDiv>
         <hr />
+        <div style={{float: "left"}}>
+          <Button
+            title="삭제하기"
+            onClick={DeleteNotice}
+            />
+        </div>
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
           <Button
-            title="등록하기"
-            onClick={createNotice}
+            title="수정하기"
+            onClick={ModifyNotice}
             />
         </div>
       </Container>
@@ -144,4 +141,4 @@ function NoticeNew() {
   )
 }
 
-export default NoticeNew;
+export default NoticeModify;

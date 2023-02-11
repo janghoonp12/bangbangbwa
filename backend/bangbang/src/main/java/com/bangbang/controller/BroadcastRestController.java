@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,14 +30,11 @@ public class BroadcastRestController {
   BroadcastService broadcastService;
 
   //방송 등록
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
   @ApiOperation(value = "방송 등록", notes = "방송을 등록합니다.")
   @PostMapping(value = "/broker/broadcasts/new")
   public ResponseEntity<?> newBroadcast(@RequestBody BroadcastSaveRequestDto requestDto) throws Exception{
-
     try {
+
       broadcastService.newBroadcast(requestDto);
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
         put("result", true);
@@ -78,9 +76,8 @@ public class BroadcastRestController {
   @PatchMapping(value = "/broker/broadcasts/modify/{broadcastId}")
   @ApiOperation(value = "해당 방송 수정", notes = "해당 방송의 제목, 내용을 수정합니다.")
   public ResponseEntity<?> modifyBroadcast(@PathVariable Long broadcastId, @RequestBody BroadcastUpdateRequestDto requestDto){
-
+    broadcastService.modifyBroadcast(broadcastId, requestDto);
     try {
-      broadcastService.modifyBroadcast(broadcastId, requestDto);
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
         put("result", true);
         put("msg", "방송수정을 완료했습니다.");
@@ -93,18 +90,15 @@ public class BroadcastRestController {
   }
 
   //방송 삭제(비활성화)
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
   @PatchMapping(value = "/broker/broadcasts/deactive/{broadcastId}")
   @ApiOperation(value = "해당 방송 삭제", notes = "해당 방송을 비활성화합니다.")
   public ResponseEntity<?> deactivateBroadcast(@PathVariable Long broadcastId){
-    try{
-      broadcastService.deactivateBroadcast(broadcastId);
-      return new ResponseEntity<Object>(new HashMap<String, Object>() {{
-        put("result", true);
-        put("msg", "방송비활성화를 완료했습니다.");
-      }}, HttpStatus.OK);
+    broadcastService.deactivateBroadcast(broadcastId);
+    try {
+        return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+          put("result", true);
+          put("msg", "방송비활성화를 완료했습니다.");
+        }}, HttpStatus.OK);
     } catch (Exception e){
       e.printStackTrace();
       return extracted();

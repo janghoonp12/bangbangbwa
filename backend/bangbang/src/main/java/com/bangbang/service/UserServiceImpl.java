@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signUp(SignUp SignUpInfo) throws Exception {
         if (userRepository.findByUserEmail(SignUpInfo.getUserEmail()) != null) {
-            throw new BaseException(ErrorMessage.EXIST_ID);
+            throw new BaseException(ErrorMessage.EXIST_EMAIL);
         }
 
-        if (userRepository.findByUserNickname(SignUpInfo.getUserPassword()).isPresent()) {
-            throw  new BaseException(ErrorMessage.EXIST_EMAIL);
+        if (userRepository.findByUserNickname(SignUpInfo.getUserNickname()).isPresent()) {
+            throw new BaseException(ErrorMessage.EXIST_NICKNAME);
         }
 
         User user = User.builder()
@@ -85,6 +85,8 @@ public class UserServiceImpl implements UserService {
         User object = userRepository.findByUserId(uid);
         if (object != null) {
             User user = object;
+            System.out.println(token);
+            System.out.println(user.getUser_refresh_token());
             if (token.equals(user.getUser_refresh_token())) {
                 if (jwtTokenProvider.validateToken(token)) {
                     return jwtTokenProvider.createToken(user.getUserId(), user.getUser_roles());

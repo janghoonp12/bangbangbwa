@@ -41,8 +41,6 @@ public class UserRestController {
   @ApiOperation(value = "회원 등록", notes = "회원을 등록합니다.")
   @PostMapping("/users/new")
   public ResponseEntity<?> signUp(@RequestBody SignUp SignUpInfo) throws Exception {
-    System.out.println(SignUpInfo);
-
     userService.signUp(SignUpInfo);
 
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
@@ -75,7 +73,7 @@ public class UserRestController {
   @PostMapping("/user/users/refresh")
   public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
     HttpStatus status = HttpStatus.ACCEPTED;
-    String token = request.getHeader("X-AUTH-TOKEN");
+    String token = request.getHeader("X-AUTH-TOKEN").substring(7);
     Long uid = userService.findUserId(token);
     String result = userService.refreshToken(uid, token);
     if (result != null && !result.equals("")) {

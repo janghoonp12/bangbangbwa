@@ -5,6 +5,7 @@ import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
+import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
@@ -35,6 +36,8 @@ class Openvidu extends Component {
             light: 0,
             view: 0,
             mold: 0,
+            mediaStream: null,
+            myTrack: null,
             countToilet() {
               return `변기: ${this.toilet}`
             },
@@ -54,7 +57,7 @@ class Openvidu extends Component {
               return `곰팡이: ${this.mold}`
             },        
         };
-
+        
         this.scrollRef = React.createRef();
 
         this.joinSession = this.joinSession.bind(this);
@@ -67,6 +70,14 @@ class Openvidu extends Component {
 
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
+    }
+
+    replaceTrack = () => {
+      const { publisher, myTrack } = this.state;
+      console.log(myTrack)
+      publisher.replaceTrack(myTrack)
+        .then(() => console.log('바꿔졌다'))
+        .catch(error => console.log('에러남', error));
     }
 
     componentWillUnmount() {
@@ -458,6 +469,15 @@ class Openvidu extends Component {
     //     setSearch('')
     //   }
     // }
+    async getMedia() {
+      var mediaStream = await this.OV.getUserMedia(this.state.publisher);
+      console.log(mediaStream)
+      var myTrack = mediaStream.getVideoTracks()[0]
+      this.setState({
+        mediaStream: mediaStream,
+        myTrack: myTrack,
+      })
+    }
 
     joinSession() {
         // --- 1) Get an OpenVidu object ---
@@ -530,6 +550,7 @@ class Openvidu extends Component {
                                 mirror: false, // Whether to mirror your local video or not
                             });
 
+                            this.getMedia()
                             // --- 6) Publish your stream ---
 
                             mySession.publish(publisher);
@@ -619,6 +640,7 @@ class Openvidu extends Component {
         }
 
         // Empty all properties...
+        chattings=[]
         this.OV = null;
         this.setState({
             session: undefined,
@@ -832,119 +854,129 @@ class Openvidu extends Component {
                 )}
                 
                 {this.state.myUserName === 'Participant1' ? (
-                  <SButtonDiv
-                    onMouseDown={this.onDragStart}
-                    onMouseMove={this.state.isDrag ? onThrottleDragMove : null}
-                    onMouseUp={this.onDragEnd}
-                    onMouseLeave={this.onDragEnd}
-                    ref={this.scrollRef}
-                  >
-                    <SButtonInput2 
-                      type="button"
-                      id="toilet"
-                      value={this.state.countToilet()}
-                      onClick={this.onClickToiletClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="drainage"
-                      value={this.state.countDrainage()}
-                      onClick={this.onClickDrainageClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="sink"
-                      value={this.state.countSink()}
-                      onClick={this.onClickSinkClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="light"
-                      value={this.state.countLight()}
-                      onClick={this.onClickLightClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="view"
-                      value={this.state.countView()}
-                      onClick={this.onClickViewClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="mold"
-                      value={this.state.countMold()}
-                      onClick={this.onClickMoldClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id=""
-                      value="버튼7"
-                      onClick={this.onClickToiletClear}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id=""
-                      value="버튼8"
-                      onClick={this.onClickToiletClear}
-                    />
-                  </SButtonDiv>
+                  <SButtonLineDiv>
+                    <div>
+                      <BroadcastButtonModal />
+                    </div>
+                    <SButtonDiv
+                      onMouseDown={this.onDragStart}
+                      onMouseMove={this.state.isDrag ? onThrottleDragMove : null}
+                      onMouseUp={this.onDragEnd}
+                      onMouseLeave={this.onDragEnd}
+                      ref={this.scrollRef}
+                    >
+                      <SButtonInput2 
+                        type="button"
+                        id="toilet"
+                        value={this.state.countToilet()}
+                        onClick={this.onClickToiletClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="drainage"
+                        value={this.state.countDrainage()}
+                        onClick={this.onClickDrainageClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="sink"
+                        value={this.state.countSink()}
+                        onClick={this.onClickSinkClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="light"
+                        value={this.state.countLight()}
+                        onClick={this.onClickLightClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="view"
+                        value={this.state.countView()}
+                        onClick={this.onClickViewClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="mold"
+                        value={this.state.countMold()}
+                        onClick={this.onClickMoldClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id=""
+                        value="버튼7"
+                        onClick={this.onClickToiletClear}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id=""
+                        value="버튼8"
+                        onClick={this.onClickToiletClear}
+                      />
+                    </SButtonDiv>
+                  </SButtonLineDiv>
                 ) : (
-                  <SButtonDiv
-                    onMouseDown={this.onDragStart}
-                    onMouseMove={this.state.isDrag ? onThrottleDragMove : null}
-                    onMouseUp={this.onDragEnd}
-                    onMouseLeave={this.onDragEnd}
-                    ref={this.scrollRef}
-                  >
-                    <SButtonInput2 
-                      type="button"
-                      id="toilet"
-                      value={this.state.countToilet()}
-                      onClick={this.onClickToilet}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="drainage"
-                      value={this.state.countDrainage()}
-                      onClick={this.onClickDrainage}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="sink"
-                      value={this.state.countSink()}
-                      onClick={this.onClickSink}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="light"
-                      value={this.state.countLight()}
-                      onClick={this.onClickLight}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="view"
-                      value={this.state.countView()}
-                      onClick={this.onClickView}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id="mold"
-                      value={this.state.countMold()}
-                      onClick={this.onClickMold}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id=""
-                      value="버튼7"
-                      onClick={this.onClickToilet}
-                    />
-                    <SButtonInput2 
-                      type="button"
-                      id=""
-                      value="버튼8"
-                      onClick={this.onClickToilet}
-                    />
-                  </SButtonDiv>
+                  <SButtonLineDiv>
+                    <div>
+                      <BroadcastButtonModal />
+                    </div>
+                    <SButtonDiv
+                      onMouseDown={this.onDragStart}
+                      onMouseMove={this.state.isDrag ? onThrottleDragMove : null}
+                      onMouseUp={this.onDragEnd}
+                      onMouseLeave={this.onDragEnd}
+                      ref={this.scrollRef}
+                    >
+                      <SButtonInput2 
+                        type="button"
+                        id="toilet"
+                        value={this.state.countToilet()}
+                        onClick={this.onClickToilet}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="drainage"
+                        value={this.state.countDrainage()}
+                        onClick={this.onClickDrainage}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="sink"
+                        value={this.state.countSink()}
+                        onClick={this.onClickSink}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="light"
+                        value={this.state.countLight()}
+                        onClick={this.onClickLight}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="view"
+                        value={this.state.countView()}
+                        onClick={this.onClickView}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id="mold"
+                        value={this.state.countMold()}
+                        onClick={this.onClickMold}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id=""
+                        value="버튼7"
+                        onClick={this.onClickToilet}
+                      />
+                      <SButtonInput2 
+                        type="button"
+                        id=""
+                        value="버튼8"
+                        onClick={this.onClickToilet}
+                      />
+                    </SButtonDiv>
+                  </SButtonLineDiv>
                 )}
                 <SChatDiv>
                   <SChatAreaDiv>
@@ -960,9 +992,9 @@ class Openvidu extends Component {
                 {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                      <UserVideoComponent streamManager={this.state.publisher} />
+                    <UserVideoComponent streamManager={this.state.publisher} />
                     </div>
-                  ) : null}
+                    ) : null}
                   {this.state.subscribers.map((sub, i) => (
                     <div key={i} className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(sub)}>
                       <UserVideoComponent streamManager={sub} />
@@ -972,6 +1004,12 @@ class Openvidu extends Component {
               </div>
             ) : null}
           </Container>
+          {/* <div>
+            <button onClick={this.replaceTrack}>화면</button>
+          </div>
+          <div>
+            <SwitchCamera />
+          </div> */}
         </Wrapper>
       );
     }
@@ -1077,7 +1115,7 @@ const STitleDiv = styled.div`
 
 const SScreenDiv = styled.div`
   width: 100%;
-  height: 60vh;
+  height: 58vh;
 `;
 
 // const SButtonDiv = styled.div`
@@ -1086,6 +1124,13 @@ const SScreenDiv = styled.div`
 //   height: 5vh;
 //   border: 1px solid black;
 // `;
+
+const SButtonLineDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  justify-content: center;
+  align-items: center;
+`;
 
 const SButtonDiv = styled.div`
     display: flex;
@@ -1097,11 +1142,7 @@ const SButtonDiv = styled.div`
     flex-wrap: nowrap;
     overflow-x: auto;
     // border: 1px solid grey;
-    & > * {
-        :not(:last-child) {
-            margin-bottom: 16px;
-        }
-    }
+    
     &::-webkit-scrollbar {
       display: none;
     }
@@ -1112,21 +1153,23 @@ const SChatDiv = styled.div`
   grid-direction: row;
   grid-template-row: 5fr 1fr;
   width: 100%;
-  height: 15vh;
-  border: 1px solid black;
+  height: 16vh;
+  border: 1px solid grey;
+  margin-top: 1%;
 `;
 
 const SChatAreaDiv = styled.div`
-  border: 1px solid black;
+  // border: 0.5px solid black;
   display: flex;
   overflow-y: auto;
   flex-direction: column-reverse;
   word-wrap: break-word;
+  
 `;
 
 const SInput = styled.input`
   width: 100%;
-  height: 5vh;
+  height: 4vh;
 `;
 
 const SChatP = styled.p`
@@ -1136,18 +1179,18 @@ const SChatP = styled.p`
 const SButtonInput = styled.input`
   border-radius: 10px;
   margin-left: 10px;
-  height: 100%;
+  height: 60%;
   border: 0 solid black;
   background-color: red;
   color: white; 
 `;
 
 const SButtonInput2 = styled.input`
-  border-radius: 50px;
+  border-radius: 10px;
   margin-left: 10px;
   height: 100%;
   border: 0 solid black;
-  // background-color: green;
+  background-color: #F8EDE3;
   // color: white;
   margin-bottom: 0px;
   margin-right:10px;
