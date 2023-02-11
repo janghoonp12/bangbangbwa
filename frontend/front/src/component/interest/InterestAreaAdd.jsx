@@ -93,14 +93,17 @@ function InterestAreaAdd() {
     setOnAdd(true)
   };
 
+  // 등록
   const adding = () => {
+    const accessToken = sessionStorage.getItem("access-token");
+
     if (dong) {
       const data = {
         'interest_dongcode': dong
       }
       axios.post('/user/interest/areas/new', data, {
         headers: {
-          "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+          "X-AUTH-TOKEN" : `Bearer ${accessToken}`
         }
       })
       .then(response => {
