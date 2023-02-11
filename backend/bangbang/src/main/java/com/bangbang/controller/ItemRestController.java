@@ -71,7 +71,8 @@ public class ItemRestController {
             HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
-            itemDto.setItem_id(uid);
+            Long broker_id = brokerRepository.findByUserId(uid).getBrokerId();
+            itemDto.setBroker_id(broker_id);
 
             long item_id = itemService.newItem(itemDto);
             itemService.newItemPrice(itemPrice, item_id);
@@ -79,6 +80,7 @@ public class ItemRestController {
             itemService.newOption(option, item_id);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }
@@ -121,6 +123,7 @@ public class ItemRestController {
                 return new ResponseEntity<ItemResponseDto>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return exceptionHandling();
         }
     }
@@ -144,9 +147,24 @@ public class ItemRestController {
     })
     @ApiOperation(value="매물 수정")
     @PatchMapping("/broker/items/modify")
-    public ResponseEntity<?> modifyItem(@RequestBody ItemUpdateDto item) {
+    public ResponseEntity<?> modifyItem(@RequestBody ObjectNode item, HttpServletRequest request) {
         try {
-            itemService.modifyItem(item);
+            ObjectMapper mapper = new ObjectMapper();
+            ItemUpdateRequestDto itemDto = mapper.treeToValue(item.get("item"), ItemUpdateRequestDto.class);
+            ItemPriceUpdateRequestDto itemPrice = mapper.treeToValue(item.get("itemPrice"), ItemPriceUpdateRequestDto.class);
+            ManageOptionUpdateRequestDto manage = mapper.treeToValue(item.get("manageOption"), ManageOptionUpdateRequestDto.class);
+            OptionUpdateRequestDto option = mapper.treeToValue(item.get("option"), OptionUpdateRequestDto.class);
+
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            Long broker_id = brokerRepository.findByUserId(uid).getBrokerId();
+            itemDto.setBroker_id(broker_id);
+
+            itemService.modifyItem(itemDto);
+            itemService.modifyItemPrice(itemPrice);
+            itemService.modifyManageOption(manage);
+            itemService.modifyOption(option);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();

@@ -128,23 +128,21 @@ public class Item {
     @Column(nullable = true)
     private Integer item_toilet;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name="item_price",
             joinColumns = @JoinColumn(name="item_id"),
             inverseJoinColumns = @JoinColumn(name="item_id"))
     private ItemPrice itemPrice;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name="manage_option",
             joinColumns = @JoinColumn(name="item_id"),
             inverseJoinColumns =  @JoinColumn(name="item_id"))
     private ManageOption manageOption;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinTable(name="options",
             joinColumns = @JoinColumn(name="item_id"),
             inverseJoinColumns =  @JoinColumn(name="item_id"))
     private Option option;
-
-
 }
