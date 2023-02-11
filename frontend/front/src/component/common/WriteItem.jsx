@@ -212,10 +212,11 @@ function WriteItem() {
     }
 
     // axios 체크
+    const accessToken = sessionStorage.getItem("access-token");
     
     axios.post('/broker/items/new', data, {
       headers: {
-        "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
+        "X-AUTH-TOKEN" : `Bearer ${accessToken}`
       }
     })
     .then(response => {
