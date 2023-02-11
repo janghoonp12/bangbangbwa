@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { writeItemAsync } from "../../reducers/itemSlice"
+import { writeItemAsync, clearWriteItemDone } from "../../reducers/itemSlice"
 import styled from "styled-components";
 import Button from "./ui/Button";
 import DaumPostcode from 'react-daum-postcode';
@@ -70,6 +70,7 @@ function WriteItem() {
 
   useEffect(() => {
     if (writeItemDone) {
+      dispatch(clearWriteItemDone())
       navigate('/notices');
     }
   })

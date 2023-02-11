@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import data from "../../data.json";
 import ItemList from "./ItemList";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,9 @@ import Filter from "../common/Filter";
 import FilterButton from "../common/FilterButton";
 import styled from "styled-components";
 import LoadMore from "../common/ui/LoadMore";
+import { useDispatch, useSelector } from 'react-redux';
+import { firstSearchItemAsync } from "../../reducers/itemSlice"
+import ItemListItem from "./ItemListItem";
 
 
 const SButtonDiv = styled.div`
@@ -21,7 +24,26 @@ const SButtonLineDiv = styled.div`
   grid-template-columns: 2fr 8fr 2fr;
 `;
 
+const ItemWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    white-space: nowrap;
+    & > * {
+        :not(:last-child) {
+            margin-bottom: 16px;
+        }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+`;
+
 function Items() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const writeItem = () => {
     navigate("/writeitems")
@@ -30,6 +52,19 @@ function Items() {
   const limit = 12; // 한 페이지에 나올 방송 수
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
   const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
+
+  const { items } = useSelector((state) => state.itemSlice);
+
+  useEffect(() => {
+    if (items === null) {
+      dispatch(firstSearchItemAsync(
+        {
+          page: 0,
+          size: 12,
+        }
+      ))
+    }
+  },[])
 
   return (
     <div>
@@ -41,12 +76,14 @@ function Items() {
       <div id="filterDiv" style={{ display: "none" }}>
         <Filter />
       </div>
-      <ItemList
-        posts={data.slice(0, offset)}
-        onClickItem={(item) => {
-            navigate(`/items/${item.id}`);
-        }}
-      />
+      <ItemWrapper>
+      {items ? items.map((item, index) => (
+        <ItemListItem
+          posts={item}
+        />
+      )
+        ) : <label>no data</label>}
+      </ItemWrapper>
       <SButtonDiv>
         <LoadMore 
           total={data.length}

@@ -2,14 +2,8 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import data from "../../data.json";
 import styled from "styled-components";
+import { useSelector } from 'react-redux';
 // import logosample from "../../assets/logosample.png"
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 const Container = styled.div`    
   width: 100%;
@@ -103,9 +97,9 @@ function ItemDetail() {
   const goBack = () => {
     navigate(-1);
   }
+  const { itemDetail } = useSelector((state) => state.itemSlice);
 
   return (
-    <Wrapper>
       <Container>
         <SGridDiv>
           <SPicLeftDiv>
@@ -131,34 +125,13 @@ function ItemDetail() {
         
         <h1>매물 상세 정보</h1>
         <SInfoDiv>
-          <SPTag>매물이름: {post.title}</SPTag>
-          <SPTag>매물종류: {post.type}</SPTag>
-          <SPTag>건물유형: {post.building_type}</SPTag>
-          <SPTag>관리비용: {post.manage_fee}</SPTag>
-          <SPTag>매물이름: {post.title}</SPTag>
-          <SPTag>매물종류: {post.type}</SPTag>
-          <SPTag>건물유형: {post.building_type}</SPTag>
-          <SPTag>관리비용: {post.manage_fee}</SPTag>
-          <SPTag>매물이름: {post.title}</SPTag>
-          <SPTag>매물종류: {post.type}</SPTag>
-          <SPTag>건물유형: {post.building_type}</SPTag>
-          <SPTag>관리비용: {post.manage_fee}</SPTag>
-          <SPTag>매물이름: {post.title}</SPTag>
-          <SPTag>매물종류: {post.type}</SPTag>
-          <SPTag>건물유형: {post.building_type}</SPTag>
-          <SPTag>관리비용: {post.manage_fee}</SPTag>
-          <SPTag>매물이름: {post.title}</SPTag>
-          <SPTag>매물종류: {post.type}</SPTag>
-          <SPTag>건물유형: {post.building_type}</SPTag>
-          <SPTag>관리비용: {post.manage_fee}</SPTag>
-          <SPTag>매물이름: {post.title}</SPTag>
-          <SPTag>매물종류: {post.type}</SPTag>
-          <SPTag>건물유형: {post.building_type}</SPTag>
-          <SPTag>관리비용: {post.manage_fee}</SPTag>
+          <SPTag>매물이름: {itemDetail.item_title}</SPTag>
+          <SPTag>매물종류: {itemDetail.item_type}</SPTag>
+          <SPTag>건물유형: {itemDetail.item_building_type}</SPTag>
+          <SPTag>관리비용: {itemDetail.item_manage_fee}</SPTag>
         </SInfoDiv>
         <button onClick={goBack}>뒤로가기</button>
       </Container>
-    </Wrapper>
   )
 }
 
