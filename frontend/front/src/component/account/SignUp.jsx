@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useCallback, useEffect } from "react";
-import { signUpAsync } from "../../reducers/userSlice"
+import { signUpAsync, clearSignUpDone } from "../../reducers/userSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -87,6 +87,7 @@ function SignUp() {
 
   useEffect(() => {
     if (signUpDone) {
+      dispatch(clearSignUpDone());
       navigate('/signin');
     }
   })

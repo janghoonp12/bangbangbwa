@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../common/ui/Button";
-import { modifyNoticeAsync, deleteNoticeAsync } from "../../reducers/noticeSlice"
+import { modifyNoticeAsync, deleteNoticeAsync, clearModifyNoticeDone, clearDeleteNoticeDone } from "../../reducers/noticeSlice"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import useInput from '../../hooks/useInput';
@@ -49,7 +49,7 @@ const STitleP = styled.p`
 
 function NoticeModify() {
   const navigate = useNavigate();
-  const { noticeDetail } = useSelector((state) => state.noticeSlice);
+  const { noticeDetail, modifyNoticeDone, deleteNoticeDone } = useSelector((state) => state.noticeSlice);
   const [type, setType] = useInput(noticeDetail ? noticeDetail.notice_type : '');
   const [title, setTitle] = useInput(noticeDetail ? noticeDetail.notice_title : '');
   const [comment, setComment] = useState(noticeDetail ? noticeDetail.notice_comment : '');
@@ -57,10 +57,19 @@ function NoticeModify() {
   // const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
 
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
-    console.log(noticeDetail)
-  }, [])
+    if (modifyNoticeDone) {
+      dispatch(clearModifyNoticeDone())
+      navigate(-1)
+    }
+
+    if (deleteNoticeDone) {
+      dispatch(clearDeleteNoticeDone())
+      navigate(-1)
+    }
+  })
 
   // useEffect(() => {
   //   if (writeNoticeDone) {

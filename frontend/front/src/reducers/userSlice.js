@@ -18,6 +18,7 @@ export const signUpAsync = createAsyncThunk(
   'user/SIGN_UP',
   async (data, thunkAPI) => {
     try {
+      console.log(data)
       const response = await axios.post(
         '/users/new',
         data
@@ -60,6 +61,9 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    clearSignUpDone: (state) => {
+      state.signUpDone = false
+    },
     // addNumber: (state, action) => {
     //   state.number = state.number + action.payload;
     // },
@@ -88,7 +92,6 @@ const userSlice = createSlice({
     builder.addCase(signUpAsync.fulfilled, (state, action) => {
       state.signUpLoading = false;
       state.signUpDone = true;
-      alert('회원가입에 성공하였습니다.');
     });
     builder.addCase(signUpAsync.rejected, (state, action) => {
       state.signUpLoading = false;
@@ -140,5 +143,7 @@ const userSlice = createSlice({
     });
   }
 });
+
+export const { clearSignUpDone } = userSlice.actions;
 
 export default userSlice.reducer;

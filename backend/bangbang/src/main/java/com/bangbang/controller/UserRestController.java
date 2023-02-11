@@ -41,8 +41,6 @@ public class UserRestController {
   @ApiOperation(value = "회원 등록", notes = "회원을 등록합니다.")
   @PostMapping("/users/new")
   public ResponseEntity<?> signUp(@RequestBody SignUp SignUpInfo) throws Exception {
-    System.out.println(SignUpInfo);
-
     userService.signUp(SignUpInfo);
 
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{

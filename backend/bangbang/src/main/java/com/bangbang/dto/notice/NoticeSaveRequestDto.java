@@ -4,8 +4,10 @@ import com.bangbang.domain.notice.Notice;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class NoticeSaveRequestDto {
     private long notice_id; //PK
     private long user_id; //FK
