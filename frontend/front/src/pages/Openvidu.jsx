@@ -579,6 +579,15 @@ class Openvidu extends Component {
                             console.log('There was an error connecting to the session:', error.code, error.message);
                         });
                 });
+
+                mySession.on('publisherStartSpeaking', (event) => {
+                  console.log('User ' + event.connection.connectionId + ' start speaking');
+                });
+
+                mySession.on('publisherStopSpeaking', (event) => {
+                  console.log('User ' + event.connection.connectionId + ' stop speaking');
+                });
+
                 // 채팅
                 mySession.on('signal', (event) => {
                   if (event.data === "###toilet###") {
