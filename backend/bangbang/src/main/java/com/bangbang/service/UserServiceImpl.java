@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void signUp(SignUp SignUpInfo) throws Exception {
         if (userRepository.findByUserEmail(SignUpInfo.getUserEmail()) != null) {
-            throw new BaseException(ErrorMessage.EXIST_ID);
+            throw new BaseException(ErrorMessage.EXIST_EMAIL);
         }
 
-        if (userRepository.findByUserNickname(SignUpInfo.getUserPassword()).isPresent()) {
-            throw  new BaseException(ErrorMessage.EXIST_EMAIL);
+        if (userRepository.findByUserNickname(SignUpInfo.getUserNickname()).isPresent()) {
+            throw new BaseException(ErrorMessage.EXIST_NICKNAME);
         }
 
         User user = User.builder()

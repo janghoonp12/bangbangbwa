@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { searchDetailNoticeAsync, clearSearchDetailNoticeDone } from "../../reducers/noticeSlice"
 
 
 const Std = styled.td`
@@ -12,10 +14,19 @@ const Std = styled.td`
 
 
 function NoticeItem(props) {
+  const dispatch = useDispatch();
     const data = props.notice
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { searchDetailNoticeDone } = useSelector((state) => state.noticeSlice);
+  
+  useEffect(() => {
+    if (searchDetailNoticeDone) {
+      dispatch(clearSearchDetailNoticeDone())
+      navigate(`/notices/${data.notice_id}`)
+    }
+  }, [searchDetailNoticeDone])
     const onClick = () => {
-        navigate(`/notices/${data.notice_id}`)
+      dispatch(searchDetailNoticeAsync(data.notice_id))
     }
 
     return (

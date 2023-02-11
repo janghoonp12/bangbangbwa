@@ -59,7 +59,7 @@ function NoticeNew() {
     if (writeNoticeDone) {
       navigate('/notices');
     }
-  })
+  }, [writeNoticeDone])
 
   const typeChange = (e) => {
     setType(e.target.value)

@@ -4,8 +4,10 @@ import com.bangbang.domain.item.Item;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ItemSaveRequestDto {
     private long item_id; //PK

@@ -11,8 +11,7 @@ export default function Notice() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(searchAllNoticeAsync())
-    // console.log(notices)
-  }, [])
+  },)
 
   return (
     <div>

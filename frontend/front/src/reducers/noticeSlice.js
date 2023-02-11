@@ -98,6 +98,18 @@ const noticeSlice = createSlice({
   name: "notice",
   initialState,
   reducers: {
+    clearSearchDetailNoticeDone: (state) => {
+      state.searchDetailNoticeDone = false
+    },
+    clearWriteNoticeDone: (state) => {
+      state.writeNoticeDone = false
+    },
+    clearModifyNoticeDone: (state) => {
+      state.modifyNoticeDone = false
+    },
+    clearDeleteNoticeDone: (state) => {
+      state.deleteNoticeDone = false
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(searchAllNoticeAsync.pending, (state, action) => {
@@ -109,7 +121,6 @@ const noticeSlice = createSlice({
       state.searchAllNoticeLoading = false;
       state.searchAllNoticeDone = true;
       state.noticeData = action.payload.content
-      console.log(state.noticeData)
     });
     builder.addCase(searchAllNoticeAsync.rejected, (state, action) => {
       state.searchAllNoticeLoading = false;
@@ -125,7 +136,6 @@ const noticeSlice = createSlice({
       state.searchDetailNoticeLoading = false;
       state.searchDetailNoticeDone = true;
       state.noticeDetail = action.payload
-      console.log(state.noticeDetail)
     });
     builder.addCase(searchDetailNoticeAsync.rejected, (state, action) => {
       state.searchDetailNoticeLoading = false;
@@ -135,7 +145,6 @@ const noticeSlice = createSlice({
     builder.addCase(writeNoticeAsync.pending, (state, action) => {
       state.writeNoticeLoading = true;
       state.writeNoticeError = null;
-      state.writeNoticeDone = false;
     });
     builder.addCase(writeNoticeAsync.fulfilled, (state, action) => {
       state.writeNoticeLoading = false;
@@ -180,5 +189,7 @@ const noticeSlice = createSlice({
 
   }
 });
+
+export const { clearSearchDetailNoticeDone, clearWriteNoticeDone, clearModifyNoticeDone, clearDeleteNoticeDone  } = noticeSlice.actions;
 
 export default noticeSlice.reducer;
