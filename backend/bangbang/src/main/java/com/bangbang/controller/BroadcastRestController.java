@@ -54,12 +54,20 @@ public class BroadcastRestController {
 //    return broadcastService.searchBroadcastAll();
 //  }
 
-  //방송 조회(페이지)
-  @GetMapping(value = "/broadcasts")
-  @ApiOperation(value = "방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public Page<BroadcastListResponseDto> searchBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  //라이브중인 방송 조회(페이지)
+  @GetMapping(value = "/broadcasts/live")
+  @ApiOperation(value = "라이브 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
+  public Page<BroadcastListResponseDto> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
     Pageable pageable = PageRequest.of(page, size);
-    return broadcastService.searchBroadcastAll(pageable);
+    return broadcastService.searchLiveBroadcastAll(pageable);
+  }
+
+  //종료된 방송 조회(페이지)
+  @GetMapping(value = "/broadcasts/end")
+  @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
+  public Page<BroadcastListResponseDto> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    return broadcastService.searchEndBroadcastAll(pageable);
   }
 
   //해당 방송 조회

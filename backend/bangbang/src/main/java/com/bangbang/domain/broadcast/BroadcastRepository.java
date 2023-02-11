@@ -16,6 +16,7 @@ import java.util.List;
 //}
 
 public interface BroadcastRepository extends PagingAndSortingRepository<Broadcast, Long> {
+    Page<Broadcast> findByBroadcastStatus(Pageable pageable, Integer broadcastStatus);
     Page<Broadcast> findAll(Pageable pageable);
     Optional<Broadcast> findByBroadcastId(Long broadcastId);
 

@@ -11,10 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BroadcastDatetime {
-    @CreatedDate
-    private LocalDateTime broadcast_reservation_time;
 
-    @CreatedDate
+    @LastModifiedDate
     private LocalDateTime broadcast_start_time;
 
     @LastModifiedDate
