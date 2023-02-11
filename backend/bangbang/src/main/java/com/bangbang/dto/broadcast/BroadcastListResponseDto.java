@@ -9,6 +9,7 @@ public class BroadcastListResponseDto {
     private Long broadcastId;
     private String broadcastDescription;
     private String broadcastTitle;
+    private Integer broadcastStatus;
     private Long imageId;
 
     public BroadcastListResponseDto(Broadcast entity){
@@ -16,5 +17,6 @@ public class BroadcastListResponseDto {
         this.broadcastDescription = entity.getBroadcastDescription();
         this.broadcastTitle = entity.getBroadcastTitle();
         this.imageId = entity.getImage().getImageId();
+        this.broadcastStatus = entity.getBroadcastStatus();
     }
 }

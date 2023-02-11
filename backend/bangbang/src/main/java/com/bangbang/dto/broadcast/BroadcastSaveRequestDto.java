@@ -3,6 +3,8 @@ package com.bangbang.dto.broadcast;
 import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.image.Image;
 import com.bangbang.domain.item.Item;
+
+import java.time.LocalDateTime;
 import java.util.Random;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,16 +16,18 @@ public class BroadcastSaveRequestDto {
   private Long broadcastId;
   private String broadcastDescription;
   private String broadcastTitle;
+  private LocalDateTime broadcastReservationTime;
 
   private Long itemId;
   private Long imageId;
 
   @Builder
-  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long itemId, Long imageId){
+  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long itemId, Long imageId, LocalDateTime broadcastReservationTime){
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
     this.itemId = itemId;
     this.imageId = imageId;
+    this.broadcastReservationTime = broadcastReservationTime;
   }
 
 //  public void setItem(Item item){this.item = item;}
@@ -37,6 +41,7 @@ public class BroadcastSaveRequestDto {
         .itemId(itemId)
         .image(image)
         .broadcastRoomId(generatedString)
+        .broadcastReservationTime(broadcastReservationTime)
         .build();
   }
 }
