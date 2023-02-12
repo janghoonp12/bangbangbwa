@@ -73,12 +73,6 @@ public class ItemRestController {
             ManageOptionSaveRequestDto manage = mapper.treeToValue(item.get("manageOption"), ManageOptionSaveRequestDto.class);
             OptionSaveRequestDto option = mapper.treeToValue(item.get("option"), OptionSaveRequestDto.class);
 
-            HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
-            Long uid = userService.findUserId(token);
-            Long broker_id = brokerRepository.findByUserId(uid).getBrokerId();
-            itemDto.setBroker_id(broker_id);
-
             long item_id = itemService.newItem(itemDto);
             itemService.newItemPrice(itemPrice, item_id);
             itemService.newManageOption(manage, item_id);
