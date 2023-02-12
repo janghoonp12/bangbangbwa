@@ -38,7 +38,7 @@ class Openvidu extends Component {
             myTrack: null,
             chattings: [],
             selectedDevice: null,
-            camera: 0,
+            camera: 1,
             camDevices: [],
             countToilet() {
               return `변기: ${this.toilet}`
@@ -502,7 +502,7 @@ class Openvidu extends Component {
       // console.log(SwitchCamera)
       let newPublisher = this.OV.initPublisher(undefined, {
         audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: this.state.camDevices[0].deviceId, // The source of video. If undefined default webcam
+        videoSource: this.state.camDevices[this.state.camera].deviceId, // The source of video. If undefined default webcam
         publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
         publishVideo: true, // Whether you want to start publishing with your video enabled or not
         resolution: '640x480', // The resolution of your video
@@ -513,7 +513,7 @@ class Openvidu extends Component {
       this.setState({
         publisher: newPublisher,
         mainStreamManager: newPublisher,
-        camera: 0,
+        camera: this.state.camera+1,
       })
       
     }
@@ -527,10 +527,10 @@ class Openvidu extends Component {
       //   myTrack: myTrack2,
       //   camera: 1,
       // })
-      console.log(SwitchCamera)
+      // console.log(SwitchCamera)
       let newPublisher = this.OV.initPublisher(undefined, {
         audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: this.state.camDevices[1].deviceId, // The source of video. If undefined default webcam
+        videoSource: this.state.camDevices[0].deviceId, // The source of video. If undefined default webcam
         publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
         publishVideo: true, // Whether you want to start publishing with your video enabled or not
         resolution: '640x480', // The resolution of your video
@@ -546,12 +546,12 @@ class Openvidu extends Component {
     }
 
     toggleCamera = () => {
-      if (this.state.camDevices.length>1 && this.state.camera === 0) {
-        this.getMedia2()
-        console.log("change into backcam")
-      } else {
+      if (this.state.camDevices.length !== this.state.camera) {
         this.getMedia()
-        console.log("change into frontcam")
+        console.log("change into nextcam")
+      } else {
+        this.getMedia2()
+        console.log("return to defaultcam")
       }
     }
 
@@ -1114,7 +1114,7 @@ class Openvidu extends Component {
           {/* <div>
             <SwitchCamera />
           </div> */}
-          <div>
+          {/* <div>
             <ul>
               {this.state.camDevices.map(device => (
                 <li key={device.deviceId}>
@@ -1122,7 +1122,7 @@ class Openvidu extends Component {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           
         </Wrapper>
       );
