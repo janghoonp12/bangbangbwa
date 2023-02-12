@@ -1,33 +1,38 @@
 package com.bangbang.service;
 
-import com.bangbang.domain.item.DongCode;
-import com.bangbang.domain.item.GugunCode;
-import com.bangbang.domain.item.SidoCode;
-import com.bangbang.domain.search.SearchDongRepository;
-import com.bangbang.domain.search.SearchGugunRepository;
-import com.bangbang.domain.search.SearchSidoRepository;
+import com.bangbang.domain.item.Item;
+import com.bangbang.domain.search.SearchBroadcastRepository;
+import com.bangbang.domain.search.SearchItemRepository;
+import com.bangbang.dto.broadcast.BroadcastResponseDto;
 import com.bangbang.dto.search.SearchResultDto;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class SearchService {
-  @Autowired
-  private final SearchDongRepository searchDongRepository;
-  @Autowired
-  private final SearchGugunRepository searchGugunRepository;
-  @Autowired
-  private final SearchSidoRepository searchSidoRepository;
+  private final SearchItemRepository searchItemRepository;
+  private final SearchBroadcastRepository searchBroadcastRepository;
 
+  public SearchResultDto search(String dongCode, String keyword) {
+    List<Item> dataA = searchItemRepository.findByItemDongcode(dongCode);
 
-  public SearchResultDto search(String keyword) {
-    List<DongCode> dongCodes = searchDongRepository.findByDongNameContaining(keyword);
-    List<GugunCode> gugunCodes = searchGugunRepository.findByGugunNameContaining(keyword);
-    List<SidoCode> sidoCodes = searchSidoRepository.findBySidoNameContaining(keyword);
+    List<Item> dataB = searchItemRepository.findByItemDongcodeAndKeyword(dongCode, keyword);
 
-    return new SearchResultDto(dongCodes, gugunCodes, sidoCodes);
+    List<String> itemIds = dataA.stream().map(Item::getItemId).map(String::valueOf)
+        .collect(Collectors.toList());
+
+    try {
+      List<Long> itemIdsLong = itemIds.stream().map(Long::valueOf).collect(Collectors.toList());
+
+      List<BroadcastResponseDto> dataD = searchBroadcastRepository.findByKeywordAndItemIds(keyword, itemIdsLong);
+
+      return new SearchResultDto(dataB, dataD);
+    } catch (Exception e) {
+      return new SearchResultDto(dataB, Collections.emptyList());
+    }
   }
 }

@@ -145,4 +145,8 @@ public class Item {
             joinColumns = @JoinColumn(name="item_id"),
             inverseJoinColumns =  @JoinColumn(name="item_id"))
     private Option option;
+
+    public String getItemId() {
+        return String.valueOf(item_id);
+    }
 }
