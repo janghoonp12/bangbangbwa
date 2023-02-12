@@ -24,24 +24,6 @@ const SButtonLineDiv = styled.div`
   grid-template-columns: 2fr 8fr 2fr;
 `;
 
-const ItemWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    margin-top: 30px;
-    align-items: flex-start;
-    justify-content: center;
-    white-space: nowrap;
-    & > * {
-        :not(:last-child) {
-            margin-bottom: 16px;
-        }
-    }
-    &::-webkit-scrollbar {
-      display: none;
-    }
-`;
-
 function Items() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,14 +38,13 @@ function Items() {
   const { items } = useSelector((state) => state.itemSlice);
 
   useEffect(() => {
-    if (items === null) {
-      dispatch(firstSearchItemAsync(
-        {
-          page: 0,
-          size: 12,
-        }
-      ))
-    }
+    dispatch(firstSearchItemAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
+    console.log(items)
   },[])
 
   return (
@@ -76,14 +57,14 @@ function Items() {
       <div id="filterDiv" style={{ display: "none" }}>
         <Filter />
       </div>
-      <ItemWrapper>
+      <ItemList>
       {items ? items.map((item, index) => (
         <ItemListItem
           posts={item}
         />
       )
         ) : <label>no data</label>}
-      </ItemWrapper>
+      </ItemList>
       <SButtonDiv>
         <LoadMore 
           total={data.length}

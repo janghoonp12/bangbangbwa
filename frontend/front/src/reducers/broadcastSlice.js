@@ -6,11 +6,47 @@ export const initialState = {
   findMyItemLoading: false,
   findMyItemDone: false,
   findMyItemError: null,
+  SearchLiveBroadcastLoading: false,
+  SearchLiveBroadcastDone: false,
+  SearchLiveBroadcastError: null,
+  SearchEndBroadcastLoading: false,
+  SearchEndBroadcastDone: false,
+  SearchEndBroadcastError: null,
   writeBroadcastLoading: false,
   writeBroadcastDone: false,
   writeBroadcastError: null,
   myItem: null,
+  liveBroadcast: null,
+  endBroadcast: null,
 };
+
+export const firstSearchLiveBroadcastAsync = createAsyncThunk(
+  'broadcast/SEARCHLIVEBROADCAST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        '/broadcasts/live', {page: 0, size: 12}
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const firstSearchEndBroadcastAsync = createAsyncThunk(
+  'broadcast/SEARCHENDBOADCAST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        '/broadcasts/end', {page: 0, size: 12}
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
 
 export const findMyItemAsync = createAsyncThunk(
   'broadcast/FINDMYITEM',
@@ -75,6 +111,40 @@ const broadcastSlice = createSlice({
     builder.addCase(writeBroadcastAsync.rejected, (state, action) => {
       state.writeBroadcastLoading = false;
       state.writeBroadcastError = action.error
+    });
+    builder.addCase(firstSearchLiveBroadcastAsync.pending, (state, action) => {
+      state.SearchLiveBroadcastLoading = true;
+      state.SearchLiveBroadcastError = null;
+      state.SearchLiveBroadcastDone = false;
+    });
+    builder.addCase(firstSearchLiveBroadcastAsync.fulfilled, (state, action) => {
+      state.SearchLiveBroadcastLoading = false;
+      state.SearchLiveBroadcastDone = true;
+      if (state.action.payload.length !== 0) {
+        state.liveBroadcast = action.payload.content;
+      }
+      console.log(action.payload.content)
+    });
+    builder.addCase(firstSearchLiveBroadcastAsync.rejected, (state, action) => {
+      state.SearchLiveBroadcastLoading = false;
+      state.SearchLiveBroadcastError = action.error
+    });
+    builder.addCase(firstSearchEndBroadcastAsync.pending, (state, action) => {
+      state.SearchEndBroadcastLoading = true;
+      state.SearchEndBroadcastError = null;
+      state.SearchEndBroadcastDone = false;
+    });
+    builder.addCase(firstSearchEndBroadcastAsync.fulfilled, (state, action) => {
+      state.SearchEndBroadcastLoading = false;
+      state.SearchEndBroadcastDone = true;
+      //state.endBroadcast = action.payload.content;
+      if (state.action.payload.length !== 0) { 
+        state.endBroadcast = action.payload.content;
+      }
+    });
+    builder.addCase(firstSearchEndBroadcastAsync.rejected, (state, action) => {
+      state.SearchEndBroadcastLoading = false;
+      state.SearchEndBroadcastError = action.error
     });
   }
 });

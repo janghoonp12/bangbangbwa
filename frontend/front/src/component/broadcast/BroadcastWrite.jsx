@@ -27,7 +27,7 @@ function BroadcastWrite(props) {
   const [item, setItem] = useState("");
   const [title, setTitle] = useState("방송 제목");
   const [outlook, setOutlook] = useState("방송 개요");
-  const [startTime, setstartTime] = useState("방송 시작시간");
+  const [startTime, setstartTime] = useState("");
   const [thumbnail, setThumbnail] = useState("썸네일");
 
   const { myItem, writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
@@ -85,8 +85,9 @@ function BroadcastWrite(props) {
               setOutlook(event.target.value);
           }}
         />
-        <TextInput
+        <input
           height={20}
+          type='date'
           value={startTime}
           onChange={(event) => {
               setstartTime(event.target.value);

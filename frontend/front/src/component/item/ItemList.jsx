@@ -1,7 +1,6 @@
 import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import ItemListItem from "./ItemListItem";
 import throttle from "../../utils/Throttle"
 
 const Wrapper = styled.div`
@@ -22,8 +21,7 @@ const Wrapper = styled.div`
     }
 `;
 
-function ItemList(props) {
-    const { posts, onClickItem } = props;
+function ItemList({ children }) {
 
     // 좌우 스크롤 움직임은 해당 DOM의 scrollLeft로 움직임
     // 해당 scrollLeft를 얻기 위해 useRef로 DOM에 접근
@@ -69,17 +67,7 @@ function ItemList(props) {
         onMouseLeave={onDragEnd}
         ref={scrollRef}
       >
-        {posts.map((post, index) => {
-          return (
-            <ItemListItem
-              key={post.id}
-              post={post}
-              onClick={() => {
-                onClickItem(post);
-              }}
-            />
-          );
-        })}
+        {children}
       </Wrapper>
     );
 }
