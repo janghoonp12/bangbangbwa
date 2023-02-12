@@ -52,6 +52,7 @@ function BroadcastAll() {
   useEffect(() => {
     dispatch(firstSearchLiveBroadcastAsync())
     dispatch(firstSearchEndBroadcastAsync())
+    console.log(liveBroadcast)
   },[])
 
   return (

@@ -21,13 +21,14 @@ const Container = styled.div`
 
 `;
 
-function BroadcastWrite(props) {
+function BroadcastWrite() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [item, setItem] = useState("");
   const [title, setTitle] = useState("방송 제목");
   const [outlook, setOutlook] = useState("방송 개요");
-  const [startTime, setstartTime] = useState("");
+  const [reservationStartDate, setReservationstartDate] = useState("");
+  const [reservationStartTime, setReservationstartTime] = useState("");
   const [thumbnail, setThumbnail] = useState("썸네일");
 
   const { myItem, writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
@@ -43,25 +44,31 @@ function BroadcastWrite(props) {
     }
   })
 
+  const itemChange = (e) => {
+    setItem(e.target.value)
+  }
+
   const createBroadcast = () => {
     dispatch(writeBroadcastAsync(
       {
         "broadcastDescription": outlook,
-        "broadcastReservationTime" : startTime,
+        "broadcastReservationTime" : reservationStartDate + "T" + reservationStartTime + ":00",
         "broadcastTitle": title,
-        "itemId": item
+        "itemId": item,
+        "imageId": 1
       }
     ))
+    navigate()
   }
   
   return (
     <Wrapper>
-      <select required>
-        <option value="" onChange={setItem} disabled selected style={{ display: "none" }}>매물을 선택하세요</option>
+      <selected onChange={itemChange} required>
+        <option value="" disabled selected style={{ display: "none" }}>매물을 선택하세요</option>
         {myItem ? myItem.map((item, index) => (
           <option value={item.item.item_id}>{item.item.item_title}</option>
         )): <option value="">등록된 매물이 없습니다</option>}
-      </select>
+      </selected>
       {/* <TextInput
         value={item}
         height={100}
@@ -88,9 +95,17 @@ function BroadcastWrite(props) {
         <input
           height={20}
           type='date'
-          value={startTime}
+          value={reservationStartDate}
           onChange={(event) => {
-              setstartTime(event.target.value);
+            setReservationstartDate(event.target.value);
+          }}
+        />
+        <input
+          height={20}
+          type='time'
+          value={reservationStartTime}
+          onChange={(event) => {
+            setReservationstartTime(event.target.value);
           }}
         />
         <TextInput
