@@ -36,9 +36,7 @@ public class InterestRestController {
     @Autowired
     private final UserService userService;
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="관심지역 등록")
     @PostMapping("/user/interest/areas/new")
     public ResponseEntity<?> newInterestArea(@RequestBody InterestareaSaveRequestDto area, HttpServletRequest request) {
@@ -55,9 +53,7 @@ public class InterestRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="관심매물 등록")
     @PostMapping("/user/interest/items/new")
     public ResponseEntity<?> newInterestItem(@RequestBody InterestitemSaveRequestDto item, HttpServletRequest request) {
@@ -73,9 +69,7 @@ public class InterestRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="관심지역 조회")
     @GetMapping("/user/interest/areas")
     public ResponseEntity<?> searchInterestArea(HttpServletRequest request) {
@@ -92,9 +86,7 @@ public class InterestRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="관심매물 조회")
     @GetMapping("/user/interest/items")
     public ResponseEntity<?> searchInterestItem(HttpServletRequest request) {
@@ -111,9 +103,7 @@ public class InterestRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="관심지역 삭제")
     @DeleteMapping("/user/interest/areas/{interestId}")
     public ResponseEntity<?> deleteInterestArea(@PathVariable Long interestId) {
@@ -125,9 +115,7 @@ public class InterestRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="관심매물 삭제")
     @DeleteMapping("/user/interest/items/{interestId}")
     public ResponseEntity<?> deleteInterestItem(@PathVariable Long interestId) {

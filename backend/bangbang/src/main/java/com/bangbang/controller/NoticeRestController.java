@@ -33,9 +33,7 @@ public class NoticeRestController {
     private final UserService userService;
 
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="공지사항 등록")
     @PostMapping("/admin/notices/new")
     public ResponseEntity<?> newNotice(@RequestBody NoticeSaveRequestDto notice, HttpServletRequest request) {
@@ -76,9 +74,7 @@ public class NoticeRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="공지사항 수정")
     @PatchMapping("/admin/notices/modify")
     public ResponseEntity<?> modifyNotice(@RequestBody NoticeUpdateRequestDto notice, HttpServletRequest request) {
@@ -93,9 +89,7 @@ public class NoticeRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="공지사항 삭제")
     @DeleteMapping("/admin/notices/{noticeId}")
     public ResponseEntity<?> deleteNotice(@PathVariable long noticeId) {

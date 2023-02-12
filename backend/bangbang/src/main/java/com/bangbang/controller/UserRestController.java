@@ -66,9 +66,7 @@ public class UserRestController {
     }}, HttpStatus.OK);
   }
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 refresh_token", required = true, dataType = "String", paramType = "header")
-  })
+
   @ApiOperation(value = "Access Token 재발급", notes = "만료된 access token을 재발급받는다.")
   @PostMapping("/user/users/refresh")
   public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
