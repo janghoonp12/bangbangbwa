@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png";
@@ -6,6 +6,8 @@ import QuitModal from "../common/ui/QuitModal";
 import nicknamelogo from "../../assets/nicknamelogo.png";
 import passwordlogo from "../../assets/pwlogo.png";
 import updatelogo from "../../assets/updatelogo.png";
+import { useDispatch, useSelector } from 'react-redux';
+import { searchMyInfoAsync, clearSearchMyInfoDone } from "../../reducers/userSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -104,16 +106,23 @@ const SQuitDiv = styled.div`
 `;
 
 function MyProfile(props) {
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userInfo } = useSelector((state) => state.userSlice);
+
+  useEffect(() => {
+    dispatch(searchMyInfoAsync())
+    dispatch(clearSearchMyInfoDone())
+  },[])
 
   return (
     <Wrapper>
       <Container>
         <SProfileDiv>
           <SImg1 alt="이미지" src={logosample} />
-          <SNameP>UserName</SNameP>
-          <SEmailP>abcde@gmail.com</SEmailP>
+          <SNameP>{ userInfo.userNickname }</SNameP>
+          <SEmailP>{ userInfo.userEmail}</SEmailP>
           <SNowMenuP
             style={{ marginTop: "10rem" }}
             onClick={() => {
@@ -143,8 +152,8 @@ function MyProfile(props) {
           </div>
           <SFlexDiv>
             <div>
-              <p>정진수</p>
-              <p>abcde@gmail.com</p>
+              <p>{ userInfo.userNickname }</p>
+              <p>{ userInfo.userEmail}</p>
             </div>
 
           </SFlexDiv>
@@ -154,7 +163,7 @@ function MyProfile(props) {
             < SLogoImg src={nicknamelogo} alt="닉네임로고" />
             </SLogoDiv>
             <SInfoP>닉 네 임 : </SInfoP>
-            <SInfoP>정진츄</SInfoP>
+            <SInfoP>{ userInfo.userNickname }</SInfoP>
             <SLogoDiv>
             < SLogoImg src={updatelogo} alt="수정로고" />
             </SLogoDiv>

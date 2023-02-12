@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import BroadcastListitem from "./BroadcastListitem";
 import throttle from "../../utils/Throttle";
 
 const Wrapper = styled.div`
@@ -21,9 +20,7 @@ const Wrapper = styled.div`
 `;
 
 
-function BroadcastList(props) {
-  const { posts, onClickItem } = props;
-
+function BroadcastList({ children }) {
   // 좌우 스크롤 움직임은 해당 DOM의 scrollLeft로 움직임
     // 해당 scrollLeft를 얻기 위해 useRef로 DOM에 접근
     const scrollRef = useRef(null);
@@ -69,17 +66,7 @@ function BroadcastList(props) {
       onMouseLeave={onDragEnd}
       ref={scrollRef}
     >
-      {posts.map((post, index) => {
-        return (
-          <BroadcastListitem
-            key={post.id}
-            post={post}
-            onClick={() => {
-              onClickItem(post);
-            }}
-          />
-        );
-      })}
+      {children}
     </Wrapper>
   );
 }

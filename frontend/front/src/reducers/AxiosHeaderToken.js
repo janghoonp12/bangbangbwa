@@ -6,7 +6,7 @@ const BASE_URL = "https://i8a405.p.ssafy.io/api"
 
 const AxiosHeaderToken = axios.create({
   baseURL: BASE_URL,
-  // baseURL: "http://localhost:8080",
+
   headers: {
       "Content-Type": "application/json;charset=utf-8",
   } 

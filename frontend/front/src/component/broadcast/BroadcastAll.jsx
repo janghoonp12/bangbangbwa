@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BroadcastList from "./BroadcastList";
 import data from "../../data.json";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,9 @@ import Button from 'react-bootstrap/Button';
 import Filter from "../common/Filter";
 import styled from "styled-components";
 import FilterButton from "../common/FilterButton";
+import { useDispatch, useSelector } from 'react-redux';
+import { firstSearchLiveBroadcastAsync, firstSearchEndBroadcastAsync } from "../../reducers/broadcastSlice"
+import BroadcastListItem from "./BroadcastListitem";
 
 const SH2 = styled.h2`
   float: left;
@@ -29,18 +32,27 @@ const SButtonLineDiv = styled.div`
 `;
 
 function BroadcastAll() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const broadcastItem = () => {
     navigate("/broadcasts/new")
   }
 
-  const liveBroadcast = () => {
+  const liveBroadcastNavigation = () => {
     navigate("/broadcasts/live")
   }
 
-  const NonLiveBroadcast = () => {
+  const NonLiveBroadcastNavigation = () => {
     navigate("/broadcasts/nonlive")
   }
+
+  const { liveBroadcast } = useSelector((state) => state.broadcastSlice);
+  const { endBroadcast } = useSelector((state) => state.broadcastSlice);
+  
+  useEffect(() => {
+    dispatch(firstSearchLiveBroadcastAsync())
+    dispatch(firstSearchEndBroadcastAsync())
+  },[])
 
   return (
   <div>
@@ -54,27 +66,29 @@ function BroadcastAll() {
     </div>
     <div style={{height: '50px', marginTop: '10px'}}>
       <SH2>실시간 방송</SH2>
-      <SButton onClick={liveBroadcast}>더보기</SButton>
+      <SButton onClick={liveBroadcastNavigation}>더보기</SButton>
     </div>
-    <div>
-      <BroadcastList
-        posts = {data}
-        onClickItem = {(item) => {
-            navigate(`/broadcasts/${item.id}`)
-        }}
-      />
-    </div>
+    <BroadcastList>
+      {liveBroadcast ? liveBroadcast.map((item, index) => (
+        <BroadcastListItem
+          posts={item}
+        />
+      )) : <label>no data</label>}
+    </BroadcastList>
     <hr />
     <div style={{height: '50px'}}>
       <SH2>지난 방송</SH2>
-      <SButton onClick={NonLiveBroadcast}>더보기</SButton>
+      <SButton onClick={NonLiveBroadcastNavigation}>더보기</SButton>
     </div>
-    <BroadcastList
-      posts = {data}
-      onClickItem = {(item) => {
-          navigate(`/broadcasts/${item.id}`)
-      }}
-    />
+
+    <BroadcastList>
+      {endBroadcast ? endBroadcast.map((item, index) => (
+        <BroadcastListItem
+          posts={item}
+        />
+      )) : <label>no data</label>}
+    </BroadcastList>
+
   </div>
   )
 }
