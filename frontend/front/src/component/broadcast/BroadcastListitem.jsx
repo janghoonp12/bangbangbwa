@@ -40,16 +40,14 @@ const SCardContentP = styled.p`
 `;
 
 function BroadcastListItem(props) {
-    const { post, onClick } = props;
+
     return (
-      <SCardDiv onDoubleClick={onClick}>
+      <SCardDiv>
         <SCardImg variant="top" src="logo512.png" alt="이미지" />
         <SCardBodyDiv>
-          <SCardTitleP>{post.title}</SCardTitleP>
+          <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
           <SCardContentP>
-            {post.type},
-            {post.building_type},
-            {post.manage_fee}
+            {props.posts.broadcastDescription},
           </SCardContentP>
         </SCardBodyDiv>
       </SCardDiv>

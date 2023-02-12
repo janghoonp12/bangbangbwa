@@ -120,10 +120,7 @@ const broadcastSlice = createSlice({
     builder.addCase(firstSearchLiveBroadcastAsync.fulfilled, (state, action) => {
       state.SearchLiveBroadcastLoading = false;
       state.SearchLiveBroadcastDone = true;
-      if (state.action.payload.length !== 0) {
-        state.liveBroadcast = action.payload.content;
-      }
-      console.log(action.payload.content)
+      state.liveBroadcast = action.payload.content;
     });
     builder.addCase(firstSearchLiveBroadcastAsync.rejected, (state, action) => {
       state.SearchLiveBroadcastLoading = false;
@@ -137,10 +134,7 @@ const broadcastSlice = createSlice({
     builder.addCase(firstSearchEndBroadcastAsync.fulfilled, (state, action) => {
       state.SearchEndBroadcastLoading = false;
       state.SearchEndBroadcastDone = true;
-      //state.endBroadcast = action.payload.content;
-      if (state.action.payload.length !== 0) { 
-        state.endBroadcast = action.payload.content;
-      }
+      state.endBroadcast = action.payload.content;
     });
     builder.addCase(firstSearchEndBroadcastAsync.rejected, (state, action) => {
       state.SearchEndBroadcastLoading = false;
