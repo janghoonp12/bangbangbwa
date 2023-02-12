@@ -22,13 +22,19 @@ public class SearchRestController {
   @ApiOperation(value="키워드 검색")
   @GetMapping("/search")
   public ResponseEntity<SearchResultDto> search(
-      @RequestParam String dongCode,
-      @RequestParam String keyword) {
+      @RequestParam(required = false) String dongCode,
+      @RequestParam(required = false) String keyword) {
+    if (dongCode == null || dongCode.isEmpty()){
+      dongCode = String.valueOf('%');
+    }
+    if (keyword == null || keyword.isEmpty()) {
+      keyword = String.valueOf('%');
+    }
     try {
-      SearchResultDto searchResult = searchService.search(dongCode, keyword);
-      return new ResponseEntity<>(searchResult, HttpStatus.OK);
+        SearchResultDto searchResult = searchService.search(dongCode, keyword);
+        return new ResponseEntity<>(searchResult, HttpStatus.OK);
     } catch (Exception e) {
-      return exceptionHandling();
+        return exceptionHandling();
     }
   }
 
