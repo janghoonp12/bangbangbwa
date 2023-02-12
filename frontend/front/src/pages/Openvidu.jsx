@@ -1114,6 +1114,15 @@ class Openvidu extends Component {
           {/* <div>
             <SwitchCamera />
           </div> */}
+          <div>
+            <ul>
+              {this.state.camDevices.map(device => (
+                <li key={device.deviceId}>
+                  {device.label}
+                </li>
+              ))}
+            </ul>
+          </div>
           
         </Wrapper>
       );
