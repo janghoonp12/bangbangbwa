@@ -1,20 +1,19 @@
 package com.bangbang.dto.search;
 
-import com.bangbang.domain.item.DongCode;
-import com.bangbang.domain.item.GugunCode;
-import com.bangbang.domain.item.SidoCode;
+import com.bangbang.domain.item.Item;
+import com.bangbang.dto.broadcast.BroadcastResponseDto;
 import java.util.List;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class SearchResultDto {
-  private List<DongCode> dongCodes;
-  private List<GugunCode> gugunCodes;
-  private List<SidoCode> sidoCodes;
+  private List<Item> dataB;
+  private List<BroadcastResponseDto> dataD;
 
-  public SearchResultDto(List<DongCode> dongCodes, List<GugunCode> gugunCodes, List<SidoCode> sidoCodes) {
-    this.dongCodes = dongCodes;
-    this.gugunCodes = gugunCodes;
-    this.sidoCodes = sidoCodes;
+  public SearchResultDto(List<Item> dataB, List<BroadcastResponseDto> dataD) {
+    this.dataB = dataB;
+    this.dataD = dataD;
   }
 }
