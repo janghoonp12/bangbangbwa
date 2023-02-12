@@ -1,5 +1,6 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.dto.broadcast.*;
 import com.bangbang.service.BroadcastService;
 import io.swagger.annotations.Api;
@@ -34,7 +35,6 @@ public class BroadcastRestController {
   @PostMapping(value = "/broker/broadcasts/new")
   public ResponseEntity<?> newBroadcast(@RequestBody BroadcastSaveRequestDto requestDto) throws Exception{
     try {
-
       broadcastService.newBroadcast(requestDto);
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
         put("result", true);
@@ -42,7 +42,7 @@ public class BroadcastRestController {
       }}, HttpStatus.OK);
     } catch (Exception e){
       e.printStackTrace();
-      return new ResponseEntity(HttpStatus.BAD_REQUEST);
+      return new ResponseEntity("/broadcasts", HttpStatus.BAD_REQUEST);
     }
 
   }
@@ -57,17 +57,35 @@ public class BroadcastRestController {
   //라이브중인 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/live")
   @ApiOperation(value = "라이브 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public Page<BroadcastListResponseDto> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  public ResponseEntity<?> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
     Pageable pageable = PageRequest.of(page, size);
-    return broadcastService.searchLiveBroadcastAll(pageable);
+    try {
+      Page<BroadcastListResponseDto> broadcasts = broadcastService.searchLiveBroadcastAll(pageable);
+
+      if(broadcasts != null && broadcasts.hasContent()){
+        return new ResponseEntity<Page<BroadcastListResponseDto>>(broadcasts, HttpStatus.OK);
+      }
+      else return new ResponseEntity(HttpStatus.NO_CONTENT);
+    } catch (Exception e){
+      return extracted();
+    }
   }
 
   //종료된 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/end")
   @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public Page<BroadcastListResponseDto> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  public ResponseEntity<?> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
     Pageable pageable = PageRequest.of(page, size);
-    return broadcastService.searchEndBroadcastAll(pageable);
+    try {
+      Page<BroadcastListResponseDto> broadcasts = broadcastService.searchEndBroadcastAll(pageable);
+      if(broadcasts != null && broadcasts.hasContent()){
+        return new ResponseEntity<Page<BroadcastListResponseDto>>(broadcasts, HttpStatus.OK);
+      }
+      else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e){
+      return extracted();
+    }
+
   }
 
   //해당 방송 조회
@@ -78,9 +96,6 @@ public class BroadcastRestController {
   }
 
   //방송 제목, 설명 수정
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
   @PatchMapping(value = "/broker/broadcasts/modify/{broadcastId}")
   @ApiOperation(value = "해당 방송 수정", notes = "해당 방송의 제목, 내용을 수정합니다.")
   public ResponseEntity<?> modifyBroadcast(@PathVariable Long broadcastId, @RequestBody BroadcastUpdateRequestDto requestDto){
