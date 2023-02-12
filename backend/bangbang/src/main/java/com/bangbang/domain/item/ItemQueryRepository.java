@@ -29,13 +29,13 @@ public class ItemQueryRepository {
         BooleanBuilder builder = new BooleanBuilder();
 
         //item_id 연결
-        builder.and(item.item_id.eq(itemPrice.item_id));
-        builder.and(item.item_id.eq(manageOption.item_id));
-        builder.and(item.item_id.eq(option.item_id));
+        builder.andAnyOf(item.item_id.eq(itemPrice.item_id));
+        builder.andAnyOf(item.item_id.eq(manageOption.item_id));
+        builder.andAnyOf(item.item_id.eq(option.item_id));
 
         //활성상태(삭제, 팔리지 않은)인 게시글만
-        builder.and(item.item_status.eq(1));
-        builder.and(item.item_deal_complete.eq(false));
+        builder.andAnyOf(item.item_status.eq(1));
+        builder.andAnyOf(item.item_deal_complete.eq(false));
 
         //매물 종류
         if (filter.getItem_type() != null) {
