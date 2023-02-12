@@ -499,7 +499,7 @@ class Openvidu extends Component {
       //   myTrack: myTrack,
       //   camera: 0,
       // })
-      console.log(SwitchCamera)
+      // console.log(SwitchCamera)
       let newPublisher = this.OV.initPublisher(undefined, {
         audioSource: undefined, // The source of audio. If undefined default microphone
         videoSource: this.state.camDevices[0].deviceId, // The source of video. If undefined default webcam
@@ -512,6 +512,7 @@ class Openvidu extends Component {
     });
       this.setState({
         publisher: newPublisher,
+        mainStreamManager: newPublisher,
         camera: 0,
       })
       
@@ -539,6 +540,7 @@ class Openvidu extends Component {
     });
       this.setState({
         publisher: newPublisher,
+        mainStreamManager: newPublisher,
         camera: 1,
       })
     }
