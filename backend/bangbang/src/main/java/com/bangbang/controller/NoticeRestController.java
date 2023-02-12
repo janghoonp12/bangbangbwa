@@ -4,12 +4,14 @@ import com.bangbang.domain.notice.Notice;
 import com.bangbang.domain.notice.NoticeRepository;
 import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
+import com.bangbang.dto.notice.NoticeUpdateRequestDto;
 import com.bangbang.service.NoticeService;
 import com.bangbang.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +46,6 @@ public class NoticeRestController {
             noticeService.newNotice(notice);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
             return exceptionHandling();
         }
     }
@@ -80,8 +81,11 @@ public class NoticeRestController {
     })
     @ApiOperation(value="공지사항 수정")
     @PatchMapping("/admin/notices/modify")
-    public ResponseEntity<?> modifyNotice(@RequestBody Notice notice) {
+    public ResponseEntity<?> modifyNotice(@RequestBody NoticeUpdateRequestDto notice, HttpServletRequest request) {
         try {
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            notice.setUser_id(uid);
             noticeService.modifyNotice(notice);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -94,7 +98,7 @@ public class NoticeRestController {
     })
     @ApiOperation(value="공지사항 삭제")
     @DeleteMapping("/admin/notices/{noticeId}")
-    public ResponseEntity<?> modifyNotice(@PathVariable long noticeId) {
+    public ResponseEntity<?> deleteNotice(@PathVariable long noticeId) {
         try {
             noticeService.deleteNotice(noticeId);
             return new ResponseEntity(HttpStatus.OK);

@@ -33,7 +33,8 @@ public class Notice extends NoticeDatetime {
     private int notice_status;
 
     @Builder
-    public Notice(long user_id, String notice_title, String notice_type, String notice_comment) {
+    public Notice(long notice_id, long user_id, String notice_title, String notice_type, String notice_comment) {
+        this.notice_id = notice_id;
         this.user_id = user_id;
         this.notice_title = notice_title;
         this.notice_type = notice_type;

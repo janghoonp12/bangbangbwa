@@ -4,6 +4,7 @@ import com.bangbang.domain.notice.Notice;
 import com.bangbang.domain.notice.NoticeRepository;
 import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
+import com.bangbang.dto.notice.NoticeUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,8 +44,8 @@ public class NoticeServiceImpl implements NoticeService{
 
     @Transactional
     @Override
-    public void modifyNotice(Notice notice) {
-        noticeRepository.save(notice);
+    public void modifyNotice(NoticeUpdateRequestDto notice) {
+        noticeRepository.save(notice.toEntity());
     }
 
     @Transactional
