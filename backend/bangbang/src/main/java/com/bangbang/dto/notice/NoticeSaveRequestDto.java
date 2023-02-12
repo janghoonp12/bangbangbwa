@@ -8,6 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class NoticeSaveRequestDto {
     private long notice_id; //PK
     private long user_id; //FK
