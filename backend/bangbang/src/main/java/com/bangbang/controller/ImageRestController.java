@@ -42,9 +42,7 @@ public class ImageRestController {
   private final ImageService imageService;
 
   //사진 등록
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+
   @PostMapping(value = "/broker/images/new")
   @ApiOperation(value = "사진 등록", notes = "사진을 등록합니다.")
   public ResponseEntity<?> newImage(@RequestParam("file") MultipartFile file,

@@ -34,18 +34,14 @@ public class BookmarkRestController {
   private final JwtTokenProvider jwtTokenProvider;
   private final CustomUserDetailsService customUserDetailsService;
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+
   @GetMapping(value = "/user/bookmarks")
   @ApiOperation(value = "모든 즐겨찾기 조회", notes = "즐겨찾기를 모두 조회합니다.")
   public List<BookmarkListResponseDto> searchBookmarkAll(){
     return bookmarkService.searchBookmarkAll();
   }
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+
   @GetMapping(value = "/user/bookmarks/{bookmarkId}")
   @ApiOperation(value = "해당 즐겨찾기 조회", notes = "해당 즐겨찾기를 조회합니다.")
   public BookmarkResponseDto bookmarkDetail(@PathVariable Long bookmarkId){
@@ -53,9 +49,7 @@ public class BookmarkRestController {
   }
 
 
-//  @ApiImplicitParams({
-//      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-//  })
+
   @PostMapping(value = "/user/bookmarks/new")
   @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기를 등록합니다.")
   public ResponseEntity<?> newBookmark(@RequestBody BookmarkSaveRequestDto requestDto, HttpServletRequest request){
@@ -78,9 +72,7 @@ public class BookmarkRestController {
 
   }
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+
   @PatchMapping(value = "/user/bookmarks/modify/{bookmarkId}")
   @ApiOperation(value = "즐겨찾기 수정", notes = "즐겨찾기를 수정합니다.")
   public ResponseEntity<?> modifyBookmark(@PathVariable Long bookmarkId, @RequestBody
@@ -93,9 +85,7 @@ public class BookmarkRestController {
     }}, HttpStatus.OK);
   }
 
-  @ApiImplicitParams({
-      @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-  })
+
   @DeleteMapping(value = "/user/bookmarks/{bookmarkId}")
   @ApiOperation(value = "즐겨찾기 삭제", notes = "즐겨찾기를 삭제합니다.")
   public ResponseEntity<?> deleteBookmark(@PathVariable Long bookmarkId){

@@ -35,9 +35,7 @@ public class MyPageRestController {
     @Autowired
     private final BrokerRepository brokerRepository;
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="유저 정보 조회")
     @GetMapping("/user/mypage")
     public ResponseEntity<?> searchUser(HttpServletRequest request) {
@@ -55,9 +53,7 @@ public class MyPageRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="나의 매물 정보 조회")
     @GetMapping("/broker/mypage/item")
     public ResponseEntity<?> searchMyItem(HttpServletRequest request) {
@@ -75,9 +71,7 @@ public class MyPageRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="나의 방송 정보 조회")
     @GetMapping("/broker/mypage/broadcast")
     public ResponseEntity<?> searchMyBroadcast(HttpServletRequest request) {
