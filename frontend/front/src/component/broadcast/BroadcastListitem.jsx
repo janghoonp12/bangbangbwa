@@ -44,7 +44,7 @@ function BroadcastListItem(props) {
   const navigate = useNavigate();
   
   const onClick = () => {
-    navigate("/openvidu")
+    navigate(`/broadcasts/${props.posts.broadcastId}`)
   }
 
   return (
