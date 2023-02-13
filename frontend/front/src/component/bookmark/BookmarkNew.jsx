@@ -194,7 +194,7 @@ function BookmarkNew() {
   useEffect(() => {
     if (writeBookmarkDone) {
       dispatch(clearWriteBookmarkDone())
-      navigate('/bookmarks');
+      navigate('/interests/bookmarks');
     }
   })
 
