@@ -10,8 +10,8 @@ import broadcastSlice from "./broadcastSlice"
 import bookmarkSlice from "./bookmarkSlice"
 import fileSlice from "./fileSlice";
 
-axios.defaults.baseURL = "http://localhost:8081/api/"
-//axios.defaults.baseURL = "https://i8a405.p.ssafy.io/api"
+//axios.defaults.baseURL = "http://localhost:8081/api/"
+axios.defaults.baseURL = "https://i8a405.p.ssafy.io/api"
 
 
 export default combineReducers({
