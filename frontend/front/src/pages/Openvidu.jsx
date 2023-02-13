@@ -92,6 +92,7 @@ class Openvidu extends Component {
         // console.log(this.state.camDevices)
         // console.log(SwitchCamera())
         const { me } = this.props;
+
         this.handleChangeUserName(me.nickname)
         // this.setState({myUserName: me.nickname})
         
