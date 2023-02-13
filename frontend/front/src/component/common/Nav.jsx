@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import noticelogo from "../../assets/noticelogo.png"
@@ -7,7 +7,9 @@ import mypagelogo from "../../assets/mypagelogo.png"
 import logo from "../../assets/logo.png"
 import searchbutton from "../../assets/searchbutton.png"
 import AlarmList from "../alarm/AlarmList";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import SearchInfoModal from "./ui/SearchInfoModal";
+
 
 const Navbar = styled.nav`
   position: flex;
@@ -31,7 +33,7 @@ const NavDiv = styled.div`
 `;
 
 const NavSearchBarDiv = styled.div`
-  width: 600px;
+  width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,7 +95,7 @@ const SLogoImg = styled.img`
 `;
 
 const SInput = styled.input`
-  width: 400px;
+  width: 300px;
   height: 35px;
   border-radius: 10px;
   border: 0 solid black;
@@ -108,9 +110,66 @@ const TestDiv = styled.div`
   border-radius: 8px;
 `;
 
+const SSelect = styled.select`
+  margin-right: 2 0px;
+  height: 40px;
+  width: 200px;
+  border-radius: 8px;
+`;
+
 
 const Nav = () => {
+  // 로그인 여부 파악
   const isLogin = !!sessionStorage.getItem('access-token')
+
+  // 페이지 렌더링시 시도코드 받아오기
+  useEffect(() => {
+    axios.get('/items/sido')
+    .then(res => {
+      setSidoAll(res.data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  },[])
+
+
+  // 시도 고르기
+  const [sidoAll, setSidoAll] = useState('')
+  const [sido, setSido] = useState('')
+  const sidoSelect = (e) => {
+    setSido(e.target.value)
+    axios.get(`/items/gugun/${e.target.value}`)
+    .then(res => {
+      setGugunAll(res.data)
+    })
+    .catch(err => {
+      alert('지역 정보를 받아오는데 실패하였습니다.')
+      console.log(err)
+    })
+  };
+
+  // 구군 고르기
+  const [gugunAll, setGugunAll] = useState('')
+  const [gugun, setGugun] = useState('')
+  const gugunSelect = (e) => {
+    setGugun(e.target.value)
+    axios.get(`/items/dong/${e.target.value}`)
+    .then(res => {
+      setDongAll(res.data)
+    })
+    .catch(err => {
+      alert('지역 정보를 받아오는데 실패하였습니다.')
+      console.log(err)
+    })
+  };
+
+  // 동 고르기
+  const [dongAll, setDongAll] = useState('')
+  const [dong, setDong] = useState('')
+  const dongSelect = (e) => {
+    setDong(e.target.value)
+  };
 
 
   const [alarmBar, setAlarmBar] = useState(false);
@@ -126,6 +185,8 @@ const Nav = () => {
   }
 
   const navigate = useNavigate();
+
+  // 검색
   const onClick = () => {
     if (search) {
       alert(`${search} 검색`)
@@ -166,8 +227,32 @@ const Nav = () => {
       </NavLeftDiv>
       <NavRightDiv>
         <NavSearchBarDiv>
+          <SearchInfoModal />
+          <SSelect onChange={sidoSelect}>
+            {(sidoAll) ? sidoAll.map((sido, index) => {
+              return (
+                <option key={sido.sidoCode} value={sido.sidoCode}>{sido.sidoName}</option>
+              )
+            }) : null}
+          </SSelect>
+          <SSelect onChange={gugunSelect}>
+            {(gugunAll) ? gugunAll.map((gugun, index) => {
+              return (
+                <option key={gugun.gugunCode} value={gugun.gugunCode}>{gugun.gugunName}</option>
+              )
+            }) : null}
+          </SSelect>
+          <SSelect onChange={dongSelect}>
+            {(dongAll) ? dongAll.map((dong, index) => {
+              return (
+                <option key={dong.dongCode} value={dong.dongCode}>{dong.dongName}</option>
+              )
+            }) : null}
+          </SSelect>
+        </NavSearchBarDiv>
+        <NavSearchBarDiv>
            <SInput type="text" value={search} onChange={onChange} onKeyDown={(e) => activeEnter(e)} placeholder=" 검색어를 입력하세요" />
-           <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
+           <SButton disabled={(search || dong) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
         </NavSearchBarDiv>
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
