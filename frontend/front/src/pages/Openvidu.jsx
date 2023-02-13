@@ -6,11 +6,16 @@ import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
 import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
+import { connect } from 'react-redux';
 // import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
+// const {me} = useSelector((state) => state.userSlice);
+const mapStateToProps = (state) => ({
+  me: state.userSlice.me
+})
 
 class Openvidu extends Component {
   
@@ -75,8 +80,8 @@ class Openvidu extends Component {
       OV.getDevices().then(devices => {
         let videoDevices = devices.filter(dev => dev.kind==='videoinput')
         console.log(videoDevices)
-        // this.setState({camDevices: videoDevices}, ()=> {console.log(this.state.camDevices)})
-        this.setState({camDevices: devices}, ()=> {console.log(this.state.camDevices)})
+        this.setState({camDevices: videoDevices}, ()=> {console.log(this.state.camDevices)})
+        // this.setState({camDevices: devices}, ()=> {console.log(this.state.camDevices)})
         
       })
     }
@@ -86,15 +91,10 @@ class Openvidu extends Component {
         this.getCameras()
         // console.log(this.state.camDevices)
         // console.log(SwitchCamera())
-    }
-
-
-    replaceTrack = () => {
-      const { publisher, myTrack } = this.state;
-      console.log(myTrack)
-      publisher.replaceTrack(myTrack)
-        .then(() => console.log('바꿔졌다'))
-        .catch(error => console.log('에러남', error));
+        const { me } = this.props;
+        this.setState({myUserName: me.nickname})
+        
+        this.joinSession()
     }
 
     componentWillUnmount() {
@@ -873,6 +873,11 @@ class Openvidu extends Component {
       const delay = 10;
       const onThrottleDragMove = throttle(this.onDragMove, delay);
 
+      const { me } = this.props;
+      
+      console.log(this.props)
+      console.log(me)
+
       return (
         <Wrapper>
           <Container className="container">
@@ -890,7 +895,7 @@ class Openvidu extends Component {
                         className="form-control"
                         type="text"
                         id="userName"
-                        value={myUserName}
+                        value={me.nickname}
                         onChange={this.handleChangeUserName}
                         required
                       />
@@ -1120,7 +1125,7 @@ class Openvidu extends Component {
                 <li key={device.deviceId} style={{color:"white"}}>
                   {device.kind}
                   {device.label}
-                  {device.deviceId}
+                  {/* {device.deviceId} */}
                 </li>
               ))}
             </ul>
@@ -1208,7 +1213,7 @@ class Openvidu extends Component {
     }
 }
 
-export default Openvidu;
+export default connect(mapStateToProps)(Openvidu);
 
 const Wrapper = styled.div`
   display: flex;

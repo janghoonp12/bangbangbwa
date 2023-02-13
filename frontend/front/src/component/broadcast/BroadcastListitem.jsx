@@ -1,6 +1,7 @@
 import React from "react";
 // import Card from 'react-bootstrap/Card';
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const SCardDiv = styled.div`
   display: flex;
@@ -40,18 +41,23 @@ const SCardContentP = styled.p`
 `;
 
 function BroadcastListItem(props) {
+  const navigate = useNavigate();
+  
+  const onClick = () => {
+    navigate("/openvidu")
+  }
 
-    return (
-      <SCardDiv>
-        <SCardImg variant="top" src="logo512.png" alt="이미지" />
-        <SCardBodyDiv>
-          <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
-          <SCardContentP>
-            {props.posts.broadcastDescription},
-          </SCardContentP>
-        </SCardBodyDiv>
-      </SCardDiv>
-    )
+  return (
+    <SCardDiv onDoubleClick={onClick}>
+      <SCardImg variant="top" src="logo512.png" alt="이미지" />
+      <SCardBodyDiv>
+        <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
+        <SCardContentP>
+          {props.posts.broadcastDescription},
+        </SCardContentP>
+      </SCardBodyDiv>
+    </SCardDiv>
+  )
 }
 
 export default BroadcastListItem;
