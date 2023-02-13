@@ -14,7 +14,8 @@ const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
 // const {me} = useSelector((state) => state.userSlice);
 const mapStateToProps = (state) => ({
-  me: state.userSlice.me
+  me: state.userSlice.me,
+  broadcast: state.broadcastSlice.myItem,
 })
 
 class Openvidu extends Component {
@@ -92,8 +93,18 @@ class Openvidu extends Component {
         // console.log(this.state.camDevices)
         // console.log(SwitchCamera())
         const { me } = this.props;
+        const { match } = this.props;
+        // const broadcastId = match.params.postId
+        // const { broadcast } = this.props;
 
-        this.handleChangeUserName(me.nickname)
+        // this.handleChangeSessionId(broadcast.id)
+        if (me) {
+          this.handleChangeUserName(me.nickname)
+        } else {
+          this.handleChangeUserName("Guest")
+        }
+
+        // this.handleChangeSessionId(broadcastId)
         // this.setState({myUserName: me.nickname})
         
         this.joinSession()
@@ -875,10 +886,13 @@ class Openvidu extends Component {
       const delay = 10;
       const onThrottleDragMove = throttle(this.onDragMove, delay);
 
+      // const { match } = this.props;
+      // const broadcastId = this.props.match.params.postId
       const { me } = this.props;
-      
-      console.log(this.props)
-      console.log(me)
+
+      // console.log(broadcastId)
+      // console.log(this.props)
+      // console.log(me)
 
       return (
         <Wrapper>
@@ -897,7 +911,7 @@ class Openvidu extends Component {
                         className="form-control"
                         type="text"
                         id="userName"
-                        value={me.nickname}
+                        value="{me.nickname}"
                         onChange={this.handleChangeUserName}
                         required
                       />
