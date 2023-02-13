@@ -18,6 +18,7 @@ export const initialState = {
   myItem: null,
   liveBroadcast: null,
   endBroadcast: null,
+  watchingBroadCast: null,
 };
 
 export const firstSearchLiveBroadcastAsync = createAsyncThunk(
@@ -82,6 +83,9 @@ const broadcastSlice = createSlice({
   reducers: {
     clearWriteBroadcastDone: (state) => {
       state.writeBroadcastDone = false
+    },
+    choiceWatchingBroadCast: (state, action) => {
+      state.watchingBroadCast = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -143,5 +147,5 @@ const broadcastSlice = createSlice({
   }
 });
 
-export const { clearWriteBroadcastDone } = broadcastSlice.actions;
+export const { clearWriteBroadcastDone, choiceWatchingBroadCast } = broadcastSlice.actions;
 export default broadcastSlice.reducer;
