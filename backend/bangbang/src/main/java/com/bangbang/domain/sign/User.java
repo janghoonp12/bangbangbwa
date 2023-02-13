@@ -40,7 +40,7 @@ public class User implements UserDetails {
    // 유저 등급
 
   @Column(length = 1, nullable = true)
-  private String user_status;             // 유저 상태
+  private int user_status;             // 유저 상태
 
   @ElementCollection(fetch = FetchType.EAGER)
   @Builder.Default

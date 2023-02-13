@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
                 .userNickname(SignUpInfo.getUserNickname())
                 .userPassword(passwordEncoder.encode(SignUpInfo.getUserPassword()))
                 .user_roles(Collections.singletonList("ROLE_USER"))
-                .user_status("1").build();
+                .user_status(1).build();
         userRepository.save(user);
 
     }
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             }
         System.out.println(user);
 
-        if (user.getUser_status() == "0") {
+        if (user.getUser_status() == 0) {
             throw new BaseException(ErrorMessage.DONT_EXIST_ACCOUNT);
         }
 
