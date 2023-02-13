@@ -109,20 +109,16 @@ function MyProfile(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { userInfo } = useSelector((state) => state.userSlice);
+  const { me } = useSelector((state) => state.userSlice);
 
-  useEffect(() => {
-    dispatch(searchMyInfoAsync())
-    dispatch(clearSearchMyInfoDone())
-  },[])
 
   return (
     <Wrapper>
       <Container>
         <SProfileDiv>
           <SImg1 alt="이미지" src={logosample} />
-          <SNameP>{ userInfo.userNickname }</SNameP>
-          <SEmailP>{ userInfo.userEmail}</SEmailP>
+          <SNameP>{ me.nickname }</SNameP>
+          <SEmailP>{ me.email}</SEmailP>
           <SNowMenuP
             style={{ marginTop: "10rem" }}
             onClick={() => {
@@ -152,8 +148,8 @@ function MyProfile(props) {
           </div>
           <SFlexDiv>
             <div>
-              <p>{ userInfo.userNickname }</p>
-              <p>{ userInfo.userEmail}</p>
+              <p>{ me.userNickname }</p>
+              <p>{ me.userEmail}</p>
             </div>
 
           </SFlexDiv>
@@ -163,7 +159,7 @@ function MyProfile(props) {
             < SLogoImg src={nicknamelogo} alt="닉네임로고" />
             </SLogoDiv>
             <SInfoP>닉 네 임 : </SInfoP>
-            <SInfoP>{ userInfo.userNickname }</SInfoP>
+            <SInfoP>{ me.nickname }</SInfoP>
             <SLogoDiv>
             < SLogoImg src={updatelogo} alt="수정로고" />
             </SLogoDiv>

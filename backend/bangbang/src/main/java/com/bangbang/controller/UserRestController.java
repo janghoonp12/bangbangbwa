@@ -62,6 +62,7 @@ public class UserRestController {
       put("nickname", token.get("nickname"));
       put("email", token.get("email"));
       put("id", token.get("id"));
+      put("role", token.get("role"));
 
     }}, HttpStatus.OK);
   }
