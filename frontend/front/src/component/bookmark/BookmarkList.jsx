@@ -31,6 +31,7 @@ const SButtonDiv = styled.div`
 function BookmarkList(props) {
   const bookmarks = props.bookmarks
 
+
   const limit = 12; // 한 페이지에 나올 방송 수
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
   const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
@@ -38,22 +39,23 @@ function BookmarkList(props) {
   return (
     <Wrapper>
       <Container>
-        {bookmarks.slice(0, offset).map((post, index) => {
+        {bookmarks ? bookmarks.slice(0, offset).map((post, index) => {
           return (
             <BookmarkListItem
             key={post.id}
             post={post}
             />
             );
-          })}
+          }) : <p>no data</p>}
       </Container>
       <SButtonDiv>
+        {bookmarks ?
         <LoadMore 
           total={bookmarks.length}
           limit={limit}
           loads={loads}
           setLoads={setLoads}
-        />
+        /> : <p>no data</p>}
       </SButtonDiv>
     </Wrapper>
   )
