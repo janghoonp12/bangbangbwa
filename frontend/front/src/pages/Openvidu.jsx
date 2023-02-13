@@ -75,7 +75,8 @@ class Openvidu extends Component {
       OV.getDevices().then(devices => {
         let videoDevices = devices.filter(dev => dev.kind==='videoinput')
         console.log(videoDevices)
-        this.setState({camDevices: videoDevices}, ()=> {console.log(this.state.camDevices)})
+        // this.setState({camDevices: videoDevices}, ()=> {console.log(this.state.camDevices)})
+        this.setState({camDevices: devices}, ()=> {console.log(this.state.camDevices)})
         
       })
     }
@@ -1117,7 +1118,9 @@ class Openvidu extends Component {
             <ul>
               {this.state.camDevices.map(device => (
                 <li key={device.deviceId} style={{color:"white"}}>
+                  {device.kind}
                   {device.label}
+                  {device.deviceId}
                 </li>
               ))}
             </ul>
