@@ -9,6 +9,24 @@ import SearchItem from "./SearchItem";
 import axios from "axios";
 
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-top: 30px;
+    align-items: flex-start;
+    justify-content: center;
+    white-space: nowrap;
+    & > * {
+        :not(:last-child) {
+            margin-bottom: 16px;
+        }
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+`;
+
 const SButtonDiv = styled.div`
   display: flex;
   justify-content: center;
@@ -29,6 +47,7 @@ function ItemSearchAll() {
 
 
   // 검색 axios 요청
+  const [broadcasts, setBroadcasts] = useState(null);
   const [items, setItems] = useState(null);
   const { searchWord } = useParams();
   const [keyword, dongCode] = searchWord.split('&');
@@ -37,16 +56,25 @@ function ItemSearchAll() {
 
     if (keyword && dongCode) {
       axios.get(`${baseURL}dongCode=${dongCode}&keyword=${keyword}`)
-      .then(res => setItems(res.data.dataB))
+      .then(res => {
+        setItems(res.data.dataB)
+        setBroadcasts(res.data.dataD)
+      })
       .catch(err => console.log(err))
       
     } else if (keyword) {
       axios.get(`${baseURL}keyword=${keyword}`)
-      .then(res => setItems(res.data.dataB))
+      .then(res => {
+        setItems(res.data.dataB)
+        setBroadcasts(res.data.dataD)
+      })
       .catch(err => console.log(err))
     } else if (dongCode) {
       axios.get(`${baseURL}dongCode=${dongCode}`)
-      .then(res => setItems(res.data.dataB))
+      .then(res => {
+        setItems(res.data.dataB)
+        setBroadcasts(res.data.dataD)
+      })
       .catch(err => console.log(err))  
     }
 
@@ -62,7 +90,32 @@ function ItemSearchAll() {
       <div id="filterDiv" style={{ display: "none" }}>
         <Filter />
       </div>
+      <Wrapper>
+        <h2>방송 검색 결과</h2>
+      </Wrapper>
+      <ItemList>
+      {broadcasts && broadcasts.length ? broadcasts.map((broadcast, index) => (
+        <SearchItem
+        broadcasts={broadcasts}
+        />
+      )
+        ) : <h3>검색 결과가 없습니다...</h3>}
+      </ItemList>
       
+      <SButtonDiv>
+        {broadcasts ?
+        <LoadMore 
+          total={broadcasts.length}
+          limit={limit}
+          loads={loads}
+          setLoads={setLoads}
+        /> : null}
+      </SButtonDiv>
+      <hr />
+      <br />
+      <Wrapper>
+        <h2>매물 검색 결과</h2>
+      </Wrapper>
       <ItemList>
       {items && items.length ? items.map((item, index) => (
         <SearchItem
