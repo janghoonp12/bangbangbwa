@@ -35,6 +35,20 @@ export const firstSearchLiveBroadcastAsync = createAsyncThunk(
   }
 );
 
+export const nextSearchBroadcastAsync = createAsyncThunk(
+  'broadcast/SEARCHLIVEBROADCAST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        '/broadcasts/live', {page: 0, size: 12}
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 export const firstSearchEndBroadcastAsync = createAsyncThunk(
   'broadcast/SEARCHENDBOADCAST',
   async (data, thunkAPI) => {

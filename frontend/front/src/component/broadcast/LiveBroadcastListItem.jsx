@@ -43,22 +43,22 @@ const SCardContentP = styled.p`
 `;
 
 function LiveBroadcastListItem(props) {
-  const data = props.data
+  console.log(props)
   const navigate = useNavigate();
   const onClick = () => {
-    navigate(`/broadcasts/${data.id}`)
+    // navigate(`/broadcasts/${data.id}`)
   }
 
   return (
     <SCardDiv onDoubleClick={onClick}>
       <SCardImg variant="top" src={logosample} alt="이미지" />
       <SCardBodyDiv>
-        <SCardTitleP>{data.title}</SCardTitleP>
+        {/* <SCardTitleP>{data.title}</SCardTitleP>
         <SCardContentP>
           {data.type},
           {data.building_type},
           {data.manage_fee}
-        </SCardContentP>
+        </SCardContentP> */}
       </SCardBodyDiv>
     </SCardDiv>
   )

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import data from "../../data.json";
 import ItemList from "./ItemList";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Filter from "../common/Filter";
 import FilterButton from "../common/FilterButton";
 import styled from "styled-components";
-import LoadMore from "../common/ui/LoadMore";
 import { useDispatch, useSelector } from 'react-redux';
-import { searchItemAsync } from "../../reducers/itemSlice"
+import { firstSearchItemAsync, nextSearchItemAsync } from "../../reducers/itemSlice"
 import ItemListItem from "./ItemListItem";
 
 
@@ -48,20 +46,24 @@ function Items() {
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
   const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
 
-  const { items, last } = useSelector((state) => state.itemSlice);
+  const { items, last, currentPage } = useSelector((state) => state.itemSlice);
 
   useEffect(() => {
-    dispatch(searchItemAsync(
+    dispatch(firstSearchItemAsync(
       {
         page: 0,
         size: 12,
       }
     ))
-    console.log(items)
   },[])
 
   const loadItem = () => {
-
+    dispatch(nextSearchItemAsync(
+      {
+        page: currentPage,
+        size: 12,
+      }
+    ))
   }
 
   return (
@@ -83,7 +85,7 @@ function Items() {
         ) : <label>no data</label>}
       </ItemList>
       <SButtonDiv>
-        {!last ? <SButton>매물 더보기</SButton> : <SButton>매물이 없습니다.</SButton>}
+        {!last ? <SButton onClick={loadItem}>매물 더보기</SButton> : <SButton aria-readonly>매물이 없습니다.</SButton>}
       </SButtonDiv>
     </div>
   )

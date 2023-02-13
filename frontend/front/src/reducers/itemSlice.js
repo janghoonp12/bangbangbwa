@@ -15,6 +15,7 @@ export const initialState = {
   items: null,
   itemDetail: null,
   last: false,
+  currentPage: 0,
 
 };
 
@@ -32,12 +33,26 @@ export const writeItemAsync = createAsyncThunk(
   }
 );
 
-export const searchItemAsync = createAsyncThunk(
-  'item/SEARCH_ITEM',
+export const firstSearchItemAsync = createAsyncThunk(
+  'item/FIRST_SEARCH_ITEM',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
-        '/items', data
+        `/items?page=${data.page}&size=${data.size}`,
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const nextSearchItemAsync = createAsyncThunk(
+  'item/NEXT_SEARCH_ITEM',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `/items?page=${data.page}&size=${data.size}`, data
       );
       return response.data
     } catch (err) {
@@ -47,7 +62,7 @@ export const searchItemAsync = createAsyncThunk(
 );
 
 export const searchDetailItemAsync = createAsyncThunk(
-  'item/SEARCHDETAIL',
+  'item/SEARCH_DETAIL',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
@@ -88,18 +103,35 @@ const itemSlice = createSlice({
       state.writeItemError = action.payload
       alert('매물 등록 실패');
     });
-    builder.addCase(searchItemAsync.pending, (state, action) => {
+    builder.addCase(firstSearchItemAsync.pending, (state, action) => {
       state.searchItemLoading = true;
       state.searchItemDone = null;
       state.searchItemError = false;
     });
-    builder.addCase(searchItemAsync.fulfilled, (state, action) => {
+    builder.addCase(firstSearchItemAsync.fulfilled, (state, action) => {
       state.searchItemLoading = false;
       state.searchItemDone = true;
       state.items = action.payload.content;
+      state.currentPage += 1;
       state.last = action.payload.last
     });
-    builder.addCase(searchItemAsync.rejected, (state, action) => {
+    builder.addCase(firstSearchItemAsync.rejected, (state, action) => {
+      state.searchItemLoading = false;
+      state.searchItemError = action.error
+    });
+    builder.addCase(nextSearchItemAsync.pending, (state, action) => {
+      state.searchItemLoading = true;
+      state.searchItemDone = null;
+      state.searchItemError = false;
+    });
+    builder.addCase(nextSearchItemAsync.fulfilled, (state, action) => {
+      state.searchItemLoading = false;
+      state.searchItemDone = true;
+      state.items = state.items.concat(action.payload.content)
+      state.currentPage += 1;
+      state.last = action.payload.last
+    });
+    builder.addCase(nextSearchItemAsync.rejected, (state, action) => {
       state.searchItemLoading = false;
       state.searchItemError = action.error
     });
