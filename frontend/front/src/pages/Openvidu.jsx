@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
@@ -92,7 +92,8 @@ class Openvidu extends Component {
         // console.log(this.state.camDevices)
         // console.log(SwitchCamera())
         const { me } = this.props;
-        this.setState({myUserName: me.nickname})
+        this.handleChangeUserName(me.nickname)
+        // this.setState({myUserName: me.nickname})
         
         this.joinSession()
     }
@@ -111,9 +112,9 @@ class Openvidu extends Component {
         });
     }
 
-    handleChangeUserName(e) {
+    handleChangeUserName(value) {
         this.setState({
-            myUserName: e.target.value,
+            myUserName: value
         });
     }
 
