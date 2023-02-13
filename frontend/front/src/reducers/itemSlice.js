@@ -97,7 +97,6 @@ const itemSlice = createSlice({
       state.firstSearchItemLoading = false;
       state.firstSearchItemDone = true;
       state.items = action.payload.content;
-      console.log(action.payload.content)
     });
     builder.addCase(firstSearchItemAsync.rejected, (state, action) => {
       state.firstSearchItemLoading = false;
