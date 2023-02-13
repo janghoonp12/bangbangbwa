@@ -149,13 +149,11 @@ public class ItemQueryRepository {
         }
 
         return queryFactory
-                .select(new QItemDto(item,itemPrice,manageOption, option)).distinct()
+                .select(new QItemDto(item, itemPrice, manageOption, option)).distinct()
                 .from(item, itemPrice, manageOption, option)
-                .leftJoin(item.itemPrice, itemPrice)
-                .leftJoin(item.manageOption,manageOption)
-                .leftJoin(item.option, option)
                 .where(builder)
-                .limit(10)
+                .orderBy(item.item_id.desc())
+                .limit(100)
                 .fetch();
     }
 }
