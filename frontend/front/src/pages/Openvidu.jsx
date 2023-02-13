@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
 import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
-import SwitchCamera from '../component/openvidu/SwitchCamera';
+// import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
@@ -72,7 +72,6 @@ class Openvidu extends Component {
 
     getCameras() {
       const OV = new OpenVidu();
-      let camDevices = [];
       OV.getDevices().then(devices => {
         let videoDevices = devices.filter(dev => dev.kind==='videoinput')
         console.log(videoDevices)
@@ -508,7 +507,7 @@ class Openvidu extends Component {
         resolution: '640x480', // The resolution of your video
         frameRate: 30, // The frame rate of your video
         insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-        mirror: true, // Whether to mirror your local video or not
+        mirror: false, // Whether to mirror your local video or not
     });
       this.setState({
         publisher: newPublisher,
@@ -710,7 +709,7 @@ class Openvidu extends Component {
                     var newchattings = this.state.chattings
                     newchattings.unshift(event.data);
                     this.setState({chattings: newchattings})
-                    this.setState({chat:""})
+                    // this.setState({chat:""})
                   }
                   
                 });
@@ -1114,15 +1113,15 @@ class Openvidu extends Component {
           {/* <div>
             <SwitchCamera />
           </div> */}
-          {/* <div>
+          <div>
             <ul>
               {this.state.camDevices.map(device => (
-                <li key={device.deviceId}>
+                <li key={device.deviceId} style={{color:"white"}}>
                   {device.label}
                 </li>
               ))}
             </ul>
-          </div> */}
+          </div>
           
         </Wrapper>
       );
