@@ -15,7 +15,7 @@ const OPENVIDU_SERVER_SECRET = 'A405';
 // const {me} = useSelector((state) => state.userSlice);
 const mapStateToProps = (state) => ({
   me: state.userSlice.me,
-  broadcast: state.broadcastSlice.myItem,
+  watchingBroadCast: state.broadcastSlice.watchingBroadCast,
 })
 
 class Openvidu extends Component {
@@ -24,6 +24,7 @@ class Openvidu extends Component {
         super(props);
 
         this.state = {
+            myTitle : "",
             mySessionId: 'SessionA',
             // myUserName: 'Participant' + Math.floor(Math.random() * 100),
             myUserName: 'Participant1',
@@ -67,7 +68,7 @@ class Openvidu extends Component {
         };
         
         this.scrollRef = React.createRef();
-
+        this.handleChangeMyTitle = this.handleChangeMyTitle.bind(this);
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
@@ -90,10 +91,11 @@ class Openvidu extends Component {
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
         this.getCameras()
+        console.log(this.props)
         // console.log(this.state.camDevices)
         // console.log(SwitchCamera())
         const { me } = this.props;
-        const { match } = this.props;
+        const { watchingBroadCast } = this.props;
         // const broadcastId = match.params.postId
         // const { broadcast } = this.props;
 
@@ -103,8 +105,9 @@ class Openvidu extends Component {
         } else {
           this.handleChangeUserName("Guest")
         }
-
-        // this.handleChangeSessionId(broadcastId)
+        console.log(watchingBroadCast)
+        this.handleChangeMyTitle(watchingBroadCast.broadcastTitle)
+        this.handleChangeSessionId(watchingBroadCast.broadcastRoomId)
         // this.setState({myUserName: me.nickname})
         
         this.joinSession()
@@ -118,9 +121,15 @@ class Openvidu extends Component {
         this.leaveSession();
     }
 
-    handleChangeSessionId(e) {
+    handleChangeMyTitle(value) {
+      this.setState({
+          myTitle: value,
+      });
+  }
+
+    handleChangeSessionId(value) {
         this.setState({
-            mySessionId: e.target.value,
+            mySessionId: value,
         });
     }
 
@@ -878,6 +887,7 @@ class Openvidu extends Component {
     }
 
     render() {
+      const myTitle = this.state.myTitle
       const mySessionId = this.state.mySessionId;
       const myUserName = this.state.myUserName;
       
@@ -938,7 +948,7 @@ class Openvidu extends Component {
             {this.state.session !== undefined ? (
               <div id="session">
                 <STitleDiv id="session-header">
-                  <STitleP id="session-title">{mySessionId}</STitleP>
+                  <STitleP id="session-title">{myTitle}</STitleP>
                   <SWatchersP><SWatcherImg src={watchers} alt="시청자"/> {this.state.subscribers.length}</SWatchersP>
                   {this.state.myUserName === 'Participant1' ? (
                     <div>
@@ -1135,17 +1145,17 @@ class Openvidu extends Component {
           {/* <div>
             <SwitchCamera />
           </div> */}
-          <div>
+          {/* <div>
             <ul>
               {this.state.camDevices.map(device => (
                 <li key={device.deviceId} style={{color:"white"}}>
                   {device.kind}
                   {device.label}
-                  {/* {device.deviceId} */}
+                  {device.deviceId}
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           
         </Wrapper>
       );

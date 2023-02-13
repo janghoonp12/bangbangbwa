@@ -50,7 +50,7 @@ const bookmarkSlice = createSlice({
   reducers: {
     clearWriteBookmarkDone: (state) => {
       state.writeBookmarkDone = false
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(writeBookmarkAsync.pending, (state, action) => {
