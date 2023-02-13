@@ -130,7 +130,8 @@ const userSlice = createSlice({
       state.signInLoading = false;
       state.me = {
         email : action.payload.email,
-        nickname: action.payload.nickname
+        nickname: action.payload.nickname,
+        role : action.payload.role
       }
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
@@ -152,7 +153,8 @@ const userSlice = createSlice({
       state.signInLoading = false;
       state.me = {
         email : action.payload.email,
-        nickname: action.payload.nickname
+        nickname: action.payload.nickname,
+        role : action.payload.role
       }
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)

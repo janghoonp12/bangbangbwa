@@ -70,13 +70,13 @@ public class UserServiceImpl implements UserService {
         String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), user.getUser_roles());
         user.setUser_refresh_token(refreshToken);
         userRepository.save(user);
-
         return new HashMap<String, Object>() {{
             put("nickname", user.getUserNickname());
             put("access-token", accessToken);
             put("refresh-token", refreshToken);
             put("email", user.getUserEmail());
             put("id", user.getUserId());
+            put("role", user.getUser_roles().get(0));
         }};
     }
 

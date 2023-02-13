@@ -11,6 +11,7 @@ import PostViewPage from '../component/mypage/PostViewPage';
 import PostWritePage from '../component/mypage/PostWritePage';
 import MyBroadcast from "../component/mypage/MyBroadcast";
 
+
 const Wrapper = styled.div`
   margin-top: 3rem;
   flex-direction: column;
