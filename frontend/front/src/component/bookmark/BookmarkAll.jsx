@@ -44,7 +44,6 @@ function BookmarkAll() {
 
   useEffect(() => {
     dispatch(firstSearchBookmarkAsync())
-    console.log(bookmarks)
   }, [])
 
   const onClick = () => {

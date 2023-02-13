@@ -77,7 +77,8 @@ const bookmarkSlice = createSlice({
       state.firstSearchBookmarkLoading = false;
       state.firstSearchBookmarkDone = true;
       state.bookmarks = action.payload.content;
-      console.log(action.payload.content)
+      console.log(action.payload)
+      // console.log(action.payload.content)
     });
     builder.addCase(firstSearchBookmarkAsync.rejected, (state, action) => {
       state.firstSearchBookmarkLoading = false;

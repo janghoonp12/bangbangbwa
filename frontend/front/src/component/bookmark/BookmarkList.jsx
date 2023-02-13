@@ -30,8 +30,6 @@ const SButtonDiv = styled.div`
 
 function BookmarkList(props) {
   const bookmarks = props.bookmarks
-  console.log(props)
-  console.log(bookmarks)
 
   const limit = 12; // 한 페이지에 나올 방송 수
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
