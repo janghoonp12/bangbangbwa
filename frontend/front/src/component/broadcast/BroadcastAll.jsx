@@ -7,7 +7,7 @@ import Filter from "../common/Filter";
 import styled from "styled-components";
 import FilterButton from "../common/FilterButton";
 import { useDispatch, useSelector } from 'react-redux';
-import { firstSearchLiveBroadcastAsync, firstSearchEndBroadcastAsync } from "../../reducers/broadcastSlice"
+import { SearchLiveBroadcastAsync, SearchEndBroadcastAsync } from "../../reducers/broadcastSlice"
 import BroadcastListItem from "./BroadcastListitem";
 
 const SH2 = styled.h2`
@@ -50,9 +50,18 @@ function BroadcastAll() {
   const { endBroadcast } = useSelector((state) => state.broadcastSlice);
   
   useEffect(() => {
-    dispatch(firstSearchLiveBroadcastAsync())
-    dispatch(firstSearchEndBroadcastAsync())
-    console.log(liveBroadcast)
+    dispatch(SearchLiveBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
+    dispatch(SearchEndBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
   },[])
 
   return (

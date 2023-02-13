@@ -12,6 +12,7 @@ export const initialState = {
   searchDetailItemLoading: false,
   searchDetailItemDone: false,
   searchDetailItemError: null,
+  myItem: null,
   items: null,
   itemDetail: null,
   last: false,
@@ -33,21 +34,7 @@ export const writeItemAsync = createAsyncThunk(
   }
 );
 
-export const firstSearchItemAsync = createAsyncThunk(
-  'item/FIRST_SEARCH_ITEM',
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.get(
-        `/items?page=${data.page}&size=${data.size}`,
-      );
-      return response.data
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
-
-export const nextSearchItemAsync = createAsyncThunk(
+export const SearchItemAsync = createAsyncThunk(
   'item/NEXT_SEARCH_ITEM',
   async (data, thunkAPI) => {
     try {
@@ -75,11 +62,31 @@ export const searchDetailItemAsync = createAsyncThunk(
   }
 );
 
+export const findMyItemAsync = createAsyncThunk(
+  'broadcast/FIND_MY_ITEM',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.get(
+        '/broker/mypage/item',
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 
 const itemSlice = createSlice({
   name: "item",
   initialState,
   reducers: {
+    initItemState: (state) => {
+      state.items = null;
+      state.currentPage = 0;
+      state.last = false;
+      state.itemDetail = null;
+    },
     clearSearchDetailItemDone: (state) => {
       state.searchDetailItemDone = false
     },
@@ -103,35 +110,37 @@ const itemSlice = createSlice({
       state.writeItemError = action.payload
       alert('매물 등록 실패');
     });
-    builder.addCase(firstSearchItemAsync.pending, (state, action) => {
+    builder.addCase(findMyItemAsync.pending, (state, action) => {
+      state.findMyItemLoading = true;
+      state.findMyItemError = null;
+      state.findMyItemDone = false;
+    });
+    builder.addCase(findMyItemAsync.fulfilled, (state, action) => {
+      state.findMyItemLoading = false;
+      state.findMyItemDone = true;
+      state.myItem = action.payload
+    });
+    builder.addCase(findMyItemAsync.rejected, (state, action) => {
+      state.findMyItemLoading = false;
+      state.findMyItemError = action.error
+    });
+    builder.addCase(SearchItemAsync.pending, (state, action) => {
       state.searchItemLoading = true;
       state.searchItemDone = null;
       state.searchItemError = false;
     });
-    builder.addCase(firstSearchItemAsync.fulfilled, (state, action) => {
+    builder.addCase(SearchItemAsync.fulfilled, (state, action) => {
       state.searchItemLoading = false;
       state.searchItemDone = true;
-      state.items = action.payload.content;
+      if (state.items === null) {
+        state.items = action.payload.content;
+      } else {
+        state.items = state.items.concat(action.payload.content)
+      }
       state.currentPage += 1;
       state.last = action.payload.last
     });
-    builder.addCase(firstSearchItemAsync.rejected, (state, action) => {
-      state.searchItemLoading = false;
-      state.searchItemError = action.error
-    });
-    builder.addCase(nextSearchItemAsync.pending, (state, action) => {
-      state.searchItemLoading = true;
-      state.searchItemDone = null;
-      state.searchItemError = false;
-    });
-    builder.addCase(nextSearchItemAsync.fulfilled, (state, action) => {
-      state.searchItemLoading = false;
-      state.searchItemDone = true;
-      state.items = state.items.concat(action.payload.content)
-      state.currentPage += 1;
-      state.last = action.payload.last
-    });
-    builder.addCase(nextSearchItemAsync.rejected, (state, action) => {
+    builder.addCase(SearchItemAsync.rejected, (state, action) => {
       state.searchItemLoading = false;
       state.searchItemError = action.error
     });
@@ -152,5 +161,5 @@ const itemSlice = createSlice({
   }
 });
 
-export const { clearWriteItemDone, clearSearchDetailItemDone } = itemSlice.actions;
+export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone } = itemSlice.actions;
 export default itemSlice.reducer;

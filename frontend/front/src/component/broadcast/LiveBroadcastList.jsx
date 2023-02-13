@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import LiveBroadcastListItem from "./LiveBroadcastListItem";
-import datas from "../../data.json";
+import BroadcastListItem from "./BroadcastListitem";
 import styled from "styled-components";
 import Filter from "../common/Filter";
-import LoadMore from "../common/ui/LoadMore";
 import FilterButton from "../common/FilterButton";
 import { useDispatch, useSelector } from 'react-redux';
-import { firstSearchLiveBroadcastAsync, nextSearchBroadcastAsync } from "../../reducers/broadcastSlice"
-import { LastPage } from "@mui/icons-material";
+import { SearchLiveBroadcastAsync, initBroadcastState } from "../../reducers/broadcastSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,10 +50,11 @@ function LiveBroadcastList() {
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
   const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
 
-  const { liveBroadcast, livePagelast, currentPage } = useSelector((state) => state.broadcastSlice);
+  const { liveBroadcast, currentPage, last } = useSelector((state) => state.broadcastSlice);
 
   useEffect(() => {
-    dispatch(firstSearchLiveBroadcastAsync(
+    dispatch(initBroadcastState())
+    dispatch(SearchLiveBroadcastAsync(
       {
         page: 0,
         size: 12,
@@ -65,7 +63,7 @@ function LiveBroadcastList() {
   },[])
 
   const loadItem = () => {
-    dispatch(nextSearchBroadcastAsync(
+    dispatch(SearchLiveBroadcastAsync(
       {
         page: currentPage,
         size: 12,
@@ -85,23 +83,15 @@ function LiveBroadcastList() {
       </div>
       <h2 style={{marginTop : '10px'}}>라이브 방송 목록</h2>
       <Wrapper>
-        {datas.slice(0, offset).map((data, index) => {
-          return (
-            <LiveBroadcastListItem
-              key={data.id}
-              data={data}
-            />
-          );
-        })}
         {liveBroadcast ? liveBroadcast.map((broadcast, index) => (
-        <LiveBroadcastListItem
+        <BroadcastListItem
           posts={broadcast}
         />
       )
         ) : <label>no data</label>}
       </Wrapper>
       <SButtonDiv>
-        {!livePagelast ? <SButton onClick={loadItem}>매물 더보기</SButton> : <SButton aria-readonly>매물이 없습니다.</SButton>}
+        {!last ? <SButton onClick={loadItem}>라이브 방송 더보기</SButton> : <></>}
       </SButtonDiv>
     </div>
   )

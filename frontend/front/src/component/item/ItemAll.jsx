@@ -6,7 +6,7 @@ import Filter from "../common/Filter";
 import FilterButton from "../common/FilterButton";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
-import { firstSearchItemAsync, nextSearchItemAsync } from "../../reducers/itemSlice"
+import { SearchItemAsync, initItemState } from "../../reducers/itemSlice"
 import ItemListItem from "./ItemListItem";
 
 
@@ -49,7 +49,8 @@ function Items() {
   const { items, last, currentPage } = useSelector((state) => state.itemSlice);
 
   useEffect(() => {
-    dispatch(firstSearchItemAsync(
+    dispatch(initItemState())
+    dispatch(SearchItemAsync(
       {
         page: 0,
         size: 12,
@@ -58,7 +59,7 @@ function Items() {
   },[])
 
   const loadItem = () => {
-    dispatch(nextSearchItemAsync(
+    dispatch(SearchItemAsync(
       {
         page: currentPage,
         size: 12,

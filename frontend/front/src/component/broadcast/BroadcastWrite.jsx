@@ -30,8 +30,8 @@ function BroadcastWrite() {
   const [reservationStartDate, setReservationstartDate] = useState("");
   const [reservationStartTime, setReservationstartTime] = useState("");
   const [thumbnail, setThumbnail] = useState("썸네일");
-
-  const { myItem, writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
+  const { myItem } = useSelector((state) => state.itemSlice);
+  const { writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
 
   useEffect(() => {
     dispatch(findMyItemAsync())

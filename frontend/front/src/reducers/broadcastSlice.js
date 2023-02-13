@@ -15,18 +15,19 @@ export const initialState = {
   writeBroadcastLoading: false,
   writeBroadcastDone: false,
   writeBroadcastError: null,
-  myItem: null,
   liveBroadcast: null,
   endBroadcast: null,
   watchingBroadCast: null,
+  last: true,
+  currentPage: 0,
 };
 
-export const firstSearchLiveBroadcastAsync = createAsyncThunk(
+export const SearchLiveBroadcastAsync = createAsyncThunk(
   'broadcast/SEARCHLIVEBROADCAST',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
-        '/broadcasts/live', {page: 0, size: 12}
+        `/broadcasts/live?page=${data.page}&size=${data.size}`,
       );
       return response.data
     } catch (err) {
@@ -35,26 +36,12 @@ export const firstSearchLiveBroadcastAsync = createAsyncThunk(
   }
 );
 
-export const nextSearchBroadcastAsync = createAsyncThunk(
-  'broadcast/SEARCHLIVEBROADCAST',
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.get(
-        '/broadcasts/live', {page: 0, size: 12}
-      );
-      return response.data
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err);
-    }
-  }
-);
-
-export const firstSearchEndBroadcastAsync = createAsyncThunk(
+export const SearchEndBroadcastAsync = createAsyncThunk(
   'broadcast/SEARCHENDBOADCAST',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
-        '/broadcasts/end', {page: 0, size: 12}
+        `/broadcasts/end?page=${data.page}&size=${data.size}`
       );
       return response.data
     } catch (err) {
@@ -64,7 +51,7 @@ export const firstSearchEndBroadcastAsync = createAsyncThunk(
 );
 
 export const findMyItemAsync = createAsyncThunk(
-  'broadcast/FINDMYITEM',
+  'broadcast/FIND_MY_ITEM',
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
@@ -78,7 +65,7 @@ export const findMyItemAsync = createAsyncThunk(
 );
 
 export const writeBroadcastAsync = createAsyncThunk(
-  'broadcast/WRITEITEM',
+  'broadcast/WRITE_BROADCAST',
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.post(
@@ -95,28 +82,19 @@ const broadcastSlice = createSlice({
   name: "broadcast",
   initialState,
   reducers: {
+    initBroadcastState: (state) => {
+      state.currentPage = 0
+      state.last = true
+    },
     clearWriteBroadcastDone: (state) => {
       state.writeBroadcastDone = false
     },
     choiceWatchingBroadCast: (state, action) => {
       state.watchingBroadCast = action.payload
-    }
+    },
+    
   },
   extraReducers: (builder) => {
-    builder.addCase(findMyItemAsync.pending, (state, action) => {
-      state.findMyItemLoading = true;
-      state.findMyItemError = null;
-      state.findMyItemDone = false;
-    });
-    builder.addCase(findMyItemAsync.fulfilled, (state, action) => {
-      state.findMyItemLoading = false;
-      state.findMyItemDone = true;
-      state.myItem = action.payload
-    });
-    builder.addCase(findMyItemAsync.rejected, (state, action) => {
-      state.findMyItemLoading = false;
-      state.findMyItemError = action.error
-    });
     builder.addCase(writeBroadcastAsync.pending, (state, action) => {
       state.writeBroadcastLoading = true;
       state.writeBroadcastError = null;
@@ -130,36 +108,48 @@ const broadcastSlice = createSlice({
       state.writeBroadcastLoading = false;
       state.writeBroadcastError = action.error
     });
-    builder.addCase(firstSearchLiveBroadcastAsync.pending, (state, action) => {
+    builder.addCase(SearchLiveBroadcastAsync.pending, (state, action) => {
       state.SearchLiveBroadcastLoading = true;
       state.SearchLiveBroadcastError = null;
       state.SearchLiveBroadcastDone = false;
     });
-    builder.addCase(firstSearchLiveBroadcastAsync.fulfilled, (state, action) => {
+    builder.addCase(SearchLiveBroadcastAsync.fulfilled, (state, action) => {
       state.SearchLiveBroadcastLoading = false;
       state.SearchLiveBroadcastDone = true;
       state.liveBroadcast = action.payload.content;
+      state.currentPage += 1;
+      if (action.payload === "") {
+        state.last = true
+      } else {
+        state.last = action.payload.last
+      }
     });
-    builder.addCase(firstSearchLiveBroadcastAsync.rejected, (state, action) => {
+    builder.addCase(SearchLiveBroadcastAsync.rejected, (state, action) => {
       state.SearchLiveBroadcastLoading = false;
       state.SearchLiveBroadcastError = action.error
     });
-    builder.addCase(firstSearchEndBroadcastAsync.pending, (state, action) => {
+    builder.addCase(SearchEndBroadcastAsync.pending, (state, action) => {
       state.SearchEndBroadcastLoading = true;
       state.SearchEndBroadcastError = null;
       state.SearchEndBroadcastDone = false;
     });
-    builder.addCase(firstSearchEndBroadcastAsync.fulfilled, (state, action) => {
+    builder.addCase(SearchEndBroadcastAsync.fulfilled, (state, action) => {
       state.SearchEndBroadcastLoading = false;
       state.SearchEndBroadcastDone = true;
       state.endBroadcast = action.payload.content;
+      state.currentPage += 1;
+      if (action.payload === "") {
+        state.last = true
+      } else {
+        state.last = action.payload.last
+      }
     });
-    builder.addCase(firstSearchEndBroadcastAsync.rejected, (state, action) => {
+    builder.addCase(SearchEndBroadcastAsync.rejected, (state, action) => {
       state.SearchEndBroadcastLoading = false;
       state.SearchEndBroadcastError = action.error
     });
   }
 });
 
-export const { clearWriteBroadcastDone, choiceWatchingBroadCast } = broadcastSlice.actions;
+export const { initBroadcastState, clearWriteBroadcastDone, choiceWatchingBroadCast } = broadcastSlice.actions;
 export default broadcastSlice.reducer;
