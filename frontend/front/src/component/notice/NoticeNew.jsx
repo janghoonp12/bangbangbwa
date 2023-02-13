@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../common/ui/Button";
 import { writeNoticeAsync } from "../../reducers/noticeSlice"
+import DropZone from "../common/Dropzone";
 
 const Wrapper = styled.div`
   display: flex;
@@ -130,7 +131,7 @@ function NoticeNew() {
         <hr />
         <SGridDiv>
           <STitleP>첨부 파일</STitleP>
-          <input type="file" multiple={true} />
+          <DropZone></DropZone>
         </SGridDiv>
         <hr />
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
