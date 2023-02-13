@@ -173,7 +173,7 @@ const Nav = () => {
 
 
   const [alarmBar, setAlarmBar] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const onChange = (e) => {
           setSearch(e.target.value)
       }
@@ -188,10 +188,9 @@ const Nav = () => {
 
   // 검색
   const onClick = () => {
-    if (search) {
-      alert(`${search} 검색`)
+    if (search || dong) {
+      navigate(`/items/search/${search}&${dong}`)
       setSearch('')
-      navigate('/')
     }
   }
 
