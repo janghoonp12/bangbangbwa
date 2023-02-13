@@ -11,4 +11,7 @@ public interface MypageService {
     User searchUser(Long userId);
     List<ItemDto> searchMyItem(Long userId);
     List<BroadcastListResponseDto> searchMyBroadcast(Long userId);
+    void modifyUserNickname(Long userId, String nickname);
+    void modifyUserPassword(Long userId, String password);
+    void deactivateUser(Long userId);
 }
