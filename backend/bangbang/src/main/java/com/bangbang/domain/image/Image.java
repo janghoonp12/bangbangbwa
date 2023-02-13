@@ -10,10 +10,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
 @Entity
 @Table(name = "image")
+@Getter
+@NoArgsConstructor
 public class Image {
 
   @Id
@@ -21,22 +21,20 @@ public class Image {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long imageId;
 
-  @Column(name = "image_storage_location", length = 100, nullable = false)
-  private String imageStorageLocation;
+  @Column(name = "image_path", length = 100, nullable = false)
+  private String imagePath;
 
-  @Column(name = "image_type", nullable = false)
-  private Integer imageType;
+  @Column(name = "image_origin_name", nullable = false)
+  private String imageOriginName;
 
-  @Column(name = "image_use_id", nullable = false)
-  private Long imageUseId;
-
+  @Column(name = "image_name", nullable = false)
+  private String imageName;
 
   @Builder
-  public Image(Long imageId, String imageStorageLocation, Integer imageType, Long imageUseId){
+  public Image(Long imageId, String imagePath, String imageOriginName, String imageName){
     this.imageId = imageId;
-    this.imageStorageLocation = imageStorageLocation;
-    this.imageType = imageType;
-    this.imageUseId = imageUseId;
+    this.imageOriginName = imageOriginName;
+    this.imageName = imageName;
+    this.imagePath = imagePath;
   }
-
 }
