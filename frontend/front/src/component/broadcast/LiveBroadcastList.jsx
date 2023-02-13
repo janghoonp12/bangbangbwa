@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LiveBroadcastListItem from "./LiveBroadcastListItem";
 import datas from "../../data.json";
 import styled from "styled-components";
 import Filter from "../common/Filter";
 import LoadMore from "../common/ui/LoadMore";
 import FilterButton from "../common/FilterButton";
+import { useDispatch, useSelector } from 'react-redux';
+import { firstSearchLiveBroadcastAsync, nextSearchBroadcastAsync } from "../../reducers/broadcastSlice"
+import { LastPage } from "@mui/icons-material";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,11 +36,42 @@ const SButtonLineDiv = styled.div`
   grid-template-columns: 2fr 8fr 2fr;
 `;
 
-function LiveBroadcastList() {
+const SButton = styled.button`
+  border-radius: 8px;
+  border: 0.5px solid lightgrey;
+  background-color: lightgrey; 
+  :hover {
+    background: grey;
+    border: 1px solid black;
+  }
+  margin-bottom: 30px;
+`;
 
+function LiveBroadcastList() {
+  const dispatch = useDispatch();
   const limit = 12; // 한 페이지에 나올 방송 수
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
   const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
+
+  const { liveBroadcast, livePagelast, currentPage } = useSelector((state) => state.broadcastSlice);
+
+  useEffect(() => {
+    dispatch(firstSearchLiveBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
+  },[])
+
+  const loadItem = () => {
+    dispatch(nextSearchBroadcastAsync(
+      {
+        page: currentPage,
+        size: 12,
+      }
+    ))
+  }
 
   return (
     <div>
@@ -59,14 +93,15 @@ function LiveBroadcastList() {
             />
           );
         })}
+        {liveBroadcast ? liveBroadcast.map((broadcast, index) => (
+        <LiveBroadcastListItem
+          posts={broadcast}
+        />
+      )
+        ) : <label>no data</label>}
       </Wrapper>
       <SButtonDiv>
-        <LoadMore 
-          total={datas.length}
-          limit={limit}
-          loads={loads}
-          setLoads={setLoads}
-        />
+        {!livePagelast ? <SButton onClick={loadItem}>매물 더보기</SButton> : <SButton aria-readonly>매물이 없습니다.</SButton>}
       </SButtonDiv>
     </div>
   )

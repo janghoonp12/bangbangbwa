@@ -66,7 +66,7 @@ function BroadcastAll() {
       <Filter />
     </div>
     <div style={{height: '50px', marginTop: '10px'}}>
-      <SH2>실시간 방송</SH2>
+      <SH2>라이브 방송</SH2>
       <SButton onClick={liveBroadcastNavigation}>더보기</SButton>
     </div>
     <BroadcastList>
