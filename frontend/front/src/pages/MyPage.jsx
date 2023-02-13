@@ -4,12 +4,16 @@ import {
   Route
 } from "react-router-dom";
 import styled from "styled-components";
-import MyProfile from "../component/mypage/MyProfile";
 import NewBroker from "../component/mypage/NewBroker";
 import MyItem from '../component/mypage/MyItem';
 import PostViewPage from '../component/mypage/PostViewPage';
 import PostWritePage from '../component/mypage/PostWritePage';
 import MyBroadcast from "../component/mypage/MyBroadcast";
+import MyPageSide from "../component/mypage/MyPageSide";
+import MyProfile from "../component/mypage/MyProfile";
+import useInput from '../hooks/useInput';
+
+import { useSelector } from 'react-redux';
 
 
 const Wrapper = styled.div`
@@ -20,21 +24,33 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
+const SecondWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Container = styled.div`
+  display: flex;    
+  width: 100%;
+  max-width: 70%;
+`;
+
 function MyPage() {
+  const { myPageStatus } = useSelector((state) => state.commonSlice);
 
   return (
     <Wrapper>
-    {/* <h1>MyPage</h1> */}
-    <Routes>
-      <Route index element={<MyProfile />} />
-      <Route path="newbroker" element={<NewBroker />}/>
-      <Route path="myitem" element={<MyItem />} />
-      <Route path="myitem/:postId" element={<PostViewPage />} />
-      <Route path="myitem/:postId/post-write" element={<PostWritePage />}/>
-      <Route path="mybroadcast" element={<MyBroadcast />}/>
-      {/* <Route path="myBroadcast/:myBroadcastId" element={<PostViewPage />} /> */}
-      {/* <Route path="myBroadcast/:myBroadcastId/broadcast-write" element={<PostWritePage />}/> */}
-    </Routes>
+      <SecondWrapper>
+        <Container>
+          <MyPageSide />
+          {myPageStatus == 1 && <MyProfile />}
+          {myPageStatus == 2 && <NewBroker />}
+          {myPageStatus == 3 && <MyItem />}
+          {myPageStatus == 4 && <MyBroadcast />}
+        </Container>
+      </SecondWrapper>
     </Wrapper>
   )
 }
