@@ -5,7 +5,7 @@ import data from "../data.json";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
-import { firstSearchItemAsync } from "../reducers/itemSlice"
+import { searchItemAsync } from "../reducers/itemSlice"
 import ItemListItem from "../component/item/ItemListItem";
 import BroadcastListItem from "../component/broadcast/BroadcastListitem";
 import { firstSearchLiveBroadcastAsync } from "../reducers/broadcastSlice"
@@ -30,7 +30,7 @@ function Home() {
   const { liveBroadcast } = useSelector((state) => state.broadcastSlice);
 
   useEffect(() => {
-    dispatch(firstSearchItemAsync(
+    dispatch(searchItemAsync(
       {
         page: 0,
         size: 12,
