@@ -1,10 +1,12 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.bookmark.Bookmark;
 import com.bangbang.domain.sign.User;
 import com.bangbang.dto.bookmark.BookmarkListResponseDto;
 import com.bangbang.dto.bookmark.BookmarkResponseDto;
 import com.bangbang.dto.bookmark.BookmarkSaveRequestDto;
 import com.bangbang.dto.bookmark.BookmarkUpdateRequestDto;
+import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.service.BookmarkService;
 import com.bangbang.service.CustomUserDetailsService;
 import com.bangbang.util.JwtTokenProvider;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,18 +40,19 @@ public class BookmarkRestController {
 
   @GetMapping(value = "/user/bookmarks")
   @ApiOperation(value = "모든 즐겨찾기 조회", notes = "즐겨찾기를 모두 조회합니다.")
-  public List<BookmarkListResponseDto> searchBookmarkAll(){
-    return bookmarkService.searchBookmarkAll();
+  public ResponseEntity<?> searchBookmarkAll(HttpServletRequest request){
+    try {
+      String token = jwtTokenProvider.resolveToken(request);
+      Long uId = Long.valueOf(jwtTokenProvider.getUserId(token));
+      List<BookmarkListResponseDto> bookmark = bookmarkService.searchBookmarkUser(uId);
+      if(!bookmark.isEmpty()){
+        return new ResponseEntity<List<BookmarkListResponseDto>>(bookmark, HttpStatus.OK);
+      }
+      else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e){
+      return extracted();
+    }
   }
-
-
-  @GetMapping(value = "/user/bookmarks/{bookmarkId}")
-  @ApiOperation(value = "해당 즐겨찾기 조회", notes = "해당 즐겨찾기를 조회합니다.")
-  public BookmarkResponseDto bookmarkDetail(@PathVariable Long bookmarkId){
-    return bookmarkService.bookmarkDetail(bookmarkId);
-  }
-
-
 
   @PostMapping(value = "/user/bookmarks/new")
   @ApiOperation(value = "즐겨찾기 등록", notes = "즐겨찾기를 등록합니다.")
@@ -101,5 +105,8 @@ public class BookmarkRestController {
       return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+  }
+  private ResponseEntity extracted() {
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 }

@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 import AxiosHeaderToken from "./AxiosHeaderToken";
 
 export const initialState = {
@@ -9,7 +9,7 @@ export const initialState = {
   firstSearchBookmarkLoading: false,
   firstSearchBookmarkDone: false,
   firstSearchBookmarkError: null,
-  Bookmarks: null,
+  bookmarks: null,
   last: false,
 
 };
@@ -30,10 +30,10 @@ export const writeBookmarkAsync = createAsyncThunk(
 
 export const firstSearchBookmarkAsync = createAsyncThunk(
   'Bookmark/FIRSTSEARCH',
-  async (data, thunkAPI) => {
+  async (thunkAPI) => {
     try {
-      const response = await axios.get(
-        '/user/bookmarks', data
+      const response = await AxiosHeaderToken.get(
+        '/user/bookmarks'
       );
       return response.data
     } catch (err) {
@@ -61,12 +61,12 @@ const bookmarkSlice = createSlice({
     builder.addCase(writeBookmarkAsync.fulfilled, (state, action) => {
       state.writeBookmarkLoading = false;
       state.writeBookmarkDone = true;
-      alert('매물 등록 성공')
+      alert('즐겨찾기 등록 성공')
     });
     builder.addCase(writeBookmarkAsync.rejected, (state, action) => {
       state.writeBookmarkLoading = false;
       state.writeBookmarkError = action.payload
-      alert('매물 등록 실패');
+      alert('즐겨찾기 등록 실패');
     });
     builder.addCase(firstSearchBookmarkAsync.pending, (state, action) => {
       state.firstSearchBookmarkLoading = true;
@@ -76,8 +76,7 @@ const bookmarkSlice = createSlice({
     builder.addCase(firstSearchBookmarkAsync.fulfilled, (state, action) => {
       state.firstSearchBookmarkLoading = false;
       state.firstSearchBookmarkDone = true;
-      state.Bookmarks = action.payload.content;
-      console.log(action.payload.content)
+      state.bookmarks = action.payload;
     });
     builder.addCase(firstSearchBookmarkAsync.rejected, (state, action) => {
       state.firstSearchBookmarkLoading = false;

@@ -36,17 +36,9 @@ public class BookmarkService {
   BookmarkRepository bookmarkRepository;
 
   //즐겨찾기 전체 조회
-  public List<BookmarkListResponseDto> searchBookmarkAll(){
-    return bookmarkRepository.findAll().stream()
-        .map(BookmarkListResponseDto::new)
-        .collect(Collectors.toList());
-  }
-
-  //해당 즐겨찾기 조회
-  public BookmarkResponseDto bookmarkDetail(Long bookmarkId){
-    Bookmark entity = bookmarkRepository.findByBookmarkId(bookmarkId)
-        .orElseThrow(() -> new IllegalArgumentException("해당 즐겨찾기가 없습니다."));
-    return new BookmarkResponseDto(entity);
+  public List<BookmarkListResponseDto> searchBookmarkUser(long uId){
+    return bookmarkRepository.findByUserId(uId).stream().map(BookmarkListResponseDto::new).collect(
+        Collectors.toList());
   }
 
   //즐겨찾기 등록

@@ -7,9 +7,7 @@ const BASE_URL = "https://i8a405.p.ssafy.io/api"
 const AxiosHeaderToken = axios.create({
   baseURL: BASE_URL,
 
-  headers: {
-      "Content-Type": "application/json;charset=utf-8",
-  } 
+
 })
 
 AxiosHeaderToken.interceptors.request.use(

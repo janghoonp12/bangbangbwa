@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import HotItemList from "../component/home/HotItemList";
 import HotBroadcastList from "../component/home/HotBroadcastList";
 import data from "../data.json";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { searchItemAsync } from "../reducers/itemSlice"
+import ItemListItem from "../component/item/ItemListItem";
+import BroadcastListItem from "../component/broadcast/BroadcastListitem";
+import { firstSearchLiveBroadcastAsync } from "../reducers/broadcastSlice"
 
 
 const Wrapper = styled.div`
@@ -19,29 +24,46 @@ const Container = styled.div`
 
 function Home() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { items } = useSelector((state) => state.itemSlice);
+  const { liveBroadcast } = useSelector((state) => state.broadcastSlice);
+
+  useEffect(() => {
+    dispatch(searchItemAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
+    dispatch(firstSearchLiveBroadcastAsync())
+  },[])
 
   return (
     <Wrapper>
       <Container>
         <div>
-          <h2>지금 핫한 방송</h2>
+          <h2>최근 방송</h2>
           <hr />
-          <HotBroadcastList
-            posts={data}
-            onClickItem={(item) => {
-              navigate(`/broadcasts/${item.id}`);
-            }}
-            />
+          <HotBroadcastList>
+          {liveBroadcast ? liveBroadcast.map((item, index) => (
+        <BroadcastListItem
+          posts={item}
+        />
+      )) : <label>no data</label>}
+          </HotBroadcastList>
         </div>
         <hr/>
-        <h2>인기 매물</h2>
+        <h2>최근 매물</h2>
         <div>
-          <HotItemList
-              posts={data}
-              onClickItem={(item) => {
-                navigate(`/items/${item.id}`);
-              }}
-          />
+        <HotBroadcastList>
+          {items ? items.map((item, index) => (
+        <ItemListItem
+          posts={item}
+        />
+      )
+        ) : <label>no data</label>}
+          </HotBroadcastList>
         </div>
       </Container>
     </Wrapper>

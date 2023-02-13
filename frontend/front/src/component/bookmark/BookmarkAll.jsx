@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom/dist";
 import BookmarkList from "./BookmarkList";
 import styled from "styled-components";
+import { useDispatch, useSelector } from 'react-redux';
+import { firstSearchBookmarkAsync } from "../../reducers/bookmarkSlice"
 
 const SDiv = styled.div`
   display: flex;
@@ -36,6 +38,13 @@ const SButton = styled.button`
 
 function BookmarkAll() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { bookmarks } = useSelector((state) => state.bookmarkSlice);
+
+  useEffect(() => {
+    dispatch(firstSearchBookmarkAsync())
+  }, [])
 
   const onClick = () => {
     navigate('new')
@@ -49,7 +58,7 @@ function BookmarkAll() {
       </SBtnDiv>
       <SDiv>
         <br />
-        <BookmarkList />
+        <BookmarkList bookmarks={bookmarks} />
       </SDiv>
     </div>
   )

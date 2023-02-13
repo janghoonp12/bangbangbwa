@@ -55,7 +55,7 @@ public class OauthServiceImpl extends DefaultOAuth2UserService {
           .userNickname(userName)
           .userPassword(userPassword)
           .user_roles(Collections.singletonList("ROLE_USER"))
-          .user_status("1").build();
+          .user_status(1).build();
       userRepository.save(findUser);
 
       findUser = userRepository.findByUserEmail(email);

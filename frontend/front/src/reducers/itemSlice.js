@@ -6,9 +6,9 @@ export const initialState = {
   writeItemLoading: false,
   writeItemDone: false,
   writeItemError: null,
-  firstSearchItemLoading: false,
-  firstSearchItemDone: false,
-  firstSearchItemError: null,
+  searchItemLoading: false,
+  searchItemDone: false,
+  searchItemError: null,
   searchDetailItemLoading: false,
   searchDetailItemDone: false,
   searchDetailItemError: null,
@@ -32,8 +32,8 @@ export const writeItemAsync = createAsyncThunk(
   }
 );
 
-export const firstSearchItemAsync = createAsyncThunk(
-  'item/FIRSTSEARCH',
+export const searchItemAsync = createAsyncThunk(
+  'item/SEARCH_ITEM',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
@@ -88,20 +88,20 @@ const itemSlice = createSlice({
       state.writeItemError = action.payload
       alert('매물 등록 실패');
     });
-    builder.addCase(firstSearchItemAsync.pending, (state, action) => {
-      state.firstSearchItemLoading = true;
-      state.firstSearchItemDone = null;
-      state.firstSearchItemError = false;
+    builder.addCase(searchItemAsync.pending, (state, action) => {
+      state.searchItemLoading = true;
+      state.searchItemDone = null;
+      state.searchItemError = false;
     });
-    builder.addCase(firstSearchItemAsync.fulfilled, (state, action) => {
-      state.firstSearchItemLoading = false;
-      state.firstSearchItemDone = true;
+    builder.addCase(searchItemAsync.fulfilled, (state, action) => {
+      state.searchItemLoading = false;
+      state.searchItemDone = true;
       state.items = action.payload.content;
-      console.log(action.payload.content)
+      state.last = action.payload.last
     });
-    builder.addCase(firstSearchItemAsync.rejected, (state, action) => {
-      state.firstSearchItemLoading = false;
-      state.firstSearchItemError = action.error
+    builder.addCase(searchItemAsync.rejected, (state, action) => {
+      state.searchItemLoading = false;
+      state.searchItemError = action.error
     });
     builder.addCase(searchDetailItemAsync.pending, (state, action) => {
       state.searchDetailItemLoading = true;
@@ -117,7 +117,6 @@ const itemSlice = createSlice({
       state.searchDetailItemLoading = false;
       state.searchDetailItemError = action.error
     });
-
   }
 });
 
