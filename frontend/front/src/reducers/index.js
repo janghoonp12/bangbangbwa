@@ -9,9 +9,10 @@ import itemSlice from "./itemSlice"
 import broadcastSlice from "./broadcastSlice"
 import bookmarkSlice from "./bookmarkSlice"
 import fileSlice from "./fileSlice";
+import commonSlice from "./commonSlice"
 
-axios.defaults.baseURL = "http://localhost:8081/api/"
-//axios.defaults.baseURL = "https://i8a405.p.ssafy.io/api"
+//axios.defaults.baseURL = "http://localhost:8081/api/"
+axios.defaults.baseURL = "https://i8a405.p.ssafy.io/api"
 
 
 export default combineReducers({
@@ -20,5 +21,6 @@ export default combineReducers({
     itemSlice,
     broadcastSlice,
     bookmarkSlice,
-    fileSlice
+    fileSlice,
+    commonSlice
 })
