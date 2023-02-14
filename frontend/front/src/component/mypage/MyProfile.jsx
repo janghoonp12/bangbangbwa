@@ -5,7 +5,10 @@ import nicknamelogo from "../../assets/nicknamelogo.png";
 import passwordlogo from "../../assets/pwlogo.png";
 import updatelogo from "../../assets/updatelogo.png";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import useInput from '../../hooks/useInput';
+import { changeNicknameAsync, changePasswordAsync, withdrawalAsync, clearSignInDone, changeMeNickname } from "../../reducers/userSlice"
+import Swal from 'sweetalert2'
 
 const SItemDiv = styled.div`
   width: 100%;
@@ -73,13 +76,37 @@ function MyProfile() {
   const [newPassword, onChangePassword] = useInput('');
 
   const changeNickname = () => {
-    console.log(1234)
+    console.log(newNickname.length)
+    if (newNickname.length < 2 && newNickname.length > 10) {
+      alert('닉네임은 2~10자로 입력해주세요!')
+      return
+    }
+    console.log("무한?")
+    dispatch(changeNicknameAsync(newNickname))
+    dispatch(changeMeNickname(newNickname))
+    Swal.fire({
+      position: 'middle',
+      icon: 'success',
+      title: '닉네임 변경 성공!',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   const changePassword = () => {
-    console.log(1234)
+    if (newPassword.length < 8 && newPassword.length > 30) {
+      alert('패스워드는 8자 이상 30자 이하로 입력해주세요!')
+      return
+    }
+    dispatch(changePasswordAsync(newPassword))
+    Swal.fire({
+      position: 'middle',
+      icon: 'success',
+      title: '비밀변호 변경 성공!',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
-
 
   return (
     <SItemDiv>
@@ -113,11 +140,11 @@ function MyProfile() {
         <SInfoP>비밀번호: </SInfoP>
         <StyleInput value={newPassword} required onChange={onChangePassword}/>
         <SLogoDiv>
-        < SLogoImg src={updatelogo} alt="수정로고" />
+        < SLogoImg src={updatelogo} alt="수정로고" onClick={changePassword}/>
         </SLogoDiv>
       </SGridDiv>
       <SQuitDiv>
-        <QuitModal />
+        <QuitModal/>
       </SQuitDiv>
     </SItemDiv>
     )
