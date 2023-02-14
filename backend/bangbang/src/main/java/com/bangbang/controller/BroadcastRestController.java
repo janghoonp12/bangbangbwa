@@ -1,13 +1,9 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.dto.broadcast.*;
-import com.bangbang.dto.item.ItemDto;
 import com.bangbang.dto.item.ItemFilterRequestDto;
 import com.bangbang.service.BroadcastService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -140,7 +135,7 @@ public class BroadcastRestController {
   }
 
   @ApiOperation(value = "방송 필터 검색")
-  @PostMapping("/broadcast/filter")
+  @PostMapping("/broadcasts/filter")
   public ResponseEntity<?> searchBroadcastFilter(@RequestBody ItemFilterRequestDto filter) {
     try {
       List<BroadcastResponseDto> list = broadcastService.searchBroadcastByFilter(filter);
@@ -151,7 +146,6 @@ public class BroadcastRestController {
       e.printStackTrace();
       return extracted();
     }
-
   }
 
   private ResponseEntity extracted() {
