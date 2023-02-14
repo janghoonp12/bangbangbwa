@@ -56,8 +56,8 @@ public class BroadcastRestController {
 
   //라이브중인 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/live")
-  @ApiOperation(value = "라이브 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public ResponseEntity<?> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  @ApiOperation(value = "라이브 방송 조회", notes = "해당 페이지의 방송 12개를 조회합니다.")
+  public ResponseEntity<?> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
     Pageable pageable = PageRequest.of(page, size);
     try {
       Page<BroadcastListResponseDto> broadcasts = broadcastService.searchLiveBroadcastAll(pageable);
@@ -73,8 +73,8 @@ public class BroadcastRestController {
 
   //종료된 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/end")
-  @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public ResponseEntity<?> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 12개를 조회합니다.")
+  public ResponseEntity<?> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
     Pageable pageable = PageRequest.of(page, size);
     try {
       Page<BroadcastListResponseDto> broadcasts = broadcastService.searchEndBroadcastAll(pageable);
