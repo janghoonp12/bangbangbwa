@@ -653,9 +653,9 @@ class Openvidu extends Component {
                             // console.log(this.state.camDevices)
                             // --- 6) Publish your stream ---
 
-                            mySession.publish(publisher);
                             // Set the main video in the page to display our webcam and store our Publisher
                             if (this.state.subscribers.length === 0) {
+                              mySession.publish(publisher);
                               this.setState({
                                 mainStreamManager: publisher,
                                 publisher: publisher,
@@ -752,6 +752,7 @@ class Openvidu extends Component {
         // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
 
         const mySession = this.state.session;
+        // mySession.unpublish(this.state.publisher);
 
         if (mySession) {
             mySession.disconnect();
@@ -907,7 +908,7 @@ class Openvidu extends Component {
       return (
         <Wrapper>
           <Container className="container">
-            {this.state.session === undefined ? (
+            {/* {this.state.session === undefined ? (
               <div id="join">
                 <div id="img-div">
                     <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
@@ -943,7 +944,7 @@ class Openvidu extends Component {
                   </form>
                 </div>
               </div>
-            ) : null}
+            ) : null} */}
 
             {this.state.session !== undefined ? (
               <div id="session">
@@ -1137,7 +1138,9 @@ class Openvidu extends Component {
                   ))}    
                 </div> */}
               </div>
-            ) : null}
+            ) : (
+              <p>방송이 존재하지 않습니다.</p>
+            )}
           </Container>
           {/* <div>
             <button onClick={this.replaceTrack}>화면</button>
