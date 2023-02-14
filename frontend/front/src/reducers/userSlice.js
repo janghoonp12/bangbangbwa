@@ -15,6 +15,15 @@ export const initialState = {
   searchMyInfoLoading: false,
   searchMyInfoDone: false,
   searchMyInfoError: null,
+  changeNicknameLoading: false,
+  changeNicknameDone: false,
+  changeNicknameError: null,
+  changePasswordLoading: false,
+  changePasswordDone: false,
+  changePasswordError: null,
+  withdrawalLoading: false,
+  withdrawalDone: false,
+  withdrawalError: null,
   me: null,
   userInfo : null
 };
@@ -77,6 +86,51 @@ export const searchMyInfoAsync = createAsyncThunk(
   }
 );
 
+export const changeNicknameAsync = createAsyncThunk(
+  'user/CHANGE_MY_NICKNAME',
+  async (data, thunkAPI) => {
+    try {
+      console.log(data)
+      const response = await AxiosHeaderToken.patch(
+        `/user/mypage/modify/nickname/${data}`
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const changePasswordAsync = createAsyncThunk(
+  'user/CHANGE_MY_PASSWORD',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.patch(
+        `/user/mypage/modify/password/${data}`
+      );
+
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const withdrawalAsync = createAsyncThunk(
+  'user/WITHDRAWAL_USER',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.patch(
+        `/user/mypage/deactivate`
+      );
+
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -87,6 +141,17 @@ const userSlice = createSlice({
     clearSearchMyInfoDone: (state) => {
       state.searchMyInfoDone = false
     },
+    clearSignInDone: (state) => {
+      state.signInDone = false
+    },
+    changeMeNickname: (state, action) => {
+      state.me.nickname = action.payload;
+    },
+    logout: (state) => {
+      state.me = null
+      sessionStorage.clear()
+    },
+
     // addNumber: (state, action) => {
     //   state.number = state.number + action.payload;
     // },
@@ -175,15 +240,54 @@ const userSlice = createSlice({
       state.searchMyInfoLoading = false;
       state.searchMyInfoDone = true;
       state.userInfo = action.payload
-      console.log(action.payload)
     });
     builder.addCase(searchMyInfoAsync.rejected, (state, action) => {
       state.searchMyInfoLoading = false;
       state.searchMyInfoError = action.data
     });
+    builder.addCase(changeNicknameAsync.pending, (state, action) => {
+      state.changeNicknameLoading = true;
+      state.changeNicknameError = null;
+      state.changeNicknameDone = false;
+    });
+    builder.addCase(changeNicknameAsync.fulfilled, (state, action) => {
+      state.changeNicknameLoading = false;
+      state.changeNicknameDone = true;
+    });
+    builder.addCase(changeNicknameAsync.rejected, (state, action) => {
+      state.changeNicknameLoading = false;
+      state.changeNicknameError = action.error
+      console.log("error")
+    });
+    builder.addCase(changePasswordAsync.pending, (state, action) => {
+      state.changePasswordLoading = true;
+      state.changePasswordError = null;
+      state.changePasswordDone = false;
+    });
+    builder.addCase(changePasswordAsync.fulfilled, (state, action) => {
+      state.changePasswordLoading = false;
+      state.changePasswordDone = true;
+    });
+    builder.addCase(changePasswordAsync.rejected, (state, action) => {
+      state.changePasswordLoading = false;
+      state.changePasswordError = action.error
+    });
+    builder.addCase(withdrawalAsync.pending, (state, action) => {
+      state.withdrawalLoading = true;
+      state.withdrawalError = null;
+      state.withdrawalDone = false;
+    });
+    builder.addCase(withdrawalAsync.fulfilled, (state, action) => {
+      state.withdrawalLoading = false;
+      state.withdrawalDone = true;
+    });
+    builder.addCase(withdrawalAsync.rejected, (state, action) => {
+      state.withdrawalLoading = false;
+      state.withdrawalError = action.error
+    });
   }
 });
 
-export const { clearSignUpDone, clearSearchMyInfoDone } = userSlice.actions;
+export const { clearSignUpDone, clearSearchMyInfoDone, clearSignInDone, changeMeNickname, logout } = userSlice.actions;
 
 export default userSlice.reducer;
