@@ -9,7 +9,11 @@ import searchbutton from "../../assets/searchbutton.png"
 import AlarmList from "../alarm/AlarmList";
 import axios from "axios";
 import SearchInfoModal from "./ui/SearchInfoModal";
+import { FaSignOutAlt } from "react-icons/fa";
 
+import { useDispatch, useSelector } from 'react-redux';
+
+import { logout } from "../../reducers/userSlice"
 
 const Navbar = styled.nav`
   position: flex;
@@ -117,11 +121,17 @@ const SSelect = styled.select`
   border-radius: 8px;
 `;
 
+const LogoutIcon = styled(FaSignOutAlt)`
+  cursor: pointer;
+  font-size: 30px;
+
+`
+
 
 const Nav = () => {
-  
+  const dispatch = useDispatch();
   // 로그인 여부 파악
-  const isLogin = !!sessionStorage.getItem('access-token')
+  const { me } = useSelector((state) => state.userSlice);
 
   // 페이지 렌더링시 시도코드 받아오기
   useEffect(() => {
@@ -196,6 +206,10 @@ const Nav = () => {
       setDongAll('')
       setDong('')
     }
+  }
+
+  const signOut = () => {
+    dispatch(logout());
   }
 
 
@@ -281,14 +295,22 @@ const Nav = () => {
             </TestDiv>
           )}
         </NavDiv>
-        <NavDiv>
-          {isLogin &&
+          { me ? <NavDiv><NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
+          <SImg src={mypagelogo} alt="#" />
+          </NavLink></NavDiv> : <></>
+          }
+          {/* {isLogin &&
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           <SImg src={mypagelogo} alt="#" />
           </NavLink>
           }
           {!isLogin &&
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
+            로그인  
+          </NavLink>
+          } */}
+        <NavDiv>
+        { me ? <LogoutIcon onClick={signOut}></LogoutIcon> : <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
             로그인  
           </NavLink>
           }

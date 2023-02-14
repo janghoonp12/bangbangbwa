@@ -1,9 +1,14 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.image.Image;
 import com.bangbang.dto.file.FileDto;
+import com.bangbang.dto.image.ImageResponseDto;
 import com.bangbang.dto.image.ImageSaveRequestDto;
+import com.bangbang.service.BroadcastService;
 import com.bangbang.service.ImageService;
+import com.bangbang.service.NoticeService;
+import com.bangbang.service.NoticeServiceImpl;
 import com.bangbang.util.MD5Generator;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -54,17 +59,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class ImageRestController {
 
   private final ImageService imageService;
+  private final BroadcastService broadcastService;
+  private final NoticeServiceImpl noticeService;
   private final Logger log = LoggerFactory.getLogger(getClass());
 
   @PostMapping(value = "/broker/images/new")
-//  @PostMapping(value = "/upload")
-  @ApiOperation(value = "사진 등록", notes = "사진을 등록합니다.")
-  public ResponseEntity<?> newImage(@RequestParam("file") List<MultipartFile> files) throws Exception {
+  @ApiOperation(value = "방송 사진 등록", notes = "방송 사진을 등록합니다.")
+  public ResponseEntity<?> newImageBroadcast(@RequestParam("file") MultipartFile file) throws Exception {
     try{
-      for(MultipartFile file : files){
         String origFilename = file.getOriginalFilename();
         String filename = new MD5Generator(origFilename).toString();
-        String savePath = System.getProperty("user.dir") + "\\files";
+        String savePath = "C:\\Users\\SSAFY\\project\\week2\\S08P12A405\\frontend\\front\\src\\assets";
 
         if(!new File(savePath).exists()){
           try {
@@ -73,16 +78,21 @@ public class ImageRestController {
             e.getStackTrace();
           }
         }
-        String filePath = savePath + "\\" + filename;
+        String filePath = savePath + "\\" + origFilename;
         file.transferTo(new File(filePath));
+
+        System.out.println(savePath);
+        System.out.println(filePath);
 
         ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
         imageSaveRequestDto.setImageOriginName(origFilename);
         imageSaveRequestDto.setImagePath(filePath);
         imageSaveRequestDto.setImageName(filename);
 
-        imageService.saveFile(imageSaveRequestDto);
-      }
+      Long image_id = imageService.saveFile(imageSaveRequestDto);
+      imageSaveRequestDto.setImageId(image_id);
+
+      return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
 
     } catch (Exception e){
       e.printStackTrace();
@@ -91,43 +101,66 @@ public class ImageRestController {
     return new ResponseEntity<>(HttpStatus.OK);
   }
 
-  //사진 등록
+  @PostMapping(value = "/admin/images/new")
+  @ApiOperation(value = "공지사항 사진 등록", notes = "사진을 등록합니다.")
+  public ResponseEntity<?> newImageNotice(@RequestParam("file") MultipartFile file) throws Exception {
+    try{
 
-//  @PostMapping(value = "/broker/images/new")
-//  @ApiOperation(value = "사진 등록", notes = "사진을 등록합니다.")
-//  public ResponseEntity<?> newImage(@RequestParam("file") MultipartFile file,
-//      @RequestParam("imageType") Integer imageType,
-//      @RequestParam("imageUseId") Long imageUseId) throws Exception {
-//
-//    String imageStorageLocation = saveUploadedFile(file);
-//    ImageSaveRequestDto requestDto = ImageSaveRequestDto.builder()
-//        .imageStorageLocation(imageStorageLocation)
-//        .imageType(imageType)
-//        .imageUseId(imageUseId)
-//        .build();
-//
-//    imageService.newImage(requestDto);
-//
-//    return new ResponseEntity<Object>(new HashMap<String, Object>() {{
-//      put("result", true);
-//      put("msg", "사진등록을 성공하였습니다.");
-//    }}, HttpStatus.OK);
-//  }
+      String origFilename = file.getOriginalFilename();
+      String filename = new MD5Generator(origFilename).toString();
+      String savePath = System.getProperty("user.dir") + "\\files";
+//      String savePath = "C:\\Users\\SSAFY\\project\\week2\\S08P12A405\\frontend\\front\\src\\assets";
 
-  private String saveUploadedFile(MultipartFile file) throws IOException {
-    String fileName = file.getOriginalFilename();
-    String uniqueFileName = UUID.randomUUID() + fileName;
-    Path path = Paths.get("/파일/저장/경로/" + uniqueFileName);
+      if(!new File(savePath).exists()){
+        try {
+          new File(savePath).mkdir();
+        } catch (Exception e){
+          e.getStackTrace();
+        }
+      }
+      String filePath = savePath + "\\" + origFilename;
+      file.transferTo(new File(filePath));
 
-    while (Files.exists(path)) {
-      uniqueFileName = UUID.randomUUID() + fileName;
-      path = Paths.get("/파일/저장/경로/" + uniqueFileName);
+      System.out.println(savePath);
+      System.out.println(filePath);
+
+      ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
+      imageSaveRequestDto.setImageOriginName(origFilename);
+      imageSaveRequestDto.setImagePath(filePath);
+      imageSaveRequestDto.setImageName(filename);
+
+      Long image_id = imageService.saveFile(imageSaveRequestDto);
+      imageSaveRequestDto.setImageId(image_id);
+
+      return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
+
+
+    } catch (Exception e){
+      e.printStackTrace();
     }
 
-    Files.write(path, file.getBytes());
-    return uniqueFileName;
+    return new ResponseEntity<>(HttpStatus.OK);
   }
-  private String getPath(){
-    return "C:/Users/SSAFY/test";
+
+
+  @GetMapping(value = "/images/{imageId}")
+  @ApiOperation(value = "이미지 불러오기", notes = "이미지를 불러옵니다.")
+  public ResponseEntity<?> getImage(@PathVariable("imageId") Long imageId){
+    System.out.println("이미지 아이디 : " + imageId);
+    try {
+      ImageResponseDto imageResponseDto = imageService.getFile(imageId);
+
+      System.out.println("image 값 : "+ imageResponseDto);
+      if (imageResponseDto != null) {
+        return new ResponseEntity<ImageResponseDto>(imageResponseDto, HttpStatus.OK);
+      }
+      else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e){
+      return extracted();
+    }
+
+  }
+  private ResponseEntity extracted() {
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
   }
 }

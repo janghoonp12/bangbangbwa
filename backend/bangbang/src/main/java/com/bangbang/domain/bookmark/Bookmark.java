@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Table(name = "bookmark")
 public class Bookmark {
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   @Column(name="bookmark_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long bookmarkId;  //PK
 
   @Column(name = "bookmark_title", length = 20, nullable = false)

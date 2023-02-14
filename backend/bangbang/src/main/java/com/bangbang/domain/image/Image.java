@@ -1,5 +1,6 @@
 package com.bangbang.domain.image;
 
+import io.swagger.models.auth.In;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +18,8 @@ import lombok.NoArgsConstructor;
 public class Image {
 
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   @Column(name = "image_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long imageId;
 
   @Column(name = "image_path", length = 100, nullable = false)
@@ -29,6 +30,7 @@ public class Image {
 
   @Column(name = "image_name", nullable = false)
   private String imageName;
+
 
   @Builder
   public Image(Long imageId, String imagePath, String imageOriginName, String imageName){
