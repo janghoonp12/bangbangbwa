@@ -7,7 +7,7 @@ import Filter from "../common/Filter";
 import styled from "styled-components";
 import FilterButton from "../common/FilterButton";
 import { useDispatch, useSelector } from 'react-redux';
-import { firstSearchLiveBroadcastAsync, firstSearchEndBroadcastAsync } from "../../reducers/broadcastSlice"
+import { SearchLiveBroadcastAsync, SearchEndBroadcastAsync } from "../../reducers/broadcastSlice"
 import BroadcastListItem from "./BroadcastListitem";
 
 const SH2 = styled.h2`
@@ -50,9 +50,18 @@ function BroadcastAll() {
   const { endBroadcast } = useSelector((state) => state.broadcastSlice);
   
   useEffect(() => {
-    dispatch(firstSearchLiveBroadcastAsync())
-    dispatch(firstSearchEndBroadcastAsync())
-    console.log(liveBroadcast)
+    dispatch(SearchLiveBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
+    dispatch(SearchEndBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
   },[])
 
   return (
@@ -66,7 +75,7 @@ function BroadcastAll() {
       <Filter />
     </div>
     <div style={{height: '50px', marginTop: '10px'}}>
-      <SH2>실시간 방송</SH2>
+      <SH2>라이브 방송</SH2>
       <SButton onClick={liveBroadcastNavigation}>더보기</SButton>
     </div>
     <BroadcastList>

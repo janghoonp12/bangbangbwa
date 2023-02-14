@@ -66,7 +66,7 @@ const SNormalButton = styled.button`
 `;
 
 const SGoLoginP = styled.p`
-  font-size: 0.25rem;
+  font-size: 1rem;
   color: blue;
   cursor: pointer;
 `;
@@ -127,13 +127,13 @@ function SignUp() {
           <div style={{fontSize: "2rem"}}>계정 만들기</div>
           {/* <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div> */}
           <STextDiv style={{ marginTop: "10%"}}>이메일</STextDiv>
-          <SCustomInput  placeholder="이메일를 입력해주세요!" value={userEmail} required onChange={onChangeEmail}/>
+          <SCustomInput  placeholder="이메일을 입력해주세요" value={userEmail} required onChange={onChangeEmail}/>
           <STextDiv>닉네임</STextDiv>
-          <SCustomInput placeholder="닉네입을 입력해주세요!" value={userNickname} required onChange={onChangeNickname}/>
+          <SCustomInput placeholder="닉네임을 입력해주세요" value={userNickname} required onChange={onChangeNickname}/>
           <STextDiv>비밀번호</STextDiv>
-          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword} type="password"/>
+          <SCustomInput placeholder="비밀번호를 입력해주세요" value={userPassword} required onChange={onChangePassword} type="password"/>
           <STextDiv>비밀번호 확인</STextDiv>
-          <SCustomInput placeholder="비밀번호 확인을 입력해주세요!" value={passwordCheck} required onChange={onChangePasswordCheck} type="password"/>
+          <SCustomInput placeholder="비밀번호를 한번 더 입력해주세요" value={passwordCheck} required onChange={onChangePasswordCheck} type="password"/>
           <STextDiv style={{ marginTop: "10%"}}>
             <SGoLoginP
               onClick={() => {

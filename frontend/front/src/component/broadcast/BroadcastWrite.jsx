@@ -30,8 +30,8 @@ function BroadcastWrite() {
   const [reservationStartDate, setReservationstartDate] = useState("");
   const [reservationStartTime, setReservationstartTime] = useState("");
   const [thumbnail, setThumbnail] = useState("썸네일");
-
-  const { myItem, writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
+  const { myItem } = useSelector((state) => state.itemSlice);
+  const { writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
 
   useEffect(() => {
     dispatch(findMyItemAsync())
@@ -63,12 +63,12 @@ function BroadcastWrite() {
   
   return (
     <Wrapper>
-      <selected onChange={itemChange} required>
+      <select onChange={itemChange} required>
         <option value="" disabled selected style={{ display: "none" }}>매물을 선택하세요</option>
         {myItem ? myItem.map((item, index) => (
           <option value={item.item.item_id}>{item.item.item_title}</option>
         )): <option value="">등록된 매물이 없습니다</option>}
-      </selected>
+      </select>
       {/* <TextInput
         value={item}
         height={100}

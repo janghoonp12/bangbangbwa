@@ -24,9 +24,7 @@ const Wrapper = styled.div`
     }
 `;
 
-function HotBroadcastList(props) {
-    const { posts, onClickItem } = props;
-
+function HotBroadcastList({ children }) {
     // 좌우 스크롤 움직임은 해당 DOM의 scrollLeft로 움직임
     // 해당 scrollLeft를 얻기 위해 useRef로 DOM에 접근
     const scrollRef = useRef(null);
@@ -71,17 +69,7 @@ function HotBroadcastList(props) {
         onMouseLeave={onDragEnd}
         ref={scrollRef}
       >
-        {posts.map((post, index) => {
-          return (
-            <HotBroadcastListItem
-              key={post.id}
-              post={post}
-              onClick={() => {
-                onClickItem(post);
-              }}
-            />
-          );
-        })}
+        {children}
       </Wrapper>
     );
 }

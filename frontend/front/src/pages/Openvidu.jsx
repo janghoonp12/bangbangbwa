@@ -1,16 +1,22 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
 import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
+import { connect } from 'react-redux';
 // import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
+// const {me} = useSelector((state) => state.userSlice);
+const mapStateToProps = (state) => ({
+  me: state.userSlice.me,
+  watchingBroadCast: state.broadcastSlice.watchingBroadCast,
+})
 
 class Openvidu extends Component {
   
@@ -18,6 +24,7 @@ class Openvidu extends Component {
         super(props);
 
         this.state = {
+            myTitle : "",
             mySessionId: 'SessionA',
             // myUserName: 'Participant' + Math.floor(Math.random() * 100),
             myUserName: 'Participant1',
@@ -61,7 +68,7 @@ class Openvidu extends Component {
         };
         
         this.scrollRef = React.createRef();
-
+        this.handleChangeMyTitle = this.handleChangeMyTitle.bind(this);
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
@@ -75,8 +82,8 @@ class Openvidu extends Component {
       OV.getDevices().then(devices => {
         let videoDevices = devices.filter(dev => dev.kind==='videoinput')
         console.log(videoDevices)
-        // this.setState({camDevices: videoDevices}, ()=> {console.log(this.state.camDevices)})
-        this.setState({camDevices: devices}, ()=> {console.log(this.state.camDevices)})
+        this.setState({camDevices: videoDevices}, ()=> {console.log(this.state.camDevices)})
+        // this.setState({camDevices: devices}, ()=> {console.log(this.state.camDevices)})
         
       })
     }
@@ -84,17 +91,26 @@ class Openvidu extends Component {
     componentDidMount() {
         window.addEventListener('beforeunload', this.onbeforeunload);
         this.getCameras()
+        console.log(this.props)
         // console.log(this.state.camDevices)
         // console.log(SwitchCamera())
-    }
+        const { me } = this.props;
+        const { watchingBroadCast } = this.props;
+        // const broadcastId = match.params.postId
+        // const { broadcast } = this.props;
 
-
-    replaceTrack = () => {
-      const { publisher, myTrack } = this.state;
-      console.log(myTrack)
-      publisher.replaceTrack(myTrack)
-        .then(() => console.log('바꿔졌다'))
-        .catch(error => console.log('에러남', error));
+        // this.handleChangeSessionId(broadcast.id)
+        if (me) {
+          this.handleChangeUserName(me.nickname)
+        } else {
+          this.handleChangeUserName("Guest")
+        }
+        console.log(watchingBroadCast)
+        this.handleChangeMyTitle(watchingBroadCast.broadcastTitle)
+        this.handleChangeSessionId(watchingBroadCast.broadcastRoomId)
+        // this.setState({myUserName: me.nickname})
+        
+        this.joinSession()
     }
 
     componentWillUnmount() {
@@ -105,15 +121,21 @@ class Openvidu extends Component {
         this.leaveSession();
     }
 
-    handleChangeSessionId(e) {
+    handleChangeMyTitle(value) {
+      this.setState({
+          myTitle: value,
+      });
+  }
+
+    handleChangeSessionId(value) {
         this.setState({
-            mySessionId: e.target.value,
+            mySessionId: value,
         });
     }
 
-    handleChangeUserName(e) {
+    handleChangeUserName(value) {
         this.setState({
-            myUserName: e.target.value,
+            myUserName: value
         });
     }
 
@@ -631,9 +653,9 @@ class Openvidu extends Component {
                             // console.log(this.state.camDevices)
                             // --- 6) Publish your stream ---
 
-                            mySession.publish(publisher);
                             // Set the main video in the page to display our webcam and store our Publisher
                             if (this.state.subscribers.length === 0) {
+                              mySession.publish(publisher);
                               this.setState({
                                 mainStreamManager: publisher,
                                 publisher: publisher,
@@ -730,6 +752,7 @@ class Openvidu extends Component {
         // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
 
         const mySession = this.state.session;
+        // mySession.unpublish(this.state.publisher);
 
         if (mySession) {
             mySession.disconnect();
@@ -865,6 +888,7 @@ class Openvidu extends Component {
     }
 
     render() {
+      const myTitle = this.state.myTitle
       const mySessionId = this.state.mySessionId;
       const myUserName = this.state.myUserName;
       
@@ -873,10 +897,18 @@ class Openvidu extends Component {
       const delay = 10;
       const onThrottleDragMove = throttle(this.onDragMove, delay);
 
+      // const { match } = this.props;
+      // const broadcastId = this.props.match.params.postId
+      const { me } = this.props;
+
+      // console.log(broadcastId)
+      // console.log(this.props)
+      // console.log(me)
+
       return (
         <Wrapper>
           <Container className="container">
-            {this.state.session === undefined ? (
+            {/* {this.state.session === undefined ? (
               <div id="join">
                 <div id="img-div">
                     <img src="resources/images/openvidu_grey_bg_transp_cropped.png" alt="OpenVidu logo" />
@@ -890,7 +922,7 @@ class Openvidu extends Component {
                         className="form-control"
                         type="text"
                         id="userName"
-                        value={myUserName}
+                        value="{me.nickname}"
                         onChange={this.handleChangeUserName}
                         required
                       />
@@ -912,12 +944,12 @@ class Openvidu extends Component {
                   </form>
                 </div>
               </div>
-            ) : null}
+            ) : null} */}
 
             {this.state.session !== undefined ? (
               <div id="session">
                 <STitleDiv id="session-header">
-                  <STitleP id="session-title">{mySessionId}</STitleP>
+                  <STitleP id="session-title">{myTitle}</STitleP>
                   <SWatchersP><SWatcherImg src={watchers} alt="시청자"/> {this.state.subscribers.length}</SWatchersP>
                   {this.state.myUserName === 'Participant1' ? (
                     <div>
@@ -1106,7 +1138,9 @@ class Openvidu extends Component {
                   ))}    
                 </div> */}
               </div>
-            ) : null}
+            ) : (
+              <p>방송이 존재하지 않습니다.</p>
+            )}
           </Container>
           {/* <div>
             <button onClick={this.replaceTrack}>화면</button>
@@ -1114,7 +1148,7 @@ class Openvidu extends Component {
           {/* <div>
             <SwitchCamera />
           </div> */}
-          <div>
+          {/* <div>
             <ul>
               {this.state.camDevices.map(device => (
                 <li key={device.deviceId} style={{color:"white"}}>
@@ -1124,7 +1158,7 @@ class Openvidu extends Component {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
           
         </Wrapper>
       );
@@ -1208,7 +1242,7 @@ class Openvidu extends Component {
     }
 }
 
-export default Openvidu;
+export default connect(mapStateToProps)(Openvidu);
 
 const Wrapper = styled.div`
   display: flex;

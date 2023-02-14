@@ -15,11 +15,13 @@ public class BroadcastResponseDto {
     private Long broadcastId;
     private String broadcastDescription;
     private String broadcastTitle;
+    private String broadcastRoomId;
 
     @QueryProjection
     public BroadcastResponseDto(Broadcast entity){
         this.broadcastId = entity.getBroadcastId();
         this.broadcastDescription = entity.getBroadcastDescription();
         this.broadcastTitle = entity.getBroadcastTitle();
+        this.broadcastRoomId = entity.getBroadcastRoomId();
     }
 }

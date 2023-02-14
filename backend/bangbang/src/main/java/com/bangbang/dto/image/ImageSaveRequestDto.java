@@ -12,24 +12,24 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ImageSaveRequestDto {
   private Long imageId;
-  private String imageStorageLocation;
-
-  private Integer imageType;
-  private Long imageUseId;
+  private String imagePath;
+  private String imageOriginName;
+  private String imageName;
 
   @Builder
-  public ImageSaveRequestDto(String imageStorageLocation, Integer imageType, Long imageUseId){
-    this.imageStorageLocation = imageStorageLocation;
-    this.imageType = imageType;
-    this.imageUseId = imageUseId;
+  public ImageSaveRequestDto(Long imageId, String imagePath, String imageOriginName, String imageName){
+    this.imageId = imageId;
+    this.imagePath = imagePath;
+    this.imageOriginName = imageOriginName;
+    this.imageName = imageName;
   }
 
   public Image toEntiy() {
     return Image.builder()
         .imageId(imageId)
-        .imageStorageLocation(imageStorageLocation)
-        .imageType(imageType)
-        .imageUseId(imageUseId)
+        .imagePath(imagePath)
+        .imageOriginName(imageOriginName)
+        .imageName(imageName)
         .build();
   }
 }

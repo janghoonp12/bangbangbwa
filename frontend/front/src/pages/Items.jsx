@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ItemAll from "../component/item/ItemAll";
 import ItemDetail from "../component/item/ItemDetail";
+import ItemSearchAll from "../component/item/ItemSearchAll";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -24,6 +25,7 @@ function Items() {
         <Routes>
           <Route index element={<ItemAll />} />
           <Route path=":postId" element={<ItemDetail />} />
+          <Route path="/search/:searchWord" element={<ItemSearchAll />} />
         </Routes>
       </Container>
     </Wrapper>

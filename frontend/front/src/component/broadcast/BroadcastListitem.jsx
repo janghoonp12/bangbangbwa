@@ -1,6 +1,9 @@
 import React from "react";
 // import Card from 'react-bootstrap/Card';
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice"
 
 const SCardDiv = styled.div`
   display: flex;
@@ -40,18 +43,24 @@ const SCardContentP = styled.p`
 `;
 
 function BroadcastListItem(props) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onClick = () => {
+    dispatch(choiceWatchingBroadCast(props.posts))
+    navigate(`/broadcasts/${props.posts.broadcastId}`)
+  }
 
-    return (
-      <SCardDiv>
-        <SCardImg variant="top" src="logo512.png" alt="이미지" />
-        <SCardBodyDiv>
-          <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
-          <SCardContentP>
-            {props.posts.broadcastDescription},
-          </SCardContentP>
-        </SCardBodyDiv>
-      </SCardDiv>
-    )
+  return (
+    <SCardDiv onDoubleClick={onClick}>
+      <SCardImg variant="top" src="logo512.png" alt="이미지" />
+      <SCardBodyDiv>
+        <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
+        <SCardContentP>
+          {props.posts.broadcastDescription},
+        </SCardContentP>
+      </SCardBodyDiv>
+    </SCardDiv>
+  )
 }
 
 export default BroadcastListItem;

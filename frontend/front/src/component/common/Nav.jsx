@@ -173,7 +173,7 @@ const Nav = () => {
 
 
   const [alarmBar, setAlarmBar] = useState(false);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const onChange = (e) => {
           setSearch(e.target.value)
       }
@@ -188,10 +188,9 @@ const Nav = () => {
 
   // 검색
   const onClick = () => {
-    if (search) {
-      alert(`${search} 검색`)
+    if (search || dong) {
+      navigate(`/items/search/${search}&${dong}`)
       setSearch('')
-      navigate('/')
     }
   }
 
@@ -229,6 +228,7 @@ const Nav = () => {
         <NavSearchBarDiv>
           <SearchInfoModal />
           <SSelect onChange={sidoSelect}>
+            <option value="" disabled selected style={{display: "none"}}>시/도</option>
             {(sidoAll) ? sidoAll.map((sido, index) => {
               return (
                 <option key={sido.sidoCode} value={sido.sidoCode}>{sido.sidoName}</option>
@@ -236,6 +236,7 @@ const Nav = () => {
             }) : null}
           </SSelect>
           <SSelect onChange={gugunSelect}>
+          <option value="" disabled selected style={{display: "none"}}>구/군</option>
             {(gugunAll) ? gugunAll.map((gugun, index) => {
               return (
                 <option key={gugun.gugunCode} value={gugun.gugunCode}>{gugun.gugunName}</option>
@@ -243,6 +244,7 @@ const Nav = () => {
             }) : null}
           </SSelect>
           <SSelect onChange={dongSelect}>
+          <option value="" disabled selected style={{display: "none"}}>동/리</option>
             {(dongAll) ? dongAll.map((dong, index) => {
               return (
                 <option key={dong.dongCode} value={dong.dongCode}>{dong.dongName}</option>

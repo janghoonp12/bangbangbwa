@@ -5,6 +5,8 @@ import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect } from "react";
 import { signInAsync } from "../../reducers/userSlice";
+import kakao from "../../assets/kakaoLogin.png";
+import naver from "../../assets/naverLogin.png";
 
 const Wrapper = styled.div`
   display: flex;
@@ -58,24 +60,30 @@ const SNormalButton = styled.button`
   width: 60%;
 `;
 
-const SKakaoButton = styled.button`
-  background: yellow;
-  margin-top: 0.25rem;
-  width: 60%;
-`;
+// const SKakaoButton = styled.button`
+//   background: yellow;
+//   margin-top: 0.25rem;
+//   width: 60%;
+// `;
 
-const SNaverButton = styled.button`
-  background: lightgreen;
-  margin-top: 0.25rem;
-  width: 60%;
-`;
+// const SNaverButton = styled.button`
+//   background: lightgreen;
+//   margin-top: 0.25rem;
+//   width: 60%;
+// `;
 
 const SSGignuP = styled.p`
   display: inline-block;
-  font-size: 0.25rem;
+  font-size: 1rem;
   color: blue;
   cursor: pointer;
 `;
+
+const SImg = styled.img`
+  width: 120px;
+  height: 35px;
+`;
+
 
 function Login() {
   const navigate = useNavigate();
@@ -88,20 +96,24 @@ function Login() {
 
   useEffect(() => {
     if (signInDone) {
-      alert("로그인 성공!")
       console.log(me)
       navigate('/');
     }
   })
 
-  const KakaoLogin = () => {
-    navigate("http://localhost:8081/api/oauth2/authoriztation/kakao")
-  }
+  // const KakaoLogin = () => {
+  //   navigate("http://localhost:8081/api/oauth2/authoriztation/kakao")
+  // }
 
-  const NaverLogin = () => {
-    navigate("http://localhost:8081/api/oauth2/authoriztation/naver")
-  }
+  // const NaverLogin = () => {
+  //   navigate("http://localhost:8081/api/oauth2/authoriztation/naver")
+  // }
   
+  const activeEnter = (e) => {
+    if (e.key === 'Enter') {
+      signInButtonClick()
+    }
+  }
 
   const signInButtonClick = useCallback(() => {
     if (!regex.test(userEmail)) {
@@ -119,9 +131,6 @@ function Login() {
       }
     ));
   })
-  // const onClick = () => {
-  //   navigate("/")
-  // }
 
   return (
     <Wrapper>
@@ -131,9 +140,9 @@ function Login() {
           <div style={{fontSize: "6rem"}}>logo</div>
           <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div>
           <div style={{textAlign: "left", marginTop: "3rem", marginLeft: "10%"}}>이메일</div>
-          <SCustomInput placeholder="이메일를 입력해주세요!" value={userEmail} required onChange={onChangeEmail}/>
+          <SCustomInput placeholder="이메일을 입력해주세요" value={userEmail} required onChange={onChangeEmail}/>
           <div style={{textAlign: "left", marginLeft: "10%"}}>비밀번호</div>
-          <SCustomInput placeholder="비밀번호를 입력해주세요!" value={userPassword} required onChange={onChangePassword} type="password"/>
+          <SCustomInput placeholder="비밀번호를 입력해주세요" value={userPassword} required onChange={onChangePassword} onKeyDown={(e) => activeEnter(e)} type="password"/>
           <div style={{textAlign: "left", marginLeft: "10%"}}>
             <SSGignuP
             onClick={() => {
@@ -141,11 +150,14 @@ function Login() {
             }}>아직 회원이 아니신가요?</SSGignuP>
           </div>
           <SNormalButton type="button" onClick={() => {signInButtonClick()}}>로그인</SNormalButton>
-          <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/kakao">카카오</a>
-          <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/naver">네이버</a>
+          <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center'}}>
+          <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/kakao"><SImg src={kakao} alt="카카오" /></a>
+          &nbsp;&nbsp;
+          <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/naver"><SImg src={naver} alt="네이버" /></a>
+          </div>
           {/* <SKakaoButton type="button" onClick={() => {KakaoLogin()}}>카카오</SKakaoButton>
           <SNaverButton type="button" onClick={() => {NaverLogin()}}>네이버</SNaverButton> */}
-          <div style={{textAlign: "left", marginLeft: "10%"}}>
+          <div style={{textAlign: "left", marginLeft: "10%", marginTop: '10px'}}>
             <label>계정이 필요하신가요?</label>
             <SSGignuP
             onClick={() => {
