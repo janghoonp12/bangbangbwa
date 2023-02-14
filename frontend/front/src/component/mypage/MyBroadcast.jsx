@@ -39,7 +39,7 @@ function MyBroadcast() {
         }}
       />
       <Pagination
-        total={data.length}
+        total={myBroadcast.length}
         limit={limit}
         page={page}
         setPage={setPage}
