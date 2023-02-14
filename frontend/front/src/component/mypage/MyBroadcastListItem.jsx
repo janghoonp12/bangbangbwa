@@ -81,6 +81,10 @@ function MyBroadcastListItem(props) {
   const { myBroadcast, onClick } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const onClickLive = () => {
+    dispatch(choiceWatchingBroadCast(myBroadcast))
+    navigate(`/broadcasts/${myBroadcast.broadcastId}`)
+  }
   console.log(myBroadcast)
   return (
     <Wrapper>
