@@ -119,6 +119,7 @@ const SSelect = styled.select`
 
 
 const Nav = () => {
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   // 로그인 여부 파악
   const isLogin = !!sessionStorage.getItem('access-token')
 
@@ -131,6 +132,12 @@ const Nav = () => {
     .catch(err => {
       console.log(err)
     })
+
+    // 브라우저 크기 인식
+    const resizeListener = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", resizeListener);
   },[])
 
 
@@ -228,6 +235,7 @@ const Nav = () => {
         </NavDiv>
       </NavLeftDiv>
       <NavRightDiv>
+        {innerWidth > 700 ?
         <NavSearchBarDiv>
           <SearchInfoModal />
           <SSelect onChange={sidoSelect}>
@@ -254,7 +262,7 @@ const Nav = () => {
               )
             }) : null}
           </SSelect>
-        </NavSearchBarDiv>
+        </NavSearchBarDiv> : <></>}
         <NavSearchBarDiv>
            <SInput type="text" value={search} onChange={onChange} onKeyDown={(e) => activeEnter(e)} placeholder=" 검색어를 입력하세요" />
            <SButton disabled={(search || dong) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>

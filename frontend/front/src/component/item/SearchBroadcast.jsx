@@ -60,10 +60,8 @@ function SearchItem(props) {
         <SCardImg variant="top" src={logosample} alt="이미지" />
         <SCardBodyDiv>
           <SCardTitleP>{broadcast.broadcastTitle}</SCardTitleP>
-          <SCardContentP>
-            {broadcast.broadcast_reservation_time},
-            {broadcast.broadcastDescription}
-          </SCardContentP>
+          <SCardContentP>{broadcast.broadcastReservationTime}</SCardContentP>
+          <SCardContentP>{broadcast.broadcastDescription}</SCardContentP>
         </SCardBodyDiv>
       </SCardDiv>
     )
