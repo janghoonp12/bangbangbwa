@@ -4,7 +4,6 @@ import { writeItemAsync, clearWriteItemDone } from "../../reducers/itemSlice"
 import styled from "styled-components";
 import Button from "./ui/Button";
 import DaumPostcode from 'react-daum-postcode';
-import axios from "axios";
 import ImageUpload from "./ImageUpload";
 import { useDispatch, useSelector } from 'react-redux';
 
