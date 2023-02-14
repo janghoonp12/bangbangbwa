@@ -1,8 +1,9 @@
-package com.bangbang.domain.item;
+package com.bangbang.domain.broadcast;
 
-import com.bangbang.dto.item.ItemDto;
+import com.bangbang.domain.item.Option;
+import com.bangbang.dto.broadcast.BroadcastResponseDto;
+import com.bangbang.dto.broadcast.QBroadcastResponseDto;
 import com.bangbang.dto.item.ItemFilterRequestDto;
-import com.bangbang.dto.item.QItemDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
@@ -14,24 +15,26 @@ import static com.bangbang.domain.item.QItem.item;
 import static com.bangbang.domain.item.QItemPrice.itemPrice;
 import static com.bangbang.domain.item.QManageOption.manageOption;
 import static com.bangbang.domain.item.QOption.option;
+import static com.bangbang.domain.broadcast.QBroadcast.broadcast;
 
 @Repository
-public class ItemQueryRepository {
+public class BroadcastQueryRepository {
     private final EntityManager em;
     private final JPAQueryFactory queryFactory;
 
-    public ItemQueryRepository(EntityManager em) {
+    public BroadcastQueryRepository(EntityManager em) {
         this.em = em;
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    public List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter) {
+    public List<BroadcastResponseDto> searchItemByFilter(ItemFilterRequestDto filter) {
         BooleanBuilder builder = new BooleanBuilder();
 
         //item_id 연결
         builder.andAnyOf(item.item_id.eq(itemPrice.item_id));
         builder.andAnyOf(item.item_id.eq(manageOption.item_id));
         builder.andAnyOf(item.item_id.eq(option.item_id));
+        builder.andAnyOf(item.item_id.eq(broadcast.itemId));
 
         //활성상태(삭제, 팔리지 않은)인 게시글만
         builder.andAnyOf(item.item_status.eq(1));
@@ -149,7 +152,7 @@ public class ItemQueryRepository {
         }
 
         return queryFactory
-                .select(new QItemDto(item, itemPrice, manageOption, option)).distinct()
+                .select(new QBroadcastResponseDto(broadcast)).distinct()
                 .from(item, itemPrice, manageOption, option)
                 .where(builder)
                 .orderBy(item.item_id.desc())
