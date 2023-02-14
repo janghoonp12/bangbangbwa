@@ -97,6 +97,14 @@ public class BroadcastRestController {
     return broadcastService.broadcastDetail(broadcastId);
   }
 
+  //매물번호로 방송 조회
+  @GetMapping(value = "/broadcasts/item/{itemId}")
+  @ApiOperation(value = "매물 방송 조회", notes = "매물에 해당하는 방송을 조회합니다.")
+  public BroadcastListResponseDto broadcastItemDetail(@PathVariable Long itemId){
+    return broadcastService.broadcastItemDetail(itemId);
+  }
+
+
   //방송 제목, 설명 수정
   @PatchMapping(value = "/broker/broadcasts/modify/{broadcastId}")
   @ApiOperation(value = "해당 방송 수정", notes = "해당 방송의 제목, 내용을 수정합니다.")

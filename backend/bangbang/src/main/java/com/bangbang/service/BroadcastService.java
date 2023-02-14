@@ -72,6 +72,14 @@ public class BroadcastService {
     return new BroadcastResponseDto(entity);
   }
 
+
+  // 매물 해당 방송 조회
+  public BroadcastListResponseDto broadcastItemDetail(Long itemId){
+    BroadcastListResponseDto entity = broadcastRepository.findByItemId(itemId);
+    return entity;
+  }
+
+
   //방송 수정
   @Transactional
   public void modifyBroadcast(Long id, BroadcastUpdateRequestDto requestDto){
