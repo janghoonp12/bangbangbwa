@@ -4,6 +4,7 @@ package com.bangbang.controller;
 import com.bangbang.dto.SignIn;
 import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.dto.sign.SignUp;
+import com.bangbang.dto.sign.UserDto;
 import com.bangbang.service.UserServiceImpl;
 import com.bangbang.domain.sign.User;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -97,5 +99,15 @@ public class UserRestController {
       put("msg", "이메일로 임시 비밀번호를 발급하였습니다.");
     }}, HttpStatus.OK);
   }
+
+  @ApiOperation(value = "모든 유저 조회", notes = "관리자 페이지에서 모든 유저를 조회하는 용도입니다.")
+  @PostMapping("/admin/users/all")
+  public ResponseEntity<?> findAllUsers(HttpServletRequest request) throws Exception {
+    List<UserDto> user = userService.findAllUsers();
+    if (user != null && !user.isEmpty())
+      return new ResponseEntity<List<UserDto>>(user, HttpStatus.OK);
+    return new ResponseEntity(HttpStatus.NO_CONTENT);
+  }
+
 
 }

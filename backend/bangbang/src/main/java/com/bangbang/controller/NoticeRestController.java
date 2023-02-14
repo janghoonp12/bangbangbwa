@@ -52,7 +52,7 @@ public class NoticeRestController {
     @GetMapping("/notices")
     public ResponseEntity<Page<NoticeResponseDto>> searchNoticeAll(
         @RequestParam(defaultValue = "0") Integer page,
-        @RequestParam(defaultValue = "10") Integer size) {
+        @RequestParam(defaultValue = "12") Integer size) {
         try {
             Page<NoticeResponseDto> noticePage = noticeService.searchNoticeAll(page, size);
             return new ResponseEntity<Page<NoticeResponseDto>>(noticePage, HttpStatus.OK);

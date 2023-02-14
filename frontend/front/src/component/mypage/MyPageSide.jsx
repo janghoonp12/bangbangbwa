@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png";
 import { useSelector, useDispatch } from 'react-redux';
 import { changeMyPageStatus } from "../../reducers/commonSlice"
+import useInput from '../../hooks/useInput';
 
 const SProfileDiv = styled.div`
   width: 100%;
@@ -43,10 +44,16 @@ function MyPageSide() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.userSlice);
-
+  const [status, setStatus] = useState();
   const changeStatus = (data) => {
     dispatch(changeMyPageStatus(data))
   }
+
+  useEffect(() => {
+    if (me.role === 'ROLE_ADMIN' || me.role === "ROLE_BROKER") {
+      setStatus(true)
+    }
+  },[])
 
   return (
     <SProfileDiv>
@@ -64,16 +71,16 @@ function MyPageSide() {
           changeStatus(2)
         }}
       >중개사 등록</SMenuP>
-      <SMenuP
+      {status && <SMenuP
         onClick={() => {
           changeStatus(3)
         }}
-      >나의 매물정보</SMenuP>
-      <SMenuP
+      >나의 매물정보</SMenuP>}
+      {status && <SMenuP
         onClick={() => {
           changeStatus(4)
         }}
-      >나의 방송정보</SMenuP>
+      >나의 방송정보</SMenuP>}
     </SProfileDiv>
     )
 }

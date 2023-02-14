@@ -1,13 +1,17 @@
 package com.bangbang.service;
 
 import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broadcast.BroadcastQueryRepository;
 import com.bangbang.domain.broadcast.BroadcastRepository;
 import com.bangbang.domain.image.Image;
 import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.dto.broadcast.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import com.bangbang.dto.item.ItemFilterRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +28,8 @@ public class BroadcastService {
   BroadcastRepository broadcastRepository;
   @Autowired
   ImageRepository imageRepository;
+  @Autowired
+  BroadcastQueryRepository broadcastQueryRepository;
 
   // 방송 등록
   @Transactional
@@ -47,16 +53,21 @@ public class BroadcastService {
     }
   }
 
+  // 모든 방송조회
+  public Page<BroadcastListResponseDto> searchBroadcastAll(Pageable pageable) {
+    return broadcastRepository.findAllByOrderByBroadcastIdDesc(pageable)
+        .map(BroadcastListResponseDto::new);
+  }
 
-  //라이중인 방송 조회
+  //라이브중인 방송 조회
   public Page<BroadcastListResponseDto> searchLiveBroadcastAll(Pageable pageable){
-    return broadcastRepository.findByBroadcastStatus(pageable, 1).map(BroadcastListResponseDto::new);
+    return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 1).map(BroadcastListResponseDto::new);
 
   }
 
   //종료된 방송 조회
   public Page<BroadcastListResponseDto> searchEndBroadcastAll(Pageable pageable){
-      return broadcastRepository.findByBroadcastStatus(pageable, 0).map(BroadcastListResponseDto::new);
+      return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 0).map(BroadcastListResponseDto::new);
   }
 
   //해당 방송 조회
@@ -65,6 +76,14 @@ public class BroadcastService {
             .orElseThrow(() -> new IllegalArgumentException("해당 방송이 존재하지 않습니다."));
     return new BroadcastResponseDto(entity);
   }
+
+
+  // 매물 해당 방송 조회
+  public BroadcastListResponseDto broadcastItemDetail(Long itemId){
+    BroadcastListResponseDto entity = broadcastRepository.findByItemId(itemId);
+    return entity;
+  }
+
 
   //방송 수정
   @Transactional
@@ -88,5 +107,9 @@ public class BroadcastService {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public List<BroadcastResponseDto> searchBroadcastByFilter(ItemFilterRequestDto filter) {
+    return broadcastQueryRepository.searchBroadcastByFilter(filter);
   }
 }

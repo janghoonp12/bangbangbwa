@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import itemImage from "../../assets/logosample.png"
+import { useDispatch } from "react-redux";
+import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice";
 
 
 const Wrapper = styled.div`
@@ -77,8 +79,13 @@ const STextDiv = styled.div`
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function MyBroadcastListItem(props) {
   const { myBroadcast, onClick } = props;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const onClickLive = () => {
+    dispatch(choiceWatchingBroadCast(myBroadcast))
+    navigate(`/broadcasts/${myBroadcast.broadcastId}`)
+  }
+  console.log(myBroadcast)
   return (
     <Wrapper>
       <div>
@@ -86,18 +93,16 @@ function MyBroadcastListItem(props) {
       </div>
       <STextDiv>
         <TitleDiv>
-          <TitleText onClick={onClick}>{myBroadcast.title}</TitleText>
+          <TitleText onClick={onClick}>{myBroadcast.broadcastTitle}</TitleText>
           <ButtonDiv>
             <SLiveButton
-              onClick={() => {
-                navigate("/");
-              }}
+              onClick={onClickLive}
               >Go Live</SLiveButton>
           </ButtonDiv>
         </TitleDiv>
         <ContentDiv>
-          <ContentText>{myBroadcast.description}</ContentText>
-          <ContentText>{myBroadcast.reservation_time}</ContentText>
+          <ContentText>{myBroadcast.broadcastDescription}</ContentText>
+          <ContentText>{myBroadcast.broadcastReservationTime}</ContentText>
         </ContentDiv>
       </STextDiv>
     </Wrapper>

@@ -1,7 +1,7 @@
 package com.bangbang.dto.search;
 
 import com.bangbang.domain.item.Item;
-import com.bangbang.dto.broadcast.BroadcastResponseDto;
+import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 public class SearchResultDto {
   private List<Item> dataB;
-  private List<BroadcastResponseDto> dataD;
+  private List<BroadcastListResponseDto> dataD;
 
-  public SearchResultDto(List<Item> dataB, List<BroadcastResponseDto> dataD) {
+  public SearchResultDto(List<Item> dataB, List<BroadcastListResponseDto> dataD) {
     this.dataB = dataB;
     this.dataD = dataD;
   }

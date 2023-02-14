@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
@@ -601,7 +601,11 @@ class Openvidu extends Component {
                     var subscriber = mySession.subscribe(event.stream, undefined);
                     var subscribers = this.state.subscribers;
                     subscribers.push(subscriber);
+                    console.log(event)
 
+                    // if (this.state.subscribers.length === 0) {                      
+                    //     this.setState({myUserName: 'host-'+this.state.myUserName});
+                    // } 
                     // Update the state with the new subscribers
                     this.setState({
                         subscribers: subscribers,
@@ -653,26 +657,34 @@ class Openvidu extends Component {
                             // console.log(this.state.camDevices)
                             // --- 6) Publish your stream ---
 
+                            mySession.publish(publisher);
                             // Set the main video in the page to display our webcam and store our Publisher
                             if (this.state.subscribers.length === 0) {
-                              mySession.publish(publisher);
                               this.setState({
+                                myUserName: 'host-'+this.state.myUserName,
                                 mainStreamManager: publisher,
                                 publisher: publisher,
-                              });
+                               });
+                              
                             } else {
+                              console.log(this.state.subscribers)
+                              this.setState({
+                                publisher: publisher,
+                              })
                               for (let i=0; i<this.state.subscribers.length; i++) {
-                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
+                                // if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
+                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('host')) {
                                   this.setState({
                                     mainStreamManager: this.state.subscribers[i]
                                   })
                                   console.log("이밑을봐라")
                                   console.log(this.state.subscribers[i])
+                                } else {
+                                  this.setState({
+                                    mainStreamManager: this.state.subscribers[0]
+                                  })
                                 }
-                              }
-                              this.setState({
-                                publisher: publisher,
-                              })
+                              }                              
                             }                           
                         })
                         .catch((error) => {
@@ -769,6 +781,7 @@ class Openvidu extends Component {
             publisher: undefined,
             chattings: [],
         });
+
     }
 
     onDragStart = (e) => {
@@ -889,8 +902,8 @@ class Openvidu extends Component {
 
     render() {
       const myTitle = this.state.myTitle
-      const mySessionId = this.state.mySessionId;
-      const myUserName = this.state.myUserName;
+      // const mySessionId = this.state.mySessionId;
+      // const myUserName = this.state.myUserName;
       
       let chatbox = this.state.chattings.map((chatting, index) => <SChatP index={index}>{chatting}</SChatP>)
 
@@ -899,7 +912,7 @@ class Openvidu extends Component {
 
       // const { match } = this.props;
       // const broadcastId = this.props.match.params.postId
-      const { me } = this.props;
+      // const { me } = this.props;
 
       // console.log(broadcastId)
       // console.log(this.props)
@@ -951,7 +964,8 @@ class Openvidu extends Component {
                 <STitleDiv id="session-header">
                   <STitleP id="session-title">{myTitle}</STitleP>
                   <SWatchersP><SWatcherImg src={watchers} alt="시청자"/> {this.state.subscribers.length}</SWatchersP>
-                  {this.state.myUserName === 'Participant1' ? (
+                  {/* {this.state.myUserName === 'Participant1' ? ( */}
+                  {this.state.myUserName.includes('host') ? (
                     <div>
                       <SButtonInput 
                         type="button"
@@ -989,7 +1003,8 @@ class Openvidu extends Component {
                   </SLiveEndDiv>
                 )}
                 
-                {this.state.myUserName === 'Participant1' ? (
+                {/* {this.state.myUserName === 'Participant1' ? ( */}
+                {this.state.myUserName.includes('host') ? (
                   <SButtonLineDiv>
                     <div>
                       <BroadcastButtonModal />
