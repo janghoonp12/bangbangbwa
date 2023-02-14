@@ -56,13 +56,13 @@ public class BroadcastService {
 
   //라이중인 방송 조회
   public Page<BroadcastListResponseDto> searchLiveBroadcastAll(Pageable pageable){
-    return broadcastRepository.findByBroadcastStatus(pageable, 1).map(BroadcastListResponseDto::new);
+    return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 1).map(BroadcastListResponseDto::new);
 
   }
 
   //종료된 방송 조회
   public Page<BroadcastListResponseDto> searchEndBroadcastAll(Pageable pageable){
-      return broadcastRepository.findByBroadcastStatus(pageable, 0).map(BroadcastListResponseDto::new);
+      return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 0).map(BroadcastListResponseDto::new);
   }
 
   //해당 방송 조회
