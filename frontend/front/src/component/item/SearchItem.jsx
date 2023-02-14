@@ -59,12 +59,13 @@ function SearchItem(props) {
       <SCardDiv onDoubleClick={onClick}>
         <SCardImg variant="top" src={logosample} alt="이미지" />
         <SCardBodyDiv>
-          <SCardTitleP>{item.item_title}</SCardTitleP>
+          {item ? <SCardTitleP>{item.item_title}</SCardTitleP> : null }
+          {item ?
           <SCardContentP>
             {item.item_type},
             {item.item_building_type},
             {item.item_manage_fee}
-          </SCardContentP>
+          </SCardContentP> : null }
         </SCardBodyDiv>
       </SCardDiv>
     )
