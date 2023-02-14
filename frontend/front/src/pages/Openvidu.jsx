@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import UserVideoComponent from '../component/openvidu/UserVideoComponent';
 import styled from 'styled-components';
 import throttle from '../utils/Throttle';
@@ -646,7 +646,7 @@ class Openvidu extends Component {
                                 resolution: '640x480', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: true, // Whether to mirror your local video or not
+                                mirror: false, // Whether to mirror your local video or not
                             });
 
                             // this.getMedia()
@@ -657,12 +657,15 @@ class Openvidu extends Component {
                             if (this.state.subscribers.length === 0) {
                               mySession.publish(publisher);
                               this.setState({
+                                myUserName: "host-"+this.state.myUserName,
                                 mainStreamManager: publisher,
                                 publisher: publisher,
                               });
                             } else {
+                              console.log(this.state.subscribers)
                               for (let i=0; i<this.state.subscribers.length; i++) {
-                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
+                                // if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
+                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('임상빈')) {
                                   this.setState({
                                     mainStreamManager: this.state.subscribers[i]
                                   })
@@ -769,6 +772,7 @@ class Openvidu extends Component {
             publisher: undefined,
             chattings: [],
         });
+
     }
 
     onDragStart = (e) => {
@@ -889,8 +893,8 @@ class Openvidu extends Component {
 
     render() {
       const myTitle = this.state.myTitle
-      const mySessionId = this.state.mySessionId;
-      const myUserName = this.state.myUserName;
+      // const mySessionId = this.state.mySessionId;
+      // const myUserName = this.state.myUserName;
       
       let chatbox = this.state.chattings.map((chatting, index) => <SChatP index={index}>{chatting}</SChatP>)
 
@@ -899,7 +903,7 @@ class Openvidu extends Component {
 
       // const { match } = this.props;
       // const broadcastId = this.props.match.params.postId
-      const { me } = this.props;
+      // const { me } = this.props;
 
       // console.log(broadcastId)
       // console.log(this.props)
@@ -951,7 +955,8 @@ class Openvidu extends Component {
                 <STitleDiv id="session-header">
                   <STitleP id="session-title">{myTitle}</STitleP>
                   <SWatchersP><SWatcherImg src={watchers} alt="시청자"/> {this.state.subscribers.length}</SWatchersP>
-                  {this.state.myUserName === 'Participant1' ? (
+                  {/* {this.state.myUserName === 'Participant1' ? ( */}
+                  {this.state.myUserName.includes('host') ? (
                     <div>
                       <SButtonInput 
                         type="button"
@@ -989,7 +994,8 @@ class Openvidu extends Component {
                   </SLiveEndDiv>
                 )}
                 
-                {this.state.myUserName === 'Participant1' ? (
+                {/* {this.state.myUserName === 'Participant1' ? ( */}
+                {this.state.myUserName.includes('host') ? (
                   <SButtonLineDiv>
                     <div>
                       <BroadcastButtonModal />
