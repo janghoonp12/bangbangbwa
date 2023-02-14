@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
+import axios from "axios";
 // import logosample from "../../assets/logosample.png"
 
 const Container = styled.div`    
@@ -101,6 +102,7 @@ const Sbutton = styled.button`
 
 function ItemDetail() {
   const navigate = useNavigate();
+  const [broadcastInfo, setBroadcastInfo] = useState('');
 
   const goBack = () => {
     navigate(-1);
@@ -138,6 +140,11 @@ function ItemDetail() {
     roadviewClient.getNearestPanoId(position, 50, function(panoId) {
       roadview.setPanoId(panoId, position); 
     });
+
+    // 해당 매물의 방송 등록 여부
+    axios.get(`/broadcasts/item/${itemDetail.item_id}`)
+    .then(res => setBroadcastInfo(res.data))  // broadcastStatus === 1 일때만 방송정보에 띄우기
+    .catch(err => console.log(err))
 
   }, [])
 
