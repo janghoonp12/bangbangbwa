@@ -50,7 +50,7 @@ public class BroadcastRestController {
   public ResponseEntity<?> searchBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
     Pageable pageable = PageRequest.of(page, size);
     try {
-      Page<BroadcastListResponseDto> broadcasts = broadcastService.searchLiveBroadcastAll(pageable);
+      Page<BroadcastListResponseDto> broadcasts = broadcastService.searchBroadcastAll(pageable);
 
       if(broadcasts != null && broadcasts.hasContent()){
         return new ResponseEntity<Page<BroadcastListResponseDto>>(broadcasts, HttpStatus.OK);
