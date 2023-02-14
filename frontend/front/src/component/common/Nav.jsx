@@ -191,6 +191,9 @@ const Nav = () => {
     if (search || dong) {
       navigate(`/items/search/${search}&${dong}`)
       setSearch('')
+      setGugunAll('')
+      setDongAll('')
+      setDong('')
     }
   }
 
