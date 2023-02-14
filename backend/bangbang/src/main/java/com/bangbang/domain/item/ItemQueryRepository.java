@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.bangbang.domain.broadcast.QBroadcast.broadcast;
 import static com.bangbang.domain.item.QItem.item;
 import static com.bangbang.domain.item.QItemPrice.itemPrice;
 import static com.bangbang.domain.item.QManageOption.manageOption;
@@ -27,15 +29,6 @@ public class ItemQueryRepository {
 
     public List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter) {
         BooleanBuilder builder = new BooleanBuilder();
-
-        //item_id 연결
-        builder.andAnyOf(item.item_id.eq(itemPrice.item_id));
-        builder.andAnyOf(item.item_id.eq(manageOption.item_id));
-        builder.andAnyOf(item.item_id.eq(option.item_id));
-
-        //활성상태(삭제, 팔리지 않은)인 게시글만
-        builder.andAnyOf(item.item_status.eq(1));
-        builder.andAnyOf(item.item_deal_complete.eq(false));
 
         //매물 종류
         if (filter.getItem_type() != null) {
@@ -146,6 +139,17 @@ public class ItemQueryRepository {
                 builder.or(option.option_refrigerator.eq(true));
             if (option.option_doorlock.equals(f.isOption_doorlock()))
                 builder.or(option.option_doorlock.eq(true));
+        }
+
+        if (builder != null) {
+            //item_id 연결
+            builder.andAnyOf(item.item_id.eq(itemPrice.item_id));
+            builder.andAnyOf(item.item_id.eq(manageOption.item_id));
+            builder.andAnyOf(item.item_id.eq(option.item_id));
+
+            //활성상태(삭제, 팔리지 않은)인 게시글만
+            builder.andAnyOf(item.item_status.eq(1));
+            builder.andAnyOf(item.item_deal_complete.eq(false));
         }
 
         return queryFactory
