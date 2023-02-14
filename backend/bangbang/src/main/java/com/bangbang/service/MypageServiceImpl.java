@@ -1,5 +1,6 @@
 package com.bangbang.service;
 
+import com.bangbang.domain.broker.BrokerRepository;
 import com.bangbang.domain.page.MypageRepository;
 import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
@@ -24,6 +25,8 @@ public class MypageServiceImpl implements MypageService{
     @Autowired
     UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private BrokerRepository brokerRepository;
 
     @Override
     public User searchUser(Long userId) {
@@ -37,7 +40,8 @@ public class MypageServiceImpl implements MypageService{
 
     @Override
     public List<BroadcastListResponseDto> searchMyBroadcast(Long userId) {
-        return mypageRepository.searchBroadcastByBrokerId(userId);
+        Long brokerId = brokerRepository.findByUserId(userId).getBrokerId();
+        return mypageRepository.searchBroadcastByBrokerId(brokerId);
     }
 
     @Transactional
