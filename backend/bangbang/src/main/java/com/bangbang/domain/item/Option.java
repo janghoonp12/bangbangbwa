@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class Option {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long option_id;
 
     @Column(nullable = true)

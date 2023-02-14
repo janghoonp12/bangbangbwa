@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 public class Replay {
 
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   @Column(name = "replay_id")
   private Long replayId;
 
