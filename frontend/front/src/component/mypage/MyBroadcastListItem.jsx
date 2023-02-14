@@ -78,7 +78,7 @@ const STextDiv = styled.div`
 function MyBroadcastListItem(props) {
   const { myBroadcast, onClick } = props;
   const navigate = useNavigate();
-
+  console.log(myBroadcast)
   return (
     <Wrapper>
       <div>
@@ -86,7 +86,7 @@ function MyBroadcastListItem(props) {
       </div>
       <STextDiv>
         <TitleDiv>
-          <TitleText onClick={onClick}>{myBroadcast.title}</TitleText>
+          <TitleText onClick={onClick}>{myBroadcast.broadcastTitle}</TitleText>
           <ButtonDiv>
             <SLiveButton
               onClick={() => {
@@ -96,8 +96,8 @@ function MyBroadcastListItem(props) {
           </ButtonDiv>
         </TitleDiv>
         <ContentDiv>
-          <ContentText>{myBroadcast.description}</ContentText>
-          <ContentText>{myBroadcast.reservation_time}</ContentText>
+          <ContentText>{myBroadcast.broadcastDescription}</ContentText>
+          <ContentText>{myBroadcast.broadcastReservationTime}</ContentText>
         </ContentDiv>
       </STextDiv>
     </Wrapper>

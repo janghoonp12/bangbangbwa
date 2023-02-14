@@ -13,6 +13,7 @@ import MyProfile from "../component/mypage/MyProfile";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { searchMyItemAsync } from "../reducers/itemSlice"
+import { searchMyBroadcastAsync } from "../reducers/broadcastSlice"
 
 
 const Wrapper = styled.div`
@@ -42,6 +43,7 @@ function MyPage() {
 
   useEffect(() => {
     dispatch(searchMyItemAsync())
+    dispatch(searchMyBroadcastAsync())
   },[])
 
   return (
