@@ -5,6 +5,7 @@ import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
 import com.bangbang.dto.sign.SignUp;
+import com.bangbang.dto.sign.UserDto;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
 import com.bangbang.util.EmailHandler;
@@ -142,5 +143,8 @@ public class UserServiceImpl implements UserService {
         return Long.valueOf(jwtTokenProvider.getUserId(token));
     }
 
-
+    @Override
+    public List<UserDto> findAllUsers() throws Exception {
+        return userRepository.findAllUsers();
+    }
 }
