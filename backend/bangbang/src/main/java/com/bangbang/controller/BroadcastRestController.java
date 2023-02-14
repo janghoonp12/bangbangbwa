@@ -49,12 +49,22 @@ public class BroadcastRestController {
 
   }
 
-//  //모두 조회
-//  @GetMapping(value = "/broadcasts")
-//  @ApiOperation(value = "방송 조회", notes = "모든 방송을 조회합니다.")
-//  public List<BroadcastListResponseDto> searchBroadcastAll() {
-//    return broadcastService.searchBroadcastAll();
-//  }
+  //모두 조회
+  @GetMapping(value = "/broadcasts")
+  @ApiOperation(value = "방송 조회", notes = "모든 방송을 조회합니다.")
+  public ResponseEntity<?> searchBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    try {
+      Page<BroadcastListResponseDto> broadcasts = broadcastService.searchLiveBroadcastAll(pageable);
+
+      if(broadcasts != null && broadcasts.hasContent()){
+        return new ResponseEntity<Page<BroadcastListResponseDto>>(broadcasts, HttpStatus.OK);
+      }
+      else return new ResponseEntity(HttpStatus.NO_CONTENT);
+    } catch (Exception e){
+      return extracted();
+    }
+  }
 
   //라이브중인 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/live")

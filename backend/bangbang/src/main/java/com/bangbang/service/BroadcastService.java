@@ -53,8 +53,13 @@ public class BroadcastService {
     }
   }
 
+  // 모든 방송조회
+  public Page<BroadcastListResponseDto> searchBroadcastAll(Pageable pageable) {
+    return broadcastRepository.findAllByOrderByBroadcastIdDesc(pageable)
+        .map(BroadcastListResponseDto::new);
+  }
 
-  //라이중인 방송 조회
+  //라이브중인 방송 조회
   public Page<BroadcastListResponseDto> searchLiveBroadcastAll(Pageable pageable){
     return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 1).map(BroadcastListResponseDto::new);
 

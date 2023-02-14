@@ -20,7 +20,7 @@ import java.util.List;
 
 public interface BroadcastRepository extends PagingAndSortingRepository<Broadcast, Long> {
     Page<Broadcast> findByBroadcastStatusOrderByBroadcastIdDesc(Pageable pageable, Integer broadcastStatus);
-    Page<Broadcast> findAll(Pageable pageable);
+    Page<Broadcast> findAllByOrderByBroadcastIdDesc(Pageable pageable);
     Optional<Broadcast> findByBroadcastId(Long broadcastId);
     @Query("SELECT new com.bangbang.dto.broadcast.BroadcastListResponseDto(b) FROM Broadcast b WHERE b.itemId = :itemId")
     BroadcastListResponseDto findByItemId(@Param("itemId") Long itemId);
