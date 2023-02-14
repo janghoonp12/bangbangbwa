@@ -10,7 +10,8 @@ const SCardDiv = styled.div`
   flex-direction: column;
   width: 250px;
   height: 400px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 5px;
   margin-bottom: 0px;
   border: 1px solid grey;
   border-radius: 8px;
