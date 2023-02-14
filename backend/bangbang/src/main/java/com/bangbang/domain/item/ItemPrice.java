@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class ItemPrice {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long item_price_id;
 
     @Column(nullable = false)
