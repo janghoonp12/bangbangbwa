@@ -14,7 +14,7 @@ const SCardDiv = styled.div`
   width: 250px;
   height: 400px;
   margin-left: 25px;
-  margin-right: 25px;
+  margin-right: 5px;
   margin-bottom: 0px;
   border: 1px solid grey;
   border-radius: 8px;
