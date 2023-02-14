@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HotItemList from "../component/home/HotItemList";
 import HotBroadcastList from "../component/home/HotBroadcastList";
-import data from "../data.json";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
