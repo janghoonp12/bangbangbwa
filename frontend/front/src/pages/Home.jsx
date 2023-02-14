@@ -5,10 +5,10 @@ import data from "../data.json";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
-import { searchItemAsync } from "../reducers/itemSlice"
+import { SearchItemAsync } from "../reducers/itemSlice"
 import ItemListItem from "../component/item/ItemListItem";
 import BroadcastListItem from "../component/broadcast/BroadcastListitem";
-import { firstSearchLiveBroadcastAsync } from "../reducers/broadcastSlice"
+import { SearchLiveBroadcastAsync, initBroadcastState } from "../reducers/broadcastSlice"
 
 
 const Wrapper = styled.div`
@@ -30,13 +30,19 @@ function Home() {
   const { liveBroadcast } = useSelector((state) => state.broadcastSlice);
 
   useEffect(() => {
-    dispatch(searchItemAsync(
+    dispatch(initBroadcastState())
+    dispatch(SearchItemAsync(
       {
         page: 0,
         size: 12,
       }
     ))
-    dispatch(firstSearchLiveBroadcastAsync())
+    dispatch(SearchLiveBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
   },[])
 
   return (
