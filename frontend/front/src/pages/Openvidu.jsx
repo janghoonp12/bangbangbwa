@@ -601,6 +601,7 @@ class Openvidu extends Component {
                     var subscriber = mySession.subscribe(event.stream, undefined);
                     var subscribers = this.state.subscribers;
                     subscribers.push(subscriber);
+                    console.log(event)
 
                     // Update the state with the new subscribers
                     this.setState({
@@ -646,7 +647,7 @@ class Openvidu extends Component {
                                 resolution: '640x480', // The resolution of your video
                                 frameRate: 30, // The frame rate of your video
                                 insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
-                                mirror: false, // Whether to mirror your local video or not
+                                mirror: true, // Whether to mirror your local video or not
                             });
 
                             // this.getMedia()
@@ -657,25 +658,29 @@ class Openvidu extends Component {
                             if (this.state.subscribers.length === 0) {
                               mySession.publish(publisher);
                               this.setState({
-                                myUserName: "host-"+this.state.myUserName,
+                                myUserName: 'host-'+this.state.myUserName,
                                 mainStreamManager: publisher,
                                 publisher: publisher,
                               });
                             } else {
                               console.log(this.state.subscribers)
+                              this.setState({
+                                publisher: publisher,
+                              })
                               for (let i=0; i<this.state.subscribers.length; i++) {
                                 // if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
-                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('임상빈')) {
+                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('host')) {
                                   this.setState({
                                     mainStreamManager: this.state.subscribers[i]
                                   })
                                   console.log("이밑을봐라")
                                   console.log(this.state.subscribers[i])
+                                } else {
+                                  this.setState({
+                                    mainStreamManager: this.state.subscribers[0]
+                                  })
                                 }
-                              }
-                              this.setState({
-                                publisher: publisher,
-                              })
+                              }                              
                             }                           
                         })
                         .catch((error) => {
