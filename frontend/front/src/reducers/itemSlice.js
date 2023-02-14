@@ -70,7 +70,7 @@ export const searchMyItemAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
-        '/broker/mypage/item',
+        '/mypage/item',
       );
       return response.data
     } catch (err) {

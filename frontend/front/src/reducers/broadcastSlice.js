@@ -59,7 +59,7 @@ export const searchMyBroadcastAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
-        '/broker/mypage/broadcast',
+        '/mypage/broadcast',
       );
       return response.data
     } catch (err) {
