@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logosample from "../../assets/logosample.png";
 import { useSelector, useDispatch } from 'react-redux';
 import { changeMyPageStatus } from "../../reducers/commonSlice"
+import useInput from '../../hooks/useInput';
 
 const SProfileDiv = styled.div`
   width: 100%;
@@ -43,14 +44,14 @@ function MyPageSide() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.userSlice);
-  let status = false;
+  const [status, setStatus] = useState();
   const changeStatus = (data) => {
     dispatch(changeMyPageStatus(data))
   }
 
   useEffect(() => {
     if (me.role === 'ROLE_ADMIN' || me.role === "ROLE_BROKER") {
-      status = true;
+      setStatus(true)
     }
   },[])
 
