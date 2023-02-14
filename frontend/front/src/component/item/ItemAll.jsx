@@ -86,7 +86,7 @@ function Items() {
         ) : <label>no data</label>}
       </ItemList>
       <SButtonDiv>
-        {!last ? <SButton onClick={loadItem}>매물 더보기</SButton> : <SButton aria-readonly>매물이 없습니다.</SButton>}
+        {!last ? <SButton onClick={loadItem}>매물 더보기</SButton> : <></>}
       </SButtonDiv>
     </div>
   )
