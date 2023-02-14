@@ -28,7 +28,7 @@ function Pagination({ total, limit, page, setPage }) {
               key={i+1} 
               onClick={() => {setPage(firstNum+1+i)}}
               aria-current={page === firstNum+1+i ? "page" : null}
-              disabled={(page>=numPages) ? true : false}
+              style={(firstNum+1+i > numPages ? {display:"none"} : null)}
             >
               {firstNum+1+i}
             </Button>
@@ -39,7 +39,8 @@ function Pagination({ total, limit, page, setPage }) {
               key ={i+1}
               onClick={() => setPage(lastNum)}
               aria-current={page === lastNum ? "page" : null}
-              disabled={(page>=numPages) ? true : false}
+              // disabled={(page>=numPages) ? true : false}
+              style={(lastNum >numPages ? {display:"none"} : null)}
             >
               {lastNum}
             </Button>
