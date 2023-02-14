@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "broadcast")
 public class Broadcast extends BroadcastDatetime{
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   @Column(name = "broadcast_id")
   private Long broadcastId; //PK
 

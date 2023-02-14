@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "broker")
 public class Broker {
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "broker_id", nullable = false)
     private Long brokerId;
     @JoinTable(name="user",
