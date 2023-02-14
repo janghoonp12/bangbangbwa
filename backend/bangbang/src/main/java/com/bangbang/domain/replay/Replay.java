@@ -16,7 +16,6 @@ public class Replay {
 
   @Id
   @Column(name = "replay_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long replayId;
 
   @Column(name = "replay_storage_location",length = 200, nullable = true)

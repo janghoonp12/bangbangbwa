@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class Broadcast extends BroadcastDatetime{
   @Id
   @Column(name = "broadcast_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long broadcastId; //PK
 
   @Column(name = "broadcast_description",length = 10, nullable = true)

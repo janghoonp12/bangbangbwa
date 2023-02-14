@@ -14,7 +14,6 @@ import javax.persistence.*;
 public class Bookmark {
   @Id
   @Column(name="bookmark_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long bookmarkId;  //PK
 
   @Column(name = "bookmark_title", length = 20, nullable = false)

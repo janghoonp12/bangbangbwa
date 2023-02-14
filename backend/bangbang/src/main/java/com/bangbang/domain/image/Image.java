@@ -19,7 +19,6 @@ public class Image {
 
   @Id
   @Column(name = "image_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long imageId;
 
   @Column(name = "image_path", length = 100, nullable = false)

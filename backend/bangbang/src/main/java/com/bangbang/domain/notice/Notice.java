@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Notice extends NoticeDatetime {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long notice_id; //PK
     @Column(nullable = false)
     @JoinTable(name="user",
