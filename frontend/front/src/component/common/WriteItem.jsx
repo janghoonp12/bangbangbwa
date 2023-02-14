@@ -71,7 +71,7 @@ function WriteItem() {
   useEffect(() => {
     if (writeItemDone) {
       dispatch(clearWriteItemDone())
-      navigate('/notices');
+      navigate('/items');
     }
   })
 
