@@ -603,6 +603,9 @@ class Openvidu extends Component {
                     subscribers.push(subscriber);
                     console.log(event)
 
+                    // if (this.state.subscribers.length === 0) {                      
+                    //     this.setState({myUserName: 'host-'+this.state.myUserName});
+                    // } 
                     // Update the state with the new subscribers
                     this.setState({
                         subscribers: subscribers,
@@ -654,14 +657,15 @@ class Openvidu extends Component {
                             // console.log(this.state.camDevices)
                             // --- 6) Publish your stream ---
 
+                            mySession.publish(publisher);
                             // Set the main video in the page to display our webcam and store our Publisher
                             if (this.state.subscribers.length === 0) {
-                              mySession.publish(publisher);
                               this.setState({
                                 myUserName: 'host-'+this.state.myUserName,
                                 mainStreamManager: publisher,
                                 publisher: publisher,
-                              });
+                               });
+                              
                             } else {
                               console.log(this.state.subscribers)
                               this.setState({
