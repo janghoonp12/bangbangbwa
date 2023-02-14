@@ -2,6 +2,8 @@ package com.bangbang.controller;
 
 import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.dto.broadcast.*;
+import com.bangbang.dto.item.ItemDto;
+import com.bangbang.dto.item.ItemFilterRequestDto;
 import com.bangbang.service.BroadcastService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -123,6 +125,21 @@ public class BroadcastRestController {
           put("msg", "방송비활성화를 완료했습니다.");
         }}, HttpStatus.OK);
     } catch (Exception e){
+      e.printStackTrace();
+      return extracted();
+    }
+
+  }
+
+  @ApiOperation(value = "방송 필터 검색")
+  @PostMapping("/broadcast/filter")
+  public ResponseEntity<?> searchBroadcastFilter(@RequestBody ItemFilterRequestDto filter) {
+    try {
+      List<BroadcastResponseDto> list = broadcastService.searchBroadcastByFilter(filter);
+      if (list != null && !list.isEmpty())
+        return new ResponseEntity<List<BroadcastResponseDto>>(list, HttpStatus.OK);
+      else return new ResponseEntity(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
       e.printStackTrace();
       return extracted();
     }
