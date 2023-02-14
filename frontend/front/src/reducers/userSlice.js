@@ -148,8 +148,9 @@ const userSlice = createSlice({
       state.me.nickname = action.payload;
     },
     logout: (state) => {
-      state.me = null
-      sessionStorage.clear()
+      state.me = null;
+      state.signInDone = false;
+      sessionStorage.clear();
     },
 
     // addNumber: (state, action) => {
