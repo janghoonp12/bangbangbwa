@@ -1,5 +1,7 @@
 package com.bangbang.service;
 
+import com.bangbang.domain.image.Image;
+import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.domain.notice.Notice;
 import com.bangbang.domain.notice.NoticeRepository;
 import com.bangbang.dto.notice.NoticeResponseDto;
@@ -24,10 +26,15 @@ public class NoticeServiceImpl implements NoticeService{
     @Autowired
     private NoticeRepository noticeRepository;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
     @Transactional
     @Override
     public void newNotice(NoticeSaveRequestDto notice) {
-        noticeRepository.save(notice.toEntity());
+        Image image = imageRepository.findByImageId(notice.getImage_id())
+            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
+        noticeRepository.save(notice.toEntity(image));
     }
 
     @Override
