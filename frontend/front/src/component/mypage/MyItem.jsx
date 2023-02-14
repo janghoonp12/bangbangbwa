@@ -5,6 +5,7 @@ import PostList from "./PostList";
 import data from "../../data.json";
 import logosample from "../../assets/logosample.png"
 import Pagination from "../common/ui/Pagination";
+import { useSelector } from 'react-redux';
 
 const ItemDiv = styled.div`
   width: 100%;
@@ -26,12 +27,12 @@ function MyItem() {
   const [page, setPage] = useState(1); // 페이지
   const offset = (page - 1) * limit; // 페이지별 매물들을 받아오기 위한 index offset
 
-  // useEffect로 BE에 data를 요청해야 하는 것 같음. 일단은 더미데이터로
+  const { myItem } = useSelector((state) => state.itemSlice);
 
   return (
     <ItemDiv>
       <PostList
-        posts={data.slice(offset, offset+limit)}
+        posts={myItem.slice(offset, offset+limit)}
         onClickItem={(item) => {
           navigate(`/mypage/myitem/${item.id}`);
         }}

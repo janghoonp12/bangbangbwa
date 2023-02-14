@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Routes,
   Route
@@ -6,14 +6,13 @@ import {
 import styled from "styled-components";
 import NewBroker from "../component/mypage/NewBroker";
 import MyItem from '../component/mypage/MyItem';
-import PostViewPage from '../component/mypage/PostViewPage';
-import PostWritePage from '../component/mypage/PostWritePage';
 import MyBroadcast from "../component/mypage/MyBroadcast";
 import MyPageSide from "../component/mypage/MyPageSide";
 import MyProfile from "../component/mypage/MyProfile";
-import useInput from '../hooks/useInput';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { searchMyItemAsync } from "../reducers/itemSlice"
 
 
 const Wrapper = styled.div`
@@ -39,6 +38,11 @@ const Container = styled.div`
 
 function MyPage() {
   const { myPageStatus } = useSelector((state) => state.commonSlice);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(searchMyItemAsync())
+  },[])
 
   return (
     <Wrapper>
