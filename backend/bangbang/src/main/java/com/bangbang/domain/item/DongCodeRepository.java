@@ -11,7 +11,7 @@ import java.util.List;
 public interface DongCodeRepository extends JpaRepository<DongCode, String> {
     @Query(value = "select distinct d.dongName, d.dongCode " +
             "from dongcode d " +
-            "where left(d.dongCode, 5) =:gugunCode " +
+            "where left(d.dongCode, 5) =:gugunCode and d.dongCode is not null and d.dongName is not null " +
             "order by d.dongName", nativeQuery = true)
     List<DongDto> getDongInGugun(@Param("gugunCode") String gugunCode); //동을 가져오는 쿼리
 
