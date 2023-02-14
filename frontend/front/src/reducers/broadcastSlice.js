@@ -12,18 +12,22 @@ export const initialState = {
   SearchEndBroadcastLoading: false,
   SearchEndBroadcastDone: false,
   SearchEndBroadcastError: null,
+  SearchMyBroadcastLoading: false,
+  SearchMyBroadcastDone: false,
+  SearchMyBroadcastError: null,
   writeBroadcastLoading: false,
   writeBroadcastDone: false,
   writeBroadcastError: null,
   liveBroadcast: null,
   endBroadcast: null,
+  myBroadcast: null,
   watchingBroadCast: null,
   last: true,
   currentPage: 0,
 };
 
 export const SearchLiveBroadcastAsync = createAsyncThunk(
-  'broadcast/SEARCHLIVEBROADCAST',
+  'broadcast/SEARCH_LIVE_BROADCAST',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
@@ -37,11 +41,25 @@ export const SearchLiveBroadcastAsync = createAsyncThunk(
 );
 
 export const SearchEndBroadcastAsync = createAsyncThunk(
-  'broadcast/SEARCHENDBOADCAST',
+  'broadcast/SEARCH_END_BOADCAST',
   async (data, thunkAPI) => {
     try {
       const response = await axios.get(
         `/broadcasts/end?page=${data.page}&size=${data.size}`
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const searchMyBroadcastAsync = createAsyncThunk(
+  'broadcast/SEARCH_MY_BROADCAST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.get(
+        '/broker/mypage/broadcast',
       );
       return response.data
     } catch (err) {
@@ -125,8 +143,23 @@ const broadcastSlice = createSlice({
       }
     });
     builder.addCase(SearchLiveBroadcastAsync.rejected, (state, action) => {
-      state.SearchLiveBroadcastLoading = false;
-      state.SearchLiveBroadcastError = action.error
+      state.SearchMyBroadcastLoading = false;
+      state.SearchMyBroadcastError = action.error
+    });
+    builder.addCase(searchMyBroadcastAsync.pending, (state, action) => {
+      state.SearchMyBroadcastLoading = true;
+      state.SearchMyBroadcastError = null;
+      state.SearchMyBroadcastDone = false;
+    });
+    builder.addCase(searchMyBroadcastAsync.fulfilled, (state, action) => {
+      state.SearchMyBroadcastLoading = false;
+      state.SearchMyBroadcastDone = true;
+      state.myBroadcast = action.payload;
+      console.log(state.myBroadcast)
+    });
+    builder.addCase(searchMyBroadcastAsync.rejected, (state, action) => {
+      state.SearchMyBroadcastLoading = false;
+      state.SearchMyBroadcastError = action.error
     });
     builder.addCase(SearchEndBroadcastAsync.pending, (state, action) => {
       state.SearchEndBroadcastLoading = true;

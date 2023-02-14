@@ -53,18 +53,17 @@ const STextDiv = styled.div`
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function PostListItem(props) {
   const { post, onClick } = props;
-
   return (
     <Wrapper onClick={onClick}>
       <div>
         <SItemImg src={itemImage} alt="이미지샘플"/>
       </div>
       <STextDiv>
-        <STitleTextP>{post.title}</STitleTextP>
+        <STitleTextP>{props.post.item.item_title}</STitleTextP>
         <SContentDiv>
-          <SContentTextP>{post.type}</SContentTextP>
-          <SContentTextP>{post.building_type}</SContentTextP>
-          <SContentTextP>{post.manage_fee}</SContentTextP>
+          <SContentTextP>{props.post.item.item_type}</SContentTextP>
+          <SContentTextP>{props.post.item.item_building_type}</SContentTextP>
+          <SContentTextP>{props.post.item.item_manage_fee}</SContentTextP>
         </SContentDiv>
       </STextDiv>
       

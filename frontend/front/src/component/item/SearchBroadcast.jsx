@@ -47,6 +47,7 @@ const SCardContentP = styled.p`
 
 function SearchItem(props) {
   const broadcast = props.broadcast
+  console.log(broadcast)
 
   const dispatch = useDispatch();
   
@@ -58,11 +59,9 @@ function SearchItem(props) {
       <SCardDiv onDoubleClick={onClick}>
         <SCardImg variant="top" src={logosample} alt="이미지" />
         <SCardBodyDiv>
-          <SCardTitleP>{broadcast.broadcast_title}</SCardTitleP>
-          <SCardContentP>
-            {broadcast.broadcast_reservation_time},
-            {broadcast.broadcast_description},
-          </SCardContentP>
+          <SCardTitleP>{broadcast.broadcastTitle}</SCardTitleP>
+          <SCardContentP>{broadcast.broadcastReservationTime}</SCardContentP>
+          <SCardContentP>{broadcast.broadcastDescription}</SCardContentP>
         </SCardBodyDiv>
       </SCardDiv>
     )

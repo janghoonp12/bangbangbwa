@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MyBroadcastList from "./MyBroadcastList";
 import data from "../../broadcastdata.json";
-import logosample from "../../assets/logosample.png"
 import Pagination from "../common/ui/Pagination";
+import { useSelector } from 'react-redux';
 
 const SItemDiv = styled.div`
   width: 100%;
@@ -28,12 +28,15 @@ function MyBroadcast() {
 
   // useEffect로 BE에 data를 요청해야 하는 것 같음. 일단은 더미데이터로
 
+  const { myBroadcast } = useSelector((state) => state.broadcastSlice);
+  console.log(myBroadcast)
+
   return (
     <SItemDiv>
       <MyBroadcastList
-        myBroadcasts={data.slice(offset, offset+limit)}
+        myBroadcasts={myBroadcast.slice(offset, offset+limit)}
         onClickItem={(item) => {
-          navigate(`/broadcasts/${item.id}`);
+          navigate(`/broadcasts/${item.broadcast_id}`);
         }}
       />
       <Pagination

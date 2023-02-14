@@ -2,6 +2,8 @@ package com.bangbang.controller;
 
 import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.dto.broadcast.*;
+import com.bangbang.dto.item.ItemDto;
+import com.bangbang.dto.item.ItemFilterRequestDto;
 import com.bangbang.service.BroadcastService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -56,8 +58,8 @@ public class BroadcastRestController {
 
   //라이브중인 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/live")
-  @ApiOperation(value = "라이브 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public ResponseEntity<?> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  @ApiOperation(value = "라이브 방송 조회", notes = "해당 페이지의 방송 12개를 조회합니다.")
+  public ResponseEntity<?> searchLiveBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
     Pageable pageable = PageRequest.of(page, size);
     try {
       Page<BroadcastListResponseDto> broadcasts = broadcastService.searchLiveBroadcastAll(pageable);
@@ -73,8 +75,8 @@ public class BroadcastRestController {
 
   //종료된 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/end")
-  @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 10개를 조회합니다.")
-  public ResponseEntity<?> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+  @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 12개를 조회합니다.")
+  public ResponseEntity<?> searchEndBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
     Pageable pageable = PageRequest.of(page, size);
     try {
       Page<BroadcastListResponseDto> broadcasts = broadcastService.searchEndBroadcastAll(pageable);
@@ -123,6 +125,21 @@ public class BroadcastRestController {
           put("msg", "방송비활성화를 완료했습니다.");
         }}, HttpStatus.OK);
     } catch (Exception e){
+      e.printStackTrace();
+      return extracted();
+    }
+
+  }
+
+  @ApiOperation(value = "방송 필터 검색")
+  @PostMapping("/broadcast/filter")
+  public ResponseEntity<?> searchBroadcastFilter(@RequestBody ItemFilterRequestDto filter) {
+    try {
+      List<BroadcastResponseDto> list = broadcastService.searchBroadcastByFilter(filter);
+      if (list != null && !list.isEmpty())
+        return new ResponseEntity<List<BroadcastResponseDto>>(list, HttpStatus.OK);
+      else return new ResponseEntity(HttpStatus.NO_CONTENT);
+    } catch (Exception e) {
       e.printStackTrace();
       return extracted();
     }

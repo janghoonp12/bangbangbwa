@@ -81,11 +81,7 @@ function MyBroadcastListItem(props) {
   const { myBroadcast, onClick } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onClickLive = () => {
-    dispatch(choiceWatchingBroadCast(props.posts))
-    navigate(`/broadcasts/${props.posts.broadcastId}`)
-  }
-
+  console.log(myBroadcast)
   return (
     <Wrapper>
       <div>
@@ -93,7 +89,7 @@ function MyBroadcastListItem(props) {
       </div>
       <STextDiv>
         <TitleDiv>
-          <TitleText onClick={onClick}>{myBroadcast.title}</TitleText>
+          <TitleText onClick={onClick}>{myBroadcast.broadcastTitle}</TitleText>
           <ButtonDiv>
             <SLiveButton
               onClick={onClickLive}
@@ -101,8 +97,8 @@ function MyBroadcastListItem(props) {
           </ButtonDiv>
         </TitleDiv>
         <ContentDiv>
-          <ContentText>{myBroadcast.description}</ContentText>
-          <ContentText>{myBroadcast.reservation_time}</ContentText>
+          <ContentText>{myBroadcast.broadcastDescription}</ContentText>
+          <ContentText>{myBroadcast.broadcastReservationTime}</ContentText>
         </ContentDiv>
       </STextDiv>
     </Wrapper>

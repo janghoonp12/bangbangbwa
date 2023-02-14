@@ -12,6 +12,9 @@ export const initialState = {
   searchDetailItemLoading: false,
   searchDetailItemDone: false,
   searchDetailItemError: null,
+  searchMyItemLoading: false,
+  searchMyItemDone: false,
+  searchMyItemError: null,
   myItem: null,
   items: null,
   itemDetail: null,
@@ -62,7 +65,7 @@ export const searchDetailItemAsync = createAsyncThunk(
   }
 );
 
-export const findMyItemAsync = createAsyncThunk(
+export const searchMyItemAsync = createAsyncThunk(
   'broadcast/FIND_MY_ITEM',
   async (data, thunkAPI) => {
     try {
@@ -110,19 +113,20 @@ const itemSlice = createSlice({
       state.writeItemError = action.payload
       alert('매물 등록 실패');
     });
-    builder.addCase(findMyItemAsync.pending, (state, action) => {
-      state.findMyItemLoading = true;
-      state.findMyItemError = null;
-      state.findMyItemDone = false;
+    builder.addCase(searchMyItemAsync.pending, (state, action) => {
+      state.searchMyItemLoading = true;
+      state.searchMyItemError = null;
+      state.searchMyItemDone = false;
     });
-    builder.addCase(findMyItemAsync.fulfilled, (state, action) => {
-      state.findMyItemLoading = false;
-      state.findMyItemDone = true;
+    builder.addCase(searchMyItemAsync.fulfilled, (state, action) => {
+      state.searchMyItemLoading = false;
+      state.searchMyItemDone = true;
+      console.log(action.payload)
       state.myItem = action.payload
     });
-    builder.addCase(findMyItemAsync.rejected, (state, action) => {
-      state.findMyItemLoading = false;
-      state.findMyItemError = action.error
+    builder.addCase(searchMyItemAsync.rejected, (state, action) => {
+      state.searchMyItemLoading = false;
+      state.searchMyItemError = action.error
     });
     builder.addCase(SearchItemAsync.pending, (state, action) => {
       state.searchItemLoading = true;
