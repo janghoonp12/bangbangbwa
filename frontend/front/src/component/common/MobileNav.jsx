@@ -118,7 +118,11 @@ const SSelect = styled.select`
 `;
 
 
-const Nav = () => {
+const MobileNav = () => {
+  // 메뉴 토글
+  const [menuToggle, setMenuToggle] = useState(false);
+  const [searchToggle, setSearchToggle] = useState(false);
+
   
   // 로그인 여부 파악
   const isLogin = !!sessionStorage.getItem('access-token')
@@ -207,29 +211,34 @@ const Nav = () => {
           <SLogoImg src={logo} alt="#" />
           </NavLink>
         </NavDiv>
-        <NavNameDiv>
-          <p style={{lineHeight: '60px'}}>방방</p>
-        </NavNameDiv>
-        <NavDiv>
+        <NavDiv onClick={() => setMenuToggle(!menuToggle)}>
+          <NavLink style={nonActiveStyle}>
+            {menuToggle ? '닫기' : '메뉴'}
+          </NavLink>
+        </NavDiv>
+        {menuToggle && <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/broadcasts">
             방송
           </NavLink>
-        </NavDiv>
-          <p style={{lineHeight: '60px'}}>|</p>
-        <NavDiv>
+        </NavDiv>}
+        {menuToggle && <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/items">
             매물
           </NavLink>
-        </NavDiv>
-        <p style={{lineHeight: '60px'}}>|</p>
-        <NavDiv>
+        </NavDiv>}
+        {menuToggle && <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests">
             관심
           </NavLink>
-        </NavDiv>
+        </NavDiv>}
       </NavLeftDiv>
       <NavRightDiv>
-        <NavSearchBarDiv>
+      <NavDiv onClick={() => setSearchToggle(!searchToggle)}>
+          <NavLink style={nonActiveStyle}>
+            {searchToggle ? '닫기' : '검색'}
+          </NavLink>
+        </NavDiv>
+        {searchToggle && <NavSearchBarDiv>
           <SearchInfoModal />
           <SSelect onChange={sidoSelect}>
             <option value="" disabled selected style={{display: "none"}}>시/도</option>
@@ -255,36 +264,25 @@ const Nav = () => {
               )
             }) : null}
           </SSelect>
-        </NavSearchBarDiv>
-        <NavSearchBarDiv>
+        </NavSearchBarDiv>}
+        {searchToggle && <NavSearchBarDiv>
            <SInput type="text" value={search} onChange={onChange} onKeyDown={(e) => activeEnter(e)} placeholder=" 검색어를 입력하세요" />
            <SButton disabled={(search || dong) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
-        </NavSearchBarDiv>
+        </NavSearchBarDiv>}
         <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
             <SImg src={noticelogo} alt="#" />
           </NavLink>
         </NavDiv>
-        <NavDiv
-          onMouseEnter={() => setAlarmBar(true)}
-          onMouseLeave={() => setAlarmBar(false)}
-        >
+        <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
-          <SImg src={alarmlogo} alt="#" />
+            <SImg src={alarmlogo} alt="#" />
           </NavLink>
-          {alarmBar && (
-            <TestDiv
-              onMouseEnter={() => setAlarmBar(true)}
-              onMouseLeave={() => setAlarmBar(false)}
-            >
-              <AlarmList />
-            </TestDiv>
-          )}
         </NavDiv>
         <NavDiv>
           {isLogin &&
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
-          <SImg src={mypagelogo} alt="#" />
+            <SImg src={mypagelogo} alt="#" />
           </NavLink>
           }
           {!isLogin &&
@@ -298,4 +296,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default MobileNav;
