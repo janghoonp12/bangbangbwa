@@ -1,5 +1,6 @@
 package com.bangbang.domain.image;
 
+import io.swagger.models.auth.In;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +30,7 @@ public class Image {
 
   @Column(name = "image_name", nullable = false)
   private String imageName;
+
 
   @Builder
   public Image(Long imageId, String imagePath, String imageOriginName, String imageName){
