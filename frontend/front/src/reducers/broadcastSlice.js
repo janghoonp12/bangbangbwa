@@ -12,6 +12,9 @@ export const initialState = {
   SearchEndBroadcastLoading: false,
   SearchEndBroadcastDone: false,
   SearchEndBroadcastError: null,
+  SearchMyBroadcastLoading: false,
+  SearchMyBroadcastDone: false,
+  SearchMyBroadcastError: null,
   writeBroadcastLoading: false,
   writeBroadcastDone: false,
   writeBroadcastError: null,
@@ -42,6 +45,20 @@ export const SearchEndBroadcastAsync = createAsyncThunk(
     try {
       const response = await axios.get(
         `/broadcasts/end?page=${data.page}&size=${data.size}`
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const SearchMyBroadcastAsync = createAsyncThunk(
+  'broadcast/SEARCH_MY_BROADCAST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `/broadcasts/live?page=${data.page}&size=${data.size}`,
       );
       return response.data
     } catch (err) {
