@@ -38,7 +38,7 @@ function MyItem() {
         }}
       />
       <Pagination
-        total={data.length}
+        total={myItem.length}
         limit={limit}
         page={page}
         setPage={setPage}
