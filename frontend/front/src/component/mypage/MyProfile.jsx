@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QuitModal from "../common/ui/QuitModal";
 import nicknamelogo from "../../assets/nicknamelogo.png";
 import passwordlogo from "../../assets/pwlogo.png";
 import updatelogo from "../../assets/updatelogo.png";
 import { useDispatch, useSelector } from 'react-redux';
+import useInput from '../../hooks/useInput';
 
 const SItemDiv = styled.div`
   width: 100%;
@@ -44,6 +45,7 @@ const SLogoDiv = styled.div`
 const SLogoImg = styled.img`
   width: 20px;
   height: 20px;
+  cursor: pointer;
 `;
 
 const SInfoP = styled.p`
@@ -55,10 +57,28 @@ const SQuitDiv = styled.div`
   float: right;
 `;
 
+const StyleInput = styled.input`
+  width: 300px;
+  height: 40px;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid black;
+`
+
 function MyProfile() {
   const dispatch = useDispatch();
-
   const { me } = useSelector((state) => state.userSlice);
+  const [newNickname, onChangeNickname] = useInput(me?.nickname || '');
+  const [newPassword, onChangePassword] = useInput('');
+
+  const changeNickname = () => {
+    console.log(1234)
+  }
+
+  const changePassword = () => {
+    console.log(1234)
+  }
 
 
   return (
@@ -70,6 +90,7 @@ function MyProfile() {
         <div>
           <p>{ me.userNickname }</p>
           <p>{ me.userEmail}</p>
+          asdasd
         </div>
 
       </SFlexDiv>
@@ -79,9 +100,10 @@ function MyProfile() {
         < SLogoImg src={nicknamelogo} alt="닉네임로고" />
         </SLogoDiv>
         <SInfoP>닉 네 임 : </SInfoP>
-        <SInfoP>{ me.nickname }</SInfoP>
+        {/* <SInfoP>{ me.nickname }</SInfoP> */}
+        <StyleInput value={newNickname} required onChange={onChangeNickname}/>
         <SLogoDiv>
-        < SLogoImg src={updatelogo} alt="수정로고" />
+        <SLogoImg src={updatelogo} alt="닉네임수정로고" onClick={changeNickname} />
         </SLogoDiv>
       </SGridDiv>
       <SGridDiv style={{ marginTop: "5px" }}>
@@ -89,7 +111,7 @@ function MyProfile() {
         < SLogoImg src={passwordlogo} alt="비밀번호로고" />
         </SLogoDiv>
         <SInfoP>비밀번호: </SInfoP>
-        <SInfoP>zx************</SInfoP>
+        <StyleInput value={newPassword} required onChange={onChangePassword}/>
         <SLogoDiv>
         < SLogoImg src={updatelogo} alt="수정로고" />
         </SLogoDiv>

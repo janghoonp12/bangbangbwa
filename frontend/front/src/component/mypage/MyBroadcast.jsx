@@ -29,7 +29,6 @@ function MyBroadcast() {
   // useEffect로 BE에 data를 요청해야 하는 것 같음. 일단은 더미데이터로
 
   const { myBroadcast } = useSelector((state) => state.broadcastSlice);
-  console.log(myBroadcast)
 
   return (
     <SItemDiv>

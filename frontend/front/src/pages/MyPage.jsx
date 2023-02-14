@@ -39,11 +39,13 @@ const Container = styled.div`
 
 function MyPage() {
   const { myPageStatus } = useSelector((state) => state.commonSlice);
+  const { me } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(searchMyItemAsync())
-    dispatch(searchMyBroadcastAsync())
+    if (me.role === 'ROLE_ADMIN' || me.role === "ROLE_BROKER") {
+      dispatch(searchMyItemAsync())
+      dispatch(searchMyBroadcastAsync())
+    }
   },[])
 
   return (
@@ -51,10 +53,10 @@ function MyPage() {
       <SecondWrapper>
         <Container>
           <MyPageSide />
-          {myPageStatus == 1 && <MyProfile />}
-          {myPageStatus == 2 && <NewBroker />}
-          {myPageStatus == 3 && <MyItem />}
-          {myPageStatus == 4 && <MyBroadcast />}
+          {myPageStatus === 1 && <MyProfile />}
+          {myPageStatus === 2 && <NewBroker />}
+          {myPageStatus === 3 && <MyItem />}
+          {myPageStatus === 4 && <MyBroadcast />}
         </Container>
       </SecondWrapper>
     </Wrapper>

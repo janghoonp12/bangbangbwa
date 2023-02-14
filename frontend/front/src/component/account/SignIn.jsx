@@ -89,14 +89,13 @@ function Login() {
   const navigate = useNavigate();
   const [userEmail, onChangeEmail] = useInput('');
   const [userPassword, onChangePassword] = useInput('');
-  const { signInDone, me } = useSelector((state) => state.userSlice);
+  const { signInDone } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
 
   const regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
   useEffect(() => {
     if (signInDone) {
-      console.log(me)
       navigate('/');
     }
   })
