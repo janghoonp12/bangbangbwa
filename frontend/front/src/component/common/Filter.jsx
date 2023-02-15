@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "./ui/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const Wrapper = styled.div`
@@ -66,6 +66,8 @@ const SP = styled.p`
 `;
 
 function Filter() {
+  const location = useLocation();
+  console.log(location)
 
   const navigate = useNavigate();
 
