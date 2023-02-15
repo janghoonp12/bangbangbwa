@@ -96,6 +96,7 @@ const SButton = styled.button`
 const SLogoImg = styled.img`
   width: 40px;
   height: 40px;
+  margin-bottom: 5px;
 `;
 
 const SInput = styled.input`
