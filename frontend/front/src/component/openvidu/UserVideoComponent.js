@@ -15,6 +15,19 @@ const SImg = styled.img`
   padding-bottom: 5%;
 `;
 
+const SEndCastDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  height: 58vh;
+`;
+
+const SEndCastP = styled.p`
+  margin-bottom: 0px;
+  color: white;
+`;
+
 export default class UserVideoComponent extends Component {
 
     getNicknameTag() {
@@ -25,13 +38,22 @@ export default class UserVideoComponent extends Component {
     render() {
         return (
             <div>
+                {/* {this.props.streamManager.videos[0].canplayListenerAdded !== false ? ( */}
+                {/* {this.props.streamManager.stream.mediaStream ? ( */}
                 {this.props.streamManager !== undefined ? (
+                  <div>
                     <div className="streamcomponent">
                         <OpenViduVideoComponent streamManager={this.props.streamManager} />
                         {/* <div><SP>{this.getNicknameTag()}</SP></div> */}
                         <div style={{ backgroundColor: "rgba(255, 255, 255, 0.4)"}}><SP><SImg src={redDot} alt="이미지"/> Live</SP></div>
                     </div>
-                ) : null}
+                    <SEndCastDiv style={this.props.streamManager.stream.mediaStream ? {display:"none"} : null}>
+                      <SEndCastP>방송이 종료되었습니다.</SEndCastP>
+                    </SEndCastDiv>
+                  </div>
+                ) : (
+                  null
+                )}
             </div>
         );
     }
