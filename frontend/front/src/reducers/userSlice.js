@@ -240,7 +240,6 @@ const userSlice = createSlice({
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
       sessionStorage.setItem("refresh-token", action.payload.refreshtoken)
-      alert('로그인에 성공하였습니다.');
       state.signInDone = true;
     });
     builder.addCase(signInAsync.rejected, (state, error) => {

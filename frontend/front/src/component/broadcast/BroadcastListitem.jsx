@@ -46,16 +46,14 @@ const SCardContentP = styled.p`
 function BroadcastListItem(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { images } = useSelector((state) => state.fileSlice);
   const onClick = () => {
     dispatch(choiceWatchingBroadCast(props.posts))
     navigate(`/broadcasts/${props.posts.broadcastId}`)
   }
-  const imgPath = images;
 
   return (
     <SCardDiv onDoubleClick={onClick}>
-      <SCardImg variant="top" src={imgPath} alt="이미지" />
+      <SCardImg variant="top" src={props.posts.imagePath} alt="이미지" />
       <SCardBodyDiv>
         <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
         <SCardContentP>
