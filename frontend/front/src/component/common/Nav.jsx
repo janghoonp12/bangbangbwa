@@ -212,6 +212,7 @@ const Nav = () => {
 
   const signOut = () => {
     dispatch(logout());
+    navigate("/")
   }
 
 
