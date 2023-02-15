@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import bookmarkData from "../../bookmarkData.json";
 import BookmarkListItem from "./BookmarkListItem";
 import styled from "styled-components";
 import LoadMore from "../common/ui/LoadMore";
@@ -29,7 +28,9 @@ const SButtonDiv = styled.div`
   margin-top: 30px;
 `;
 
-function BookmarkList() {
+function BookmarkList(props) {
+  const bookmarks = props.bookmarks
+
 
   const limit = 12; // 한 페이지에 나올 방송 수
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
@@ -38,22 +39,23 @@ function BookmarkList() {
   return (
     <Wrapper>
       <Container>
-        {bookmarkData.slice(0, offset).map((post, index) => {
+        {bookmarks ? bookmarks.slice(0, offset).map((post, index) => {
           return (
             <BookmarkListItem
             key={post.id}
             post={post}
             />
             );
-          })}
+          }) : <p>no data</p>}
       </Container>
       <SButtonDiv>
+        {bookmarks ?
         <LoadMore 
-          total={bookmarkData.length}
+          total={bookmarks.length}
           limit={limit}
           loads={loads}
           setLoads={setLoads}
-        />
+        /> : <p>no data</p>}
       </SButtonDiv>
     </Wrapper>
   )

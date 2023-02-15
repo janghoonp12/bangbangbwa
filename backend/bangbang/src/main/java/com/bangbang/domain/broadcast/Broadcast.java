@@ -28,7 +28,7 @@ public class Broadcast extends BroadcastDatetime{
   private Integer broadcastStatus;               //방송상태
 
   @Column(name = "broadcast_reservation_time")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
   private LocalDateTime broadcastReservationTime;
 
   @Column(name = "broadcast_title",length = 30, nullable = true)

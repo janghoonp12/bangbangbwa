@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import AxiosHeaderToken from "./AxiosHeaderToken";
 
 export const initialState = {
   signUpLoading: false,
@@ -11,7 +12,11 @@ export const initialState = {
   oauth2SignInLoading: false,
   oauth2SignInDone: false,
   oauth2SignInError: null,
+  searchMyInfoLoading: false,
+  searchMyInfoDone: false,
+  searchMyInfoError: null,
   me: null,
+  userInfo : null
 };
 
 export const signUpAsync = createAsyncThunk(
@@ -57,12 +62,30 @@ export const oauth2SignInAsync = createAsyncThunk(
   }
 );
 
+export const searchMyInfoAsync = createAsyncThunk(
+  'user/LOAD_MY_INFO',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.get(
+        '/user/mypage'
+      );
+
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     clearSignUpDone: (state) => {
       state.signUpDone = false
+    },
+    clearSearchMyInfoDone: (state) => {
+      state.searchMyInfoDone = false
     },
     // addNumber: (state, action) => {
     //   state.number = state.number + action.payload;
@@ -107,7 +130,8 @@ const userSlice = createSlice({
       state.signInLoading = false;
       state.me = {
         email : action.payload.email,
-        nickname: action.payload.nickname
+        nickname: action.payload.nickname,
+        role : action.payload.role
       }
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
@@ -129,7 +153,8 @@ const userSlice = createSlice({
       state.signInLoading = false;
       state.me = {
         email : action.payload.email,
-        nickname: action.payload.nickname
+        nickname: action.payload.nickname,
+        role : action.payload.role
       }
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
@@ -141,9 +166,24 @@ const userSlice = createSlice({
       state.signInError = action.payload
       alert('로그인에 실패했습니다.');
     });
+    builder.addCase(searchMyInfoAsync.pending, (state, action) => {
+      state.searchMyInfoLoading = true;
+      state.searchMyInfoError = null;
+      state.searchMyInfoDone = false;
+    });
+    builder.addCase(searchMyInfoAsync.fulfilled, (state, action) => {
+      state.searchMyInfoLoading = false;
+      state.searchMyInfoDone = true;
+      state.userInfo = action.payload
+      console.log(action.payload)
+    });
+    builder.addCase(searchMyInfoAsync.rejected, (state, action) => {
+      state.searchMyInfoLoading = false;
+      state.searchMyInfoError = action.data
+    });
   }
 });
 
-export const { clearSignUpDone } = userSlice.actions;
+export const { clearSignUpDone, clearSearchMyInfoDone } = userSlice.actions;
 
 export default userSlice.reducer;

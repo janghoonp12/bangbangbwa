@@ -77,16 +77,16 @@ function BookmarkListItem(props) {
   return (
     <SDiv>
       <div>
-        <h3 align="center"><b>{bookmark.title}</b></h3>
+        <h3 align="center"><b>{bookmark.bookmarkTitle}</b></h3>
       </div>
       <div>
         <SButton onClick={deleteBookmaark}>삭제</SButton>
       </div>
       <div>
-        <SImg onClick={onClick} src={bookmark.img_url} alt="즐겨찾기 이미지" />
+        <SImg onClick={onClick} src='/img/bundang.png' alt="즐겨찾기 이미지" />
       </div>
       <div>
-        <SP>{bookmark.description}</SP>
+        <SP>{bookmark.bookmarkComment}</SP>
       </div>
     </SDiv>
   )

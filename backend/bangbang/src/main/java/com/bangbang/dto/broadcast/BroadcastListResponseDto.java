@@ -12,11 +12,14 @@ public class BroadcastListResponseDto {
     private Integer broadcastStatus;
     private Long imageId;
 
+    private String broadcastRoomId;
+
     public BroadcastListResponseDto(Broadcast entity){
         this.broadcastId = entity.getBroadcastId();
         this.broadcastDescription = entity.getBroadcastDescription();
         this.broadcastTitle = entity.getBroadcastTitle();
         this.imageId = entity.getImage().getImageId();
         this.broadcastStatus = entity.getBroadcastStatus();
+        this.broadcastRoomId = entity.getBroadcastRoomId();
     }
 }

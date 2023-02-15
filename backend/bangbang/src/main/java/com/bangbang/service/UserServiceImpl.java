@@ -5,6 +5,7 @@ import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
 import com.bangbang.dto.sign.SignUp;
+import com.bangbang.dto.sign.UserDto;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
 import com.bangbang.util.EmailHandler;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
                 .userNickname(SignUpInfo.getUserNickname())
                 .userPassword(passwordEncoder.encode(SignUpInfo.getUserPassword()))
                 .user_roles(Collections.singletonList("ROLE_USER"))
-                .user_status("1").build();
+                .user_status(1).build();
         userRepository.save(user);
 
     }
@@ -57,7 +58,7 @@ public class UserServiceImpl implements UserService {
             }
         System.out.println(user);
 
-        if (user.getUser_status() == "0") {
+        if (user.getUser_status() == 0) {
             throw new BaseException(ErrorMessage.DONT_EXIST_ACCOUNT);
         }
 
@@ -70,13 +71,13 @@ public class UserServiceImpl implements UserService {
         String refreshToken = jwtTokenProvider.createRefresh(user.getUserId(), user.getUser_roles());
         user.setUser_refresh_token(refreshToken);
         userRepository.save(user);
-
         return new HashMap<String, Object>() {{
             put("nickname", user.getUserNickname());
             put("access-token", accessToken);
             put("refresh-token", refreshToken);
             put("email", user.getUserEmail());
             put("id", user.getUserId());
+            put("role", user.getUser_roles().get(0));
         }};
     }
 
@@ -142,5 +143,8 @@ public class UserServiceImpl implements UserService {
         return Long.valueOf(jwtTokenProvider.getUserId(token));
     }
 
-
+    @Override
+    public List<UserDto> findAllUsers() throws Exception {
+        return userRepository.findAllUsers();
+    }
 }

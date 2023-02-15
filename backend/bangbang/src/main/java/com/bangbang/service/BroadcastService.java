@@ -1,13 +1,17 @@
 package com.bangbang.service;
 
 import com.bangbang.domain.broadcast.Broadcast;
+import com.bangbang.domain.broadcast.BroadcastQueryRepository;
 import com.bangbang.domain.broadcast.BroadcastRepository;
 import com.bangbang.domain.image.Image;
 import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.dto.broadcast.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import com.bangbang.dto.item.ItemFilterRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +28,8 @@ public class BroadcastService {
   BroadcastRepository broadcastRepository;
   @Autowired
   ImageRepository imageRepository;
+  @Autowired
+  BroadcastQueryRepository broadcastQueryRepository;
 
   // 방송 등록
   @Transactional
@@ -88,5 +94,9 @@ public class BroadcastService {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public List<BroadcastResponseDto> searchBroadcastByFilter(ItemFilterRequestDto filter) {
+    return broadcastQueryRepository.searchBroadcastByFilter(filter);
   }
 }

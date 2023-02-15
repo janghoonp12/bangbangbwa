@@ -26,9 +26,7 @@ public class ReplayRestController {
     private final ReplayService replayService;
 
     //다시보기 등록
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value = "다시보기 등록", notes = "다시보기를 등록합니다.")
     @PostMapping(value = "/broker/replays/new")
     public ResponseEntity<?> newReplay(@RequestBody ReplaySaveRequestDto requestDto) throws Exception {
@@ -54,9 +52,7 @@ public class ReplayRestController {
     }
 
     //다시보기 삭제(비활성화)
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @PatchMapping(value = "/broker/replays/deactive/{replayId}")
     @ApiOperation(value = "해당 다시보기 삭제(비활성화)", notes = "해당 다시보기를 비활성화합니다.")
     public ResponseEntity<?> deactiveReplay(@PathVariable Long replayId){

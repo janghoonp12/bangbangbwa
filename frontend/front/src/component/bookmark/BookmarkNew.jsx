@@ -3,6 +3,8 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom/dist";
 import Button from "../common/ui/Button";
+import { writeBookmarkAsync, clearWriteBookmarkDone } from "../../reducers/bookmarkSlice"
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Wrapper = styled.div`
@@ -45,6 +47,10 @@ const SSelect = styled.select`
 `;
 
 function BookmarkNew() {
+  const dispatch = useDispatch();
+  const { writeBookmarkDone } = useSelector((state) => state.bookmarkSlice);
+
+
   // 시도 고르기
   const [sidoAll, setSidoAll] = useState('')
   const [sido, setSido] = useState('')
@@ -184,59 +190,34 @@ function BookmarkNew() {
     setComment(e.target.value)
   }
 
+
+  useEffect(() => {
+    if (writeBookmarkDone) {
+      dispatch(clearWriteBookmarkDone())
+      navigate('/interests/bookmarks');
+    }
+  })
+
   const createBookmark = () => {
 
-    // const data = {
-    //   'bookmarkTitle': title,
-    //   'bookmarkComment': comment,
-    //   'bookmarkItemType': dealType-1,
-    //   'bookmarkBuildingType': roomType-1,
-    //   'bookmarkMinArea': minArea,
-    //   'bookmarkMaxArea': maxArea,
-    //   'bookmarkItemBuildMinYear': buildMinYear,
-    //   'bookmarkItemBuildMaxYear': buildMaxYear,
-    //   'dongCode': dong,
-    //   'bookmarkItemMonthMinPrice': (dealType === '1') ? monthMinPrice : null,
-    //   'bookmarkItemMonthMaxPrice': (dealType === '1') ? monthMaxPrice : null,
-    //   'bookmarkItemMinDeposit': (dealType === '1' || dealType === '2') ? minDeposit : null,
-    //   'bookmarkItemMaxDeposit': (dealType === '1' || dealType === '2') ? maxDeposit : null,
-    //   'bookmarkItemBuyMinPrice': (dealType === '3') ? minBuyPrice : null,
-    //   'bookmarkItemBuyMaxPrice': (dealType === '3') ? maxBuyPrice : null
-    // }
     const data = {
-      'bookmark_title': title,
-      'bookmark_comment': comment,
-      'bookmark_item_type': dealType-1,
-      'bookmark_building_type': roomType-1,
-      'bookmark_min_area': minArea,
-      'bookmark_max_area': maxArea,
-      'bookmark_item_build_min_year': buildMinYear,
-      'bookmark_item_build_max_year': buildMaxYear,
+      'bookmarkTitle': title,
+      'bookmarkComment': comment,
+      'bookmarkItemType': dealType-1,
+      'bookmarkBuildingType': roomType-1,
+      'bookmarkMinArea': minArea,
+      'bookmarkMaxArea': maxArea,
+      'bookmarkItemBuildMinYear': buildMinYear,
+      'bookmarkItemBuildMaxYear': buildMaxYear,
       'dongCode': dong,
-      'bookmark_item_month_min_price': (dealType === '1') ? monthMinPrice : null,
-      'bookmark_item_month_max_price': (dealType === '1') ? monthMaxPrice : null,
-      'bookmark_item_min_deposit': (dealType === '1' || dealType === '2') ? minDeposit : null,
-      'bookmark_item_max_deposit': (dealType === '1' || dealType === '2') ? maxDeposit : null,
-      'bookmark_item_buy_min_price': (dealType === '3') ? minBuyPrice : null,
-      'bookmark_item_buy_max_price': (dealType === '3') ? maxBuyPrice : null
+      'bookmarkItemMonthMinPrice': (dealType === '1') ? monthMinPrice : null,
+      'bookmarkItemMonthMaxPrice': (dealType === '1') ? monthMaxPrice : null,
+      'bookmarkItemMinDeposit': (dealType === '1' || dealType === '2') ? minDeposit : null,
+      'bookmarkItemMaxDeposit': (dealType === '1' || dealType === '2') ? maxDeposit : null,
+      'bookmarkItemBuyMinPrice': (dealType === '3') ? minBuyPrice : null,
+      'bookmarkItemBuyMaxPrice': (dealType === '3') ? maxBuyPrice : null
     }
-
-    console.log(data)
-
-    const accessToken = sessionStorage.getItem("access-token");
-
-    axios.post('/user/bookmarks/new', data, {
-      headers: {
-        "X-AUTH-TOKEN" : `Bearer ${accessToken}`
-      }
-    })
-    .then(response => {
-      console.log(response);
-      navigate('/interests/bookmarks')
-    })
-    .catch(error => {
-      console.error(error);
-    })
+    dispatch(writeBookmarkAsync(data))
   }
 
   return (

@@ -23,7 +23,7 @@ public class ItemFilterRequestDto {
         this.item_deal_type = item_deal_type;
         this.item_price_buy_house = item_price_buy_house;
         this.item_price_house_deposit = item_price_house_deposit;
-        this.item_price_house_deposit = item_price_month_deposit;
+        this.item_price_month_deposit = item_price_month_deposit;
         this.item_price_month_rent = item_price_month_rent;
         this.item_floor = item_floor;
         this.item_build_year = item_build_year;

@@ -5,6 +5,9 @@ import com.bangbang.dto.SignIn;
 import com.bangbang.dto.sign.FindPassword;
 
 import com.bangbang.dto.sign.SignUp;
+import com.bangbang.dto.sign.UserDto;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,4 +24,6 @@ public interface UserService {
     User findUser(Long userId) throws Exception;
 
     Long findUserId(String token) throws  Exception;
+
+    List<UserDto> findAllUsers() throws Exception;
 }

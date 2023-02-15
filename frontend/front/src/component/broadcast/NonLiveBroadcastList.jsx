@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import NonLiveBroadcastListItem from "./NonLiveBroadcastListItem";
-import datas from "../../data.json";
+import React, { useState, useEffect } from "react";
+import BroadcastListItem from "./BroadcastListitem";
 import styled from "styled-components";
 import Filter from "../common/Filter";
-import LoadMore from "../common/ui/LoadMore";
 import FilterButton from "../common/FilterButton";
+import { useDispatch, useSelector } from 'react-redux';
+import { SearchEndBroadcastAsync, initBroadcastState } from "../../reducers/broadcastSlice"
 
 const Wrapper = styled.div`
     display: flex;
@@ -33,11 +33,43 @@ const SButtonLineDiv = styled.div`
   grid-template-columns: 2fr 8fr 2fr;
 `;
 
-function NonLiveBroadcastList() {
+const SButton = styled.button`
+  border-radius: 8px;
+  border: 0.5px solid lightgrey;
+  background-color: lightgrey; 
+  :hover {
+    background: grey;
+    border: 1px solid black;
+  }
+  margin-bottom: 30px;
+`;
 
+function NonLiveBroadcastList() {
+  const dispatch = useDispatch();
   const limit = 12; // 한 페이지에 나올 방송 수
   const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
   const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
+
+  const { endBroadcast, currentPage, last } = useSelector((state) => state.broadcastSlice);
+
+  useEffect(() => {
+    dispatch(initBroadcastState())
+    dispatch(SearchEndBroadcastAsync(
+      {
+        page: 0,
+        size: 12,
+      }
+    ))
+  },[])
+
+  const loadItem = () => {
+    dispatch(SearchEndBroadcastAsync(
+      {
+        page: currentPage,
+        size: 12,
+      }
+    ))
+  }
 
   return (
     <div>
@@ -51,22 +83,15 @@ function NonLiveBroadcastList() {
       </div>
       <h2 style={{marginTop : '10px'}}>지난 방송 목록</h2>
       <Wrapper>
-        {datas.slice(0, offset).map((data, index) => {
-          return (
-            <NonLiveBroadcastListItem
-            key={data.id}
-            data={data}
-            />
-            );
-          })}
+      {endBroadcast ? endBroadcast.map((broadcast, index) => (
+        <BroadcastListItem
+          posts={broadcast}
+        />
+      )
+        ) : <label>no data</label>}
       </Wrapper>
       <SButtonDiv>
-        <LoadMore 
-          total={datas.length}
-          limit={limit}
-          loads={loads}
-          setLoads={setLoads}
-        />
+        {!last ? <SButton onClick={loadItem}>지난 방송 더보기</SButton> : <></>}
       </SButtonDiv>
     </div>
   )

@@ -27,9 +27,7 @@ public class BrokerRestController {
     @Autowired
     private final UserService userService;
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="중개사 신청")
     @PostMapping("/user/brokers/new")
     public ResponseEntity<?> newBroker(@RequestBody BrokerSaveRequestDto broker) {
@@ -41,9 +39,7 @@ public class BrokerRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="중개사 신청 조회")
     @GetMapping("/admin/brokers")
     public ResponseEntity<?> searchBrokerAll() {
@@ -57,9 +53,7 @@ public class BrokerRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="중개사 등록")
     @PatchMapping("/admin/brokers/register")
     public ResponseEntity<?> registerBroker(HttpServletRequest request) {
@@ -74,9 +68,7 @@ public class BrokerRestController {
         }
     }
 
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 발급 받은 access_token", required = true, dataType = "String", paramType = "header")
-    })
+
     @ApiOperation(value="중개사 비활성화")
     @PatchMapping("/brokers/deactive/{brokerId}")
     public ResponseEntity<?> deactiveBroker(HttpServletRequest request) {

@@ -32,9 +32,7 @@ public class BrokerServiceImpl implements BrokerService{
 
     @Override
     public List<BrokerResponseDto> searchBrokerAll() {
-        return brokerRepository.findAll().stream()
-                .map(BrokerResponseDto::new)
-                .collect(Collectors.toList());
+        return brokerRepository.findBrokerBefore();
     }
 
     @Transactional

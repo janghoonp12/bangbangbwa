@@ -1,8 +1,9 @@
 import React from "react";
-// import Card from 'react-bootstrap/Card';
-import { useNavigate } from "react-router";
-import logosample from "../../assets/logosample.png"
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
+import { searchDetailItemAsync } from "../../reducers/itemSlice"
+import logosample from "../../assets/logosample.png"
+
 
 const SCardDiv = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ const SCardDiv = styled.div`
   }
   text-align: center;
 `;
+
 
 const SCardImg = styled.img`
   width: 248px;
@@ -42,26 +44,28 @@ const SCardContentP = styled.p`
   font-size: 20px;
 `;
 
-function LiveBroadcastListItem(props) {
-  const data = props.data
-  const navigate = useNavigate();
-  const onClick = () => {
-    navigate(`/broadcasts/${data.id}`)
-  }
 
+function SearchItem(props) {
+  const broadcast = props.broadcast
+
+  const dispatch = useDispatch();
+  
+  const onClick = () => {
+    dispatch(searchDetailItemAsync(broadcast.item_id))
+  }
+  
   return (
-    <SCardDiv onDoubleClick={onClick}>
-      <SCardImg variant="top" src={logosample} alt="이미지" />
-      <SCardBodyDiv>
-        <SCardTitleP>{data.title}</SCardTitleP>
-        <SCardContentP>
-          {data.type},
-          {data.building_type},
-          {data.manage_fee}
-        </SCardContentP>
-      </SCardBodyDiv>
-    </SCardDiv>
-  )
+      <SCardDiv onDoubleClick={onClick}>
+        <SCardImg variant="top" src={logosample} alt="이미지" />
+        <SCardBodyDiv>
+          <SCardTitleP>{broadcast.broadcast_title}</SCardTitleP>
+          <SCardContentP>
+            {broadcast.broadcast_reservation_time},
+            {broadcast.broadcast_description},
+          </SCardContentP>
+        </SCardBodyDiv>
+      </SCardDiv>
+    )
 }
 
-export default LiveBroadcastListItem;
+export default SearchItem;

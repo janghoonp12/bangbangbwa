@@ -6,27 +6,6 @@ import data from "../../data.json";
 import logosample from "../../assets/logosample.png"
 import Pagination from "../common/ui/Pagination";
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Container = styled.div`
-  display: flex;    
-  width: 100%;
-  max-width: 70%;
-`;
-
-const ProfileDiv = styled.div`
-  width: 100%;
-  max-width: 30%;
-  height: 700px;
-  border: 1px solid grey;
-  border-radius: 8px;
-`;
-
 const ItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
@@ -37,38 +16,7 @@ const ItemDiv = styled.div`
   // overflow: auto;
 `;
 
-const ImgTag = styled.img`
-  width: 80%;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-`;
-
-const NamePTag = styled.p`
-  font-size: 20px;
-`;
-
-const EmailPTag = styled.p`
-  margin-bottom: 5rem;
-  font-size: 10px;    
-`;
-
-const MenuPTag = styled.p`
-  font-size: 15px;
-  cursor: pointer;
-`;
-
-const NowMenuPTag = styled.p`
-  font-size: 15px;
-  text-decoration-line: underline;
-  cursor: pointer;
-`;
-
-const SSearchInput = styled.input`
-  width: 90%;
-  margin-top: 30px;
-`;
-
-function MyItem(props) {
+function MyItem() {
 
   const navigate = useNavigate();
 
@@ -81,51 +29,20 @@ function MyItem(props) {
   // useEffect로 BE에 data를 요청해야 하는 것 같음. 일단은 더미데이터로
 
   return (
-    <Wrapper>
-      <Container>
-        <ProfileDiv>   
-          <ImgTag alt="이미지" src={logosample} />
-          <NamePTag>UserName</NamePTag>
-          <EmailPTag>abcde@gmail.com</EmailPTag>
-          <MenuPTag
-            style={{ marginTop: "10rem" }}
-            onClick={() => {
-              navigate("/mypage")
-            }}
-          >내 프로필</MenuPTag>
-          <MenuPTag
-            onClick={() => {
-              navigate("/mypage/newbroker")
-            }}
-          >중개사 등록</MenuPTag>
-          <NowMenuPTag
-            onClick={() => {
-              navigate("/mypage/myitem")
-            }}
-          >나의 매물정보</NowMenuPTag>
-          <MenuPTag
-            onClick={() => {
-              navigate("/mypage/mybroadcast")
-            }}
-          >나의 방송정보</MenuPTag>
-          <SSearchInput  placeholder="제목을 검색하세요."/>
-        </ProfileDiv>
-        <ItemDiv>
-          <PostList
-            posts={data.slice(offset, offset+limit)}
-            onClickItem={(item) => {
-              navigate(`/mypage/myitem/${item.id}`);
-            }}
-          />
-          <Pagination
-            total={data.length}
-            limit={limit}
-            page={page}
-            setPage={setPage}
-          />
-        </ItemDiv>
-      </Container>
-    </Wrapper>
+    <ItemDiv>
+      <PostList
+        posts={data.slice(offset, offset+limit)}
+        onClickItem={(item) => {
+          navigate(`/mypage/myitem/${item.id}`);
+        }}
+      />
+      <Pagination
+        total={data.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
+    </ItemDiv>
   )
 }
 

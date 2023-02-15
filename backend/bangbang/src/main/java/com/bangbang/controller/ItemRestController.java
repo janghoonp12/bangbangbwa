@@ -118,6 +118,7 @@ public class ItemRestController {
     public ResponseEntity<?> itemDetail(@PathVariable("item_id") long itemId) {
         try {
             ItemResponseDto item = itemService.itemDetail(itemId);
+            item.setItem_description(item.getItem_description().replace("\r\n","<br>"));
             if (item != null)
                 return new ResponseEntity<ItemResponseDto>(item, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
