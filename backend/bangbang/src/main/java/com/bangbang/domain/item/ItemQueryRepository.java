@@ -42,22 +42,23 @@ public class ItemQueryRepository {
             for (int i = 0; i < filter.getItem_deal_type().length; i++) {
                 BooleanBuilder tmp2 = new BooleanBuilder();
                 tmp2.and(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
-
-                if (filter.getItem_deal_type()[i] == 0) {
-                    if (filter.getItem_price_month_rent() != null) //월세
-                        tmp2.and(itemPrice.item_price_month_rent.between(filter.getItem_price_month_rent()[0],filter.getItem_price_month_rent()[1]));
-                    if (filter.getItem_price_month_deposit() != null) //월세 보증금
-                        tmp2.and(itemPrice.item_price_month_deposit.between(filter.getItem_price_month_deposit()[0],filter.getItem_price_month_deposit()[1]));
-                }
-                if (filter.getItem_deal_type()[i] == 1)//보증금
-                    if (filter.getItem_price_house_deposit() != null)
-                        tmp2.and(itemPrice.item_price_house_deposit.between(filter.getItem_price_house_deposit()[0],filter.getItem_price_house_deposit()[1]));
-                if (filter.getItem_deal_type()[i] == 2) //매매
-                    if (filter.getItem_price_buy_house() != null)
-                        tmp2.and(itemPrice.item_price_buy_house.between(filter.getItem_price_buy_house()[0],filter.getItem_price_buy_house()[1]));
                 //방 크기
                 if (filter.getItem_exclusive_area() != null)
                     tmp2.and(item.item_exclusive_area.between(filter.getItem_exclusive_area()[0],filter.getItem_exclusive_area()[1]));
+
+                if (filter.getItem_deal_type()[i] == 0) {
+                    if (filter.getItem_price_month_rent() != null) //월세
+                        tmp2.andAnyOf(itemPrice.item_price_month_rent.between(filter.getItem_price_month_rent()[0],filter.getItem_price_month_rent()[1]));
+                    if (filter.getItem_price_month_deposit() != null) //월세 보증금
+                        tmp2.andAnyOf(itemPrice.item_price_month_deposit.between(filter.getItem_price_month_deposit()[0],filter.getItem_price_month_deposit()[1]));
+                }
+                if (filter.getItem_deal_type()[i] == 1)//보증금
+                    if (filter.getItem_price_house_deposit() != null)
+                        tmp2.andAnyOf(itemPrice.item_price_house_deposit.between(filter.getItem_price_house_deposit()[0],filter.getItem_price_house_deposit()[1]));
+                if (filter.getItem_deal_type()[i] == 2) //매매
+                    if (filter.getItem_price_buy_house() != null)
+                        tmp2.andAnyOf(itemPrice.item_price_buy_house.between(filter.getItem_price_buy_house()[0],filter.getItem_price_buy_house()[1]));
+               
             tmp.and(tmp2);
             }
         }
