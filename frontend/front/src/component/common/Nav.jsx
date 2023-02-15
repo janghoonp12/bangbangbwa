@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import noticelogo from "../../assets/noticelogo.png"
-import alarmlogo from "../../assets/alarmlogo.png"
+// import alarmlogo from "../../assets/alarmlogo.png"
 import mypagelogo from "../../assets/mypagelogo.png"
 import logo from "../../assets/logo.png"
 import searchbutton from "../../assets/searchbutton.png"
-import AlarmList from "../alarm/AlarmList";
+// import AlarmList from "../alarm/AlarmList";
 import axios from "axios";
 import SearchInfoModal from "./ui/SearchInfoModal";
 import { FaSignOutAlt } from "react-icons/fa";
@@ -105,14 +105,14 @@ const SInput = styled.input`
   border: 0 solid black;
 `;
 
-const TestDiv = styled.div`
-  position: absolute;
-  top: 65px;
-  right: 10px;
-  background-color: white;
-  border: 1px solid lightgrey;
-  border-radius: 8px;
-`;
+// const TestDiv = styled.div`
+//   position: absolute;
+//   top: 65px;
+//   right: 10px;
+//   background-color: white;
+//   border: 1px solid lightgrey;
+//   border-radius: 8px;
+// `;
 
 const SSelect = styled.select`
   margin-right: 2 0px;
@@ -183,7 +183,7 @@ const Nav = () => {
   };
 
 
-  const [alarmBar, setAlarmBar] = useState(false);
+  // const [alarmBar, setAlarmBar] = useState(false);
   const [search, setSearch] = useState('');
   const onChange = (e) => {
           setSearch(e.target.value)
@@ -201,6 +201,7 @@ const Nav = () => {
   const onClick = () => {
     if (search || dong) {
       navigate(`/items/search/${search}&${dong}`)
+      console.log(sido, gugun)
       setSearch('')
       setGugunAll('')
       setDongAll('')
@@ -279,7 +280,7 @@ const Nav = () => {
             <SImg src={noticelogo} alt="#" />
           </NavLink>
         </NavDiv>
-        <NavDiv
+        {/* <NavDiv
           onMouseEnter={() => setAlarmBar(true)}
           onMouseLeave={() => setAlarmBar(false)}
         >
@@ -294,7 +295,7 @@ const Nav = () => {
               <AlarmList />
             </TestDiv>
           )}
-        </NavDiv>
+        </NavDiv> */}
           { me ? <NavDiv><NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           <SImg src={mypagelogo} alt="#" />
           </NavLink></NavDiv> : <></>
