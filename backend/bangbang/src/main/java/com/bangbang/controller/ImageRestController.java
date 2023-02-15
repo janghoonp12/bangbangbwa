@@ -63,84 +63,84 @@ public class ImageRestController {
   private final NoticeServiceImpl noticeService;
   private final Logger log = LoggerFactory.getLogger(getClass());
 
-  @PostMapping(value = "/broker/images/new")
-  @ApiOperation(value = "방송 사진 등록", notes = "방송 사진을 등록합니다.")
-  public ResponseEntity<?> newImageBroadcast(@RequestParam("file") MultipartFile file) throws Exception {
-    try{
-        String origFilename = file.getOriginalFilename();
-        String filename = new MD5Generator(origFilename).toString();
-        String savePath = "C:\\Users\\SSAFY\\project\\week2\\S08P12A405\\frontend\\front\\src\\assets";
-
-        if(!new File(savePath).exists()){
-          try {
-            new File(savePath).mkdir();
-          } catch (Exception e){
-            e.getStackTrace();
-          }
-        }
-        String filePath = savePath + "\\" + origFilename;
-        file.transferTo(new File(filePath));
-
-        System.out.println(savePath);
-        System.out.println(filePath);
-
-        ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
-        imageSaveRequestDto.setImageOriginName(origFilename);
-        imageSaveRequestDto.setImagePath(filePath);
-        imageSaveRequestDto.setImageName(filename);
-
-      Long image_id = imageService.saveFile(imageSaveRequestDto);
-      imageSaveRequestDto.setImageId(image_id);
-
-      return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
-
-    } catch (Exception e){
-      e.printStackTrace();
-    }
-
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
-
-  @PostMapping(value = "/admin/images/new")
-  @ApiOperation(value = "공지사항 사진 등록", notes = "사진을 등록합니다.")
-  public ResponseEntity<?> newImageNotice(@RequestParam("file") MultipartFile file) throws Exception {
-    try{
-
-      String origFilename = file.getOriginalFilename();
-      String filename = new MD5Generator(origFilename).toString();
-      String savePath = System.getProperty("user.dir") + "\\files";
-//      String savePath = "C:\\Users\\SSAFY\\project\\week2\\S08P12A405\\frontend\\front\\src\\assets";
-
-      if(!new File(savePath).exists()){
-        try {
-          new File(savePath).mkdir();
-        } catch (Exception e){
-          e.getStackTrace();
-        }
-      }
-      String filePath = savePath + "\\" + origFilename;
-      file.transferTo(new File(filePath));
-
-      System.out.println(savePath);
-      System.out.println(filePath);
-
-      ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
-      imageSaveRequestDto.setImageOriginName(origFilename);
-      imageSaveRequestDto.setImagePath(filePath);
-      imageSaveRequestDto.setImageName(filename);
-
-      Long image_id = imageService.saveFile(imageSaveRequestDto);
-      imageSaveRequestDto.setImageId(image_id);
-
-      return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
-
-
-    } catch (Exception e){
-      e.printStackTrace();
-    }
-
-    return new ResponseEntity<>(HttpStatus.OK);
-  }
+//  @PostMapping(value = "/broker/images/new")
+//  @ApiOperation(value = "방송 사진 등록", notes = "방송 사진을 등록합니다.")
+//  public ResponseEntity<?> newImageBroadcast(@RequestParam("file") MultipartFile file) throws Exception {
+//    try{
+//        String origFilename = file.getOriginalFilename();
+//        String filename = new MD5Generator(origFilename).toString();
+//        String savePath = "C:\\Users\\SSAFY\\project\\week2\\S08P12A405\\frontend\\front\\src\\assets";
+//
+//        if(!new File(savePath).exists()){
+//          try {
+//            new File(savePath).mkdir();
+//          } catch (Exception e){
+//            e.getStackTrace();
+//          }
+//        }
+//        String filePath = savePath + "\\" + origFilename;
+//        file.transferTo(new File(filePath));
+//
+//        System.out.println(savePath);
+//        System.out.println(filePath);
+//
+//        ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
+//        imageSaveRequestDto.setImageOriginName(origFilename);
+//        imageSaveRequestDto.setImagePath(filePath);
+//        imageSaveRequestDto.setImageName(filename);
+//
+//      Long image_id = imageService.saveFile(imageSaveRequestDto);
+//      imageSaveRequestDto.setImageId(image_id);
+//
+//      return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
+//
+//    } catch (Exception e){
+//      e.printStackTrace();
+//    }
+//
+//    return new ResponseEntity<>(HttpStatus.OK);
+//  }
+//
+//  @PostMapping(value = "/admin/images/new")
+//  @ApiOperation(value = "공지사항 사진 등록", notes = "사진을 등록합니다.")
+//  public ResponseEntity<?> newImageNotice(@RequestParam("file") MultipartFile file) throws Exception {
+//    try{
+//
+//      String origFilename = file.getOriginalFilename();
+//      String filename = new MD5Generator(origFilename).toString();
+//      String savePath = System.getProperty("user.dir") + "\\files";
+////      String savePath = "C:\\Users\\SSAFY\\project\\week2\\S08P12A405\\frontend\\front\\src\\assets";
+//
+//      if(!new File(savePath).exists()){
+//        try {
+//          new File(savePath).mkdir();
+//        } catch (Exception e){
+//          e.getStackTrace();
+//        }
+//      }
+//      String filePath = savePath + "\\" + origFilename;
+//      file.transferTo(new File(filePath));
+//
+//      System.out.println(savePath);
+//      System.out.println(filePath);
+//
+//      ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
+//      imageSaveRequestDto.setImageOriginName(origFilename);
+//      imageSaveRequestDto.setImagePath(filePath);
+//      imageSaveRequestDto.setImageName(filename);
+//
+//      Long image_id = imageService.saveFile(imageSaveRequestDto);
+//      imageSaveRequestDto.setImageId(image_id);
+//
+//      return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
+//
+//
+//    } catch (Exception e){
+//      e.printStackTrace();
+//    }
+//
+//    return new ResponseEntity<>(HttpStatus.OK);
+//  }
 
 
   @GetMapping(value = "/images/{imageId}")
