@@ -22,6 +22,7 @@ public class BroadcastListResponseDto {
         this.broadcastTitle = entity.getBroadcastTitle();
         this.broadcastStatus = entity.getBroadcastStatus();
         this.broadcastReservationTime = entity.getBroadcastReservationTime();
+        this.imagePath = entity.getImagePath();
         this.broadcastRoomId = entity.getBroadcastRoomId();
     }
 }

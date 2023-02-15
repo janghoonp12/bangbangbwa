@@ -91,7 +91,8 @@ public class BroadcastService {
     Optional<Broadcast> broadcast = broadcastRepository.findByBroadcastId(id);
     broadcast.orElseThrow(() -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
     try {
-      broadcast.get().update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle());
+      broadcast.get().update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle(),
+                            requestDto.getImagePath(), requestDto.getBroadcastReservationTime());
     } catch (Exception e){
       e.printStackTrace();
     }
