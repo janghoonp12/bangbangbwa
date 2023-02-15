@@ -238,12 +238,12 @@ const Nav = () => {
             매물
           </NavLink>
         </NavDiv>
-        <p style={{lineHeight: '60px'}}>|</p>
-        <NavDiv>
+        { me ? <p style={{ lineHeight: '60px' }}>|</p> : <></>}
+        { me ? <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests">
             관심
           </NavLink>
-        </NavDiv>
+        </NavDiv> : <></> }
       </NavLeftDiv>
       <NavRightDiv>
         <NavSearchBarDiv>
