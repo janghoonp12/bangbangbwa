@@ -106,6 +106,7 @@ const broadcastSlice = createSlice({
     },
     clearWriteBroadcastDone: (state) => {
       state.writeBroadcastDone = false
+      console.log(state.writeBroadcastDone, "이거 왜 안됨")
     },
     choiceWatchingBroadCast: (state, action) => {
       state.watchingBroadCast = action.payload

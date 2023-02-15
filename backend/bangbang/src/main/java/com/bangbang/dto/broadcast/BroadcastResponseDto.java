@@ -17,11 +17,14 @@ public class BroadcastResponseDto {
     private String broadcastTitle;
     private String broadcastRoomId;
 
+    private String imagePath;
+
     @QueryProjection
     public BroadcastResponseDto(Broadcast entity){
         this.broadcastId = entity.getBroadcastId();
         this.broadcastDescription = entity.getBroadcastDescription();
         this.broadcastTitle = entity.getBroadcastTitle();
         this.broadcastRoomId = entity.getBroadcastRoomId();
+        this.imagePath = entity.getImagePath();
     }
 }

@@ -11,8 +11,10 @@ public class BroadcastListResponseDto {
     private String broadcastTitle;
     private Integer broadcastStatus;
     private LocalDateTime broadcastReservationTime;
+
     private String imagePath;
     private String broadcastRoomId;
+
 
 
 
@@ -23,5 +25,6 @@ public class BroadcastListResponseDto {
         this.broadcastStatus = entity.getBroadcastStatus();
         this.broadcastReservationTime = entity.getBroadcastReservationTime();
         this.broadcastRoomId = entity.getBroadcastRoomId();
+        this.imagePath = entity.getImagePath();
     }
 }

@@ -8,7 +8,6 @@ import { writeBroadcastAsync, clearWriteBroadcastDone } from "../../reducers/bro
 import { searchMyItemAsync } from "../../reducers/itemSlice";
 import BroadcastFileData from "../common/BroadcastFileData"
 import Swal from "sweetalert2";
-import { ImagesearchRoller } from "@mui/icons-material";
 
 const Wrapper = styled.div`
     display: flex;
@@ -53,17 +52,16 @@ function BroadcastWrite() {
 
   useEffect(() => {
     if (writeBroadcastDone) {
-      clearWriteBroadcastDone()
+      dispatch(clearWriteBroadcastDone())
       Swal.fire({
         icon: 'success',
         title: '방송 등록!',
         showConfirmButton: false,
         timer: 500
       })
-
       navigate('/broadcasts');
     }
-  })
+  }, [writeBroadcastDone])
 
   const itemChange = (e) => {
     setItem(e.target.value)
@@ -79,7 +77,6 @@ function BroadcastWrite() {
         "imagePath" : images
       }
     ))
-    navigate()
   }
   
   return (
