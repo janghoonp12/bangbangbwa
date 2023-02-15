@@ -48,7 +48,7 @@ export default class UserVideoComponent extends Component {
                         <div style={{ backgroundColor: "rgba(255, 255, 255, 0.4)"}}><SP><SImg src={redDot} alt="이미지"/> Live</SP></div>
                     </div>
                     <SEndCastDiv style={this.props.streamManager.stream.mediaStream ? {display:"none"} : null}>
-                      <SEndCastP>방송이 종료되었습니다.</SEndCastP>
+                      <SEndCastP></SEndCastP>
                     </SEndCastDiv>
                   </div>
                 ) : (
