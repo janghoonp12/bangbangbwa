@@ -16,6 +16,7 @@ public class BroadcastResponseDto {
     private String broadcastDescription;
     private String broadcastTitle;
     private String broadcastRoomId;
+    private String imagePath;
 
     private String imagePath;
 
@@ -24,6 +25,7 @@ public class BroadcastResponseDto {
         this.broadcastId = entity.getBroadcastId();
         this.broadcastDescription = entity.getBroadcastDescription();
         this.broadcastTitle = entity.getBroadcastTitle();
+        this.imagePath = entity.getImagePath();
         this.broadcastRoomId = entity.getBroadcastRoomId();
         this.imagePath = entity.getImagePath();
     }

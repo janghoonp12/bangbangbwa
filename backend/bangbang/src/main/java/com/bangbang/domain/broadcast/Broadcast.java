@@ -62,10 +62,12 @@ public class Broadcast extends BroadcastDatetime{
     this.broadcastRoomId = broadcastRoomId;
   }
 
-  public void update(Long broadcastId, String broadcastDescription, String broadcastTitle){
+  public void update(Long broadcastId, String broadcastDescription, String broadcastTitle, String imagePath, LocalDateTime broadcastReservationTime){
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
+    this.imagePath = imagePath;
+    this.broadcastReservationTime = broadcastReservationTime;
   }
   public void deactive(Long broadcastId){
     this.broadcastId = broadcastId;
