@@ -108,7 +108,6 @@ function ItemDetail() {
     navigate(-1);
   }
   const { itemDetail } = useSelector((state) => state.itemSlice);
-
   useEffect(() => {
     // 마커
     var marker = [
@@ -127,8 +126,8 @@ function ItemDetail() {
     };
     var map = new window.kakao.maps.StaticMap(mapContainer, options)
 
-
-
+    console.log('-------------')
+    console.log(itemDetail.item_description)
 
     // 카카오 로드뷰
     var roadviewContainer = document.getElementById('roadview'); 
@@ -195,6 +194,11 @@ function ItemDetail() {
           <SPTag>
             {itemDetail.item_move_in_type === 0 ? '즉시 입주 가능' : `입주 가능일 : ${itemDetail.item_move_in_date}`}
           </SPTag>
+        </SInfoDiv>
+        <SInfoDiv>
+          <pre style={{wordWrap: 'break-word'}}>
+            {itemDetail.item_description}
+          </pre>
         </SInfoDiv>
         <Sbutton onClick={goBack}>뒤로가기</Sbutton>
       </Container>
