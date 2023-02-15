@@ -524,19 +524,28 @@ class Openvidu extends Component {
       // console.log(SwitchCamera)
       let newPublisher = this.OV.initPublisher(undefined, {
         audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: this.state.camDevices[this.state.camera].deviceId, // The source of video. If undefined default webcam
+        videoSource: this.state.camDevices[this.state.camera.length-1].deviceId, // The source of video. If undefined default webcam
         publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
         publishVideo: true, // Whether you want to start publishing with your video enabled or not
         resolution: '640x480', // The resolution of your video
         frameRate: 30, // The frame rate of your video
         insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
         mirror: false, // Whether to mirror your local video or not
-    });
+      });
       this.setState({
         publisher: newPublisher,
         mainStreamManager: newPublisher,
-        camera: this.state.camera+1,
+        camera: this.state.camera.length,
       })
+      // this.state.session.unpublish(this.state.publisher).then(() => {
+      //   console.log('Old publisher unpublished!')
+        
+      //   this.setState({publisher : newPublisher})
+        
+      //   this.session.publish(newPublisher).then(() => {
+      //     console.log('New publisher published!');
+      //   })
+      // })
       
     }
 
@@ -559,12 +568,21 @@ class Openvidu extends Component {
         frameRate: 30, // The frame rate of your video
         insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
         mirror: true, // Whether to mirror your local video or not
-    });
+      });
       this.setState({
         publisher: newPublisher,
         mainStreamManager: newPublisher,
         camera: 1,
       })
+      // this.state.session.unpublish(this.state.publisher).then(() => {
+      //   console.log('Old publisher unpublished!')
+        
+      //   this.setState({publisher : newPublisher})
+        
+      //   this.session.publish(this.state.publisher).then(() => {
+      //     console.log('New publisher published!');
+      //   })
+      // })
     }
 
     toggleCamera = () => {
