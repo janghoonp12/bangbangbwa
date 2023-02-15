@@ -26,7 +26,7 @@ export const noticeFileUploadAsync = createAsyncThunk(
         "Content-Type": "multipart/form-data",
       }
       const response = await AxiosHeaderToken.post(
-        '/admin/images/new',
+        '/admin/images',
         data,
         config
       );

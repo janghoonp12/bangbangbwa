@@ -5,6 +5,7 @@ import logosample from "../../assets/logosample.png";
 import { useSelector, useDispatch } from 'react-redux';
 import { changeMyPageStatus } from "../../reducers/commonSlice"
 import useInput from '../../hooks/useInput';
+import MyPageLogo from "../../assets/mypagelogo.png";
 
 const SProfileDiv = styled.div`
   width: 100%;
@@ -15,7 +16,7 @@ const SProfileDiv = styled.div`
 `;
 
 const SImg1 = styled.img`
-  width: 80%;
+  width: 50%;
   margin-top: 2rem;
   margin-bottom: 1rem;
 `;
@@ -57,15 +58,15 @@ function MyPageSide() {
 
   return (
     <SProfileDiv>
-      <SImg1 alt="이미지" src={logosample} />
+      <SImg1 alt="이미지" src={MyPageLogo} />
       <SNameP>{ me.nickname }</SNameP>
       <SEmailP>{ me.email}</SEmailP>
-      <SNowMenuP
+      <SMenuP
         style={{ marginTop: "10rem" }}
         onClick={() => {
           changeStatus(1)
         }}
-      >내 프로필</SNowMenuP>
+      >내 프로필</SMenuP>
       <SMenuP
         onClick={() => {
           changeStatus(2)

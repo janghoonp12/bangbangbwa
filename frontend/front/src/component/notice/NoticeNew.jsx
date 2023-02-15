@@ -81,6 +81,7 @@ function NoticeNew() {
     setComment(e.target.value)
   }
 
+  console.log(images);
   const createNotice = () => {
     dispatch(writeNoticeAsync(
       {

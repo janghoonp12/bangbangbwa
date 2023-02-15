@@ -524,7 +524,7 @@ class Openvidu extends Component {
       // console.log(SwitchCamera)
       let newPublisher = this.OV.initPublisher(undefined, {
         audioSource: undefined, // The source of audio. If undefined default microphone
-        videoSource: this.state.camDevices[this.state.camera].deviceId, // The source of video. If undefined default webcam
+        videoSource: this.state.camDevices[-1].deviceId, // The source of video. If undefined default webcam
         publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
         publishVideo: true, // Whether you want to start publishing with your video enabled or not
         resolution: '640x480', // The resolution of your video
@@ -535,7 +535,7 @@ class Openvidu extends Component {
       this.setState({
         publisher: newPublisher,
         mainStreamManager: newPublisher,
-        camera: this.state.camera+1,
+        camera: this.state.camDevices.length,
       })
       
     }
@@ -674,16 +674,18 @@ class Openvidu extends Component {
                               for (let i=0; i<this.state.subscribers.length; i++) {
                                 // if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
                                 if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('host')) {
+                                // if (this.state.subscribers[i].videos === []) {
                                   this.setState({
                                     mainStreamManager: this.state.subscribers[i]
                                   })
                                   console.log("이밑을봐라")
                                   console.log(this.state.subscribers[i])
-                                } else {
-                                  this.setState({
-                                    mainStreamManager: this.state.subscribers[0]
-                                  })
-                                }
+                                } 
+                                // else {
+                                //   this.setState({
+                                //     mainStreamManager: this.state.subscribers[0]
+                                //   })
+                                // }
                               }                              
                             }                           
                         })
@@ -993,6 +995,7 @@ class Openvidu extends Component {
                     />
                   )}
                 </STitleDiv>
+                {/* {this.props.streamManager.stream.mediaStream ? ( */}
                 {this.state.mainStreamManager !== undefined ? (
                   <SScreenDiv id="main-video" className="col-md-6">
                     <UserVideoComponent streamManager={this.state.mainStreamManager} />

@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import Swal from "sweetalert2";
 import AxiosHeaderToken from "./AxiosHeaderToken";
 
 export const initialState = {
@@ -12,6 +13,9 @@ export const initialState = {
   oauth2SignInLoading: false,
   oauth2SignInDone: false,
   oauth2SignInError: null,
+  findPasswordLoading: false,
+  findPasswordDone: false,
+  findPasswordError: null,
   searchMyInfoLoading: false,
   searchMyInfoDone: false,
   searchMyInfoError: null,
@@ -32,7 +36,6 @@ export const signUpAsync = createAsyncThunk(
   'user/SIGN_UP',
   async (data, thunkAPI) => {
     try {
-      console.log(data)
       const response = await axios.post(
         '/users/new',
         data
@@ -71,6 +74,21 @@ export const oauth2SignInAsync = createAsyncThunk(
   }
 );
 
+export const findPasswordAsync = createAsyncThunk(
+  'user/FIND_MY_PASSWORD',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `/users/find/password`, data
+      );
+
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 export const searchMyInfoAsync = createAsyncThunk(
   'user/LOAD_MY_INFO',
   async (data, thunkAPI) => {
@@ -90,7 +108,6 @@ export const changeNicknameAsync = createAsyncThunk(
   'user/CHANGE_MY_NICKNAME',
   async (data, thunkAPI) => {
     try {
-      console.log(data)
       const response = await AxiosHeaderToken.patch(
         `/user/mypage/modify/nickname/${data}`
       );
@@ -144,6 +161,9 @@ const userSlice = createSlice({
     clearSignInDone: (state) => {
       state.signInDone = false
     },
+    clearFindPasswordDone: (state) => {
+      state.findPasswordDone = false
+    },
     changeMeNickname: (state, action) => {
       state.me.nickname = action.payload;
     },
@@ -182,10 +202,28 @@ const userSlice = createSlice({
       state.signUpLoading = false;
       state.signUpDone = true;
     });
-    builder.addCase(signUpAsync.rejected, (state, action) => {
+    builder.addCase(signUpAsync.rejected, (state, error) => {
       state.signUpLoading = false;
-      state.signUpError = action.data
-      alert('회원가입에 실패했습니다.');
+      state.signUpError = error.payload.response.data.msg[0]
+      Swal.fire({
+        icon: 'error',
+        title: state.signUpError,
+        showConfirmButton: false,
+        timer: 1000
+      })
+    });
+    builder.addCase(findPasswordAsync.pending, (state, action) => {
+      state.findPasswordLoading = true;
+      state.findPasswordError = null;
+      state.findPasswordDone = false;
+    });
+    builder.addCase(findPasswordAsync.fulfilled, (state, action) => {
+      state.findPasswordLoading = false;
+      state.findPasswordDone = true;
+    });
+    builder.addCase(findPasswordAsync.rejected, (state, error) => {
+      state.findPasswordLoading = false;
+      state.findPasswordError = error.payload.response.data.msg[0]
     });
     builder.addCase(signInAsync.pending, (state, action) => {
       state.signInLoading = true;
@@ -205,10 +243,15 @@ const userSlice = createSlice({
       alert('로그인에 성공하였습니다.');
       state.signInDone = true;
     });
-    builder.addCase(signInAsync.rejected, (state, action) => {
+    builder.addCase(signInAsync.rejected, (state, error) => {
       state.signInLoading = false;
-      state.signInError = action.error
-      alert('로그인에 실패했습니다.');
+      state.signInError = error.payload.response.data.msg[0]
+      Swal.fire({
+        icon: 'error',
+        title: state.signInError,
+        showConfirmButton: false,
+        timer: 1000
+      })
     });
     builder.addCase(oauth2SignInAsync.pending, (state, action) => {
       state.signInLoading = true;
@@ -258,7 +301,6 @@ const userSlice = createSlice({
     builder.addCase(changeNicknameAsync.rejected, (state, action) => {
       state.changeNicknameLoading = false;
       state.changeNicknameError = action.error
-      console.log("error")
     });
     builder.addCase(changePasswordAsync.pending, (state, action) => {
       state.changePasswordLoading = true;
@@ -289,6 +331,6 @@ const userSlice = createSlice({
   }
 });
 
-export const { clearSignUpDone, clearSearchMyInfoDone, clearSignInDone, changeMeNickname, logout } = userSlice.actions;
+export const { clearSignUpDone, clearSearchMyInfoDone, clearSignInDone, changeMeNickname, logout, clearFindPasswordDone } = userSlice.actions;
 
 export default userSlice.reducer;

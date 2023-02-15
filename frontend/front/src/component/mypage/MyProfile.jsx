@@ -27,7 +27,7 @@ const SFlexDiv = styled.div`
   height: 100%;
   max-height: 40%;
   width: 100%;
-  max-width: 40%;
+  // max-width: 40%;
   // justify-content: center;
   align-items: center;
   text-align: left;
@@ -61,7 +61,7 @@ const SQuitDiv = styled.div`
 `;
 
 const StyleInput = styled.input`
-  width: 300px;
+  width: 100%;
   height: 40px;
   border-top: none;
   border-left: none;
@@ -115,9 +115,8 @@ function MyProfile() {
       </div>
       <SFlexDiv>
         <div>
-          <p>{ me.userNickname }</p>
-          <p>{ me.userEmail}</p>
-          asdasd
+          <p>닉네임 : { me.nickname }</p>
+          <p>이메일 : { me.email}</p>
         </div>
 
       </SFlexDiv>
