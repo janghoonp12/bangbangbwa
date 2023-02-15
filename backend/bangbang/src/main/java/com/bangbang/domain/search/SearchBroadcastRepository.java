@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SearchBroadcastRepository extends JpaRepository<Broadcast, Long> {
 
-  @Query("SELECT new com.bangbang.dto.broadcast.BroadcastListResponseDto(b) FROM Broadcast b WHERE b.itemId IN (:itemIds) AND (b.broadcastTitle like %:keyword% OR b.broadcastDescription like %:keyword%)")
+  @Query("SELECT new com.bangbang.dto.broadcast.BroadcastListResponseDto(b) FROM Broadcast b WHERE b.itemId IN (:itemIds) AND (b.broadcastTitle like %:keyword% OR b.broadcastDescription like %:keyword%) ORDER BY b.broadcastId DESC")
   List<BroadcastListResponseDto> findByKeywordAndItemIds(@Param("keyword") String keyword,
       @Param("itemIds") List<Long> itemIds);
 }
