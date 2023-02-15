@@ -31,7 +31,7 @@ function MyItem() {
 
   return (
     <ItemDiv>
-      <PostList
+      { myItem ? <div><PostList
         posts={myItem.slice(offset, offset+limit)}
         onClickItem={(item) => {
           navigate(`/mypage/myitem/${item.id}`);
@@ -42,7 +42,7 @@ function MyItem() {
         limit={limit}
         page={page}
         setPage={setPage}
-      />
+      /></div> : <></>}
     </ItemDiv>
   )
 }

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MyBroadcastList from "./MyBroadcastList";
-import data from "../../broadcastdata.json";
 import Pagination from "../common/ui/Pagination";
 import { useSelector } from 'react-redux';
 
@@ -32,7 +31,7 @@ function MyBroadcast() {
 
   return (
     <SItemDiv>
-      <MyBroadcastList
+      { myBroadcast ? <div><MyBroadcastList
         myBroadcasts={myBroadcast.slice(offset, offset+limit)}
         onClickItem={(item) => {
           navigate(`/broadcasts/${item.broadcast_id}`);
@@ -43,7 +42,7 @@ function MyBroadcast() {
         limit={limit}
         page={page}
         setPage={setPage}
-      />
+      /></div> : <></>}
     </SItemDiv>
   )
 }

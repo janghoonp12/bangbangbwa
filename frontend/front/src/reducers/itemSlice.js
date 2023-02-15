@@ -95,6 +95,9 @@ const itemSlice = createSlice({
     },
     clearWriteItemDone: (state) => {
       state.writeItemDone = false
+    },
+    choiceItemDetail: (state, action) => {
+      state.itemDetail = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -121,7 +124,6 @@ const itemSlice = createSlice({
     builder.addCase(searchMyItemAsync.fulfilled, (state, action) => {
       state.searchMyItemLoading = false;
       state.searchMyItemDone = true;
-      console.log(action.payload)
       state.myItem = action.payload
     });
     builder.addCase(searchMyItemAsync.rejected, (state, action) => {
@@ -165,5 +167,5 @@ const itemSlice = createSlice({
   }
 });
 
-export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone } = itemSlice.actions;
+export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone, choiceItemDetail } = itemSlice.actions;
 export default itemSlice.reducer;

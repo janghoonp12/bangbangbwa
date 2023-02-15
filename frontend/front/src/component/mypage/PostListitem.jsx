@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import itemImage from "../../assets/logo.png"
+import { useDispatch } from 'react-redux';
+import { searchDetailItemAsync } from "../../reducers/itemSlice"
 
 const Wrapper = styled.div`
   width: calc(100% - 32px);
@@ -52,9 +54,13 @@ const STextDiv = styled.div`
 
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function PostListItem(props) {
-  const { post, onClick } = props;
+  const dispatch = useDispatch();
+
+  const itemClick = () => {
+    dispatch(searchDetailItemAsync(props.post.item.item_id))
+  }
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper onClick={itemClick}>
       <div>
         <SItemImg src={itemImage} alt="이미지샘플"/>
       </div>
