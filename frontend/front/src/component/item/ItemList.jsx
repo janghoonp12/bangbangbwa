@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import styled from "styled-components";
 import throttle from "../../utils/Throttle"
+
+import { useDispatch, useSelector } from 'react-redux';
+import { clearSearchDetailItemDone } from "../../reducers/itemSlice"
 
 const Wrapper = styled.div`
     display: flex;
@@ -57,6 +61,18 @@ function ItemList({ children }) {
 
     const delay = 10;
     const onThrottleDragMove = throttle(onDragMove, delay);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const { searchDetailItemDone, itemDetail } = useSelector((state) => state.itemSlice);
+
+    useEffect(() => {
+      if (searchDetailItemDone) {
+        dispatch(clearSearchDetailItemDone())
+        navigate(`/items/${itemDetail.item_id}`)
+      }
+    })
 
 
     return (
