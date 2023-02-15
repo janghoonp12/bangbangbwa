@@ -137,7 +137,6 @@ const itemSlice = createSlice({
       state.itemDetail = action.payload
     },
     deleteMyItem: (state, action) => {
-      console.log(state)
       state.myItem.map((item, index) => {
         if (item.item.item_id === action.payload) {
           state.myItem.splice(index, 1);
