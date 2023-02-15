@@ -22,6 +22,7 @@ public class ItemResponseDto {
     private Integer item_heating;
     private Integer item_move_in_type;
     private String item_move_in_date;
+    private Integer item_manage_fee;
     private Integer item_manage_type;
     private String item_title;
     private String item_description;
@@ -63,6 +64,7 @@ public class ItemResponseDto {
         this.item_heating = entity.getItem_heating();
         this.item_move_in_type = entity.getItem_move_in_type();
         this.item_move_in_date = entity.getItem_move_in_date();
+        this.item_manage_fee = entity.getItem_manage_fee();
         this.item_manage_type = entity.getItem_manage_type();
         this.item_title = entity.getItem_title();
         this.item_description = entity.getItem_description();
