@@ -19,7 +19,6 @@ export const FilterItemAsync = createAsyncThunk(
       const response = await axios.post(
         '/items/filter', data
       );
-      console.log('응답 왔음')
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -34,7 +33,7 @@ export const FilterBroadcastAsync = createAsyncThunk(
       const response = await axios.post(
         '/broadcasts/filter', data
       );
-      console.log('응답 왔음')
+      console.log(response.data)
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -67,7 +66,7 @@ const filterSlice = createSlice({
     builder.addCase(FilterItemAsync.fulfilled, (state, action) => {
       state.filterItemLoading = false;
       state.filterItemDone = true;
-      state.items = action.payload.content;
+      state.filterItem = action.payload;
     });
     builder.addCase(FilterItemAsync.rejected, (state, action) => {
       state.filterItemLoading = false;
@@ -81,7 +80,7 @@ const filterSlice = createSlice({
     builder.addCase(FilterBroadcastAsync.fulfilled, (state, action) => {
       state.filterBroadcastLoading = false;
       state.filterBroadcastDone = true;
-      state.items = action.payload.content;
+      state.filterBroadcast = action.payload;
     });
     builder.addCase(FilterBroadcastAsync.rejected, (state, action) => {
       state.filterBroadcastLoading = false;
