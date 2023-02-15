@@ -50,39 +50,41 @@ public class ItemQueryRepository {
                 }
                 if (filter.getItem_deal_type()[i] == 1)//보증금
                     if (filter.getItem_price_house_deposit() != null)
-                        builder.or(itemPrice.item_price_house_deposit.between(filter.getItem_price_house_deposit()[0],filter.getItem_price_house_deposit()[1]));
+                        tmp.and(itemPrice.item_price_house_deposit.between(filter.getItem_price_house_deposit()[0],filter.getItem_price_house_deposit()[1]));
                 if (filter.getItem_deal_type()[i] == 2) //매매
                     if (filter.getItem_price_buy_house() != null)
-                        builder.or(itemPrice.item_price_buy_house.between(filter.getItem_price_buy_house()[0],filter.getItem_price_buy_house()[1]));
+                        tmp.and(itemPrice.item_price_buy_house.between(filter.getItem_price_buy_house()[0],filter.getItem_price_buy_house()[1]));
+                //방 크기
+                if (filter.getItem_exclusive_area() != null)
+                    tmp.and(item.item_exclusive_area.between(filter.getItem_exclusive_area()[0],filter.getItem_exclusive_area()[1]));
             }
         }
 
         builder.and(tmp);
 
-        //방 크기
-        if (filter.getItem_exclusive_area() != null)
-            builder.and(item.item_exclusive_area.between(filter.getItem_exclusive_area()[0],filter.getItem_exclusive_area()[1]));
-
+        tmp = new BooleanBuilder();
         //층수
         if (filter.getItem_floor() != null) {
             for (int i = 0; i < filter.getItem_floor().length; i++) {
                 if (filter.getItem_floor()[i] == 0) {
-                    builder.and(item.item_floor.lt(0));
+                    tmp.and(item.item_floor.lt(0));
                 }
                 if (filter.getItem_floor()[i] == 1) {
-                    builder.and(item.item_floor.eq(1));
+                    tmp.and(item.item_floor.eq(1));
                 }
                 if (filter.getItem_floor()[i] == 2) {
-                    builder.and(item.item_floor.eq(2));
+                    tmp.and(item.item_floor.eq(2));
                 }
                 if (filter.getItem_floor()[i] == 3) {
-                    builder.and(item.item_floor.eq(3));
+                    tmp.and(item.item_floor.eq(3));
                 }
                 if (filter.getItem_floor()[i] == 4) {
-                    builder.and(item.item_floor.gt(3));
+                    tmp.and(item.item_floor.gt(3));
                 }
             }
         }
+
+        builder.and(tmp);
 
         //사용승인일
         LocalDate now = LocalDate.now();
@@ -149,7 +151,7 @@ public class ItemQueryRepository {
                 tmp.and(option.option_doorlock.eq(true));
         }
 
-        builder.and(tmp);
+        builder.or(tmp);
 
         if (builder != null) {
             //item_id 연결
