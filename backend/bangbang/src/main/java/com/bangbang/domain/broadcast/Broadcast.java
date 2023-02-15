@@ -43,18 +43,21 @@ public class Broadcast extends BroadcastDatetime{
   @OneToOne(fetch = FetchType.LAZY)
   private Image image;     //FK
 
+  @Column(name = "image_path")
+  private String imagePath;
+
   @Column(name = "broadcast_room_id", length = 45, nullable = false)
   private String broadcastRoomId;
 
   @Builder
   public Broadcast(Long broadcastId, String broadcastDescription, Integer broadcastStatus,
-      String broadcastTitle, Long itemId, Image image, LocalDateTime broadcastReservationTime, String broadcastRoomId){
+      String broadcastTitle, Long itemId, String imagePath, LocalDateTime broadcastReservationTime, String broadcastRoomId){
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastStatus = broadcastStatus;
     this.broadcastTitle = broadcastTitle;
     this.itemId = itemId;
-    this.image = image;
+    this.imagePath = imagePath;
     this.broadcastReservationTime = broadcastReservationTime;
     this.broadcastRoomId = broadcastRoomId;
   }
