@@ -122,6 +122,7 @@ function ItemSearchAll() {
       {items && items.length ? items.map((item, index) => (
         <SearchItem
           item={item}
+          key={item.item_id}
         />
       )
         ) : <h3>검색 결과가 없습니다...</h3>}

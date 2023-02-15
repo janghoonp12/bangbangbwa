@@ -48,16 +48,29 @@ function Filter() {
 
 
   const filtered = () => {
+    // int화 작업
+    const intBuildYear = buildYear.map((elem) => parseInt(elem))
+    const intDealType = dealType.map((elem) => parseInt(elem))
+    const intFloor = floor.map((elem) => parseInt(elem))
+    const intRoomType = roomType.map((elem) => parseInt(elem))
+
+    // 범위 검색 확인
+    const intExclusiveArea = (exclusiveArea[0] !== 0 && exclusiveArea[1] === 0) ? [exclusiveArea[0], 10000000] : exclusiveArea
+    const intBuyPrice = (buyPrice[0] !== 0 && buyPrice[1] === 0) ? [buyPrice[0], 10000000] : buyPrice
+    const intDeposit = (deposit[0] !== 0 && deposit[1] === 0) ? [deposit[0], 10000000] : deposit
+    const intMonthDeposit = (monthDeposit[0] !== 0 && monthDeposit[1] === 0) ? [monthDeposit[0], 10000000] : monthDeposit
+    const intMonthRent = (monthRent[0] !== 0 && monthRent[1] === 0) ? [monthRent[0], 10000000] : monthRent
+
     const data = {
-      "item_build_year": buildYear,
-      "item_deal_type": dealType,
-      "item_exclusive_area": exclusiveArea,
-      "item_floor": floor,
-      "item_price_buy_house": buyPrice,
-      "item_price_house_deposit": deposit,
-      "item_price_month_deposit": monthDeposit,
-      "item_price_month_rent": monthRent,
-      "item_type": roomType,
+      "item_build_year": intBuildYear,
+      "item_deal_type": intDealType,
+      "item_exclusive_area": intExclusiveArea,
+      "item_floor": intFloor,
+      "item_price_buy_house": (dealType.length && dealType.includes('2')) ? intBuyPrice : [-1, -1],
+      "item_price_house_deposit": (dealType.length && dealType.includes('1')) ? intDeposit : [-1, -1],
+      "item_price_month_deposit": (dealType.length && dealType.includes('0')) ? intMonthDeposit : [-1, -1],
+      "item_price_month_rent": (dealType.length && dealType.includes('0')) ? intMonthRent : [-1, -1],
+      "item_type": intRoomType,
       "option": {
         "option_aircon": aircon,
         "option_bed": bed,
@@ -79,7 +92,7 @@ function Filter() {
         "option_washer": washer
       }
     }
-    
+    console.log(data)
     if (where.includes('broadcast')) {
       dispatch(FilterBroadcastAsync(data))
     } else if (where.includes('item')) {
@@ -136,7 +149,7 @@ function Filter() {
   }
 
   // 전용 면적
-  const [exclusiveArea, setExclusiveArea] = useState([0, 100000]);
+  const [exclusiveArea, setExclusiveArea] = useState([0, 0]);
   const exclusiveAreaChange = (value, e) => {
     if (value === 'min') {
       setExclusiveArea([parseInt(e.target.value), exclusiveArea[1]])
@@ -182,10 +195,10 @@ function Filter() {
 
 
   // 가격
-  const [monthRent, setMonthRent] = useState([0, 100000000]);
-  const [monthDeposit, setMonthDeposit] = useState([0, 100000000]);
-  const [deposit, setDeposit] = useState([0, 100000000]);
-  const [buyPrice, setBuyPrice] = useState([0, 100000000]);
+  const [monthRent, setMonthRent] = useState([0, 0]);
+  const [monthDeposit, setMonthDeposit] = useState([0, 0]);
+  const [deposit, setDeposit] = useState([0, 0]);
+  const [buyPrice, setBuyPrice] = useState([0, 0]);
 
   const monthRentChange = (value, e) => {
     if (value === 'min') {
