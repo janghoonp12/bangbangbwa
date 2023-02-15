@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   width: 100%;
-  max-width: 70%;
+  max-width: 100%;
 `;
 
 function Broadcasts() {
