@@ -139,6 +139,22 @@ public class BroadcastRestController {
 
   }
 
+  //방송 시작
+  @PatchMapping(value = "/broker/broadcasts/start/{broadcastId}")
+  @ApiOperation(value = "해당 방송 시작", notes = "해당 방송을 시작합니다.")
+  public ResponseEntity<?> stratBroadcast(@PathVariable Long broadcastId){
+    broadcastService.startBroadcast(broadcastId);
+    try {
+      return new ResponseEntity<Object>(new HashMap<String, Object>() {{
+        put("result", true);
+        put("msg", "방송을 시작합니다.");
+      }}, HttpStatus.OK);
+    } catch (Exception e){
+      e.printStackTrace();
+      return extracted();
+    }
+  }
+
   //방송 삭제(비활성화)
   @PatchMapping(value = "/broker/broadcasts/deactive/{broadcastId}")
   @ApiOperation(value = "해당 방송 삭제", notes = "해당 방송을 비활성화합니다.")
