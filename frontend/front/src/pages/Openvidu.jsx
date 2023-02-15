@@ -535,7 +535,7 @@ class Openvidu extends Component {
       this.setState({
         publisher: newPublisher,
         mainStreamManager: newPublisher,
-        camera: this.state.camera.length,
+        camera: this.state.camDevices.length,
       })
       // this.state.session.unpublish(this.state.publisher).then(() => {
       //   console.log('Old publisher unpublished!')
