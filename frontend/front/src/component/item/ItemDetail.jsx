@@ -109,6 +109,22 @@ function ItemDetail() {
   }
   const { itemDetail } = useSelector((state) => state.itemSlice);
   useEffect(() => {
+    let recentItemData = JSON.parse(sessionStorage.getItem("recentItemData"))
+    if (recentItemData === null) {
+      sessionStorage.setItem("recentItemData", JSON.stringify([itemDetail]));
+    } else {
+      let status = true
+      for (let i = 0; i < recentItemData.length; i++) {
+        if (recentItemData[i].item_id === itemDetail.item_id) {
+          status = false
+          break
+        }
+      }
+      if (status) {
+        recentItemData.push(itemDetail)
+        sessionStorage.setItem("recentItemData", JSON.stringify(recentItemData));
+      }
+    }
     // 마커
     var marker = [
       {
