@@ -53,7 +53,7 @@ function BroadcastListItem(props) {
 
   return (
     <SCardDiv onDoubleClick={onClick}>
-      <SCardImg variant="top" src="logo512.png" alt="이미지" />
+      <SCardImg variant="top" src="/logo512.png" alt="이미지" />
       <SCardBodyDiv>
         <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
         <SCardContentP>
