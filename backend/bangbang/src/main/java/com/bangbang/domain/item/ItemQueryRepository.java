@@ -36,20 +36,24 @@ public class ItemQueryRepository {
                 builder.or(item.item_type.eq(filter.getItem_type()[i]));
             }
         }
+
+        BooleanBuilder tmp = new BooleanBuilder();
         //거래 종류
         if (filter.getItem_deal_type() != null) {
             for (int i = 0; i < filter.getItem_deal_type().length; i++) {
                 if (filter.getItem_deal_type()[i] == 0) {
-                    builder.andAnyOf(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
+                    tmp.and(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
                     //월세
                     if (filter.getItem_price_month_rent() != null)
-                        builder.and(itemPrice.item_price_month_rent.between(filter.getItem_price_month_rent()[0],filter.getItem_price_month_rent()[1]));
+                        tmp.and(itemPrice.item_price_month_rent.between(filter.getItem_price_month_rent()[0],filter.getItem_price_month_rent()[1]));
                     //월세 보증금
                     if (filter.getItem_price_month_deposit() != null)
-                        builder.and(itemPrice.item_price_month_deposit.between(filter.getItem_price_month_deposit()[0],filter.getItem_price_month_deposit()[1]));
+                        tmp.and(itemPrice.item_price_month_deposit.between(filter.getItem_price_month_deposit()[0],filter.getItem_price_month_deposit()[1]));
                 }
             }
         }
+
+        builder.and(tmp);
 
         //매매가
         if (filter.getItem_price_buy_house() != null)
@@ -106,56 +110,59 @@ public class ItemQueryRepository {
             }
         }
 
+        tmp = new BooleanBuilder();
         //옵션
         if (filter.getOption() != null) {
             Option f = filter.getOption();
             if (option.option_elevator.equals(f.isOption_elevator()))
-                builder.and(option.option_elevator.eq(true));
+                tmp.and(option.option_elevator.eq(true));
             if (option.option_veranda.equals(f.isOption_veranda()))
-                builder.and(option.option_veranda.eq(true));
+                tmp.and(option.option_veranda.eq(true));
             if (option.option_parking.equals(f.isOption_parking()))
-                builder.and(option.option_parking.eq(true));
+                tmp.and(option.option_parking.eq(true));
             if (option.option_duplex.equals(f.isOption_duplex()))
-                builder.and(option.option_duplex.eq(true));
+                tmp.and(option.option_duplex.eq(true));
             if (option.option_separation.equals(f.isOption_separation()))
-                builder.and(option.option_separation.eq(true));
+                tmp.and(option.option_separation.eq(true));
             if (option.option_induction.equals(f.isOption_induction()))
-                builder.and(option.option_induction.eq(true));
+                tmp.and(option.option_induction.eq(true));
             if (option.option_microwave.equals(f.isOption_microwave()))
-                builder.and(option.option_microwave.eq(true));
+                tmp.and(option.option_microwave.eq(true));
             if (option.option_aircon.equals(f.isOption_aircon()))
-                builder.and(option.option_aircon.eq(true));
+                tmp.and(option.option_aircon.eq(true));
             if (option.option_washer.equals(f.isOption_washer()))
-                builder.and(option.option_washer.eq(true));
+                tmp.and(option.option_washer.eq(true));
             if (option.option_tv.equals(f.isOption_tv()))
-                builder.and(option.option_tv.eq(true));
+                tmp.and(option.option_tv.eq(true));
             if (option.option_closet.equals(f.isOption_closet()))
-                builder.and(option.option_closet.eq(true));
+                tmp.and(option.option_closet.eq(true));
             if (option.option_bed.equals(f.isOption_bed()))
-                builder.and(option.option_bed.eq(true));
+                tmp.and(option.option_bed.eq(true));
             if (option.option_table.equals(f.isOption_table()))
-                builder.and(option.option_table.eq(true));
+                tmp.and(option.option_table.eq(true));
             if (option.option_shoe.equals(f.isOption_shoe()))
-                builder.and(option.option_shoe.eq(true));
+                tmp.and(option.option_shoe.eq(true));
             if (option.option_bidet.equals(f.isOption_bidet()))
-                builder.and(option.option_bidet.eq(true));
+                tmp.and(option.option_bidet.eq(true));
             if (option.option_gasrange.equals(f.isOption_gasrange()))
-                builder.and(option.option_gasrange.eq(true));
+                tmp.and(option.option_gasrange.eq(true));
             if (option.option_refrigerator.equals(f.isOption_refrigerator()))
-                builder.and(option.option_refrigerator.eq(true));
+                tmp.and(option.option_refrigerator.eq(true));
             if (option.option_doorlock.equals(f.isOption_doorlock()))
-                builder.and(option.option_doorlock.eq(true));
+                tmp.and(option.option_doorlock.eq(true));
         }
+
+        builder.and(tmp);
 
         if (builder != null) {
             //item_id 연결
-            builder.andAnyOf(item.item_id.eq(itemPrice.item_id));
-            builder.andAnyOf(item.item_id.eq(manageOption.item_id));
-            builder.andAnyOf(item.item_id.eq(option.item_id));
+            builder.and(item.item_id.eq(itemPrice.item_id));
+            builder.and(item.item_id.eq(manageOption.item_id));
+            builder.and(item.item_id.eq(option.item_id));
 
             //활성상태(삭제, 팔리지 않은)인 게시글만
-            builder.andAnyOf(item.item_status.eq(1));
-            builder.andAnyOf(item.item_deal_complete.eq(false));
+            builder.and(item.item_status.eq(1));
+            builder.and(item.item_deal_complete.eq(false));
         }
 
         return queryFactory
