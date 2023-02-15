@@ -85,7 +85,6 @@ function MyBroadcastListItem(props) {
     dispatch(choiceWatchingBroadCast(myBroadcast))
     navigate(`/broadcasts/${myBroadcast.broadcastId}`)
   }
-  console.log(myBroadcast)
   return (
     <Wrapper>
       <div>
