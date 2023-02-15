@@ -38,7 +38,7 @@ AxiosHeaderToken.interceptors.response.use(
       const {config, response} = error;
       console.log(config);
       console.log(response);
-      if(response.status === 401) {
+      if(response.status === 403) {
           const originRequest = config;
           await reissueAccessToken();
           originRequest.headers["X-AUTH-TOKEN"] = `Bearer ${sessionStorage.getItem("access-token")}`;

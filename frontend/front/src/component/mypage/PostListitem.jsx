@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import itemImage from "../../assets/logo.png"
 import { useDispatch } from 'react-redux';
-import { searchDetailItemAsync } from "../../reducers/itemSlice"
+import { searchDetailItemAsync, DeleteItemAsync, deleteMyItem, choiceItemDetail } from "../../reducers/itemSlice"
+import { useNavigate } from "react-router-dom";
+import { Button } from 'antd';
+import Swal from "sweetalert2";
+
 
 const Wrapper = styled.div`
   width: calc(100% - 32px);
@@ -13,11 +17,7 @@ const Wrapper = styled.div`
   // justify-content: center;
   border: 1px solid grey;
   border-radius: 8px;
-  cursor: pointer;
   background: white;
-  :hover {
-    background: lightgrey;
-  }
 `;
 
 const STitleTextP = styled.p`
@@ -55,12 +55,28 @@ const STextDiv = styled.div`
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function PostListItem(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const itemClick = () => {
+  const ifnoItem = () => {
     dispatch(searchDetailItemAsync(props.post.item.item_id))
   }
+  const modify = () => {
+    dispatch(choiceItemDetail(props.post))
+    navigate(`/items/modify/${props.post.item.item_id}`)
+  }
+  const deleteItem = () => {
+    dispatch(DeleteItemAsync(props.post.item.item_id))
+    dispatch(deleteMyItem(props.post.item.item_id))
+    Swal.fire({
+      icon: 'success',
+      title: '매물 삭제 성공!',
+      showConfirmButton: false,
+      timer: 500
+    })
+  }
+
   return (
-    <Wrapper onClick={itemClick}>
+    <Wrapper>
       <div>
         <SItemImg src={itemImage} alt="이미지샘플"/>
       </div>
@@ -70,6 +86,11 @@ function PostListItem(props) {
           <SContentTextP>{props.post.item.item_type}</SContentTextP>
           <SContentTextP>{props.post.item.item_building_type}</SContentTextP>
           <SContentTextP>{props.post.item.item_manage_fee}</SContentTextP>
+        </SContentDiv>
+      </STextDiv>
+      <STextDiv>
+        <SContentDiv>
+        <Button onClick={ifnoItem}>조회</Button><Button type="primary" onClick={modify}>수정</Button><Button danger onClick={deleteItem}>삭제</Button>
         </SContentDiv>
       </STextDiv>
       

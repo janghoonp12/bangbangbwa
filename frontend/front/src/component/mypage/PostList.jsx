@@ -21,7 +21,6 @@ function PostList(props) {
   const navigate = useNavigate();
   const { posts, onClickItem } = props;
   const { searchDetailItemDone, itemDetail } = useSelector((state) => state.itemSlice);
-  
   useEffect(() => {
     if (searchDetailItemDone) {
       dispatch(clearSearchDetailItemDone())
