@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { noticeFileUploadAsync} from "../../reducers/fileSlice"
+import { broadcastFileUploadAsync } from "../../reducers/fileSlice"
 
 function FileData() {
   const [file, setFile] = useState(null); //파일
@@ -11,7 +11,7 @@ function FileData() {
     const fd = new FormData();
     fd.append("file", event.target.files[0]);
     
-    dispatch(noticeFileUploadAsync(fd))
+    dispatch(broadcastFileUploadAsync(fd))
   }
 
   return(

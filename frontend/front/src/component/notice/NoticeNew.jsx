@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Button from "../common/ui/Button";
 import { writeNoticeAsync } from "../../reducers/noticeSlice"
 import NoticeFileData from "../common/NoticeFileData";
+import Swal from "sweetalert2";
 
 
 const Wrapper = styled.div`
@@ -59,6 +60,13 @@ function NoticeNew() {
 
   useEffect(() => {
     if (writeNoticeDone) {
+      Swal.fire({
+        icon: 'success',
+        title: '공지사항 작성 성공!',
+        showConfirmButton: false,
+        timer: 500
+      })
+
       navigate('/notices');
     }
   }, [writeNoticeDone])

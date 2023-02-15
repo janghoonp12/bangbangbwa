@@ -51,7 +51,6 @@ const SButton = styled.button`
 
 function ItemDetail() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { noticeDetail } = useSelector((state) => state.noticeSlice);
   const { me } = useSelector((state) => state.userSlice);
   const {images} = useSelector((state) => state.fileSlice)
@@ -66,11 +65,6 @@ function ItemDetail() {
     navigate(`/notices/modify/${noticeDetail.notice_id}`)
   }
 
-  useEffect(() => {
-   dispatch(noticeGetFileAsync(noticeDetail.image_id))
-  }, [])
-  console.log(noticeDetail);
-  console.log(images);
   return (
     <Wrapper>
       <h1 style={{marginTop: '50px'}}>공지사항</h1>

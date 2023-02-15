@@ -93,6 +93,10 @@ const fileSlice = createSlice({
   name: "file",
   initialState,
   reducers: {
+    clearNoticeGetImagesDone: (state) => {
+      state.noticeGetImagesDone = false
+      console.log(state.noticeGetImagesDone)
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(noticeFileUploadAsync.pending, (state, action) => {
@@ -105,7 +109,6 @@ const fileSlice = createSlice({
       state.noticeUploadImagesDone = true;
       console.log(action.payload);
       state.images = action.payload;
-      alert('공지사항 파일 업로드 성공')
     });
     builder.addCase(noticeFileUploadAsync.rejected, (state, action) => {
       state.noticeUploadImagesLoading = false;
@@ -122,7 +125,6 @@ const fileSlice = createSlice({
       state.broadcastUploadImagesLoading = false;
       state.broadcastUploadImagesDone = true;
       state.images = action.payload;
-      alert('방송 파일 업로드 성공')
     });
     builder.addCase(broadcastFileUploadAsync.rejected, (state, action) => {
       state.broadcastUploadImagesLoading = false;
@@ -139,7 +141,6 @@ const fileSlice = createSlice({
       state.broadcastGetImagesLoading = false;
       state.broadcastGetImagesDone = true;
       state.images = action.payload;
-      alert('방송 파일 불러오기 성공')
     });
     builder.addCase(broadcastGetFileAsync.rejected, (state, action) => {
       state.broadcastGetImagesLoading = false;
@@ -154,10 +155,8 @@ const fileSlice = createSlice({
     });
     builder.addCase(noticeGetFileAsync.fulfilled, (state, action) => {
       state.noticeGetImagesLoading = false;
-      console.log(action);
       state.noticeGetImagesDone = true;
       state.images = action.payload;
-      alert('공지사항 파일 불러오기 성공')
     });
     builder.addCase(noticeGetFileAsync.rejected, (state, action) => {
       state.noticeGetImagesLoading = false;
@@ -167,6 +166,6 @@ const fileSlice = createSlice({
   }
 });
 
-export const {  } = fileSlice.actions;
+export const { clearNoticeGetImagesDone } = fileSlice.actions;
 
 export default fileSlice.reducer;
