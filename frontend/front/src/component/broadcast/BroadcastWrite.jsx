@@ -8,6 +8,7 @@ import { writeBroadcastAsync, clearWriteBroadcastDone } from "../../reducers/bro
 import { searchMyItemAsync } from "../../reducers/itemSlice";
 import BroadcastFileData from "../common/BroadcastFileData"
 import Swal from "sweetalert2";
+import { ImagesearchRoller } from "@mui/icons-material";
 
 const Wrapper = styled.div`
     display: flex;
@@ -67,7 +68,7 @@ function BroadcastWrite() {
   const itemChange = (e) => {
     setItem(e.target.value)
   }
-
+  
   const createBroadcast = () => {
     dispatch(writeBroadcastAsync(
       {
@@ -75,7 +76,7 @@ function BroadcastWrite() {
         "broadcastReservationTime" : reservationStartDate + "T" + reservationStartTime + ":00",
         "broadcastTitle": title,
         "itemId": item,
-        "imageId": images.imageId
+        "imagePath" : images
       }
     ))
     navigate()

@@ -2,7 +2,7 @@ import React from "react";
 // import Card from 'react-bootstrap/Card';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice"
 
 const SCardDiv = styled.div`
@@ -46,14 +46,16 @@ const SCardContentP = styled.p`
 function BroadcastListItem(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { images } = useSelector((state) => state.fileSlice);
   const onClick = () => {
     dispatch(choiceWatchingBroadCast(props.posts))
     navigate(`/broadcasts/${props.posts.broadcastId}`)
   }
+  const imgPath = images;
 
   return (
     <SCardDiv onDoubleClick={onClick}>
-      <SCardImg variant="top" src="/test.jpg" alt="이미지" />
+      <SCardImg variant="top" src={imgPath} alt="이미지" />
       <SCardBodyDiv>
         <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
         <SCardContentP>

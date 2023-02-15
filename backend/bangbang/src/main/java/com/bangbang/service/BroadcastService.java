@@ -34,8 +34,8 @@ public class BroadcastService {
   // 방송 등록
   @Transactional
   public void newBroadcast(BroadcastSaveRequestDto requestDto) throws Exception{
-    Image image = imageRepository.findByImageId(requestDto.getImageId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
+//    Image image = imageRepository.findByImagePath(requestDto.getImagePath())
+//            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
     int leftLimit = 48; // numeral '0'
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 45;
@@ -49,7 +49,7 @@ public class BroadcastService {
       new Exception(new IllegalArgumentException("해당 세션 ID가 존재합니다."));
     }
     else {
-      broadcastRepository.save(requestDto.toEntity(image, generatedString));
+      broadcastRepository.save(requestDto.toEntity(generatedString));
     }
   }
 

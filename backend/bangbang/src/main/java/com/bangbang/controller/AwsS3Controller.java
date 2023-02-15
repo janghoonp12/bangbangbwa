@@ -27,15 +27,15 @@ public class AwsS3Controller {
   @PostMapping(value = "/admin/images/new")
   public ResponseEntity<?> noticeUploadImage(@RequestParam("file") MultipartFile multipartFile)
       throws IOException, NoSuchAlgorithmException {
-    ImageSaveRequestDto imageDto = awsS3Service.uploadImage(multipartFile);
+    ImageSaveRequestDto imageDto = awsS3Service.noticeUploadImage(multipartFile);
 
     return new ResponseEntity<>(imageDto, HttpStatus.OK);
   }
 
   @PostMapping(value = "/broker/images/new")
   public ResponseEntity<?> broadcastUploadImage(@RequestParam("file") MultipartFile multipartFile) throws IOException, NoSuchAlgorithmException{
-    ImageSaveRequestDto imageSaveRequestDto = awsS3Service.uploadImage(multipartFile);
+    String url = awsS3Service.broadcastUploadImage(multipartFile);
 
-    return new ResponseEntity<>(imageSaveRequestDto, HttpStatus.OK);
+    return new ResponseEntity<>(url, HttpStatus.OK);
   }
 }
