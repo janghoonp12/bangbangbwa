@@ -6,13 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class BroadcastDeactiveRequestDto {
+public class BroadcastStartRequestDto {
     private Long broadcastId;
     private Integer broadcastStatus;
 
     @Builder
-    public BroadcastDeactiveRequestDto(Long broadcastId){
+    public BroadcastStartRequestDto(Long broadcastId){
         this.broadcastId = broadcastId;
-        this.broadcastStatus = 3;
+        this.broadcastStatus = 2;
     }
 }

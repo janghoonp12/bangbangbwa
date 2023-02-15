@@ -69,9 +69,13 @@ public class Broadcast extends BroadcastDatetime{
     this.imagePath = imagePath;
     this.broadcastReservationTime = broadcastReservationTime;
   }
+  public void starter(Long broadcastId){
+    this.broadcastId = broadcastId;
+    this.broadcastStatus = 2;
+  }
   public void deactive(Long broadcastId){
     this.broadcastId = broadcastId;
-    this.broadcastStatus = 0;
+    this.broadcastStatus = 3;
   }
 
 }

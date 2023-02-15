@@ -98,6 +98,18 @@ public class BroadcastService {
     }
   }
 
+  //방송 시작
+  @Transactional
+  public void startBroadcast(Long id){
+    Optional<Broadcast> broadcast = broadcastRepository.findByBroadcastId(id);
+    broadcast.orElseThrow(() -> new IllegalArgumentException("해당 방송이 없습니다. id = " + id));
+    try{
+      broadcast.get().starter(id);
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
   //방송 삭제
   @Transactional
   public void deactivateBroadcast(Long id) {
