@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import HotItemListItem from "./HotItemListItem";
 import throttle from "../../utils/Throttle"
+
+import { useDispatch, useSelector } from 'react-redux';
+import { clearSearchDetailItemDone } from "../../reducers/itemSlice"
 
 const Wrapper = styled.div`
     display: flex;
@@ -24,8 +27,7 @@ const Wrapper = styled.div`
     }
 `;
 
-function HotItemList(props) {
-    const { posts, onClickItem } = props;
+function HotItemList({ children }) {
 
     // 좌우 스크롤 움직임은 해당 DOM의 scrollLeft로 움직임
     // 해당 scrollLeft를 얻기 위해 useRef로 DOM에 접근
@@ -62,6 +64,18 @@ function HotItemList(props) {
     const delay = 10;
     const onThrottleDragMove = throttle(onDragMove, delay);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const { searchDetailItemDone, itemDetail } = useSelector((state) => state.itemSlice);
+
+    useEffect(() => {
+      if (searchDetailItemDone) {
+        dispatch(clearSearchDetailItemDone())
+        navigate(`/items/${itemDetail.item_id}`)
+      }
+    })
+
 
     return (
       <Wrapper
@@ -71,17 +85,7 @@ function HotItemList(props) {
         onMouseLeave={onDragEnd}
         ref={scrollRef}
       >
-        {posts.map((post, index) => {
-          return (
-            <HotItemListItem
-              key={post.id}
-              post={post}
-              onClick={() => {
-                onClickItem(post);
-              }}
-            />
-          );
-        })}
+        {children}
       </Wrapper>
     );
 }
