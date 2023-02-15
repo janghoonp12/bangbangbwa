@@ -48,6 +48,7 @@ function BroadcastAll() {
 
   const { liveBroadcast } = useSelector((state) => state.broadcastSlice);
   const { endBroadcast } = useSelector((state) => state.broadcastSlice);
+  const { me } = useSelector((state) => state.userSlice);
   
   useEffect(() => {
     dispatch(SearchLiveBroadcastAsync(
@@ -66,8 +67,9 @@ function BroadcastAll() {
 
   return (
   <div>
-    <SButtonLineDiv>
-      <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button>
+      <SButtonLineDiv>
+        { me ? me.role === "ROLE_BROKER" ? <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button> : <></> : <></>}
+      {/* <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button> */}
       <div />
       <FilterButton />
     </SButtonLineDiv>

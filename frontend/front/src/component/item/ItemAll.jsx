@@ -43,6 +43,7 @@ function Items() {
   }
 
   const { items, last, currentPage } = useSelector((state) => state.itemSlice);
+  const { me } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
     dispatch(initItemState())
@@ -66,7 +67,7 @@ function Items() {
   return (
     <div>
       <SButtonLineDiv>
-        <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button>
+      { me ? me.role === "ROLE_BROKER" ? <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button> : <></> : <></>}
         <div />
         <FilterButton />
       </SButtonLineDiv>

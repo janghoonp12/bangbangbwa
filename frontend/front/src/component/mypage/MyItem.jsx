@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PostList from "./PostList";
-import data from "../../data.json";
-import logosample from "../../assets/logosample.png"
 import Pagination from "../common/ui/Pagination";
 import { useSelector } from 'react-redux';
 
