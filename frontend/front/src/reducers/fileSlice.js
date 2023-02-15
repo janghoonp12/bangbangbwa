@@ -26,7 +26,7 @@ export const noticeFileUploadAsync = createAsyncThunk(
         "Content-Type": "multipart/form-data",
       }
       const response = await AxiosHeaderToken.post(
-        '/admin/images/new',
+        '/admin/images',
         data,
         config
       );
@@ -157,7 +157,6 @@ const fileSlice = createSlice({
       console.log(action);
       state.noticeGetImagesDone = true;
       state.images = action.payload;
-      alert('공지사항 파일 불러오기 성공')
     });
     builder.addCase(noticeGetFileAsync.rejected, (state, action) => {
       state.noticeGetImagesLoading = false;

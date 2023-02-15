@@ -66,9 +66,9 @@ function ItemDetail() {
     navigate(`/notices/modify/${noticeDetail.notice_id}`)
   }
 
-  useEffect(() => {
-   dispatch(noticeGetFileAsync(noticeDetail.image_id))
-  }, [])
+  // useEffect(() => {
+  //  dispatch(noticeGetFileAsync(noticeDetail.image_id))
+  // }, [])
   console.log(noticeDetail);
   console.log(images);
   return (

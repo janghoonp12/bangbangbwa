@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { searchDetailNoticeAsync, clearSearchDetailNoticeDone } from "../../reducers/noticeSlice"
+import { noticeGetFileAsync} from "../../reducers/fileSlice"
 
 
 const Std = styled.td`
@@ -17,14 +18,18 @@ function NoticeItem(props) {
   const dispatch = useDispatch();
     const data = props.notice
   const navigate = useNavigate();
-  const { searchDetailNoticeDone } = useSelector((state) => state.noticeSlice);
+  const { searchDetailNoticeDone, noticeDetail } = useSelector((state) => state.noticeSlice);
+  const { noticeGetImagesDone } = useSelector((state) => state.fileSlice);
   
   useEffect(() => {
     if (searchDetailNoticeDone) {
       dispatch(clearSearchDetailNoticeDone())
+      dispatch(noticeGetFileAsync(noticeDetail.image_id))
+    }
+    if (noticeGetImagesDone) {
       navigate(`/notices/${data.notice_id}`)
     }
-  }, [searchDetailNoticeDone])
+  }, [searchDetailNoticeDone, noticeGetImagesDone])
     const onClick = () => {
       dispatch(searchDetailNoticeAsync(data.notice_id))
     }
