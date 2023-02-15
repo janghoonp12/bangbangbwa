@@ -11,7 +11,6 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.bangbang.domain.broadcast.QBroadcast.broadcast;
 import static com.bangbang.domain.item.QItem.item;
 import static com.bangbang.domain.item.QItemPrice.itemPrice;
 import static com.bangbang.domain.item.QManageOption.manageOption;
@@ -41,48 +40,46 @@ public class ItemQueryRepository {
         //거래 종류
         if (filter.getItem_deal_type() != null) {
             for (int i = 0; i < filter.getItem_deal_type().length; i++) {
+                tmp.and(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
+
                 if (filter.getItem_deal_type()[i] == 0) {
-                    tmp.and(item.item_deal_type.eq(filter.getItem_deal_type()[i]));
-                    //월세
-                    if (filter.getItem_price_month_rent() != null)
+                    if (filter.getItem_price_month_rent() != null) //월세
                         tmp.and(itemPrice.item_price_month_rent.between(filter.getItem_price_month_rent()[0],filter.getItem_price_month_rent()[1]));
-                    //월세 보증금
-                    if (filter.getItem_price_month_deposit() != null)
+                    if (filter.getItem_price_month_deposit() != null) //월세 보증금
                         tmp.and(itemPrice.item_price_month_deposit.between(filter.getItem_price_month_deposit()[0],filter.getItem_price_month_deposit()[1]));
                 }
+                if (filter.getItem_deal_type()[i] == 1)//보증금
+                    if (filter.getItem_price_house_deposit() != null)
+                        builder.or(itemPrice.item_price_house_deposit.between(filter.getItem_price_house_deposit()[0],filter.getItem_price_house_deposit()[1]));
+                if (filter.getItem_deal_type()[i] == 2) //매매
+                    if (filter.getItem_price_buy_house() != null)
+                        builder.or(itemPrice.item_price_buy_house.between(filter.getItem_price_buy_house()[0],filter.getItem_price_buy_house()[1]));
             }
         }
 
         builder.and(tmp);
 
-        //매매가
-        if (filter.getItem_price_buy_house() != null)
-            builder.or(itemPrice.item_price_buy_house.between(filter.getItem_price_buy_house()[0],filter.getItem_price_buy_house()[1]));
-        //보증금
-        if (filter.getItem_price_house_deposit() != null)
-            builder.or(itemPrice.item_price_house_deposit.between(filter.getItem_price_house_deposit()[0],filter.getItem_price_house_deposit()[1]));
-
         //방 크기
         if (filter.getItem_exclusive_area() != null)
-            builder.or(item.item_exclusive_area.between(filter.getItem_exclusive_area()[0],filter.getItem_exclusive_area()[1]));
+            builder.and(item.item_exclusive_area.between(filter.getItem_exclusive_area()[0],filter.getItem_exclusive_area()[1]));
 
         //층수
         if (filter.getItem_floor() != null) {
             for (int i = 0; i < filter.getItem_floor().length; i++) {
                 if (filter.getItem_floor()[i] == 0) {
-                    builder.or(item.item_floor.lt(0));
+                    builder.and(item.item_floor.lt(0));
                 }
                 if (filter.getItem_floor()[i] == 1) {
-                    builder.or(item.item_floor.eq(1));
+                    builder.and(item.item_floor.eq(1));
                 }
                 if (filter.getItem_floor()[i] == 2) {
-                    builder.or(item.item_floor.eq(2));
+                    builder.and(item.item_floor.eq(2));
                 }
                 if (filter.getItem_floor()[i] == 3) {
-                    builder.or(item.item_floor.eq(3));
+                    builder.and(item.item_floor.eq(3));
                 }
                 if (filter.getItem_floor()[i] == 4) {
-                    builder.or(item.item_floor.gt(3));
+                    builder.and(item.item_floor.gt(3));
                 }
             }
         }
@@ -93,19 +90,19 @@ public class ItemQueryRepository {
         if (filter.getItem_build_year() != null) {
             for (int i = 0; i < filter.getItem_build_year().length; i++) {
                 if (filter.getItem_build_year()[i] == 0) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(1));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(1));
                 }
                 if (filter.getItem_build_year()[i] == 1) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(5));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(5));
                 }
                 if (filter.getItem_build_year()[i] == 2) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(10));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(10));
                 }
                 if (filter.getItem_build_year()[i] == 3) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(15));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(15));
                 }
                 if (filter.getItem_build_year()[i] == 4) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(15));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(15));
                 }
             }
         }
