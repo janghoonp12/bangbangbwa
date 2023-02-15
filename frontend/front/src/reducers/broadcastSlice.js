@@ -18,6 +18,9 @@ export const initialState = {
   writeBroadcastLoading: false,
   writeBroadcastDone: false,
   writeBroadcastError: null,
+  deleteBroadcastLoading: false,
+  deleteBroadcastDone: false,
+  deleteBroadcastError: null,
   liveBroadcast: null,
   endBroadcast: null,
   myBroadcast: null,
@@ -96,6 +99,20 @@ export const findMyItemAsync = createAsyncThunk(
   }
 );
 
+export const DeleteBroadcastAsync = createAsyncThunk(
+  'item/DELETE_MY_BROADCAST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.patch(
+        `/broker/broadcasts/deactivate/${data}`,
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 const broadcastSlice = createSlice({
   name: "broadcast",
   initialState,
@@ -106,11 +123,18 @@ const broadcastSlice = createSlice({
     },
     clearWriteBroadcastDone: (state) => {
       state.writeBroadcastDone = false
-      console.log(state.writeBroadcastDone, "이거 왜 안됨")
     },
     choiceWatchingBroadCast: (state, action) => {
       state.watchingBroadCast = action.payload
     },
+    deleteMyBroadcast: (state, action) => {
+      state.myBroadcast.map((item, index) => {
+        // if (item.item_id === action.payload) {
+        //   state.myItem.splice(index, 1);
+        //   return
+        // }
+      })
+    }
     
   },
   extraReducers: (builder) => {
@@ -156,6 +180,7 @@ const broadcastSlice = createSlice({
       state.SearchMyBroadcastLoading = false;
       state.SearchMyBroadcastDone = true;
       state.myBroadcast = action.payload;
+      console.log(state.myBroadcast)
     });
     builder.addCase(searchMyBroadcastAsync.rejected, (state, action) => {
       state.SearchMyBroadcastLoading = false;
@@ -181,8 +206,21 @@ const broadcastSlice = createSlice({
       state.SearchEndBroadcastLoading = false;
       state.SearchEndBroadcastError = action.error
     });
+    builder.addCase(DeleteBroadcastAsync.pending, (state, action) => {
+      state.deleteBroadcastLoading = true;
+      state.deleteBroadcastDone = null;
+      state.deleteBroadcastError = false;
+    });
+    builder.addCase(DeleteBroadcastAsync.fulfilled, (state, action) => {
+      state.deleteBroadcastLoading = false;
+      state.deleteBroadcastDone = true;
+    });
+    builder.addCase(DeleteBroadcastAsync.rejected, (state, action) => {
+      state.deleteBroadcastLoading = false;
+      state.deleteBroadcastError = action.error
+    });
   }
 });
 
-export const { initBroadcastState, clearWriteBroadcastDone, choiceWatchingBroadCast } = broadcastSlice.actions;
+export const { initBroadcastState, clearWriteBroadcastDone, choiceWatchingBroadCast, deleteMyBroadcast } = broadcastSlice.actions;
 export default broadcastSlice.reducer;
