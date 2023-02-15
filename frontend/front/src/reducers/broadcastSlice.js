@@ -68,12 +68,12 @@ export const searchMyBroadcastAsync = createAsyncThunk(
   }
 );
 
-export const findMyItemAsync = createAsyncThunk(
-  'broadcast/FIND_MY_ITEM',
+export const writeBroadcastAsync = createAsyncThunk(
+  'broadcast/WRITE_BROADCAST',
   async (data, thunkAPI) => {
     try {
-      const response = await AxiosHeaderToken.get(
-        '/broker/mypage/item',
+      const response = await AxiosHeaderToken.post(
+        '/broker/broadcasts/new', data
       );
       return response.data
     } catch (err) {
@@ -82,12 +82,12 @@ export const findMyItemAsync = createAsyncThunk(
   }
 );
 
-export const writeBroadcastAsync = createAsyncThunk(
-  'broadcast/WRITE_BROADCAST',
+export const findMyItemAsync = createAsyncThunk(
+  'broadcast/FIND_MY_ITEM',
   async (data, thunkAPI) => {
     try {
-      const response = await AxiosHeaderToken.post(
-        '/broker/broadcasts/new', data
+      const response = await AxiosHeaderToken.get(
+        '/broker/mypage/item',
       );
       return response.data
     } catch (err) {
@@ -156,7 +156,6 @@ const broadcastSlice = createSlice({
       state.SearchMyBroadcastLoading = false;
       state.SearchMyBroadcastDone = true;
       state.myBroadcast = action.payload;
-      console.log(state.myBroadcast)
     });
     builder.addCase(searchMyBroadcastAsync.rejected, (state, action) => {
       state.SearchMyBroadcastLoading = false;
