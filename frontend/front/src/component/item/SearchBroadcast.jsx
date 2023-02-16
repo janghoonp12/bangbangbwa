@@ -47,7 +47,8 @@ const SCardContentP = styled.p`
 
 function SearchItem(props) {
   const broadcast = props.broadcast
-  const time = broadcast.broadcastReservationTime.split('T')
+  console.log(broadcast)
+  // const time = broadcast.broadcastReservationTime.split('T')
 
   const dispatch = useDispatch();
   
@@ -60,7 +61,7 @@ function SearchItem(props) {
         <SCardImg variant="top" src={logosample} alt="이미지" />
         <SCardBodyDiv>
           <SCardTitleP>{broadcast.broadcastTitle}</SCardTitleP>
-          <SCardContentP>{time[0]} {time[1]}</SCardContentP>
+          {/* <SCardContentP>{time[0]} {time[1]}</SCardContentP> */}
           <SCardContentP>{broadcast.broadcastDescription}</SCardContentP>
         </SCardBodyDiv>
       </SCardDiv>

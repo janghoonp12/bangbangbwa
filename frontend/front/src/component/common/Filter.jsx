@@ -92,7 +92,7 @@ function Filter() {
         "option_washer": washer
       }
     }
-    console.log(data)
+
     if (where.includes('broadcast')) {
       dispatch(FilterBroadcastAsync(data))
     } else if (where.includes('item')) {
@@ -336,10 +336,10 @@ function Filter() {
         <SGridDiv>
           <STitleP>월세</STitleP>
           <SGridListDiv>
-            <SP>보증금 <input onChange={(e) => monthRentChange('min', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이상</SP>
-            <SP>보증금 <input onChange={(e) => monthRentChange('max', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이하</SP>
-            <SP>월세 <input onChange={(e) => monthDepositChange('min', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이상</SP>
-            <SP>월세 <input onChange={(e) => monthDepositChange('max', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이하</SP>
+            <SP>보증금 <input onChange={(e) => monthDepositChange('min', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이상</SP>
+            <SP>보증금 <input onChange={(e) => monthDepositChange('max', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이하</SP>
+            <SP>월세 <input onChange={(e) => monthRentChange('min', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이상</SP>
+            <SP>월세 <input onChange={(e) => monthRentChange('max', e)} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType.length && dealType.includes('0')) ? false : true} /> 이하</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
@@ -362,8 +362,8 @@ function Filter() {
         <SGridDiv>
           <STitleP>면적(제곱미터)</STitleP>
           <SGridListDiv>
-            <SP><input onChange={(e) => exclusiveAreaChange('min', e)} type="number" min="0" placeholder=" 00" style={{width: '100px', marginRight: '20px'}} />이상</SP>
-            <SP><input onChange={(e) => exclusiveAreaChange('max', e)} type="number" min="0" placeholder=" 00" style={{width: '100px', marginRight: '20px'}} />이하</SP>
+            <SP><input onChange={(e) => exclusiveAreaChange('min', e)} type="number" min="0" placeholder=" 00" style={{width: '100px', marginRight: '7px'}} />이상</SP>
+            <SP><input onChange={(e) => exclusiveAreaChange('max', e)} type="number" min="0" placeholder=" 00" style={{width: '100px', marginRight: '7px'}} />이하</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
