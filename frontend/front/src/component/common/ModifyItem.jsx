@@ -73,8 +73,7 @@ function ModifyItem() {
       navigate(-1);
     }
   })
-
-  console.log(itemDetail)  
+ 
 
   // 직접 입력하는 자료
   const [roomType, setRoomType] = useState(itemDetail.item.item_type);
@@ -154,44 +153,44 @@ function ModifyItem() {
         "item_bonbun": oriBon,
         "item_bubun": oriBu,                                      
         "item_build_year": buildYear,
-        "item_building_name": postCode.buildingName,
+        "item_building_name": (postCode) ? postCode.buildingName : itemDetail.item.item_building_name,
         "item_building_type": roomType,
-        "item_buildingcode": postCode.buildingCode,                            
+        "item_buildingcode": (postCode) ? postCode.buildingCode : itemDetail.item.item_buildingcode,                            
         "item_deal_complete": false,
         "item_deal_type": dealType,
         "item_description": item_description,
-        "item_dong": postCode.bname,
-        "item_dongcode": postCode.bcode,  
-        "item_eubmyundongcode": postCode.bcode,   
+        "item_dong": (postCode) ? postCode.bname : itemDetail.item.item_dong,
+        "item_dongcode": (postCode) ? postCode.bcode : itemDetail.item.item_dongcode,  
+        "item_eubmyundongcode": (postCode) ? postCode.bcode : itemDetail.item.item_eubmyundongcode,   
         "item_exclusive_area": exclusiveArea,
         "item_floor": floor,                                                 
         "item_heating": parseInt(heating),        
-        "item_jibun": postCode.jibunAddress,
+        "item_jibun": (postCode) ? postCode.jibunAddress : itemDetail.item.item_jibun,
         "item_lat": lat,
         "item_lng": lng,
         "item_manage_fee": parseInt(manageFee),
         "item_manage_type": 0,
         "item_move_in_date": (moveIn) ? realToday : moveInDate,
         "item_move_in_type": (moveIn) ? 0 : 1,                                    
-        "item_road_name": postCode.roadname,
+        "item_road_name": (postCode) ? postCode.roadname : itemDetail.item.item_road_name,
         "item_road_name_bonbun": oriBon,
         "item_roadname_bubun": oriBu,
-        "item_roadname_code": postCode.roadnameCode,
+        "item_roadname_code": (postCode) ? postCode.roadnameCode : itemDetail.item.item_roadname_code,
         "item_room": roomNum,
-        "item_sigungucode": postCode.sigunguCode,
+        "item_sigungucode": (postCode) ? postCode.sigunguCode : itemDetail.item.item_sigungucode,
         "item_status": 1,
         "item_supply_area": supplyArea,
         "item_toilet": toiletNum,
         "item_title": itemName,
         "item_total_floor": totalFloor,
         "item_type": roomType,
-        "item_zonecode": postCode.zonecode
+        "item_zonecode": (postCode) ? postCode.zonecode : itemDetail.item.item_zonecode
          },
         "itemPrice": {
-          "item_price_buy_house": (dealType === '3') ? buyPrice : null,
-          "item_price_house_deposit": (dealType === '2') ? deposit : null,
-          "item_price_month_deposit": (dealType === '1') ? deposit : null,
-          "item_price_month_rent": (dealType === '1') ? monthRent : null
+          "item_price_buy_house": (dealType === 2) ? buyPrice : null,
+          "item_price_house_deposit": (dealType === 1) ? deposit : null,
+          "item_price_month_deposit": (dealType === 0) ? deposit : null,
+          "item_price_month_rent": (dealType === 0) ? monthRent : null
         },
         "manageOption": {                                          
           "manage_option_clean": optclean,
@@ -223,13 +222,14 @@ function ModifyItem() {
           "option_washer": washer
         }
     }
-    
+    console.log('----data------')
+    console.log(data)
     dispatch(modifyItemAsync(data))
   }
-
+  console.log(itemDetail)
 
   // 변수 실시간 추적
-  const itemNameChange = (e) => {
+  const itemNameChange = (e) => { 
     setItemName(e.target.value)
   }
   const itemDetailChange = (e) => {
@@ -446,40 +446,40 @@ function ModifyItem() {
         <SGridDiv>
           <STitleP>매물 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" checked={(roomType === 0) ? true : false} onChange={(e) => roomTypeChange(0, e)} disabled={(roomType === 1 || !roomType) ? false : true} /> 원룸</SP>
-            <SP><input type="checkbox" checked={(roomType === 1) ? true : false} onChange={(e) => roomTypeChange(1, e)} disabled={(roomType === 2 || !roomType) ? false : true} /> 투,쓰리룸</SP>
-            <SP><input type="checkbox" checked={(roomType === 2) ? true : false} onChange={(e) => roomTypeChange(2, e)} disabled={(roomType === 3 || !roomType) ? false : true} /> 오피스텔</SP>
-            <SP><input type="checkbox" checked={(roomType === 3) ? true : false} onChange={(e) => roomTypeChange(3, e)} disabled={(roomType === 4 || !roomType) ? false : true} /> 아파트</SP>
+            <SP><input type="checkbox" checked={(roomType === 0) ? true : false} onChange={(e) => roomTypeChange(0, e)} disabled={(roomType === 0 || !roomType) ? false : true} /> 원룸</SP>
+            <SP><input type="checkbox" checked={(roomType === 1) ? true : false} onChange={(e) => roomTypeChange(1, e)} disabled={(roomType === 1 || !roomType) ? false : true} /> 투,쓰리룸</SP>
+            <SP><input type="checkbox" checked={(roomType === 2) ? true : false} onChange={(e) => roomTypeChange(2, e)} disabled={(roomType === 2 || !roomType) ? false : true} /> 오피스텔</SP>
+            <SP><input type="checkbox" checked={(roomType === 3) ? true : false} onChange={(e) => roomTypeChange(3, e)} disabled={(roomType === 3 || !roomType) ? false : true} /> 아파트</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>거래 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" checked={(dealType === 0) ? true : false} onChange={(e) => dealTypeChange(0, e)} disabled={(dealType === 1 || !dealType) ? false : true}/> 월세</SP>
-            <SP><input type="checkbox" checked={(dealType === 1) ? true : false} onChange={(e) => dealTypeChange(1, e)} disabled={(dealType === 2 || !dealType) ? false : true}/> 전세</SP>
-            <SP><input type="checkbox" checked={(dealType === 2) ? true : false} onChange={(e) => dealTypeChange(2, e)} disabled={(dealType === 3 || !dealType) ? false : true}/> 매매</SP>
+            <SP><input type="checkbox" checked={(dealType === 0) ? true : false} onChange={(e) => dealTypeChange(0, e)} disabled={(dealType === 0 || !dealType) ? false : true}/> 월세</SP>
+            <SP><input type="checkbox" checked={(dealType === 1) ? true : false} onChange={(e) => dealTypeChange(1, e)} disabled={(dealType === 1 || !dealType) ? false : true}/> 전세</SP>
+            <SP><input type="checkbox" checked={(dealType === 2) ? true : false} onChange={(e) => dealTypeChange(2, e)} disabled={(dealType === 2 || !dealType) ? false : true}/> 매매</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>보증금/전세가</STitleP>
           <div>
-            <input onChange={depositChange} value={(dealType !== 2) ? deposit : '000'} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === '1' || dealType === '2') ? false : true} />&nbsp;만원
+            <input onChange={depositChange} value={(dealType !== 2) ? deposit : '000'} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === 0 || dealType === 1) ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>월세</STitleP>
           <div>
-            <input onChange={monthRentChange} value={(dealType === 0) ? monthRent : '00'} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === '1') ? false : true} />&nbsp;만원
+            <input onChange={monthRentChange} value={(dealType === 0) ? monthRent : '00'} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === 0) ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>매매가</STitleP>
           <div>
-            <input onChange={buyPriceChange} value={(dealType === 2) ? buyPrice : '0000'}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원
+            <input onChange={buyPriceChange} value={(dealType === 2) ? buyPrice : '0000'}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === 2) ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
