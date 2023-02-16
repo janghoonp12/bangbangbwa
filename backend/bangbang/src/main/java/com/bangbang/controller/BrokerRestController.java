@@ -36,9 +36,9 @@ public class BrokerRestController {
     @ApiOperation(value="중개사 신청")
     @PostMapping("/user/brokers/new")
     public ResponseEntity<?> newBroker(@RequestBody BrokerSaveRequestDto broker, HttpServletRequest request) {
+        System.out.println(broker);
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            String token = request.getHeader("X-AUTH-TOKEN");
             Long uid = userService.findUserId(token);
             broker.setUserId(uid);
             brokerService.newBroker(broker);
