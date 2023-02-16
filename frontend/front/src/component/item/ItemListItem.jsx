@@ -39,11 +39,11 @@ const SCardBodyDiv = styled.div`
 
 const SCardTitleP = styled.p`
   margin-top: 10px;
-  font-size: 30px;
+  font-size: 1.5rem;
 `;
 
 const SCardContentP = styled.p`
-  font-size: 20px;
+  font-size: 1.2rem;
 `;
 
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
