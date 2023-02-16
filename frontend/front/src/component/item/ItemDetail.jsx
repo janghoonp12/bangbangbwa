@@ -205,7 +205,7 @@ function ItemDetail() {
     <div style={{justifyContent: 'center', display: 'flex'}}>
       <Container>
         <SGridDiv>
-          <SPicLeftDiv>FavoriteIcon
+          <SPicLeftDiv>
             <SPicsDiv>
               <h1 style={{display: 'inline-block'}}>{itemDetail.item_title}</h1>
               { !interest && <FavoriteBorderIcon style={{float: 'right', fontSize: '40px', color: 'red', cursor: 'pointer'}} onClick={interestClick}/>}
