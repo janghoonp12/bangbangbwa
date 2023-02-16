@@ -1163,7 +1163,7 @@ class Openvidu extends Component {
                 <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
                 {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
                 
-                {/* <div id="video-container" className="col-md-6">
+                <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                     <UserVideoComponent streamManager={this.state.publisher} />
@@ -1174,10 +1174,10 @@ class Openvidu extends Component {
                       <UserVideoComponent streamManager={sub} />
                     </div>
                   ))}                     
-                </div> */}
-                <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
-                  <UserVideoComponent streamManager={hostSub[0]} />
                 </div>
+                {/* <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
+                  <UserVideoComponent streamManager={hostSub[0]} />
+                </div> */}
               </div>
             ) : (
               <p>방송이 존재하지 않습니다.</p>
