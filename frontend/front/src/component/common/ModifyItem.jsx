@@ -48,8 +48,8 @@ function ModifyItem() {
   const { modifyItemDone, itemDetail } = useSelector((state) => state.itemSlice);
   // 카카오 주소 검색 API
   const [postCode, setPostCode] = useState('');
-  const [lat, setLat] = useState('');
-  const [lng, setLng] = useState('');
+  const [lat, setLat] = useState(itemDetail.item.item_lat);
+  const [lng, setLng] = useState(itemDetail.item.item_lng);
   
   // 주소 선택 이벤트
   const selectAddress = (data) => {
@@ -74,38 +74,38 @@ function ModifyItem() {
     }
   })
 
-  
+  console.log(itemDetail)  
 
   // 직접 입력하는 자료
-  const [roomType, setRoomType] = useState('');
-  const [dealType, setDealType] = useState('');
-  const [itemName, setItemName] = useState('아이템 네임');
-  const [item_description, setItemDetail] = useState('');
-  const [roomNum, setRoomNum] = useState('');
-  const [toiletNum, setToiletNum] = useState('');
-  const [monthRent, setMonthRent] = useState(null);
-  const [deposit, setDeposit] = useState(null);
-  const [buyPrice, setBuyPrice] = useState(null);
-  const [floor, setFloor] = useState(1);
-  const [totalFloor, setTotalFloor] = useState('');
-  const [elevator, setElevator] = useState(false);
-  const [parking, setParking] = useState(false);
-  const [duplex, setDuplex] = useState(false);
-  const [separation, setSeparation] = useState(false);
-  const [induction, setInduction] = useState(false);
-  const [microwave, setMicrowave] = useState(false);
-  const [aircon, setAircon] = useState(false);
-  const [washer, setWasher] = useState(false);
-  const [tv, setTv] = useState(false);
-  const [closet, setCloset] = useState(false);
-  const [bed, setBed] = useState(false);
-  const [table, setTable] = useState(false);
-  const [shoe, setShoe] = useState(false);
-  const [bidet, setBidet] = useState(false);
-  const [gasrange, setGasrange] = useState(false);
-  const [refrigerator, setRefrigerator] = useState(false);
-  const [doorlock, setDoorlock] = useState(false);
-  const [veranda, setVeranda] = useState(false);
+  const [roomType, setRoomType] = useState(itemDetail.item.item_type);
+  const [dealType, setDealType] = useState(itemDetail.item.item_deal_type);
+  const [itemName, setItemName] = useState(itemDetail.item.item_title);
+  const [item_description, setItemDetail] = useState(itemDetail.item.item_description);
+  const [roomNum, setRoomNum] = useState(itemDetail.item.item_room);
+  const [toiletNum, setToiletNum] = useState(itemDetail.item.item_toilet);
+  const [monthRent, setMonthRent] = useState(itemDetail.itemPrice.item_price_month_rent);
+  const [deposit, setDeposit] = useState((itemDetail.item.item_deal_type === 0) ? itemDetail.itemPrice.item_price_month_deposit : itemDetail.itemPrice.item_price_house_deposit);
+  const [buyPrice, setBuyPrice] = useState(itemDetail.itemPrice.item_price_buy_house);
+  const [floor, setFloor] = useState(itemDetail.item.item_floor);
+  const [totalFloor, setTotalFloor] = useState(itemDetail.item.item_total_floor);
+  const [elevator, setElevator] = useState(itemDetail.option.option_elevator);
+  const [parking, setParking] = useState(itemDetail.option.option_parking);
+  const [duplex, setDuplex] = useState(itemDetail.option.option_duplex);
+  const [separation, setSeparation] = useState(itemDetail.option.option_separation);
+  const [induction, setInduction] = useState(itemDetail.option.option_induction);
+  const [microwave, setMicrowave] = useState(itemDetail.option.option_microwave);
+  const [aircon, setAircon] = useState(itemDetail.option.option_aircon);
+  const [washer, setWasher] = useState(itemDetail.option.option_washer);
+  const [tv, setTv] = useState(itemDetail.option.option_tv);
+  const [closet, setCloset] = useState(itemDetail.option.option_closet);
+  const [bed, setBed] = useState(itemDetail.option.option_bed);
+  const [table, setTable] = useState(itemDetail.option.option_table);
+  const [shoe, setShoe] = useState(itemDetail.option.option_shoe);
+  const [bidet, setBidet] = useState(itemDetail.option.option_bidet);
+  const [gasrange, setGasrange] = useState(itemDetail.option.option_gasrange);
+  const [refrigerator, setRefrigerator] = useState(itemDetail.option.option_refrigerator);
+  const [doorlock, setDoorlock] = useState(itemDetail.option.option_doorlock);
+  const [veranda, setVeranda] = useState(itemDetail.option.option_veranda);
 
   const roomTypeChange = (value, e) => {
     if (!roomType) {
@@ -122,20 +122,22 @@ function ModifyItem() {
     }
   }
 
+  const [oriBon, setOriBon] = useState(itemDetail.item.item_bonbun);
+  const [oriBu, setOriBu] = useState(itemDetail.item.item_bubun);
 
   const modifyItem = () => {
-    let bon = ''
-    let bu = ''
-    let temp = ''
-    for(var i=0; i<postCode.address.length; i++) {
-      if (postCode.address[i] === '-') {
-        bon = temp
-        temp = ''
-      } else if (parseInt(postCode.address[i])) {
-          temp += postCode.address[i]
+    if (!!postCode && itemDetail.item.item_road_name !== postCode.roadname) {
+      let temp = ''
+      for(var i=0; i<postCode.address.length; i++) {
+        if (postCode.address[i] === '-') {
+          setOriBon(temp)
+          temp = ''
+        } else if (parseInt(postCode.address[i])) {
+            temp += postCode.address[i]
+          }
         }
-      }
-    bu = temp
+      setOriBu(temp)
+    }
 
     // 오늘 날짜 가져오기
     let today = new Date();   
@@ -149,21 +151,21 @@ function ModifyItem() {
     const data = {
       "item": {
         // "broker_id": 1,
-        "item_bonbun": bon,
-        "item_bubun": bu,                                      
+        "item_bonbun": oriBon,
+        "item_bubun": oriBu,                                      
         "item_build_year": buildYear,
         "item_building_name": postCode.buildingName,
-        "item_building_type": roomType-1,
+        "item_building_type": roomType,
         "item_buildingcode": postCode.buildingCode,                            
         "item_deal_complete": false,
-        "item_deal_type": dealType-1,
+        "item_deal_type": dealType,
         "item_description": item_description,
         "item_dong": postCode.bname,
         "item_dongcode": postCode.bcode,  
         "item_eubmyundongcode": postCode.bcode,   
         "item_exclusive_area": exclusiveArea,
         "item_floor": floor,                                                 
-        "item_heating": parseInt(heating)-1,        
+        "item_heating": parseInt(heating),        
         "item_jibun": postCode.jibunAddress,
         "item_lat": lat,
         "item_lng": lng,
@@ -172,8 +174,8 @@ function ModifyItem() {
         "item_move_in_date": (moveIn) ? realToday : moveInDate,
         "item_move_in_type": (moveIn) ? 0 : 1,                                    
         "item_road_name": postCode.roadname,
-        "item_road_name_bonbun": bon,
-        "item_roadname_bubun": bu,
+        "item_road_name_bonbun": oriBon,
+        "item_roadname_bubun": oriBu,
         "item_roadname_code": postCode.roadnameCode,
         "item_room": roomNum,
         "item_sigungucode": postCode.sigunguCode,
@@ -182,7 +184,7 @@ function ModifyItem() {
         "item_toilet": toiletNum,
         "item_title": itemName,
         "item_total_floor": totalFloor,
-        "item_type": roomType-1,
+        "item_type": roomType,
         "item_zonecode": postCode.zonecode
          },
         "itemPrice": {
@@ -319,14 +321,14 @@ function ModifyItem() {
     setVeranda(!veranda)
   }
 
-  const[buildYear, setBuildyear] = useState();
+  const[buildYear, setBuildyear] = useState(itemDetail.item.item_build_year);
   const dateChange = (e) => {
     const year = e.target.value[0] + e.target.value[1] + e.target.value[2] + e.target.value[3]
     setBuildyear(year)
   }
 
-  const [supplyArea, setSupplyArea] = useState(0);
-  const [exclusiveArea, setExclusiveArea] = useState(0);
+  const [supplyArea, setSupplyArea] = useState(itemDetail.item.item_supply_area);
+  const [exclusiveArea, setExclusiveArea] = useState(itemDetail.item.item_exclusive_area);
 
   const supplyAreaChange = (e) => {
     setSupplyArea(parseInt(e.target.value))
@@ -336,7 +338,7 @@ function ModifyItem() {
     setExclusiveArea(parseInt(e.target.value))
   }
 
-  const [heating, setHeating] = useState('');
+  const [heating, setHeating] = useState(itemDetail.item.item_heating);
   const heatingChange = (value, e) => {
     if (!heating) {
       setHeating(value)
@@ -345,13 +347,13 @@ function ModifyItem() {
     }
   }
 
-  const [manageFee, setManageFee] = useState(0);
+  const [manageFee, setManageFee] = useState(itemDetail.item.item_manage_fee);
   const manageFeeChange = (e) => {
     setManageFee(e.target.value)
   }
 
-  const [moveIn, setMoveIn] = useState(false);
-  const [moveInDate, setMoveInDate] = useState('');
+  const [moveIn, setMoveIn] = useState(itemDetail.item.item_move_in_type);
+  const [moveInDate, setMoveInDate] = useState(itemDetail.item.item_move_in_date);
 
   const moveInChange = () => {
     setMoveIn(!moveIn)
@@ -402,7 +404,7 @@ function ModifyItem() {
         <h1>매물 등록</h1>
         <SGridDiv style={{marginTop: "5%"}}>
           <STitleP>매물명</STitleP>
-          <textarea rows="2" onChange={itemNameChange} placeholder=" 매물명" />
+          <textarea value={itemName} rows="2" onChange={itemNameChange} placeholder=" 매물명" />
         </SGridDiv>
         <hr />
         <SGridDiv>
@@ -413,7 +415,7 @@ function ModifyItem() {
             autoClose={false} // 값을 선택할 경우 사용되는 DOM을 제거하여 자동 닫힘 설정
           />
           <div style={{display: 'flex'}}>
-            <input type="text" value={(postCode) ? postCode.address : ''} style={{marginTop: '20px', width: '300px', marginRight: '30px'}} disabled />
+            <input type="text" value={(postCode) ? postCode.address : itemDetail.item.item_road_name} style={{marginTop: '20px', width: '300px', marginRight: '30px'}} disabled />
             {/* <p style={{marginTop: '20px', marginBottom: '0px', fontSize: '20px', paddingRight: '10px', marginRight: '0px'}}>상세 주소 :</p>
             <input type="text" style={{marginTop: '20px', width: '400px'}} disabled={(!postCode) ? true : false} /> */}
           </div>
@@ -422,91 +424,91 @@ function ModifyItem() {
         <hr />
         <SGridDiv>
           <STitleP>매물 상세 설명</STitleP>
-          <textarea rows="5" onChange={itemDetailChange} placeholder=" 매물 상세 설명" />
+          <textarea value={item_description} rows="5" onChange={itemDetailChange} placeholder=" 매물 상세 설명" />
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>면적</STitleP>
           <div>
-            공급면적&nbsp;:&nbsp;<input onChange={supplyAreaChange} type="number" placeholder=" 공급면적" style={{width: '100px', marginRight: '20px'}} />
-            전용면적&nbsp;:&nbsp;<input onChange={exclusiveAreaChange} type="number" placeholder=" 전용면적" style={{width: '100px'}} />
+            공급면적&nbsp;:&nbsp;<input onChange={supplyAreaChange} value={supplyArea} type="number" placeholder=" 공급면적" style={{width: '100px', marginRight: '20px'}} />
+            전용면적&nbsp;:&nbsp;<input onChange={exclusiveAreaChange} value={exclusiveArea} type="number" placeholder=" 전용면적" style={{width: '100px'}} />
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>방/화장실</STitleP>
           <div>
-            방&nbsp;:&nbsp;<input onChange={roomChange} type="number" min="0" placeholder=" 방 수" style={{width: '100px', marginRight: '20px'}} />
-            화장실&nbsp;:&nbsp;<input onChange={toiletChange} type="number" min="0" placeholder=" 화장실 수" style={{width: '100px'}} />
+            방&nbsp;:&nbsp;<input value={roomNum} onChange={roomChange} type="number" min="0" placeholder=" 방 수" style={{width: '100px', marginRight: '20px'}} />
+            화장실&nbsp;:&nbsp;<input value={toiletNum} onChange={toiletChange} type="number" min="0" placeholder=" 화장실 수" style={{width: '100px'}} />
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>매물 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" onClick={(e) => roomTypeChange('1', e)} disabled={(roomType === '1' || !roomType) ? false : true} /> 원룸</SP>
-            <SP><input type="checkbox" onClick={(e) => roomTypeChange('2', e)} disabled={(roomType === '2' || !roomType) ? false : true} /> 투,쓰리룸</SP>
-            <SP><input type="checkbox" onClick={(e) => roomTypeChange('3', e)} disabled={(roomType === '3' || !roomType) ? false : true} /> 오피스텔</SP>
-            <SP><input type="checkbox" onClick={(e) => roomTypeChange('4', e)} disabled={(roomType === '4' || !roomType) ? false : true} /> 아파트</SP>
+            <SP><input type="checkbox" checked={(roomType === 0) ? true : false} onChange={(e) => roomTypeChange(0, e)} disabled={(roomType === 1 || !roomType) ? false : true} /> 원룸</SP>
+            <SP><input type="checkbox" checked={(roomType === 1) ? true : false} onChange={(e) => roomTypeChange(1, e)} disabled={(roomType === 2 || !roomType) ? false : true} /> 투,쓰리룸</SP>
+            <SP><input type="checkbox" checked={(roomType === 2) ? true : false} onChange={(e) => roomTypeChange(2, e)} disabled={(roomType === 3 || !roomType) ? false : true} /> 오피스텔</SP>
+            <SP><input type="checkbox" checked={(roomType === 3) ? true : false} onChange={(e) => roomTypeChange(3, e)} disabled={(roomType === 4 || !roomType) ? false : true} /> 아파트</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>거래 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" onClick={(e) => dealTypeChange('1', e)} disabled={(dealType === '1' || !dealType) ? false : true}/> 월세</SP>
-            <SP><input type="checkbox" onClick={(e) => dealTypeChange('2', e)} disabled={(dealType === '2' || !dealType) ? false : true}/> 전세</SP>
-            <SP><input type="checkbox" onClick={(e) => dealTypeChange('3', e)} disabled={(dealType === '3' || !dealType) ? false : true}/> 매매</SP>
+            <SP><input type="checkbox" checked={(dealType === 0) ? true : false} onChange={(e) => dealTypeChange(0, e)} disabled={(dealType === 1 || !dealType) ? false : true}/> 월세</SP>
+            <SP><input type="checkbox" checked={(dealType === 1) ? true : false} onChange={(e) => dealTypeChange(1, e)} disabled={(dealType === 2 || !dealType) ? false : true}/> 전세</SP>
+            <SP><input type="checkbox" checked={(dealType === 2) ? true : false} onChange={(e) => dealTypeChange(2, e)} disabled={(dealType === 3 || !dealType) ? false : true}/> 매매</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>보증금/전세가</STitleP>
           <div>
-            <input onChange={depositChange} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === '1' || dealType === '2') ? false : true} />&nbsp;만원
+            <input onChange={depositChange} value={(dealType !== 2) ? deposit : '000'} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === '1' || dealType === '2') ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>월세</STitleP>
           <div>
-            <input onChange={monthRentChange} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === '1') ? false : true} />&nbsp;만원
+            <input onChange={monthRentChange} value={(dealType === 0) ? monthRent : '00'} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === '1') ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>매매가</STitleP>
           <div>
-            <input onChange={buyPriceChange}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원
+            <input onChange={buyPriceChange} value={(dealType === 2) ? buyPrice : '0000'}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>관리비</STitleP>
           <div>
-            <input onChange={manageFeeChange}  type="number" min="0" placeholder=" 00" style={{width: '100px'}} />&nbsp;만원
+            <input onChange={manageFeeChange} value={manageFee}  type="number" min="0" placeholder=" 00" style={{width: '100px'}} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>관리비 포함 내역</STitleP>
           <SGridListDiv>
-            <SP><input onChange={optCleanChange} type="checkbox"/> 청소비</SP>
-            <SP><input onChange={optElectricChange} type="checkbox"/> 전기</SP>
-            <SP><input onChange={optGasChange} type="checkbox"/> 가스</SP>
-            <SP><input onChange={optInternetChange} type="checkbox"/> 인터넷</SP>
-            <SP><input onChange={optTvChange} type="checkbox"/> 유선TV</SP>
-            <SP><input onChange={optWaterChange} type="checkbox"/> 수도</SP>
-            <SP>기타 &nbsp;<input onChange={optEtcChange} type="text"/></SP>
+            <SP><input checked={(optclean) ? true : false} onChange={optCleanChange} type="checkbox"/> 청소비</SP>
+            <SP><input checked={(optElectric) ? true : false} onChange={optElectricChange} type="checkbox"/> 전기</SP>
+            <SP><input checked={(optGas) ? true : false} onChange={optGasChange} type="checkbox"/> 가스</SP>
+            <SP><input checked={(optInternet) ? true : false} onChange={optInternetChange} type="checkbox"/> 인터넷</SP>
+            <SP><input checked={(optTv) ? true : false} onChange={optTvChange} type="checkbox"/> 유선TV</SP>
+            <SP><input checked={(optWater) ? true : false} onChange={optWaterChange} type="checkbox"/> 수도</SP>
+            <SP>기타 &nbsp;<input value={optEtc} onChange={optEtcChange} type="text"/></SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>층수</STitleP>
           <div style={{display: 'flex'}}>
-            총 층수&nbsp;:&nbsp;<input onChange={totalFloorChange} type="number" min="0" placeholder=" 총 층수" style={{width: '100px', marginRight: '20px'}} />
-            해당 층수&nbsp;:&nbsp;<input onChange={floorChange} type="number" min="0" placeholder=" 해당 층수" style={{width: '100px', marginRight: '20px'}} />
-            <SP style={{marginRight: '20px'}}><input onChange={isBasementChange} type="checkbox"/> 지하 여부</SP>
+            총 층수&nbsp;:&nbsp;<input value={(totalFloor) ? totalFloor : floor} onChange={totalFloorChange} type="number" min="0" placeholder=" 총 층수" style={{width: '100px', marginRight: '20px'}} />
+            해당 층수&nbsp;:&nbsp;<input value={floor} onChange={floorChange} type="number" min="0" placeholder=" 해당 층수" style={{width: '100px', marginRight: '20px'}} />
+            <SP style={{marginRight: '20px'}}><input checked={(floor < 0) ? true : false} onChange={isBasementChange} type="checkbox"/> 지하 여부</SP>
             <SP style={{color: 'red'}}>*지하 여부 체크시, 층수를 '2'로 입력하면 지하 2층으로 입력됩니다.</SP>
           </div>
         </SGridDiv>
@@ -514,46 +516,46 @@ function ModifyItem() {
         <SGridDiv>
           <STitleP>입주일</STitleP>
           <SGridListDiv>
-            <SP><input onChange={moveInChange} type="checkbox"/>즉시 입주</SP>
-            <SP><input onChange={moveInDateChange} disabled={(moveIn) ? true : false} type="date"/>입주 가능일</SP>
+            <SP><input checked={(moveIn) ? true : false} onChange={moveInChange} type="checkbox"/>즉시 입주</SP>
+            <SP><input value={(moveIn) ? '2023-02-17' : `${moveInDate}-01-01`} onChange={moveInDateChange} disabled={(moveIn) ? true : false} type="date"/>입주 가능일</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>사용 승인일</STitleP>
-            <input onChange={dateChange} type="date"/>
+            <input value={`${buildYear}-01-01`} onChange={dateChange} type="date"/>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>난방 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" onClick={(e) => heatingChange('1', e)} disabled={(heating === '1' || !heating) ? false : true}/> 개별 난방</SP>
-            <SP><input type="checkbox" onClick={(e) => heatingChange('2', e)} disabled={(heating === '2' || !heating) ? false : true}/> 지역 난방</SP>
-            <SP><input type="checkbox" onClick={(e) => heatingChange('3', e)} disabled={(heating === '3' || !heating) ? false : true}/> 중앙 난방</SP>
+            <SP><input checked={(heating === 0) ? true : false} type="checkbox" onClick={(e) => heatingChange(0, e)} disabled={(heating === 0 || !heating) ? false : true}/> 개별 난방</SP>
+            <SP><input checked={(heating === 1) ? true : false} type="checkbox" onClick={(e) => heatingChange(1, e)} disabled={(heating === 1 || !heating) ? false : true}/> 지역 난방</SP>
+            <SP><input checked={(heating === 2) ? true : false} type="checkbox" onClick={(e) => heatingChange(2, e)} disabled={(heating === 2 || !heating) ? false : true}/> 중앙 난방</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>추가 옵션</STitleP>
           <SGridListDiv>
-            <SP><input onChange={elevatorChange} type="checkbox"/> 엘리베이터</SP>
-            <SP><input onChange={parkingChange} type="checkbox"/> 주차</SP>
-            <SP><input onChange={duplexChange} type="checkbox"/> 복층</SP>
-            <SP><input onChange={separationChange} type="checkbox"/> 주방분리형</SP>
-            <SP><input onChange={inductionChange} type="checkbox"/> 인덕션</SP>
-            <SP><input onChange={microwaveChange} type="checkbox"/> 전자레인지</SP>
-            <SP><input onChange={airconChange} type="checkbox"/> 에어컨</SP>
-            <SP><input onChange={washerChange} type="checkbox"/> 세탁기</SP>
-            <SP><input onChange={tvChange} type="checkbox"/> TV</SP>
-            <SP><input onChange={closetChange} type="checkbox"/> 옷장</SP>
-            <SP><input onChange={bedChange} type="checkbox"/> 침대</SP>
-            <SP><input onChange={tableChange} type="checkbox"/> 책상</SP>
-            <SP><input onChange={shoeChange} type="checkbox"/> 신발장</SP>
-            <SP><input onChange={bidetChange} type="checkbox"/> 비데</SP>
-            <SP><input onChange={gasrangeChange} type="checkbox"/> 가스레인지</SP>
-            <SP><input onChange={refrigeratorChange} type="checkbox"/> 냉장고</SP>
-            <SP><input onChange={doorlockChange} type="checkbox"/> 전자도어락</SP>
-            <SP><input onChange={verandaChange} type="checkbox"/> 베란다/발코니</SP>
+            <SP><input checked={(elevator) ? true : false} onChange={elevatorChange} type="checkbox"/> 엘리베이터</SP>
+            <SP><input checked={(parking) ? true : false} onChange={parkingChange} type="checkbox"/> 주차</SP>
+            <SP><input checked={(duplex) ? true : false} onChange={duplexChange} type="checkbox"/> 복층</SP>
+            <SP><input checked={(separation) ? true : false} onChange={separationChange} type="checkbox"/> 주방분리형</SP>
+            <SP><input checked={(induction) ? true : false} onChange={inductionChange} type="checkbox"/> 인덕션</SP>
+            <SP><input checked={(microwave) ? true : false} onChange={microwaveChange} type="checkbox"/> 전자레인지</SP>
+            <SP><input checked={(aircon) ? true : false} onChange={airconChange} type="checkbox"/> 에어컨</SP>
+            <SP><input checked={(washer) ? true : false} onChange={washerChange} type="checkbox"/> 세탁기</SP>
+            <SP><input checked={(tv) ? true : false} onChange={tvChange} type="checkbox"/> TV</SP>
+            <SP><input checked={(closet) ? true : false} onChange={closetChange} type="checkbox"/> 옷장</SP>
+            <SP><input checked={(bed) ? true : false} onChange={bedChange} type="checkbox"/> 침대</SP>
+            <SP><input checked={(table) ? true : false} onChange={tableChange} type="checkbox"/> 책상</SP>
+            <SP><input checked={(shoe) ? true : false} onChange={shoeChange} type="checkbox"/> 신발장</SP>
+            <SP><input checked={(bidet) ? true : false} onChange={bidetChange} type="checkbox"/> 비데</SP>
+            <SP><input checked={(gasrange) ? true : false} onChange={gasrangeChange} type="checkbox"/> 가스레인지</SP>
+            <SP><input checked={(refrigerator) ? true : false} onChange={refrigeratorChange} type="checkbox"/> 냉장고</SP>
+            <SP><input checked={(doorlock) ? true : false} onChange={doorlockChange} type="checkbox"/> 전자도어락</SP>
+            <SP><input checked={(veranda) ? true : false} onChange={verandaChange} type="checkbox"/> 베란다/발코니</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
