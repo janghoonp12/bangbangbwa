@@ -26,7 +26,7 @@ public class BroadcastQueryRepository {
         this.queryFactory = new JPAQueryFactory(em);
     }
 
-    public List<BroadcastResponseDto> searchBroadcastByFilter(ItemFilterRequestDto filter) {
+    public List<Broadcast> searchBroadcastByFilter(ItemFilterRequestDto filter) {
         BooleanBuilder builder = new BooleanBuilder();
 
         //매물 종류
@@ -153,7 +153,7 @@ public class BroadcastQueryRepository {
         }
 
         return queryFactory
-                .select(new QBroadcastResponseDto(broadcast)).distinct()
+                .select(broadcast).distinct()
                 .from(item, itemPrice, option, broadcast)
                 .where(builder)
                 .orderBy(broadcast.broadcastId.desc())

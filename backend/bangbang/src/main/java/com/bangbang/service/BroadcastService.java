@@ -96,7 +96,7 @@ public class BroadcastService {
     }
   }
 
-  public List<BroadcastResponseDto> searchBroadcastByFilter(ItemFilterRequestDto filter) {
+  public List<Broadcast> searchBroadcastByFilter(ItemFilterRequestDto filter) {
     return broadcastQueryRepository.searchBroadcastByFilter(filter);
   }
 }

@@ -1,5 +1,6 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.dto.broadcast.*;
 import com.bangbang.dto.item.ItemFilterRequestDto;
 import com.bangbang.service.BroadcastService;
@@ -130,9 +131,9 @@ public class BroadcastRestController {
   @PostMapping("/broadcasts/filter")
   public ResponseEntity<?> searchBroadcastFilter(@RequestBody ItemFilterRequestDto filter) {
     try {
-      List<BroadcastResponseDto> list = broadcastService.searchBroadcastByFilter(filter);
+      List<Broadcast> list = broadcastService.searchBroadcastByFilter(filter);
       if (list != null && !list.isEmpty())
-        return new ResponseEntity<List<BroadcastResponseDto>>(list, HttpStatus.OK);
+        return new ResponseEntity<List<Broadcast>>(list, HttpStatus.OK);
       else return new ResponseEntity(HttpStatus.NO_CONTENT);
     } catch (Exception e) {
       e.printStackTrace();
