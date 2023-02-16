@@ -54,14 +54,14 @@ function BroadcastListItem(props) {
     } else if (props.posts.broadcastStatus === 3) {
       Swal.fire({
         icon: 'error',
-        title: '종료된 방송입니다.',
+        title: '시작되지 않은 방송입니다.',
         showConfirmButton: false,
         timer: 2000
       })
     } else {
       Swal.fire({
         icon: 'error',
-        title: '시작되지 않은 방송입니다.',
+        title: '종료된 방송입니다.',
         showConfirmButton: false,
         timer: 2000
       })
