@@ -300,10 +300,9 @@ const userSlice = createSlice({
         role : action.payload.role,
         level : action.payload.level
       }
-      console.log(state.me)
       sessionStorage.clear()
-      sessionStorage.setItem("access-token", action.payload.accesstoken)
-      sessionStorage.setItem("refresh-token", action.payload.refreshtoken)
+      sessionStorage.setItem("access-token", action.payload.accessToken)
+      sessionStorage.setItem("refresh-token", action.payload.refreshToken)
       state.signInDone = true;
     });
     builder.addCase(oauth2SignInAsync.rejected, (state, action) => {
