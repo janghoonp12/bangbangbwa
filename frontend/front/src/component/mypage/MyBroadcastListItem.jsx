@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import itemImage from "../../assets/logosample.png"
 import { useDispatch } from "react-redux";
-import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice";
+import { choiceWatchingBroadCast, StartBroadcastAsync } from "../../reducers/broadcastSlice";
 
 
 const Wrapper = styled.div`
@@ -83,12 +82,13 @@ function MyBroadcastListItem(props) {
   const navigate = useNavigate();
   const onClickLive = () => {
     dispatch(choiceWatchingBroadCast(myBroadcast))
+    dispatch(StartBroadcastAsync(myBroadcast.broadcastId))
     navigate(`/broadcasts/${myBroadcast.broadcastId}`)
   }
   return (
     <Wrapper>
       <div>
-        <SItemImg src={itemImage} alt="이미지샘플"/>
+        <SItemImg src={myBroadcast.imagePath} alt="이미지샘플"/>
       </div>
       <STextDiv>
         <TitleDiv>

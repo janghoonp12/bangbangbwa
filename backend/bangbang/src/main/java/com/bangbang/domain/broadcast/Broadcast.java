@@ -39,9 +39,9 @@ public class Broadcast extends BroadcastDatetime{
           inverseJoinColumns = @JoinColumn(name="item_id"))
   private Long itemId;      //FK
 
-  @JoinColumn(name="image_id")
-  @OneToOne(fetch = FetchType.LAZY)
-  private Image image;     //FK
+//  @JoinColumn(name="image_id")
+//  @OneToOne(fetch = FetchType.LAZY)
+//  private Image image;     //FK
 
   @Column(name = "image_path")
   private String imagePath;

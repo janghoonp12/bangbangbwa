@@ -1,5 +1,8 @@
 package com.bangbang.controller;
 
+import com.bangbang.domain.broadcast.BroadcastRepository;
+import com.bangbang.domain.broker.Broker;
+import com.bangbang.domain.broker.BrokerRepository;
 import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
 import com.bangbang.service.BrokerService;
@@ -21,10 +24,12 @@ import java.util.List;
 public class BrokerRestController {
     @Autowired
     private final BrokerService brokerService;
-
     @Autowired
     private final UserService userService;
-
+    @Autowired
+    private BrokerRepository brokerRepository;
+    @Autowired
+    private BroadcastRepository broadcastRepository;
 
     @ApiOperation(value="중개사 신청")
     @PostMapping("/user/brokers/new")
@@ -58,13 +63,10 @@ public class BrokerRestController {
 
 
     @ApiOperation(value="중개사 등록")
-    @PatchMapping("/admin/brokers/register")
-    public ResponseEntity<?> registerBroker(HttpServletRequest request) {
+    @PatchMapping("/admin/brokers/register/{userId}")
+    public ResponseEntity<?> registerBroker(@PathVariable long userId) {
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
-            Long uid = userService.findUserId(token);
-            brokerService.registerBroker(uid);
+            brokerService.registerBroker(userId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
@@ -77,10 +79,27 @@ public class BrokerRestController {
     public ResponseEntity<?> deactiveBroker(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             brokerService.deactiveBroker(uid);
             return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="중개사 정보 조회")
+    @GetMapping("/broker/brokers")
+    public ResponseEntity<?> searchBroker(HttpServletRequest request) {
+        try {
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            Long brokerId = brokerRepository.findByUserId(uid).getBrokerId();
+            Broker broker = brokerService.searchBroker(brokerId);
+            if (broker != null)
+                return new ResponseEntity<Broker>(broker, HttpStatus.OK);
+            else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
         }

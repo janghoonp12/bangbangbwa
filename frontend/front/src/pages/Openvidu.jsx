@@ -71,6 +71,7 @@ class Openvidu extends Component {
         this.handleChangeMyTitle = this.handleChangeMyTitle.bind(this);
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
+        this.leaveSessionHost = this.leaveSessionHost.bind(this);
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
@@ -119,6 +120,7 @@ class Openvidu extends Component {
 
     onbeforeunload(event) {
         this.leaveSession();
+        this.leaveSessionHost();
     }
 
     handleChangeMyTitle(value) {
@@ -804,6 +806,31 @@ class Openvidu extends Component {
 
     }
 
+    leaveSessionHost() {
+
+      // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
+
+      const mySession = this.state.session;
+      // mySession.unpublish(this.state.publisher);
+
+      if (mySession) {
+          mySession.disconnect();
+      }
+
+      // Empty all properties...
+      this.OV = null;
+      this.setState({
+          session: undefined,
+          subscribers: [],
+          mySessionId: 'SessionA',
+          myUserName: 'Participant' + Math.floor(Math.random() * 100),
+          mainStreamManager: undefined,
+          publisher: undefined,
+          chattings: [],
+      });
+
+  }
+
     onDragStart = (e) => {
       e.preventDefault();
       this.setState({
@@ -999,8 +1026,8 @@ class Openvidu extends Component {
                         // className="btn btn-large btn-danger"
                         // style={{ height:"100%" }}
                         type="button"
-                        id="buttonLeaveSession"
-                        onClick={this.leaveSession}
+                        id="buttonLeaveSessionHost"
+                        onClick={this.leaveSessionHost}
                         value="방송종료"
                       />
                     </div>
@@ -1163,7 +1190,7 @@ class Openvidu extends Component {
                 <SInput type="text" value={this.state.chat} onChange={this.onChange} onKeyDown={(e) => this.activeEnter(e)} placeholder=" 내용을 입력하세요" />
                 {/* <SButton disabled={(search) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton> */}
                 
-                <div id="video-container" className="col-md-6">
+                {/* <div id="video-container" className="col-md-6">
                   {this.state.publisher !== undefined ? (
                     <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                     <UserVideoComponent streamManager={this.state.publisher} />
@@ -1174,7 +1201,7 @@ class Openvidu extends Component {
                       <UserVideoComponent streamManager={sub} />
                     </div>
                   ))}                     
-                </div>
+                </div> */}
                 {/* <div className="stream-container col-md-6 col-xs-6" onClick={() => this.handleMainVideoStream(this.state.publisher)}>
                   <UserVideoComponent streamManager={hostSub[0]} />
                 </div> */}
