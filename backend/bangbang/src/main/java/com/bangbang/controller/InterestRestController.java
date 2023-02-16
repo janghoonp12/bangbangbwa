@@ -101,7 +101,7 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심지역 삭제")
-    @DeleteMapping("/user/interest/areas/{iterestId}")
+    @PostMapping("/user/interest/areas/{iterestId}")
     public ResponseEntity<?> deleteInterestArea(@PathVariable Long interestId) {
         try {
             interestService.deleteInterestArea(interestId);
