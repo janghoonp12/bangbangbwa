@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
 import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 // import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
@@ -18,11 +18,16 @@ const mapStateToProps = (state) => ({
   watchingBroadCast: state.broadcastSlice.watchingBroadCast,
 })
 
+const mapDispatchToProps = dispatch => {
+  return {
+    DeleteBroadcastAsync: (props) => dispatch(this.props.DeletebroadcastAsync(props.broadcastId))
+  }
+}
+
 class Openvidu extends Component {
   
     constructor(props) {
         super(props);
-
         this.state = {
             myTitle : "",
             mySessionId: 'SessionA',
@@ -66,7 +71,6 @@ class Openvidu extends Component {
               return `곰팡이: ${this.mold}`
             },        
         };
-        
         this.scrollRef = React.createRef();
         this.handleChangeMyTitle = this.handleChangeMyTitle.bind(this);
         this.joinSession = this.joinSession.bind(this);
@@ -174,6 +178,35 @@ class Openvidu extends Component {
                   "to": [],
                   "type":"MY_TYPE",
                   "data":`${this.state.myUserName}: ${this.state.chat}`
+              },
+              {
+                  headers: {
+                      Authorization: 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
+                      'Content-Type': 'application/json'
+                  },
+                  withCredentials: false
+              }
+          )
+          .then((response) => {
+              console.log('Send Message Success', response);
+              // chattings.push(`you: ${this.state.chat}`)
+              console.log(this.state.chattings)
+              this.setState({chat:""})
+              console.log(this.state.chat)
+          })
+          .catch((response) => {
+              console.log('Send Message Fail', response)
+          })
+    }
+
+    endAxios() {
+      axios
+          .post(OPENVIDU_SERVER_URL + '/openvidu/api/signal',
+              {
+                  "session": `${this.state.mySessionId}`,
+                  "to": [],
+                  "type":"MY_TYPE",
+                  "data":"system: 방송이 종료되었습니다."
               },
               {
                   headers: {
@@ -807,9 +840,9 @@ class Openvidu extends Component {
     }
 
     leaveSessionHost() {
-
+      this.DeleteBroadcastAsync()
       // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
+      this.endAxios()
       const mySession = this.state.session;
       // mySession.unpublish(this.state.publisher);
 
@@ -1016,7 +1049,7 @@ class Openvidu extends Component {
                   {/* {this.state.myUserName === 'Participant1' ? ( */}
                   {this.state.myUserName.includes('host') ? (
                     <div>
-                      <SButtonInput 
+                      <SButtonInput3
                         type="button"
                         id="toggleCamera"
                         onClick={this.toggleCamera}
@@ -1310,7 +1343,7 @@ class Openvidu extends Component {
     }
 }
 
-export default connect(mapStateToProps)(Openvidu);
+export default connect(mapStateToProps, mapDispatchToProps)(Openvidu);
 
 const Wrapper = styled.div`
   display: flex;
@@ -1412,6 +1445,15 @@ const SButtonInput2 = styled.input`
   // color: white;
   margin-bottom: 0px;
   margin-right:10px;
+`;
+
+const SButtonInput3 = styled.input`
+  border-radius: 10px;
+  margin-left: 10px;
+  height: 60%;
+  border: 0 solid black;
+  background-color: green;
+  color: white; 
 `;
 
 const SLiveEndDiv = styled.div`
