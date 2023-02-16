@@ -71,6 +71,7 @@ class Openvidu extends Component {
         this.handleChangeMyTitle = this.handleChangeMyTitle.bind(this);
         this.joinSession = this.joinSession.bind(this);
         this.leaveSession = this.leaveSession.bind(this);
+        this.leaveSessionHost = this.leaveSessionHost.bind(this);
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
         this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
@@ -119,6 +120,7 @@ class Openvidu extends Component {
 
     onbeforeunload(event) {
         this.leaveSession();
+        this.leaveSessionHost();
     }
 
     handleChangeMyTitle(value) {
@@ -1024,7 +1026,7 @@ class Openvidu extends Component {
                         // className="btn btn-large btn-danger"
                         // style={{ height:"100%" }}
                         type="button"
-                        id="buttonLeaveSession"
+                        id="buttonLeaveSessionHost"
                         onClick={this.leaveSessionHost}
                         value="방송종료"
                       />
