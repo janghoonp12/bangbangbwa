@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import Card from 'react-bootstrap/Card';
 import styled from "styled-components";
 import throttle from "../../utils/Throttle"
 import { useDispatch } from 'react-redux';
 import { searchDetailItemAsync } from "../../reducers/itemSlice"
+import useKakaoMap from "../../hooks/useKakaoMap"
 
 
 const SCardDiv = styled.div`
@@ -25,7 +26,7 @@ const SCardDiv = styled.div`
 `;
 
 
-const SCardImg = styled.img`
+const SImgDiv = styled.div`
   width: 248px;
   height: 250px;
   border-top-left-radius: 8px;
@@ -53,13 +54,40 @@ function ItemListItem(props) {
   const dealType = (item.item.item_deal_type === 0) ? '월세' : (item.item.item_deal_type === 0) ? '전세' : '매매'
   const price = (dealType === '월세') ? `${item.itemPrice.item_price_month_deposit}/${item.itemPrice.item_price_month_rent}` : (dealType === '전세') ? item.itemPrice.item_price_house_deposit : item.itemPrice.item_price_buy_house
    
+
+  // useEffect(() => {
+  //   var marker = [
+  //     {
+  //         position: new window.kakao.maps.LatLng(item.item.item_lng, item.item.item_lat), 
+  //         text: item.item.item_title
+  //     }
+  //   ];
+  //   console.log(item.item.item_lat, item.item.item_lng)
+  //   // 카카오 지도
+  //   var mapContainer  = document.getElementById('map')
+
+  //   var options = {
+  //     center: new window.kakao.maps.LatLng(item.item.item_lng, item.item.item_lat), 
+  //     level: 5,
+  //     marker: marker
+  //   };
+  //   var map = new window.kakao.maps.StaticMap(mapContainer, options)
+  // }, [item])
+
+
+  useKakaoMap(item);
+
+  const imgClick = (e) => {
+    e.preventDefault();
+  }
+
   const onClick = () => {
     dispatch(searchDetailItemAsync(props.posts.item.item_id))
   }
   
   return (
       <SCardDiv onDoubleClick={onClick}>
-        <SCardImg variant="top" src="test2.jpg" alt="이미지" />
+        <SImgDiv onDoubleClick={onClick} onClick={imgClick} id={item.item.item_id}> </SImgDiv>
         <SCardBodyDiv>
           <SCardTitleP>{props.posts.item.item_title}</SCardTitleP>
           <SCardContentP>
