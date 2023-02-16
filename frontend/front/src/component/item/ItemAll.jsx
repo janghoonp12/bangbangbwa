@@ -50,7 +50,7 @@ function Items() {
     dispatch(SearchItemAsync(
       {
         page: 0,
-        size: 10,
+        size: 12,
       }
     ))
   },[])
@@ -59,7 +59,7 @@ function Items() {
     dispatch(SearchItemAsync(
       {
         page: currentPage,
-        size: 10,
+        size: 12,
       }
     ))
   }

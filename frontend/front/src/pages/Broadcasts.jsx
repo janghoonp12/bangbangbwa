@@ -27,7 +27,7 @@ function Broadcasts() {
         <hr/>
         <Routes>
           <Route index element={<BroadcastAll />} />
-          <Route path=":postId" element={<Openvidu />} />
+          {/* <Route path=":postId" element={<Openvidu />} /> */}
           <Route path="filter" element={<FilterBroadcast />} />
           <Route path="new" element={<BroadcastWrite />} />
           <Route path="live" element={<LiveBroadcastList />} />
