@@ -86,6 +86,8 @@ function InterestItemListItem(props) {
     }
   }
 
+
+
   return (
     <div>
       <SCardDiv onClick={onClick}>

@@ -40,11 +40,11 @@ const SCardBodyDiv = styled.div`
 
 const SCardTitleP = styled.p`
   margin-top: 10px;
-  font-size: 30px;
+  font-size: 1.5rem;
 `;
 
 const SCardContentP = styled.p`
-  font-size: 20px;
+  font-size: 1.2rem;
 `;
 
 const SButton = styled.button`
@@ -80,6 +80,12 @@ function checkName(name){
 
 function RecentViewListItem(props) {
   const dispatch = useDispatch();
+
+  const item = props.posts
+  console.log(item)
+  const itemType = (item.item_type === 0) ? '원룸' : (item.item_type === 1) ? '투,쓰리룸' : (item.item_type === 2) ? '오피스텔' : '아파트'
+  const dealType = (item.item_deal_type === 0) ? '월세' : (item.item_deal_type === 0) ? '전세' : '매매'
+  const price = (dealType === '월세') ? `${item.itemPrice.item_price_month_deposit}/${item.itemPrice.item_price_month_rent}` : (dealType === '전세') ? item.itemPrice.item_price_house_deposit : item.itemPrice.item_price_buy_house
   
   const onClick = () => {
     dispatch(searchDetailItemAsync(props.posts.item_id))
@@ -90,11 +96,11 @@ function RecentViewListItem(props) {
       <SCardDiv onClick={onClick}>
         <SCardImg variant="top" src={sample} alt="이미지" />
         <SCardBodyDiv>
-          <SCardTitleP>{props.posts.item_title}</SCardTitleP>
+          <SCardTitleP>{item.item_title}</SCardTitleP>
           <SCardContentP>
-            {props.posts.item_type},
-            {props.posts.item_building_type},
-            {props.posts.item_manage_fee}
+            {itemType} |&nbsp;
+            {dealType} |&nbsp;
+            {price}
           </SCardContentP>
         </SCardBodyDiv>
       </SCardDiv>
