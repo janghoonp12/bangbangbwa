@@ -42,7 +42,7 @@ export default function BasicModal() {
             이 버튼들은 뭔가요?
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            버튼을 클릭해 여러분의 니즈를 표현하세요! 클릭 수는 누적되어 여러분이 어떤 정보를 원하는지 호스트가 쉽게 파악할 수 있습니다.
+            버튼을 클릭해 여러분의 니즈를 표현해보세요! 클릭 수는 누적되어 여러분이 어떤 정보를 원하는지 호스트가 쉽게 파악할 수 있습니다.
           </Typography>
         </Box>
       </Modal>
