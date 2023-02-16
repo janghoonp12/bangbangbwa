@@ -88,7 +88,7 @@ public class BrokerRestController {
     }
 
     @ApiOperation(value="중개사 정보 조회")
-    @GetMapping("/user/brokers")
+    @GetMapping("/broker/brokers")
     public ResponseEntity<?> searchBroker(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
