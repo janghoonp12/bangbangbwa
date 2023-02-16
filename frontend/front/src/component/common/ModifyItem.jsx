@@ -79,7 +79,7 @@ function ModifyItem() {
   // 직접 입력하는 자료
   const [roomType, setRoomType] = useState('');
   const [dealType, setDealType] = useState('');
-  const [itemName, setItemName] = useState('');
+  const [itemName, setItemName] = useState('아이템 네임');
   const [item_description, setItemDetail] = useState('');
   const [roomNum, setRoomNum] = useState('');
   const [toiletNum, setToiletNum] = useState('');

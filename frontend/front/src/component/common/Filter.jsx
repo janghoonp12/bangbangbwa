@@ -55,22 +55,22 @@ function Filter() {
     const intRoomType = roomType.map((elem) => parseInt(elem))
 
     // 범위 검색 확인
-    const intExclusiveArea = (exclusiveArea[0] !== 0 && exclusiveArea[1] === 0) ? [exclusiveArea[0], 10000000] : exclusiveArea
-    const intBuyPrice = (buyPrice[0] !== 0 && buyPrice[1] === 0) ? [buyPrice[0], 10000000] : buyPrice
-    const intDeposit = (deposit[0] !== 0 && deposit[1] === 0) ? [deposit[0], 10000000] : deposit
-    const intMonthDeposit = (monthDeposit[0] !== 0 && monthDeposit[1] === 0) ? [monthDeposit[0], 10000000] : monthDeposit
-    const intMonthRent = (monthRent[0] !== 0 && monthRent[1] === 0) ? [monthRent[0], 10000000] : monthRent
+    // const intExclusiveArea = (exclusiveArea[0] !== 0 && exclusiveArea[1] === 0) ? [exclusiveArea[0], 10000000] : exclusiveArea
+    // const intBuyPrice = (buyPrice[0] !== 0 && buyPrice[1] === 0) ? [buyPrice[0], 10000000] : buyPrice
+    // const intDeposit = (deposit[0] !== 0 && deposit[1] === 0) ? [deposit[0], 10000000] : deposit
+    // const intMonthDeposit = (monthDeposit[0] !== 0 && monthDeposit[1] === 0) ? [monthDeposit[0], 10000000] : monthDeposit
+    // const intMonthRent = (monthRent[0] !== 0 && monthRent[1] === 0) ? [monthRent[0], 10000000] : monthRent
 
     const data = {
-      "item_build_year": intBuildYear,
-      "item_deal_type": intDealType,
-      "item_exclusive_area": intExclusiveArea,
-      "item_floor": intFloor,
-      "item_price_buy_house": (dealType.length && dealType.includes('2')) ? intBuyPrice : [-1, -1],
-      "item_price_house_deposit": (dealType.length && dealType.includes('1')) ? intDeposit : [-1, -1],
-      "item_price_month_deposit": (dealType.length && dealType.includes('0')) ? intMonthDeposit : [-1, -1],
-      "item_price_month_rent": (dealType.length && dealType.includes('0')) ? intMonthRent : [-1, -1],
-      "item_type": intRoomType,
+      "item_build_year": (buildYear.length) ? intBuildYear : [0, 1, 2, 3, 4],
+      "item_deal_type": (dealType.length) ? intDealType : [0, 1, 2],
+      "item_exclusive_area": exclusiveArea,
+      "item_floor": (floor.length) ? intFloor : [0, 1, 2, 3, 4],
+      "item_price_buy_house": (dealType.length && dealType.includes('2')) ? buyPrice : [-1, -1],
+      "item_price_house_deposit": (dealType.length && dealType.includes('1')) ? deposit : [-1, -1],
+      "item_price_month_deposit": (dealType.length && dealType.includes('0')) ? monthDeposit : [-1, -1],
+      "item_price_month_rent": (dealType.length && dealType.includes('0')) ? monthRent : [-1, -1],
+      "item_type": (roomType.length) ? intRoomType : [0, 1, 2, 3],
       "option": {
         "option_aircon": aircon,
         "option_bed": bed,
@@ -92,6 +92,7 @@ function Filter() {
         "option_washer": washer
       }
     }
+    console.log(data)
 
     if (where.includes('broadcast')) {
       dispatch(FilterBroadcastAsync(data))
@@ -149,7 +150,7 @@ function Filter() {
   }
 
   // 전용 면적
-  const [exclusiveArea, setExclusiveArea] = useState([0, 0]);
+  const [exclusiveArea, setExclusiveArea] = useState([0, 1000000]);
   const exclusiveAreaChange = (value, e) => {
     if (value === 'min') {
       setExclusiveArea([parseInt(e.target.value), exclusiveArea[1]])
@@ -195,10 +196,10 @@ function Filter() {
 
 
   // 가격
-  const [monthRent, setMonthRent] = useState([0, 0]);
-  const [monthDeposit, setMonthDeposit] = useState([0, 0]);
-  const [deposit, setDeposit] = useState([0, 0]);
-  const [buyPrice, setBuyPrice] = useState([0, 0]);
+  const [monthRent, setMonthRent] = useState([0, 1000000]);
+  const [monthDeposit, setMonthDeposit] = useState([0, 1000000]);
+  const [deposit, setDeposit] = useState([0, 1000000]);
+  const [buyPrice, setBuyPrice] = useState([0, 1000000]);
 
   const monthRentChange = (value, e) => {
     if (value === 'min') {
