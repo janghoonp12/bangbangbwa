@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { searchDetailItemAsync } from "../../reducers/itemSlice"
-import logosample from "../../assets/logosample.png"
+import useKakaoMap from "../../hooks/useKakaoMap"
 
 
 const SCardDiv = styled.div`
@@ -25,7 +25,7 @@ const SCardDiv = styled.div`
 `;
 
 
-const SCardImg = styled.img`
+const SImgDiv = styled.div`
   width: 248px;
   height: 250px;
   border-top-left-radius: 8px;
@@ -38,11 +38,11 @@ const SCardBodyDiv = styled.div`
 
 const SCardTitleP = styled.p`
   margin-top: 10px;
-  font-size: 30px;
+  font-size: 1.5rem;
 `;
 
 const SCardContentP = styled.p`
-  font-size: 20px;
+  font-size: 1.2rem;
 `;
 
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
@@ -54,20 +54,25 @@ function FilterListItem(props) {
 
   const dealType = (item.item_deal_type === 0) ? '월세' : (item.item_deal_type === 1) ? '전세' : '매매'
   const itemType = (item.item_type === 0) ? '원룸' : (item.item_type === 1) ? '투,쓰리룸' : (item.item_type === 2) ? '오피스텔' : '아파트'
-  const price = (
+  const price = (prices) ? (
     (dealType === '월세') ? `${prices.item_price_month_deposit}/${prices.item_price_month_rent}` : 
-    (dealType === '전세') ? prices.item_price_house_deposit : prices.item_price_buy_house
-  )
+    (dealType === '전세') ? prices.item_price_house_deposit : (dealType === '매매') ? prices.item_price_buy_house : '가격 문의'
+  ) : '가격 문의'
 
   const dispatch = useDispatch();
+
+  useKakaoMap(props.item);
   
+  const imgClick = (e) => {
+    e.preventDefault();
+  }
   const onClick = () => {
     dispatch(searchDetailItemAsync(item.item_id))
   }
   
   return (
       <SCardDiv onDoubleClick={onClick}>
-        <SCardImg variant="top" src={logosample} alt="이미지" />
+        <SImgDiv onDoubleClick={onClick} onClick={imgClick} id={item.item_id}> </SImgDiv>
         <SCardBodyDiv>
           {item ? <SCardTitleP>{item.item_title}</SCardTitleP> : null }
           {item ?

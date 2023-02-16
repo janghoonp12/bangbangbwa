@@ -11,7 +11,7 @@ function useKakaoMap(item) {
         text: item.item.item_title,
       },
     ];
-    console.log(item.item.item_lat, item.item.item_lng);
+    
     // 카카오 지도
     var mapContainer = document.getElementById(item.item.item_id);
 

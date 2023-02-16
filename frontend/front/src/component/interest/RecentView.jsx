@@ -32,7 +32,7 @@ function RecentView() {
       <RecentViewList>
         { recentItemData ? recentItemData.map((item, index) => (
         <RecentViewListItem
-          posts={item}
+          item={item}
         />
       )
         ) : <label>no data</label>}
