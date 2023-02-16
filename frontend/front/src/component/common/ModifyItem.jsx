@@ -73,8 +73,7 @@ function ModifyItem() {
       navigate(-1);
     }
   })
-
-  console.log(itemDetail)  
+ 
 
   // 직접 입력하는 자료
   const [roomType, setRoomType] = useState(itemDetail.item.item_type);
@@ -154,44 +153,44 @@ function ModifyItem() {
         "item_bonbun": oriBon,
         "item_bubun": oriBu,                                      
         "item_build_year": buildYear,
-        "item_building_name": postCode.buildingName,
+        "item_building_name": (postCode) ? postCode.buildingName : itemDetail.item.item_building_name,
         "item_building_type": roomType,
-        "item_buildingcode": postCode.buildingCode,                            
+        "item_buildingcode": (postCode) ? postCode.buildingCode : itemDetail.item.item_buildingcode,                            
         "item_deal_complete": false,
         "item_deal_type": dealType,
         "item_description": item_description,
-        "item_dong": postCode.bname,
-        "item_dongcode": postCode.bcode,  
-        "item_eubmyundongcode": postCode.bcode,   
+        "item_dong": (postCode) ? postCode.bname : itemDetail.item.item_dong,
+        "item_dongcode": (postCode) ? postCode.bcode : itemDetail.item.item_dongcode,  
+        "item_eubmyundongcode": (postCode) ? postCode.bcode : itemDetail.item.item_eubmyundongcode,   
         "item_exclusive_area": exclusiveArea,
         "item_floor": floor,                                                 
         "item_heating": parseInt(heating),        
-        "item_jibun": postCode.jibunAddress,
+        "item_jibun": (postCode) ? postCode.jibunAddress : itemDetail.item.item_jibun,
         "item_lat": lat,
         "item_lng": lng,
         "item_manage_fee": parseInt(manageFee),
         "item_manage_type": 0,
         "item_move_in_date": (moveIn) ? realToday : moveInDate,
         "item_move_in_type": (moveIn) ? 0 : 1,                                    
-        "item_road_name": postCode.roadname,
+        "item_road_name": (postCode) ? postCode.roadname : itemDetail.item.item_road_name,
         "item_road_name_bonbun": oriBon,
         "item_roadname_bubun": oriBu,
-        "item_roadname_code": postCode.roadnameCode,
+        "item_roadname_code": (postCode) ? postCode.roadnameCode : itemDetail.item.item_roadname_code,
         "item_room": roomNum,
-        "item_sigungucode": postCode.sigunguCode,
+        "item_sigungucode": (postCode) ? postCode.sigunguCode : itemDetail.item.item_sigungucode,
         "item_status": 1,
         "item_supply_area": supplyArea,
         "item_toilet": toiletNum,
         "item_title": itemName,
         "item_total_floor": totalFloor,
         "item_type": roomType,
-        "item_zonecode": postCode.zonecode
+        "item_zonecode": (postCode) ? postCode.zonecode : itemDetail.item.item_zonecode
          },
         "itemPrice": {
-          "item_price_buy_house": (dealType === '3') ? buyPrice : null,
-          "item_price_house_deposit": (dealType === '2') ? deposit : null,
-          "item_price_month_deposit": (dealType === '1') ? deposit : null,
-          "item_price_month_rent": (dealType === '1') ? monthRent : null
+          "item_price_buy_house": (dealType === 2) ? buyPrice : null,
+          "item_price_house_deposit": (dealType === 1) ? deposit : null,
+          "item_price_month_deposit": (dealType === 0) ? deposit : null,
+          "item_price_month_rent": (dealType === 0) ? monthRent : null
         },
         "manageOption": {                                          
           "manage_option_clean": optclean,
@@ -223,13 +222,14 @@ function ModifyItem() {
           "option_washer": washer
         }
     }
-    
+    console.log('----data------')
+    console.log(data)
     dispatch(modifyItemAsync(data))
   }
-
+  console.log(itemDetail)
 
   // 변수 실시간 추적
-  const itemNameChange = (e) => {
+  const itemNameChange = (e) => { 
     setItemName(e.target.value)
   }
   const itemDetailChange = (e) => {
