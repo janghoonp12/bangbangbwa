@@ -2,7 +2,7 @@ import React from "react";
 // import Card from 'react-bootstrap/Card';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice"
 
 const SCardDiv = styled.div`
@@ -10,7 +10,8 @@ const SCardDiv = styled.div`
   flex-direction: column;
   width: 250px;
   height: 400px;
-  margin-right: 50px;
+  margin-left: 25px;
+  margin-right: 5px;
   margin-bottom: 0px;
   border: 1px solid grey;
   border-radius: 8px;
@@ -52,7 +53,7 @@ function BroadcastListItem(props) {
 
   return (
     <SCardDiv onDoubleClick={onClick}>
-      <SCardImg variant="top" src="logo512.png" alt="이미지" />
+      <SCardImg variant="top" src={props.posts.imagePath} alt="이미지" />
       <SCardBodyDiv>
         <SCardTitleP>{props.posts.broadcastTitle}</SCardTitleP>
         <SCardContentP>

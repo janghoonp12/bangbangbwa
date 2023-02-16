@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import data from "../../noticeData.json";
 import styled from "styled-components";
 import sample from "../../assets/logosample.png"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {noticeGetFileAsync} from "../../reducers/fileSlice"
 
 const Wrapper = styled.div`
   display: flex;
@@ -50,9 +51,9 @@ const SButton = styled.button`
 
 function ItemDetail() {
   const navigate = useNavigate();
-
   const { noticeDetail } = useSelector((state) => state.noticeSlice);
   const { me } = useSelector((state) => state.userSlice);
+  const {images} = useSelector((state) => state.fileSlice)
 
   // const notice = data.find((item) => {
   //   return parseInt(item.id) === parseInt(postId);
@@ -81,7 +82,7 @@ function ItemDetail() {
         </STitleDiv>
         <SContentDiv>
           <p style={{fontSize: '20px'}}>{noticeDetail.notice_comment}</p>
-          <img src={sample} alt="#" />
+          <img src={images.imagePath} alt="#" />
         </SContentDiv>
         <SButton onClick={goBack}>뒤로가기</SButton>
         {me ? <SButton onClick={goModify}>수정</SButton> : <></>}

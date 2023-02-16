@@ -1,8 +1,8 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import data from "../../data.json";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
 import { useSelector } from 'react-redux';
+import axios from "axios";
 // import logosample from "../../assets/logosample.png"
 
 const Container = styled.div`    
@@ -82,6 +82,18 @@ const SPTag = styled.p`
   border-radius: 8px;
 `;
 
+const Sbutton = styled.button`
+  float: right;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: 0.5px solid lightgrey;
+  background-color: rgba(255, 17, 0, 0.2);
+
+  :hover {
+    border: 1px solid black;
+  }
+`;
+
 // const ImgTag = styled.img`
 //   width: 100%;
 //   height: 100%;
@@ -90,25 +102,76 @@ const SPTag = styled.p`
 
 function ItemDetail() {
   const navigate = useNavigate();
-  const {postId} = useParams();
-  const post = data.find((item) => {
-    return parseInt(item.id) === parseInt(postId);
-  });
+  const [broadcastInfo, setBroadcastInfo] = useState('');
+
   const goBack = () => {
     navigate(-1);
   }
   const { itemDetail } = useSelector((state) => state.itemSlice);
+  useEffect(() => {
+    let recentItemData = JSON.parse(sessionStorage.getItem("recentItemData"))
+    if (recentItemData === null) {
+      sessionStorage.setItem("recentItemData", JSON.stringify([itemDetail]));
+    } else {
+      let status = true
+      for (let i = 0; i < recentItemData.length; i++) {
+        if (recentItemData[i].item_id === itemDetail.item_id) {
+          status = false
+          break
+        }
+      }
+      if (status) {
+        recentItemData.push(itemDetail)
+        sessionStorage.setItem("recentItemData", JSON.stringify(recentItemData));
+      }
+    }
+    // 마커
+    var marker = [
+      {
+          position: new window.kakao.maps.LatLng(itemDetail.item_lng, itemDetail.item_lat), 
+          text: itemDetail.item_title
+      }
+    ];
+
+    // 카카오 지도
+    var mapContainer  = document.getElementById('map')
+    var options = {
+      center: new window.kakao.maps.LatLng(itemDetail.item_lng, itemDetail.item_lat), 
+      level: 5,
+      marker: marker
+    };
+    var map = new window.kakao.maps.StaticMap(mapContainer, options)
+
+    console.log('-------------')
+    console.log(itemDetail.item_description)
+
+    // 카카오 로드뷰
+    var roadviewContainer = document.getElementById('roadview'); 
+    var roadview = new window.kakao.maps.Roadview(roadviewContainer); 
+    var roadviewClient = new window.kakao.maps.RoadviewClient(); 
+
+    var position = new window.kakao.maps.LatLng(itemDetail.item_lng, itemDetail.item_lat);
+
+    roadviewClient.getNearestPanoId(position, 50, function(panoId) {
+      roadview.setPanoId(panoId, position); 
+    });
+
+    // 해당 매물의 방송 등록 여부
+    axios.get(`/broadcasts/item/${itemDetail.item_id}`)
+    .then(res => setBroadcastInfo(res.data))  // broadcastStatus === 1 일때만 방송정보에 띄우기
+    .catch(err => console.log(err))
+
+  }, [])
 
   return (
+    <div style={{justifyContent: 'center', display: 'flex'}}>
       <Container>
         <SGridDiv>
           <SPicLeftDiv>
-            <SPicDiv>
-              <h1>매물사진</h1>
-              {/* <ImgTag src={logosample} alt="이미지" /> */}
+            <SPicDiv id="roadview">
             </SPicDiv>
             <SPicsDiv>
-              <h1>자세한사진들</h1>
+              <h1>{itemDetail.item_title}</h1>
             </SPicsDiv>
           </SPicLeftDiv>
           <SPicRightDiv>
@@ -116,9 +179,7 @@ function ItemDetail() {
               <h1>방송정보</h1>
               {/* <ImgTag src={logosample} alt="이미지" /> */}
             </SBroadcastDiv>
-            <SMapDiv>
-              <h1>지도</h1>
-              {/* <ImgTag src={logosample} alt="이미지" /> */}
+            <SMapDiv id="map">
             </SMapDiv>
           </SPicRightDiv>
         </SGridDiv>
@@ -126,12 +187,38 @@ function ItemDetail() {
         <h1>매물 상세 정보</h1>
         <SInfoDiv>
           <SPTag>매물이름: {itemDetail.item_title}</SPTag>
-          <SPTag>매물종류: {itemDetail.item_type}</SPTag>
-          <SPTag>건물유형: {itemDetail.item_building_type}</SPTag>
+          <SPTag>매물종류: {itemDetail.item_deal_type === 0 ? '월세' : itemDetail.item_deal_type === 1 ? '전세' : '매매'}</SPTag>
+          <SPTag>건물유형: {itemDetail.item_building_type === 0 ? '원룸' : itemDetail.item_building_type === 1 ? '투,쓰리룸' : itemDetail.item_building_type === 2 ? '오피스텔' : '아파트'}</SPTag>
           <SPTag>관리비용: {itemDetail.item_manage_fee}</SPTag>
         </SInfoDiv>
-        <button onClick={goBack}>뒤로가기</button>
+        <SInfoDiv>
+          <SPTag>위치: {itemDetail.item_dong}</SPTag>
+          <SPTag>
+            공급면적: {itemDetail.item_supply_area} &nbsp;&nbsp;
+            전용면적: {itemDetail.item_exclusive_area}
+          </SPTag>
+          <SPTag>
+            방: {itemDetail.item_room} &nbsp;&nbsp;
+            화장실: {itemDetail.item_toilet}
+          </SPTag>
+        </SInfoDiv>
+        <SInfoDiv>
+          <SPTag>
+            총 층수: {itemDetail.item_total_floor} &nbsp;&nbsp;
+            해당 층: {itemDetail.item_floor}
+          </SPTag>
+          <SPTag>
+            {itemDetail.item_move_in_type === 0 ? '즉시 입주 가능' : `입주 가능일 : ${itemDetail.item_move_in_date}`}
+          </SPTag>
+        </SInfoDiv>
+        <SInfoDiv>
+          <pre style={{wordWrap: 'break-word'}}>
+            {itemDetail.item_description}
+          </pre>
+        </SInfoDiv>
+        <Sbutton onClick={goBack}>뒤로가기</Sbutton>
       </Container>
+    </div>
   )
 }
 

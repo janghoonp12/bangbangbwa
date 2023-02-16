@@ -1,6 +1,7 @@
 package com.bangbang.domain.notice;
 
 import com.bangbang.domain.NoticeDatetime;
+import com.bangbang.domain.image.Image;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +15,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Notice extends NoticeDatetime {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long notice_id; //PK
     @Column(nullable = false)
     @JoinTable(name="user",
             joinColumns = @JoinColumn(name="user_id"),
             inverseJoinColumns = @JoinColumn(name="user_id"))
     private long user_id; //FK
+
+    @JoinColumn(name="image_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Image image;     //FK
+
     @Column(nullable = false, length = 40)
     private String notice_title;
     @Column(name="noticeRegidate", insertable = false, updatable = false)
@@ -33,9 +39,10 @@ public class Notice extends NoticeDatetime {
     private int notice_status;
 
     @Builder
-    public Notice(long notice_id, long user_id, String notice_title, String notice_type, String notice_comment) {
+    public Notice(long notice_id, long user_id, Image image, String notice_title, String notice_type, String notice_comment) {
         this.notice_id = notice_id;
         this.user_id = user_id;
+        this.image = image;
         this.notice_title = notice_title;
         this.notice_type = notice_type;
         this.notice_comment = notice_comment;

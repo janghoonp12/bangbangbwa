@@ -6,6 +6,7 @@ import FilterButton from "../common/FilterButton";
 import styled from "styled-components";
 import LoadMore from "../common/ui/LoadMore";
 import SearchItem from "./SearchItem";
+import SearchBroadcast from "./SearchBroadcast";
 import axios from "axios";
 
 
@@ -47,8 +48,8 @@ function ItemSearchAll() {
 
 
   // 검색 axios 요청
-  const [broadcasts, setBroadcasts] = useState(null);
-  const [items, setItems] = useState(null);
+  const [broadcasts, setBroadcasts] = useState('');
+  const [items, setItems] = useState('');
   const { searchWord } = useParams();
   const [keyword, dongCode] = searchWord.split('&');
   useEffect(() => {
@@ -67,6 +68,7 @@ function ItemSearchAll() {
       .then(res => {
         setItems(res.data.dataB)
         setBroadcasts(res.data.dataD)
+        console.log(res.data.dataD)
       })
       .catch(err => console.log(err))
     } else if (dongCode) {
@@ -95,8 +97,8 @@ function ItemSearchAll() {
       </Wrapper>
       <ItemList>
       {broadcasts && broadcasts.length ? broadcasts.map((broadcast, index) => (
-        <SearchItem
-        broadcasts={broadcasts}
+        <SearchBroadcast
+        broadcast={broadcast}
         />
       )
         ) : <h3>검색 결과가 없습니다...</h3>}
@@ -120,6 +122,7 @@ function ItemSearchAll() {
       {items && items.length ? items.map((item, index) => (
         <SearchItem
           item={item}
+          key={item.item_id}
         />
       )
         ) : <h3>검색 결과가 없습니다...</h3>}

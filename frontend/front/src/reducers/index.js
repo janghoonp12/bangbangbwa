@@ -10,6 +10,7 @@ import broadcastSlice from "./broadcastSlice"
 import bookmarkSlice from "./bookmarkSlice"
 import fileSlice from "./fileSlice";
 import commonSlice from "./commonSlice"
+import filterSlice from "./filterSlice";
 
 import { persistReducer } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session"
@@ -34,7 +35,8 @@ export const rootReducer = combineReducers({
     broadcastSlice,
     bookmarkSlice,
     fileSlice,
-    commonSlice
+    commonSlice,
+    filterSlice
 })
 
 export default persistReducer(persistConfig, rootReducer);

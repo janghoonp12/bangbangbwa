@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import logosample from "../../assets/logosample.png"
+// import logosample from "../../assets/logosample.png"
+import logo from "../../assets/logo.png"
 import { useNavigate } from "react-router";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCallback, useEffect } from "react";
-import { signInAsync } from "../../reducers/userSlice";
+import { signInAsync, findPasswordAsync, clearFindPasswordDone } from "../../reducers/userSlice";
 import kakao from "../../assets/kakaoLogin.png";
 import naver from "../../assets/naverLogin.png";
+import Swal from "sweetalert2";
 
 const Wrapper = styled.div`
   display: flex;
@@ -34,7 +36,7 @@ const Container = styled.div`
 // `
 
 const SLeftDiv = styled.div`
-  background-image: url(${logosample});
+  background-image: url(${logo});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -89,17 +91,28 @@ function Login() {
   const navigate = useNavigate();
   const [userEmail, onChangeEmail] = useInput('');
   const [userPassword, onChangePassword] = useInput('');
-  const { signInDone, me } = useSelector((state) => state.userSlice);
+  const { signInDone, findPasswordDone } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
 
   const regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
   useEffect(() => {
     if (signInDone) {
-      console.log(me)
+      Swal.fire({
+        icon: 'success',
+        title: '로그인 성공!',
+        showConfirmButton: false,
+        timer: 500
+      })
       navigate('/');
     }
-  })
+  }, [signInDone])
+
+  useEffect(() => {
+    if (findPasswordDone) {
+      dispatch(clearFindPasswordDone())
+    }
+  }, [findPasswordDone])
 
   // const KakaoLogin = () => {
   //   navigate("http://localhost:8081/api/oauth2/authoriztation/kakao")
@@ -115,13 +128,55 @@ function Login() {
     }
   }
 
+  const findPassword = () => {
+    if (userEmail === "") {
+      Swal.fire({
+        icon: 'warning',
+        title: '이메일을 입력해주세요!',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      return
+    }
+    if (!regex.test(userEmail)) {
+      Swal.fire({
+        icon: 'warning',
+        title: '이메일 형식으로 입력해주세요!',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      return
+    }
+    Swal.fire({
+      icon: 'info',
+      title: '이메일로 임시 비밀번호를 발급하였습니다.',
+      showConfirmButton: false,
+      timer: 1000
+    })
+    dispatch(findPasswordAsync(
+      {
+        id: userEmail
+      }
+    ))
+  }
+
   const signInButtonClick = useCallback(() => {
     if (!regex.test(userEmail)) {
-      alert('이메일 형식으로 입력해주세요!')
+      Swal.fire({
+        icon: 'warning',
+        title: '이메일 형식으로 입력해주세요!',
+        showConfirmButton: false,
+        timer: 1000
+      })
       return
     }
     if (userPassword.length < 8 && userPassword.length > 30) {
-      alert('패스워드는 8자 이상 30자 이하로 입력해주세요!')
+      Swal.fire({
+        icon: 'warning',
+        title: '패스워드는 8자 이상 30자 이하로 입력해주세요!',
+        showConfirmButton: false,
+        timer: 1000
+      })
       return
     }
     dispatch(signInAsync(
@@ -137,7 +192,7 @@ function Login() {
       <Container>
         <SLeftDiv />
         <SRightDiv style={{textAlign:"center"}}>
-          <div style={{fontSize: "6rem"}}>logo</div>
+          <div style={{fontSize: "3rem", color: 'rgba(214, 174, 242, 1)'}}>방방</div>
           <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div>
           <div style={{textAlign: "left", marginTop: "3rem", marginLeft: "10%"}}>이메일</div>
           <SCustomInput placeholder="이메일을 입력해주세요" value={userEmail} required onChange={onChangeEmail}/>
@@ -145,9 +200,7 @@ function Login() {
           <SCustomInput placeholder="비밀번호를 입력해주세요" value={userPassword} required onChange={onChangePassword} onKeyDown={(e) => activeEnter(e)} type="password"/>
           <div style={{textAlign: "left", marginLeft: "10%"}}>
             <SSGignuP
-            onClick={() => {
-              navigate("/signup")
-            }}>아직 회원이 아니신가요?</SSGignuP>
+            onClick={findPassword}>비밀번호를 잊으셨나요?</SSGignuP>
           </div>
           <SNormalButton type="button" onClick={() => {signInButtonClick()}}>로그인</SNormalButton>
           <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center'}}>

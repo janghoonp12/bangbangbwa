@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import HotItemList from "../component/home/HotItemList";
 import HotBroadcastList from "../component/home/HotBroadcastList";
-import data from "../data.json";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +7,7 @@ import { SearchItemAsync } from "../reducers/itemSlice"
 import ItemListItem from "../component/item/ItemListItem";
 import BroadcastListItem from "../component/broadcast/BroadcastListitem";
 import { SearchLiveBroadcastAsync, initBroadcastState } from "../reducers/broadcastSlice"
+import HotItemList from "../component/home/HotItemList";
 
 
 const Wrapper = styled.div`
@@ -62,14 +61,14 @@ function Home() {
         <hr/>
         <h2>최근 매물</h2>
         <div>
-        <HotBroadcastList>
+        <HotItemList>
           {items ? items.map((item, index) => (
         <ItemListItem
           posts={item}
         />
       )
         ) : <label>no data</label>}
-          </HotBroadcastList>
+          </HotItemList>
         </div>
       </Container>
     </Wrapper>

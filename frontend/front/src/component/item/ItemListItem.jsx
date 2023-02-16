@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 // import Card from 'react-bootstrap/Card';
-import { useNavigate } from "react-router-dom";
-import { useRef, useState } from "react"; 
 import styled from "styled-components";
 import throttle from "../../utils/Throttle"
-import { useDispatch, useSelector } from 'react-redux';
-import { searchDetailItemAsync, clearSearchDetailItemDone } from "../../reducers/itemSlice"
+import { useDispatch } from 'react-redux';
+import { searchDetailItemAsync } from "../../reducers/itemSlice"
 
 
 const SCardDiv = styled.div`
@@ -14,7 +12,7 @@ const SCardDiv = styled.div`
   width: 250px;
   height: 400px;
   margin-left: 25px;
-  margin-right: 25px;
+  margin-right: 5px;
   margin-bottom: 0px;
   border: 1px solid grey;
   border-radius: 8px;
@@ -50,23 +48,14 @@ const SCardContentP = styled.p`
 // TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function ItemListItem(props) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   
-  const { searchDetailItemDone } = useSelector((state) => state.itemSlice);
-
-  useEffect(() => {
-    if (searchDetailItemDone) {
-      dispatch(clearSearchDetailItemDone())
-      navigate(`/items/${props.posts.item.item_id}`)
-    }
-  })
   const onClick = () => {
     dispatch(searchDetailItemAsync(props.posts.item.item_id))
   }
   
   return (
       <SCardDiv onDoubleClick={onClick}>
-        <SCardImg variant="top" src="logo512.png" alt="이미지" />
+        <SCardImg variant="top" src="test2.jpg" alt="이미지" />
         <SCardBodyDiv>
           <SCardTitleP>{props.posts.item.item_title}</SCardTitleP>
           <SCardContentP>

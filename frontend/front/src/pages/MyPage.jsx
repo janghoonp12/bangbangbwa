@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Routes,
   Route
@@ -6,14 +6,14 @@ import {
 import styled from "styled-components";
 import NewBroker from "../component/mypage/NewBroker";
 import MyItem from '../component/mypage/MyItem';
-import PostViewPage from '../component/mypage/PostViewPage';
-import PostWritePage from '../component/mypage/PostWritePage';
 import MyBroadcast from "../component/mypage/MyBroadcast";
 import MyPageSide from "../component/mypage/MyPageSide";
 import MyProfile from "../component/mypage/MyProfile";
-import useInput from '../hooks/useInput';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { searchMyItemAsync } from "../reducers/itemSlice"
+import { searchMyBroadcastAsync } from "../reducers/broadcastSlice"
 
 
 const Wrapper = styled.div`
@@ -39,16 +39,24 @@ const Container = styled.div`
 
 function MyPage() {
   const { myPageStatus } = useSelector((state) => state.commonSlice);
+  const { me } = useSelector((state) => state.userSlice);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (me.role === 'ROLE_ADMIN' || me.role === "ROLE_BROKER") {
+      dispatch(searchMyItemAsync())
+      dispatch(searchMyBroadcastAsync())
+    }
+  },[])
 
   return (
     <Wrapper>
       <SecondWrapper>
         <Container>
           <MyPageSide />
-          {myPageStatus == 1 && <MyProfile />}
-          {myPageStatus == 2 && <NewBroker />}
-          {myPageStatus == 3 && <MyItem />}
-          {myPageStatus == 4 && <MyBroadcast />}
+          {myPageStatus === 1 && <MyProfile />}
+          {myPageStatus === 2 && <NewBroker />}
+          {myPageStatus === 3 && <MyItem />}
+          {myPageStatus === 4 && <MyBroadcast />}
         </Container>
       </SecondWrapper>
     </Wrapper>

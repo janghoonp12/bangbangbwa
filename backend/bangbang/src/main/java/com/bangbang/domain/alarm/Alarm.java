@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 public class Alarm extends AlarmDatetime {
   @Id
   @Column(name = "alarm_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long alarmId;
 
   @Column(name = "alarm_comment", length = 20, nullable = false)

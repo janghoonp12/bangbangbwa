@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -8,6 +8,7 @@ import {
 //Pages
 import Openvidu from "./pages/Openvidu";
 import Nav from "./component/common/Nav";
+import MobileNav from "./component/common/MobileNav";
 import Home from "./pages/Home";
 import Items from "./pages/Items";
 import Broadcasts from "./pages/Broadcasts";
@@ -25,10 +26,18 @@ import OauthRedirect from "./component/account/OauthRedirect";
 
 
 function App() {
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const resizeListener = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", resizeListener);
+  });
 
   return (
     <BrowserRouter>
-      <Nav />
+      {innerWidth > 700 ? <Nav /> : <MobileNav />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignIn/>}/>

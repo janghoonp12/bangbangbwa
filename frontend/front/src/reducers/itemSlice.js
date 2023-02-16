@@ -6,12 +6,21 @@ export const initialState = {
   writeItemLoading: false,
   writeItemDone: false,
   writeItemError: null,
+  modifyItemLoading: false,
+  modifyItemDone: false,
+  modifyItemError: null,
   searchItemLoading: false,
   searchItemDone: false,
   searchItemError: null,
   searchDetailItemLoading: false,
   searchDetailItemDone: false,
   searchDetailItemError: null,
+  searchMyItemLoading: false,
+  searchMyItemDone: false,
+  searchMyItemError: null,
+  deleteItemLoading: false,
+  deleteItemDone: false,
+  deleteItemError: null,
   myItem: null,
   items: null,
   itemDetail: null,
@@ -26,6 +35,20 @@ export const writeItemAsync = createAsyncThunk(
     try {
       const response = await AxiosHeaderToken.post(
         '/broker/items/new', data
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const modifyItemAsync = createAsyncThunk(
+  'item/MODIFY',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.patch(
+        '/broker/items/modify', data
       );
       return response.data
     } catch (err) {
@@ -62,12 +85,26 @@ export const searchDetailItemAsync = createAsyncThunk(
   }
 );
 
-export const findMyItemAsync = createAsyncThunk(
-  'broadcast/FIND_MY_ITEM',
+export const searchMyItemAsync = createAsyncThunk(
+  'item/FIND_MY_ITEM',
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
-        '/broker/mypage/item',
+        '/mypage/item',
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const DeleteItemAsync = createAsyncThunk(
+  'item/DELETE_MY_ITEM',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.patch(
+        `/broker/items/deactivate/${data}`,
       );
       return response.data
     } catch (err) {
@@ -92,6 +129,20 @@ const itemSlice = createSlice({
     },
     clearWriteItemDone: (state) => {
       state.writeItemDone = false
+    },
+    clearModifyItemDone: (state) => {
+      state.modifyItemDone = false
+    },
+    choiceItemDetail: (state, action) => {
+      state.itemDetail = action.payload
+    },
+    deleteMyItem: (state, action) => {
+      state.myItem.map((item, index) => {
+        if (item.item.item_id === action.payload) {
+          state.myItem.splice(index, 1);
+          return
+        }
+      })
     }
   },
   extraReducers: (builder) => {
@@ -110,19 +161,35 @@ const itemSlice = createSlice({
       state.writeItemError = action.payload
       alert('매물 등록 실패');
     });
-    builder.addCase(findMyItemAsync.pending, (state, action) => {
-      state.findMyItemLoading = true;
-      state.findMyItemError = null;
-      state.findMyItemDone = false;
+    builder.addCase(modifyItemAsync.pending, (state, action) => {
+      state.modifyItemLoading = true;
+      state.modifyItemError = null;
+      state.modifyItemDone = false;
     });
-    builder.addCase(findMyItemAsync.fulfilled, (state, action) => {
-      state.findMyItemLoading = false;
-      state.findMyItemDone = true;
+    builder.addCase(modifyItemAsync.fulfilled, (state, action) => {
+      state.modifyItemLoading = false;
+      state.modifyItemDone = true;
+      alert('매물 수정 성공')
+    });
+    builder.addCase(modifyItemAsync.rejected, (state, action) => {
+      state.modifyItemLoading = false;
+      state.modifyItemError = action.payload
+      alert('매물 수정 실패');
+    });
+    builder.addCase(searchMyItemAsync.pending, (state, action) => {
+      state.searchMyItemLoading = true;
+      state.searchMyItemError = null;
+      state.searchMyItemDone = false;
+    });
+    builder.addCase(searchMyItemAsync.fulfilled, (state, action) => {
+      state.searchMyItemLoading = false;
+      state.searchMyItemDone = true;
       state.myItem = action.payload
+      console.log(state.myItem)
     });
-    builder.addCase(findMyItemAsync.rejected, (state, action) => {
-      state.findMyItemLoading = false;
-      state.findMyItemError = action.error
+    builder.addCase(searchMyItemAsync.rejected, (state, action) => {
+      state.searchMyItemLoading = false;
+      state.searchMyItemError = action.error
     });
     builder.addCase(SearchItemAsync.pending, (state, action) => {
       state.searchItemLoading = true;
@@ -158,8 +225,21 @@ const itemSlice = createSlice({
       state.searchDetailItemLoading = false;
       state.searchDetailItemError = action.error
     });
+    builder.addCase(DeleteItemAsync.pending, (state, action) => {
+      state.deleteItemLoading = true;
+      state.deleteItemDone = null;
+      state.deleteItemError = false;
+    });
+    builder.addCase(DeleteItemAsync.fulfilled, (state, action) => {
+      state.deleteItemLoading = false;
+      state.deleteItemDone = true;
+    });
+    builder.addCase(DeleteItemAsync.rejected, (state, action) => {
+      state.deleteItemLoading = false;
+      state.deleteItemError = action.error
+    });
   }
 });
 
-export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone } = itemSlice.actions;
+export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone, choiceItemDetail, deleteMyItem, clearModifyItemDone } = itemSlice.actions;
 export default itemSlice.reducer;

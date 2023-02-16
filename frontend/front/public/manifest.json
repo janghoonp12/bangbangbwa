@@ -17,6 +17,16 @@
       "type": "image/png",
       "sizes": "512x512"
     }
+    {
+      "src": "test.jpg",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+    {
+      "src": "test2.jpg",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
   ],
   "start_url": ".",
   "display": "standalone",

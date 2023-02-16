@@ -15,13 +15,14 @@ const Wrapper = styled.div`
 // posts 배열에 map함수를 이용하여 각 post 객체에 대해 PostListItem을 만들어서 렌더링한다
 function MyBroadcastList(props) {
   const { myBroadcasts, onClickItem } = props;
+  console.log(myBroadcasts)
 
   return (
     <Wrapper>
       {myBroadcasts.map((myBroadcast, index) => {
         return (
           <MyBroadcastListItem
-            key={myBroadcast.id}
+            key={myBroadcast.broadcast_id}
             myBroadcast={myBroadcast}
             onClick={() => {
               onClickItem(myBroadcast);

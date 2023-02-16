@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../common/ui/Button";
 import { writeNoticeAsync } from "../../reducers/noticeSlice"
-import DropZone from "../common/Dropzone";
+import NoticeFileData from "../common/NoticeFileData";
+import Swal from "sweetalert2";
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -53,11 +55,18 @@ function NoticeNew() {
   const [comment, setComment] = useState();
 
   const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
-
+  const {images} = useSelector((state) => state.fileSlice)
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (writeNoticeDone) {
+      Swal.fire({
+        icon: 'success',
+        title: '공지사항 작성 성공!',
+        showConfirmButton: false,
+        timer: 500
+      })
+
       navigate('/notices');
     }
   }, [writeNoticeDone])
@@ -72,6 +81,7 @@ function NoticeNew() {
     setComment(e.target.value)
   }
 
+  console.log(images);
   const createNotice = () => {
     dispatch(writeNoticeAsync(
       {
@@ -79,7 +89,8 @@ function NoticeNew() {
         'notice_title': title,
         'notice_comment': comment,
         // 'notice_regidate': realToday,
-        'notice_status': 1
+        'notice_status': 1,
+        'image_id' : images.imageId
       }
     ))
     // let today = new Date();   
@@ -131,7 +142,7 @@ function NoticeNew() {
         <hr />
         <SGridDiv>
           <STitleP>첨부 파일</STitleP>
-          <DropZone></DropZone>
+          <NoticeFileData></NoticeFileData>
         </SGridDiv>
         <hr />
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>

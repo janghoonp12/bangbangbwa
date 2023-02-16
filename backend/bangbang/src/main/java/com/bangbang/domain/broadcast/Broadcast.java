@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Table(name = "broadcast")
 public class Broadcast extends BroadcastDatetime{
   @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   @Column(name = "broadcast_id")
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long broadcastId; //PK
 
   @Column(name = "broadcast_description",length = 10, nullable = true)
@@ -43,30 +43,39 @@ public class Broadcast extends BroadcastDatetime{
   @OneToOne(fetch = FetchType.LAZY)
   private Image image;     //FK
 
+  @Column(name = "image_path")
+  private String imagePath;
+
   @Column(name = "broadcast_room_id", length = 45, nullable = false)
   private String broadcastRoomId;
 
   @Builder
   public Broadcast(Long broadcastId, String broadcastDescription, Integer broadcastStatus,
-      String broadcastTitle, Long itemId, Image image, LocalDateTime broadcastReservationTime, String broadcastRoomId){
+      String broadcastTitle, Long itemId, String imagePath, LocalDateTime broadcastReservationTime, String broadcastRoomId){
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastStatus = broadcastStatus;
     this.broadcastTitle = broadcastTitle;
     this.itemId = itemId;
-    this.image = image;
+    this.imagePath = imagePath;
     this.broadcastReservationTime = broadcastReservationTime;
     this.broadcastRoomId = broadcastRoomId;
   }
 
-  public void update(Long broadcastId, String broadcastDescription, String broadcastTitle){
+  public void update(Long broadcastId, String broadcastDescription, String broadcastTitle, String imagePath, LocalDateTime broadcastReservationTime){
     this.broadcastId = broadcastId;
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
+    this.imagePath = imagePath;
+    this.broadcastReservationTime = broadcastReservationTime;
+  }
+  public void starter(Long broadcastId){
+    this.broadcastId = broadcastId;
+    this.broadcastStatus = 2;
   }
   public void deactive(Long broadcastId){
     this.broadcastId = broadcastId;
-    this.broadcastStatus = 0;
+    this.broadcastStatus = 3;
   }
 
 }

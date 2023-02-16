@@ -87,7 +87,7 @@ public class ItemRestController {
     @ApiOperation(value="매물 전체 검색 (pagination)")
     @GetMapping("/items")
     public ResponseEntity<?> searchItemAll(@RequestParam(defaultValue="0") Integer page,
-                                           @RequestParam(defaultValue="10") Integer size) {
+                                           @RequestParam(defaultValue="12") Integer size) {
         try {
             Page<ItemDto> item = itemService.searchItemAll(page, size);
             if (item != null && item.hasContent())

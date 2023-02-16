@@ -105,6 +105,10 @@ function SignUp() {
       alert('비밀번호가 일치하지 않습니다.')
       return setPasswordError(true);
     }
+    if (userNickname.length < 2 && userNickname. length > 10) {
+      alert('닉네임은 2~10자로 입력해주세요!')
+      return
+    }
     dispatch(signUpAsync(
       {
         userEmail: userEmail,

@@ -8,6 +8,7 @@ import store from './store/store';
 import { Provider } from 'react-redux';
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import 'antd/dist/reset.css';
 
 const persistor = persistStore(store);
 
