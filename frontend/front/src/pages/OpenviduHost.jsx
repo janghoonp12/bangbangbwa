@@ -101,7 +101,7 @@ class Openvidu extends Component {
 
         // this.handleChangeSessionId(broadcast.id)
         if (me) {
-          this.handleChangeUserName(me.nickname)
+          this.handleChangeUserName(`host-${me.nickname}`)
         } else {
           this.handleChangeUserName("Guest")
         }
