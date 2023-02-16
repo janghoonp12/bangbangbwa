@@ -100,13 +100,10 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심지역 삭제")
-    @DeleteMapping("/user/interest/areas/{itemId}")
-    public ResponseEntity<?> deleteInterestArea(@PathVariable Long itemId, HttpServletRequest request) {
+    @DeleteMapping("/user/interest/areas/{iterestId}")
+    public ResponseEntity<?> deleteInterestArea(@PathVariable Long interestId) {
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
-            Long uid = userService.findUserId(token);
-            interestService.interestItemStatus(uid, itemId);
+            interestService.deleteInterestItem(interestId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
@@ -126,14 +123,18 @@ public class InterestRestController {
     }
 
     @ApiOperation(value="관심매물 체크")
-    @GetMapping("/user/interest/items/check/{interestId}")
-    public ResponseEntity<?> checkInterestItem(@PathVariable Long interestId) {
+    @GetMapping("/user/interest/items/check/{itemId}")
+    public ResponseEntity<?> checkInterestItem(@PathVariable Long itemId, HttpServletRequest request) {
         try {
-            interestService.deleteInterestItem(interestId);
-            return new ResponseEntity(HttpStatus.OK);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            boolean check = interestService.interestItemStatus(uid, itemId);
+            return new ResponseEntity<Boolean>(check, HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
         }
+
     }
 
     private ResponseEntity exceptionHandling() {
