@@ -295,8 +295,8 @@ const userSlice = createSlice({
     builder.addCase(oauth2SignInAsync.fulfilled, (state, action) => {
       state.signInLoading = false;
       state.me = {
-        email : action.payload.email,
-        nickname: action.payload.nickname,
+        email : action.payload.userEmail,
+        nickname: action.payload.userNickname,
         role : action.payload.role,
         level : action.payload.level
       }
