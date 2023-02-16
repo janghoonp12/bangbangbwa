@@ -557,13 +557,6 @@ function WriteItem() {
           </SGridListDiv>
         </SGridDiv>
         <hr />
-        <SGridDiv>
-          <STitleP>사진</STitleP>
-          <SGridListDiv>
-            <ImageUpload/>
-          </SGridListDiv>
-        </SGridDiv>
-        <hr />
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
           <Button
             title="등록하기"

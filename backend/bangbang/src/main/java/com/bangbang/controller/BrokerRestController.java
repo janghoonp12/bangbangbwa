@@ -34,12 +34,11 @@ public class BrokerRestController {
     @ApiOperation(value="중개사 신청")
     @PostMapping("/user/brokers/new")
     public ResponseEntity<?> newBroker(@RequestBody BrokerSaveRequestDto broker, HttpServletRequest request) {
-        System.out.println(1234);
         try {
-            System.out.println(broker);
             String token = request.getHeader("X-AUTH-TOKEN");
-            Long uid = userService.findUserId(token);
+            Long uid = userService.findUserId(token.substring(7));
             broker.setUserId(uid);
+            System.out.println(broker);
             brokerService.newBroker(broker);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -89,7 +88,7 @@ public class BrokerRestController {
     }
 
     @ApiOperation(value="중개사 정보 조회")
-    @GetMapping("/broker/brokers")
+    @GetMapping("/user/brokers")
     public ResponseEntity<?> searchBroker(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;

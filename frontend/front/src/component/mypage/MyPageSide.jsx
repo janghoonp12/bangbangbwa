@@ -71,7 +71,7 @@ function MyPageSide() {
         onClick={() => {
           changeStatus(2)
         }}
-      >중개사 등록</SMenuP>
+      >중개사 정보</SMenuP>
       {me.level > 1 && <SMenuP
         onClick={() => {
           changeStatus(3)

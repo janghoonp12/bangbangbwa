@@ -19,6 +19,9 @@ export const initialState = {
   searchMyInfoLoading: false,
   searchMyInfoDone: false,
   searchMyInfoError: null,
+  searchBrokerInfoLoading: false,
+  searchBrokerInfoDone: false,
+  searchBrokerInfoError: null,
   changeNicknameLoading: false,
   changeNicknameDone: false,
   changeNicknameError: null,
@@ -32,7 +35,7 @@ export const initialState = {
   submitBrokerInfoDone: false,
   submitBrokerInfoError: null,
   me: null,
-  userInfo : null
+  myBrokerInfo: null,
 };
 
 export const signUpAsync = createAsyncThunk(
@@ -170,9 +173,8 @@ export const searchBrokerInfoAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
-        '/user/mypage'
+        '/user/brokers'
       );
-
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -291,14 +293,14 @@ const userSlice = createSlice({
       state.signInDone = false;
     });
     builder.addCase(oauth2SignInAsync.fulfilled, (state, action) => {
-      let level = 0
       state.signInLoading = false;
       state.me = {
-        email : action.payload.email,
-        nickname: action.payload.nickname,
+        email : action.payload.userEmail,
+        nickname: action.payload.userNickname,
         role : action.payload.role,
         level : action.payload.level
       }
+      console.log(state.me)
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
       sessionStorage.setItem("refresh-token", action.payload.refreshtoken)
@@ -317,7 +319,7 @@ const userSlice = createSlice({
     builder.addCase(searchMyInfoAsync.fulfilled, (state, action) => {
       state.searchMyInfoLoading = false;
       state.searchMyInfoDone = true;
-      state.userInfo = action.payload
+      state.me = action.payload
     });
     builder.addCase(searchMyInfoAsync.rejected, (state, action) => {
       state.searchMyInfoLoading = false;
@@ -363,17 +365,18 @@ const userSlice = createSlice({
       state.withdrawalError = action.error
     });
     builder.addCase(searchBrokerInfoAsync.pending, (state, action) => {
-      state.submitBrokerInfoLoading = true;
-      state.submitBrokerInfoError = null;
-      state.submitBrokerInfoDone = false;
+      state.searchBrokerInfoLoading = true;
+      state.searchBrokerInfoError = null;
+      state.searchBrokerInfoDone = false;
     });
     builder.addCase(searchBrokerInfoAsync.fulfilled, (state, action) => {
-      state.submitBrokerInfoLoading = false;
-      state.submitBrokerInfoDone = true;
+      state.searchBrokerInfoLoading = false;
+      state.searchBrokerInfoDone = true;
+      state.myBrokerInfo = action.payload;
     });
     builder.addCase(searchBrokerInfoAsync.rejected, (state, action) => {
-      state.submitBrokerInfoLoading = false;
-      state.submitBrokerInfoError = action.error
+      state.searchBrokerInfoLoading = false;
+      state.searchBrokerInfoError = action.error
     });
   }
 });

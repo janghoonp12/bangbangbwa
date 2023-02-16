@@ -3,6 +3,7 @@ package com.bangbang.controller;
 import com.bangbang.domain.interest.Interestarea;
 import com.bangbang.domain.interest.InterestareaRepository;
 import com.bangbang.domain.interest.Interestitem;
+import com.bangbang.domain.item.Item;
 import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
 import com.bangbang.dto.interest.InterestareaSaveRequestDto;
@@ -89,9 +90,9 @@ public class InterestRestController {
             HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
-            List<Interestitem> list = interestService.searchInterestItem(uid);
+            List<Item> list = interestService.searchInterestItem(uid);
             if (list != null && !list.isEmpty())
-                return new ResponseEntity<List<Interestitem>>(list, HttpStatus.OK);
+                return new ResponseEntity<List<Item>>(list, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
@@ -103,7 +104,7 @@ public class InterestRestController {
     @DeleteMapping("/user/interest/areas/{iterestId}")
     public ResponseEntity<?> deleteInterestArea(@PathVariable Long interestId) {
         try {
-            interestService.deleteInterestItem(interestId);
+            interestService.deleteInterestArea(interestId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
@@ -112,10 +113,13 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심매물 삭제")
-    @DeleteMapping("/user/interest/items/{interestId}")
-    public ResponseEntity<?> deleteInterestItem(@PathVariable Long interestId) {
+    @DeleteMapping("/user/interest/items/{itemId}")
+    public ResponseEntity<?> deleteInterestItem(@PathVariable Long itemId, HttpServletRequest request) {
         try {
-            interestService.deleteInterestItem(interestId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            interestService.deleteInterestItem(uid, itemId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
@@ -130,6 +134,7 @@ public class InterestRestController {
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             boolean check = interestService.interestItemStatus(uid, itemId);
+            System.out.println(check);
             return new ResponseEntity<Boolean>(check, HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();

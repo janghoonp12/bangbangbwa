@@ -4,6 +4,7 @@ import com.bangbang.domain.interest.Interestarea;
 import com.bangbang.domain.interest.InterestareaRepository;
 import com.bangbang.domain.interest.Interestitem;
 import com.bangbang.domain.interest.InterestitemRepository;
+import com.bangbang.domain.item.Item;
 import com.bangbang.dto.interest.InterestareaSaveRequestDto;
 import com.bangbang.dto.interest.InterestitemSaveRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class InterestServiceImpl implements InterestService{
     }
 
     @Override
-    public List<Interestitem> searchInterestItem(Long userId) {
-        return interestitemRepository.findByUserId(userId);
+    public List<Item> searchInterestItem(Long userId) {
+        return interestitemRepository.searchInterestItem(userId);
     }
 
     @Override
@@ -44,8 +45,9 @@ public class InterestServiceImpl implements InterestService{
     }
 
     @Override
-    public void deleteInterestItem(Long interestitemId) {
-        interestitemRepository.deleteById(interestitemId);
+    public void deleteInterestItem(Long userId, Long itemId) {
+        Interestitem item = interestitemRepository.interestItemStatus(userId, itemId);
+        interestitemRepository.deleteById(item.getInterestitemId());
     }
 
     @Override

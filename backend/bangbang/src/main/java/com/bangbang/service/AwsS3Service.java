@@ -29,31 +29,31 @@ public class AwsS3Service {
   private final AmazonS3 amazonS3;
   private final ImageService imageService;
 
-  public ImageSaveRequestDto noticeUploadImage(MultipartFile file) {
-    String fileName = createFileName(file.getOriginalFilename());
-    String url = defaultUrl+fileName;
-
-    ObjectMetadata objectMetadata = new ObjectMetadata();
-    objectMetadata.setContentLength(file.getSize());
-    objectMetadata.setContentType(file.getContentType());
-
-    ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
-    imageSaveRequestDto.setImageOriginName(file.getOriginalFilename());
-    imageSaveRequestDto.setImagePath(url);
-    imageSaveRequestDto.setImageName(fileName);
-
-    Long image_id = imageService.saveFile(imageSaveRequestDto);
-    imageSaveRequestDto.setImageId(image_id);
-
-    try (InputStream inputStream = file.getInputStream()) {
-      amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-          .withCannedAcl(CannedAccessControlList.PublicRead));
-    } catch (IOException e) {
-      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
-    }
-
-    return imageSaveRequestDto;
-  }
+//  public ImageSaveRequestDto noticeUploadImage(MultipartFile file) {
+//    String fileName = createFileName(file.getOriginalFilename());
+//    String url = defaultUrl+fileName;
+//
+//    ObjectMetadata objectMetadata = new ObjectMetadata();
+//    objectMetadata.setContentLength(file.getSize());
+//    objectMetadata.setContentType(file.getContentType());
+//
+//    ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
+//    imageSaveRequestDto.setImageOriginName(file.getOriginalFilename());
+//    imageSaveRequestDto.setImagePath(url);
+//    imageSaveRequestDto.setImageName(fileName);
+//
+//    Long image_id = imageService.saveFile(imageSaveRequestDto);
+//    imageSaveRequestDto.setImageId(image_id);
+//
+//    try (InputStream inputStream = file.getInputStream()) {
+//      amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+//          .withCannedAcl(CannedAccessControlList.PublicRead));
+//    } catch (IOException e) {
+//      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
+//    }
+//
+//    return imageSaveRequestDto;
+//  }
   public String broadcastUploadImage(MultipartFile file) {
     String fileName = createFileName(file.getOriginalFilename());
     String url = defaultUrl+fileName;
@@ -62,13 +62,13 @@ public class AwsS3Service {
     objectMetadata.setContentLength(file.getSize());
     objectMetadata.setContentType(file.getContentType());
 
-    ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
-    imageSaveRequestDto.setImageOriginName(file.getOriginalFilename());
-    imageSaveRequestDto.setImagePath(url);
-    imageSaveRequestDto.setImageName(fileName);
-
-    Long image_id = imageService.saveFile(imageSaveRequestDto);
-    imageSaveRequestDto.setImageId(image_id);
+//    ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
+//    imageSaveRequestDto.setImageOriginName(file.getOriginalFilename());
+//    imageSaveRequestDto.setImagePath(url);
+//    imageSaveRequestDto.setImageName(fileName);
+//
+//    Long image_id = imageService.saveFile(imageSaveRequestDto);
+//    imageSaveRequestDto.setImageId(image_id);
 
     try (InputStream inputStream = file.getInputStream()) {
       amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)

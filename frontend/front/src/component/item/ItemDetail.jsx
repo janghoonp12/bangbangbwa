@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
+import { searchInterestDetailAsync, changeInterest, addInterestAsync, deleteInterestAsync } from "../../reducers/itemSlice";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Swal from "sweetalert2";
+
 // import logosample from "../../assets/logosample.png"
 
 const Container = styled.div`    
@@ -108,13 +113,20 @@ const Sbutton = styled.button`
 
 function ItemDetail() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [broadcastInfo, setBroadcastInfo] = useState('');
+
+  const { interest } = useSelector((state) => state.itemSlice);
+  const { me } = useSelector((state) => state.userSlice);
 
   const goBack = () => {
     navigate('/items');
   }
   const { itemDetail } = useSelector((state) => state.itemSlice);
   useEffect(() => {
+    if (me !== null) {
+      dispatch(searchInterestDetailAsync(itemDetail.item_id))
+    }
     let recentItemData = JSON.parse(sessionStorage.getItem("recentItemData"))
     if (recentItemData === null) {
       sessionStorage.setItem("recentItemData", JSON.stringify([itemDetail]));
@@ -148,9 +160,6 @@ function ItemDetail() {
     };
     var map = new window.kakao.maps.StaticMap(mapContainer, options)
 
-    console.log('-------------')
-    console.log(itemDetail.item_description)
-
     // 카카오 로드뷰
     var roadviewContainer = document.getElementById('roadview'); 
     var roadview = new window.kakao.maps.Roadview(roadviewContainer); 
@@ -169,15 +178,38 @@ function ItemDetail() {
 
   }, [])
 
-  console.log(broadcastInfo)
+  const interestClick = () => {
+    if (me) {
+      if (interest) {
+        dispatch(deleteInterestAsync(itemDetail.item_id))
+      } else {
+        dispatch(addInterestAsync(
+          {
+            itemId: itemDetail.item_id
+          }
+        ))
+        console.log(interest)
+      }
+    }else {
+      Swal.fire({
+        icon: 'info',
+        title: '회원만 사용하실수 있습니다.',
+        showConfirmButton: false,
+        timer: 500
+      })
+    }
+    // dispatch(changeInterest())
+  }
 
   return (
     <div style={{justifyContent: 'center', display: 'flex'}}>
       <Container>
         <SGridDiv>
-          <SPicLeftDiv>
+          <SPicLeftDiv>FavoriteIcon
             <SPicsDiv>
-              <h1>{itemDetail.item_title}</h1>
+              <h1 style={{display: 'inline-block'}}>{itemDetail.item_title}</h1>
+              { !interest && <FavoriteBorderIcon style={{float: 'right', fontSize: '40px', color: 'red', cursor: 'pointer'}} onClick={interestClick}/>}
+              { interest && <FavoriteIcon style={{float: 'right', fontSize: '40px', color: 'red', cursor: 'pointer'}} onClick={interestClick}/>}
             </SPicsDiv>
             <SPicDiv id="roadview">
             </SPicDiv>
