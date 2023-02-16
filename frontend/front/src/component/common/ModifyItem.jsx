@@ -222,10 +222,11 @@ function ModifyItem() {
           "option_washer": washer
         }
     }
-    console.log('----data------')
+    console.log('변경된 데이터')
     console.log(data)
     dispatch(modifyItemAsync(data))
   }
+  console.log('기존 아이템')
   console.log(itemDetail)
 
   // 변수 실시간 추적
