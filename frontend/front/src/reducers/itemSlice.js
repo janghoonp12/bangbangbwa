@@ -21,7 +21,21 @@ export const initialState = {
   deleteItemLoading: false,
   deleteItemDone: false,
   deleteItemError: null,
+  searchInterestDetailLoading: false,
+  searchInterestDetailDone: false,
+  searchInterestDetailError: null,
+  searchInterestAllLoading: false,
+  searchInterestAllDone: false,
+  searchInterestAllError: null,
+  addInterestLoading: false,
+  addInterestDone: false,
+  addInterestError: null,
+  deleteInterestLoading: false,
+  deleteInterestDone: false,
+  deleteInterestError: null,
   myItem: null,
+  interest: false,
+  myInterests: null,
   items: null,
   itemDetail: null,
   last: false,
@@ -99,6 +113,65 @@ export const searchMyItemAsync = createAsyncThunk(
   }
 );
 
+export const searchInterestDetailAsync = createAsyncThunk(
+  'interest/SEARCH_INTEREST_DETAIL',
+  async (data, thunkAPI) => {
+    try {
+      console.log("이거 실행됨?")
+      const response = await AxiosHeaderToken.get(
+        `/user/interest/items/check/${data}`,
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const searchInterestAllAsync = createAsyncThunk(
+  'interest/SEARCH_INTEREST_ALL',
+  async (data, thunkAPI) => {
+    try {
+      console.log("이거 실행됨?")
+      const response = await AxiosHeaderToken.get(
+        `/user/interest/items`,
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const addInterestAsync = createAsyncThunk(
+  'interest/ADD_INTEREST',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.post(
+        '/user/interest/items/new', data
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const deleteInterestAsync = createAsyncThunk(
+  'interest/DELETE_INTEREST',
+  async (data, thunkAPI) => {
+    try {
+      console.log(data)
+      const response = await AxiosHeaderToken.post(
+        `/user/interest/items/${data}`,
+      );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
 export const DeleteItemAsync = createAsyncThunk(
   'item/DELETE_MY_ITEM',
   async (data, thunkAPI) => {
@@ -135,6 +208,9 @@ const itemSlice = createSlice({
     },
     choiceItemDetail: (state, action) => {
       state.itemDetail = action.payload
+    },
+    changeInterest: (state) => {
+      state.interest = !state.interest
     },
     deleteMyItem: (state, action) => {
       state.myItem.map((item, index) => {
@@ -238,8 +314,65 @@ const itemSlice = createSlice({
       state.deleteItemLoading = false;
       state.deleteItemError = action.error
     });
+    builder.addCase(searchInterestDetailAsync.pending, (state, action) => {
+      state.searchInterestDetailLoading = true;
+      state.searchInterestDetailDone = null;
+      state.searchInterestDetailError = false;
+    });
+    builder.addCase(searchInterestDetailAsync.fulfilled, (state, action) => {
+      state.searchInterestDetailLoading = false;
+      state.searchInterestDetailDone = true;
+      state.interest = action.payload
+    });
+    builder.addCase(searchInterestDetailAsync.rejected, (state, action) => {
+      state.searchInterestDetailLoading = false;
+      state.searchInterestDetailError = action.error
+    });
+    builder.addCase(searchInterestAllAsync.pending, (state, action) => {
+      state.searchInterestAllLoading = true;
+      state.searchInterestAllDone = null;
+      state.searchInterestAllError = false;
+    });
+    builder.addCase(searchInterestAllAsync.fulfilled, (state, action) => {
+      state.searchInterestAllLoading = false;
+      state.searchInterestAllDone = true;
+      console.log(action.payload)
+      state.myInterests = action.payload
+    });
+    builder.addCase(searchInterestAllAsync.rejected, (state, action) => {
+      state.searchInterestAllLoading = false;
+      state.searchInterestAllError = action.error
+    });
+    builder.addCase(addInterestAsync.pending, (state, action) => {
+      state.addInterestLoading = true;
+      state.addInterestDone = null;
+      state.addInterestError = false;
+    });
+    builder.addCase(addInterestAsync.fulfilled, (state, action) => {
+      state.addInterestLoading = false;
+      state.addInterestDone = true;
+      state.interest = true;
+    });
+    builder.addCase(addInterestAsync.rejected, (state, action) => {
+      state.addInterestLoading = false;
+      state.addInterestError = action.error
+    });
+    builder.addCase(deleteInterestAsync.pending, (state, action) => {
+      state.deleteInterestLoading = true;
+      state.deleteInterestDone = null;
+      state.deleteInterestError = false;
+    });
+    builder.addCase(deleteInterestAsync.fulfilled, (state, action) => {
+      state.deleteInterestLoading = false;
+      state.deleteInterestDone = true;
+      state.interest = false;
+    });
+    builder.addCase(deleteInterestAsync.rejected, (state, action) => {
+      state.deleteInterestLoading = false;
+      state.deleteInterestError = action.error
+    });
   }
 });
 
-export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone, choiceItemDetail, deleteMyItem, clearModifyItemDone } = itemSlice.actions;
+export const { initItemState, clearWriteItemDone, clearSearchDetailItemDone, choiceItemDetail, deleteMyItem, clearModifyItemDone, changeInterest } = itemSlice.actions;
 export default itemSlice.reducer;

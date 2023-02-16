@@ -79,6 +79,7 @@ function checkName(name){
 
 
 function RecentViewListItem(props) {
+  console.log(props)
   const dispatch = useDispatch();
   
   const onClick = () => {
