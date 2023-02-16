@@ -4,7 +4,7 @@
 
 # FE 개발 환경
 
-- Node.js → v18.12.1
+- Node.js → v16.0.0
 - react → v18.2.0
 - npm → v8.19.2
   - tailwind → v3.2.4

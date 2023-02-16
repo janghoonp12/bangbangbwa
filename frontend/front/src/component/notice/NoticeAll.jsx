@@ -2,7 +2,7 @@ import React from "react";
 import NoticeList from "./NoticeList";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
+import { useSelector } from 'react-redux';
 
 const SButton = styled.button`
   float: right;
@@ -44,6 +44,7 @@ const SSDiv = styled.div`
 
 function Notice() {
   const navigate = useNavigate();
+  const { me } = useSelector((state) => state.userSlice);
   const onClick = () => {
     navigate('/notices/new')
   }
@@ -54,7 +55,7 @@ function Notice() {
       <SSDiv>
         <SH1 align="center">공지사항</SH1>
         <SDiv>
-          <SButton onClick={onClick}>공지 작성</SButton>
+        { me ? me.role === "ROLE_ADMIN" ? <SButton onClick={onClick}>공지 작성</SButton> : <></> : <></>}
         </SDiv>
         <NoticeList />
         <br />

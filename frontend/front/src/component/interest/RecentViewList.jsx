@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import RecentViewListItem from "./RecentViewListItem";
+
+import { useDispatch, useSelector } from 'react-redux';
+import { clearSearchDetailItemDone } from "../../reducers/itemSlice"
 
 const Wrapper = styled.div`
     display: flex;
@@ -15,22 +18,23 @@ const Wrapper = styled.div`
     }
 `;
 
-function RecentViewList(props) {
-    const { posts, onClickItem } = props;
+function RecentViewList({ children }) {
+    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const { searchDetailItemDone, itemDetail } = useSelector((state) => state.itemSlice);
+
+    useEffect(() => {
+      if (searchDetailItemDone) {
+        dispatch(clearSearchDetailItemDone())
+        navigate(`/items/${itemDetail.item_id}`)
+      }
+    })
 
     return (
         <Wrapper>
-            {posts.map((post, index) => {
-                return (
-                    <RecentViewListItem
-                        key={post.id}
-                        post={post}
-                        onClick={() => {
-                            onClickItem(post);
-                        }}
-                    />
-                );
-            })}
+            {children}
         </Wrapper>
     );
 }

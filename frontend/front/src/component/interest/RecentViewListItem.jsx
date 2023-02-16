@@ -1,6 +1,8 @@
 import React from "react";
 import sample from '../../assets/logosample.png';
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
+import { searchDetailItemAsync } from "../../reducers/itemSlice"
 
 
 const SCardDiv = styled.div`
@@ -77,13 +79,10 @@ function checkName(name){
 
 
 function RecentViewListItem(props) {
-  const { post, onClick } = props;
-  const deleteRecentView = () => {
-    const josa = checkName(post.title)
-
-    if (window.confirm(`최근 본 매물 목록에서 ${josa} 삭제하시겠습니까?`)) {
-      alert("삭제되었습니다.");
-    }
+  const dispatch = useDispatch();
+  
+  const onClick = () => {
+    dispatch(searchDetailItemAsync(props.posts.item_id))
   }
 
   return (
@@ -91,15 +90,14 @@ function RecentViewListItem(props) {
       <SCardDiv onClick={onClick}>
         <SCardImg variant="top" src={sample} alt="이미지" />
         <SCardBodyDiv>
-          <SCardTitleP>{post.title}</SCardTitleP>
+          <SCardTitleP>{props.posts.item_title}</SCardTitleP>
           <SCardContentP>
-            {post.type},
-            {post.building_type},
-            {post.manage_fee}
+            {props.posts.item_type},
+            {props.posts.item_building_type},
+            {props.posts.item_manage_fee}
           </SCardContentP>
         </SCardBodyDiv>
       </SCardDiv>
-      <SButton onClick={deleteRecentView}>삭제하기</SButton>
     </div>
   )
 }

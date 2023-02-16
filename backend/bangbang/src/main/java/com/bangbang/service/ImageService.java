@@ -2,6 +2,7 @@ package com.bangbang.service;
 
 import com.bangbang.domain.image.Image;
 import com.bangbang.domain.image.ImageRepository;
+import com.bangbang.dto.image.ImageResponseDto;
 import com.bangbang.dto.image.ImageSaveRequestDto;
 import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
@@ -26,21 +27,16 @@ public class ImageService {
   private final ImageRepository imageRepository;
 
   @Transactional
-  public Image saveFile(ImageSaveRequestDto requestDto){
-    return imageRepository.save(requestDto.toEntiy());
+  public Long saveFile(ImageSaveRequestDto requestDto){
+    return imageRepository.save(requestDto.toEntiy()).getImageId();
   }
 
-  @Transactional
-  public ImageSaveRequestDto getFile(Long imageId){
-    Image image = imageRepository.findByImageId(imageId).get();
 
-    ImageSaveRequestDto imageSaveRequestDto = ImageSaveRequestDto.builder()
-        .imageId(imageId)
-        .imagePath(image.getImagePath())
-        .imageOriginName(image.getImageOriginName())
-        .imageName(image.getImageName())
-        .build();
+  public ImageResponseDto getFile(Long imageId){
+    Image entity = imageRepository.findByImageId(imageId)
+        .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
 
-    return imageSaveRequestDto;
+    return new ImageResponseDto(entity);
   }
+
 }

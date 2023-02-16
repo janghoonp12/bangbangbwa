@@ -2,7 +2,9 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import ItemAll from "../component/item/ItemAll";
 import ItemDetail from "../component/item/ItemDetail";
+import ModifyItem from "../component/common/ModifyItem";
 import ItemSearchAll from "../component/item/ItemSearchAll";
+import FilterItem from "../component/item/FilterItem";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -25,6 +27,8 @@ function Items() {
         <Routes>
           <Route index element={<ItemAll />} />
           <Route path=":postId" element={<ItemDetail />} />
+          <Route path="/modify/:postId" element={<ModifyItem />} />
+          <Route path="filter" element={<FilterItem />} />
           <Route path="/search/:searchWord" element={<ItemSearchAll />} />
         </Routes>
       </Container>

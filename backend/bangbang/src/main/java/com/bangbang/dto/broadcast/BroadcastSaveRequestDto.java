@@ -20,25 +20,25 @@ public class BroadcastSaveRequestDto {
 
 
   private Long itemId;
-  private Long imageId;
+  private String imagePath;
 
   @Builder
-  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long itemId, Long imageId,
+  public BroadcastSaveRequestDto(String broadcastDescription, String broadcastTitle, Long itemId, String imagePath,
                                  LocalDateTime broadcastReservationTime){
     this.broadcastDescription = broadcastDescription;
     this.broadcastTitle = broadcastTitle;
     this.itemId = itemId;
-    this.imageId = imageId;
+    this.imagePath = imagePath;
     this.broadcastReservationTime = broadcastReservationTime;
   }
 
-  public Broadcast toEntity(Image image, String generatedString){
+  public Broadcast toEntity(String generatedString){
     return Broadcast.builder()
         .broadcastDescription(broadcastDescription)
         .broadcastStatus(1)
         .broadcastTitle(broadcastTitle)
         .itemId(itemId)
-        .image(image)
+        .imagePath(imagePath)
         .broadcastRoomId(generatedString)
         .broadcastReservationTime(broadcastReservationTime)
         .build();

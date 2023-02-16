@@ -42,18 +42,15 @@ function Items() {
     navigate("/writeitems")
   }
 
-  const limit = 12; // 한 페이지에 나올 방송 수
-  const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
-  const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
-
   const { items, last, currentPage } = useSelector((state) => state.itemSlice);
+  const { me } = useSelector((state) => state.userSlice);
 
   useEffect(() => {
     dispatch(initItemState())
     dispatch(SearchItemAsync(
       {
         page: 0,
-        size: 12,
+        size: 10,
       }
     ))
   },[])
@@ -62,7 +59,7 @@ function Items() {
     dispatch(SearchItemAsync(
       {
         page: currentPage,
-        size: 12,
+        size: 10,
       }
     ))
   }
@@ -70,7 +67,7 @@ function Items() {
   return (
     <div>
       <SButtonLineDiv>
-        <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button>
+      { me ? me.role === "ROLE_BROKER" ? <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button> : <></> : <></>}
         <div />
         <FilterButton />
       </SButtonLineDiv>

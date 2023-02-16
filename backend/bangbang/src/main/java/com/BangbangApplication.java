@@ -15,6 +15,9 @@ import org.springframework.web.servlet.function.ServerResponse;
 @EnableJpaAuditing
 public class BangbangApplication {
 
+	static {
+		System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(BangbangApplication.class, args);
 	}

@@ -4,7 +4,10 @@ import styled from "styled-components";
 import TextInput from "../common/ui/TextInput";
 import Button from "../common/ui/Button";
 import { useDispatch, useSelector } from 'react-redux';
-import { findMyItemAsync, writeBroadcastAsync, clearWriteBroadcastDone } from "../../reducers/broadcastSlice";
+import { writeBroadcastAsync, clearWriteBroadcastDone } from "../../reducers/broadcastSlice";
+import { searchMyItemAsync } from "../../reducers/itemSlice";
+import BroadcastFileData from "../common/BroadcastFileData"
+import Swal from "sweetalert2";
 
 const Wrapper = styled.div`
     display: flex;
@@ -18,7 +21,16 @@ const Container = styled.div`
     flex-direction: column;
     width: 100%;
     max-width: 70%;
-
+`;
+const SGridDiv = styled.div`
+  display: grid;
+  grid-template-columns: 0.25fr 0.75fr;
+`;
+const STitleP = styled.p`
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
 `;
 
 function BroadcastWrite() {
@@ -31,23 +43,30 @@ function BroadcastWrite() {
   const [reservationStartTime, setReservationstartTime] = useState("");
   const [thumbnail, setThumbnail] = useState("썸네일");
   const { myItem } = useSelector((state) => state.itemSlice);
+  const { images } = useSelector((state) => state.fileSlice);
   const { writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
 
   useEffect(() => {
-    dispatch(findMyItemAsync())
+    dispatch(searchMyItemAsync())
   }, [])
 
   useEffect(() => {
     if (writeBroadcastDone) {
-      clearWriteBroadcastDone()
+      dispatch(clearWriteBroadcastDone())
+      Swal.fire({
+        icon: 'success',
+        title: '방송 등록!',
+        showConfirmButton: false,
+        timer: 500
+      })
       navigate('/broadcasts');
     }
-  })
+  }, [writeBroadcastDone])
 
   const itemChange = (e) => {
     setItem(e.target.value)
   }
-
+  
   const createBroadcast = () => {
     dispatch(writeBroadcastAsync(
       {
@@ -55,10 +74,9 @@ function BroadcastWrite() {
         "broadcastReservationTime" : reservationStartDate + "T" + reservationStartTime + ":00",
         "broadcastTitle": title,
         "itemId": item,
-        "imageId": 1
+        "imagePath" : images
       }
     ))
-    navigate()
   }
   
   return (
@@ -108,13 +126,10 @@ function BroadcastWrite() {
             setReservationstartTime(event.target.value);
           }}
         />
-        <TextInput
-          height={20}
-          value={thumbnail}
-          onChange={(event) => {
-              setThumbnail(event.target.value);
-          }}
-        />
+        <SGridDiv>
+          <STitleP>썸네일</STitleP>
+          <BroadcastFileData></BroadcastFileData>
+        </SGridDiv>
         <Button
           title="등록하기"
           onClick={createBroadcast}

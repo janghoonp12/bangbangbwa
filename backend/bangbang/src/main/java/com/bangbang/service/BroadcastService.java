@@ -34,8 +34,8 @@ public class BroadcastService {
   // 방송 등록
   @Transactional
   public void newBroadcast(BroadcastSaveRequestDto requestDto) throws Exception{
-    Image image = imageRepository.findByImageId(requestDto.getImageId())
-            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
+//    Image image = imageRepository.findByImagePath(requestDto.getImagePath())
+//            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
     int leftLimit = 48; // numeral '0'
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 45;
@@ -49,20 +49,25 @@ public class BroadcastService {
       new Exception(new IllegalArgumentException("해당 세션 ID가 존재합니다."));
     }
     else {
-      broadcastRepository.save(requestDto.toEntity(image, generatedString));
+      broadcastRepository.save(requestDto.toEntity(generatedString));
     }
   }
 
+  // 모든 방송조회
+  public Page<BroadcastListResponseDto> searchBroadcastAll(Pageable pageable) {
+    return broadcastRepository.findAllByOrderByBroadcastIdDesc(pageable)
+        .map(BroadcastListResponseDto::new);
+  }
 
-  //라이중인 방송 조회
+  //라이브중인 방송 조회
   public Page<BroadcastListResponseDto> searchLiveBroadcastAll(Pageable pageable){
-    return broadcastRepository.findByBroadcastStatus(pageable, 1).map(BroadcastListResponseDto::new);
+    return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 1).map(BroadcastListResponseDto::new);
 
   }
 
   //종료된 방송 조회
   public Page<BroadcastListResponseDto> searchEndBroadcastAll(Pageable pageable){
-      return broadcastRepository.findByBroadcastStatus(pageable, 0).map(BroadcastListResponseDto::new);
+      return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 0).map(BroadcastListResponseDto::new);
   }
 
   //해당 방송 조회
@@ -72,13 +77,34 @@ public class BroadcastService {
     return new BroadcastResponseDto(entity);
   }
 
+
+  // 매물 해당 방송 조회
+  public BroadcastListResponseDto broadcastItemDetail(Long itemId){
+    BroadcastListResponseDto entity = broadcastRepository.findByItemId(itemId);
+    return entity;
+  }
+
+
   //방송 수정
   @Transactional
   public void modifyBroadcast(Long id, BroadcastUpdateRequestDto requestDto){
     Optional<Broadcast> broadcast = broadcastRepository.findByBroadcastId(id);
     broadcast.orElseThrow(() -> new IllegalArgumentException("해당 방송이 없습니다. id = "+id));
     try {
-      broadcast.get().update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle());
+      broadcast.get().update(requestDto.getBroadcastId(), requestDto.getBroadcastDescription(), requestDto.getBroadcastTitle(),
+                            requestDto.getImagePath(), requestDto.getBroadcastReservationTime());
+    } catch (Exception e){
+      e.printStackTrace();
+    }
+  }
+
+  //방송 시작
+  @Transactional
+  public void startBroadcast(Long id){
+    Optional<Broadcast> broadcast = broadcastRepository.findByBroadcastId(id);
+    broadcast.orElseThrow(() -> new IllegalArgumentException("해당 방송이 없습니다. id = " + id));
+    try{
+      broadcast.get().starter(id);
     } catch (Exception e){
       e.printStackTrace();
     }

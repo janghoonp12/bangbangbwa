@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Interestarea {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "interestarea_id")
     private Long interestareaId;
     @JoinTable(name="user",

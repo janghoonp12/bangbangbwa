@@ -59,10 +59,9 @@ public class MyPageRestController {
 
 
     @ApiOperation(value="나의 매물 정보 조회")
-    @GetMapping("/broker/mypage/item")
+    @GetMapping("/mypage/item")
     public ResponseEntity<?> searchMyItem(HttpServletRequest request) {
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             Long brokerId = brokerRepository.findByUserId(uid).getBrokerId();
@@ -77,10 +76,9 @@ public class MyPageRestController {
 
 
     @ApiOperation(value="나의 방송 정보 조회")
-    @GetMapping("/broker/mypage/broadcast")
+    @GetMapping("/mypage/broadcast")
     public ResponseEntity<?> searchMyBroadcast(HttpServletRequest request) {
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             List<BroadcastListResponseDto> broadcasts = mypageService.searchMyBroadcast(uid);

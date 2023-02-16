@@ -54,7 +54,6 @@ export const writeNoticeAsync = createAsyncThunk(
   'notice/WRITE',
   async (data, thunkAPI) => {
     try {
-      console.log(data)
       const response = await AxiosHeaderToken.post(
         '/admin/notices/new', data
       );
