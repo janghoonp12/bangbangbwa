@@ -113,8 +113,8 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심매물 삭제")
-    @PostMapping("/user/interest/items/{interestId}")
-    public ResponseEntity<?> deleteInterestItem(@PathVariable Long interestId) {
+    @DeleteMapping("/user/interest/items/{itemId}")
+    public ResponseEntity<?> deleteInterestItem(@PathVariable Long itemId, HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
