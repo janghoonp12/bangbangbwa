@@ -67,7 +67,7 @@ function Items() {
   return (
     <div>
       <SButtonLineDiv>
-      { me ? me.role === "ROLE_BROKER" ? <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button> : <></> : <></>}
+      { me ? me.level > 1 ? <Button variant="info" onClick={writeItem} style={{marginBottom: '10px'}}>매물 등록</Button> : <></> : <></>}
         <div />
         <FilterButton />
       </SButtonLineDiv>

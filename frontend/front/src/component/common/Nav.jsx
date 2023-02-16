@@ -282,36 +282,10 @@ const Nav = () => {
             <SImg src={noticelogo} alt="#" />
           </NavLink>
         </NavDiv>
-        {/* <NavDiv
-          onMouseEnter={() => setAlarmBar(true)}
-          onMouseLeave={() => setAlarmBar(false)}
-        >
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
-          <SImg src={alarmlogo} alt="#" />
-          </NavLink>
-          {alarmBar && (
-            <TestDiv
-              onMouseEnter={() => setAlarmBar(true)}
-              onMouseLeave={() => setAlarmBar(false)}
-            >
-              <AlarmList />
-            </TestDiv>
-          )}
-        </NavDiv> */}
           { me ? <NavDiv><NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
           <SImg src={mypagelogo} alt="#" />
           </NavLink></NavDiv> : <></>
           }
-          {/* {isLogin &&
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
-          <SImg src={mypagelogo} alt="#" />
-          </NavLink>
-          }
-          {!isLogin &&
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
-            로그인  
-          </NavLink>
-          } */}
         <NavDiv>
         { me ? <LogoutIcon onClick={signOut}></LogoutIcon> : <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
             로그인  

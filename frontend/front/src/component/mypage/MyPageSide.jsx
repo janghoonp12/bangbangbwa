@@ -72,12 +72,12 @@ function MyPageSide() {
           changeStatus(2)
         }}
       >중개사 등록</SMenuP>
-      {status && <SMenuP
+      {me.level > 1 && <SMenuP
         onClick={() => {
           changeStatus(3)
         }}
       >나의 매물정보</SMenuP>}
-      {status && <SMenuP
+      {me.level > 1 && <SMenuP
         onClick={() => {
           changeStatus(4)
         }}
