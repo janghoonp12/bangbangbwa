@@ -72,7 +72,7 @@ function NewBroker() {
   }
 
   return (
-    <SItemDiv>
+    <>
       <div>
         <p>중개사무소 상호명</p>
         <Input style={{width: "250px"}} value={broker_name} required onChange={onChangeBrokerName} placeholder="중개사무소명을 입력해주세요" />
@@ -99,7 +99,7 @@ function NewBroker() {
         </SSubmitDiv>
       </div>
       
-    </SItemDiv>
+    </>
     )
 }
 

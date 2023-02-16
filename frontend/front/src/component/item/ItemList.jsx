@@ -5,7 +5,7 @@ import styled from "styled-components";
 import throttle from "../../utils/Throttle"
 
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSearchDetailItemDone } from "../../reducers/itemSlice"
+import { clearSearchDetailItemDone, searchInterestDetailAsync } from "../../reducers/itemSlice"
 
 const Wrapper = styled.div`
     display: flex;
@@ -66,7 +66,6 @@ function ItemList({ children }) {
     const navigate = useNavigate();
     
     const { searchDetailItemDone, itemDetail } = useSelector((state) => state.itemSlice);
-
     useEffect(() => {
       if (searchDetailItemDone) {
         dispatch(clearSearchDetailItemDone())

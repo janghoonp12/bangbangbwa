@@ -18,6 +18,8 @@ function OauthRedirect() {
         userNickname: searchParams.get("nickname"),
         accessToken: searchParams.get("accessToken"),
         refreshToken: searchParams.get("refreshToken"),
+        role: searchParams.get("role"),
+        level: searchParams.get("level"),
       })
     );
   }, []);

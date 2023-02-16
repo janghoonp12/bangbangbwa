@@ -31,7 +31,6 @@ function Interests() {
         <Routes>
           <Route path="/" element= {<RecentView />} />
           <Route path="items" element={<InterestItem />} />
-          <Route path="areas" element={<InterestArea />} />
           <Route path="bookmarks" element={<BookmarkAll />}/>
           <Route path="bookmarks/new" element={<BookmarkNew />}/>
         </Routes>

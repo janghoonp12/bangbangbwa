@@ -52,11 +52,6 @@ const Nav = () => {
         </NavLink>
       </Navdiv>
       <Navdiv>
-        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests/areas">
-          관심 지역
-        </NavLink>
-      </Navdiv>
-      <Navdiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/interests/bookmarks">
           즐겨찾기
         </NavLink>

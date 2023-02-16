@@ -112,7 +112,7 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심매물 삭제")
-    @DeleteMapping("/user/interest/items/{interestId}")
+    @PostMapping("/user/interest/items/{interestId}")
     public ResponseEntity<?> deleteInterestItem(@PathVariable Long interestId) {
         try {
             interestService.deleteInterestItem(interestId);
@@ -130,6 +130,7 @@ public class InterestRestController {
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             boolean check = interestService.interestItemStatus(uid, itemId);
+            System.out.println(check);
             return new ResponseEntity<Boolean>(check, HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();

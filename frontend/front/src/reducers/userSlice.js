@@ -19,6 +19,9 @@ export const initialState = {
   searchMyInfoLoading: false,
   searchMyInfoDone: false,
   searchMyInfoError: null,
+  searchBrokerInfoLoading: false,
+  searchBrokerInfoDone: false,
+  searchBrokerInfoError: null,
   changeNicknameLoading: false,
   changeNicknameDone: false,
   changeNicknameError: null,
@@ -32,6 +35,7 @@ export const initialState = {
   submitBrokerInfoDone: false,
   submitBrokerInfoError: null,
   me: null,
+  myBrokerInfo: null,
   userInfo : null
 };
 
@@ -170,9 +174,8 @@ export const searchBrokerInfoAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
-        '/user/mypage'
+        '/user/brokers'
       );
-
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -363,17 +366,19 @@ const userSlice = createSlice({
       state.withdrawalError = action.error
     });
     builder.addCase(searchBrokerInfoAsync.pending, (state, action) => {
-      state.submitBrokerInfoLoading = true;
-      state.submitBrokerInfoError = null;
-      state.submitBrokerInfoDone = false;
+      state.searchBrokerInfoLoading = true;
+      state.searchBrokerInfoError = null;
+      state.searchBrokerInfoDone = false;
     });
     builder.addCase(searchBrokerInfoAsync.fulfilled, (state, action) => {
-      state.submitBrokerInfoLoading = false;
-      state.submitBrokerInfoDone = true;
+      state.searchBrokerInfoLoading = false;
+      state.searchBrokerInfoDone = true;
+      state.myBrokerInfo = action.payload;
+      console.log(state.myBrokerInfo);
     });
     builder.addCase(searchBrokerInfoAsync.rejected, (state, action) => {
-      state.submitBrokerInfoLoading = false;
-      state.submitBrokerInfoError = action.error
+      state.searchBrokerInfoLoading = false;
+      state.searchBrokerInfoError = action.error
     });
   }
 });
