@@ -1,8 +1,6 @@
 package com.bangbang.domain.broadcast;
 
 import com.bangbang.domain.item.Option;
-import com.bangbang.dto.broadcast.BroadcastResponseDto;
-import com.bangbang.dto.broadcast.QBroadcastResponseDto;
 import com.bangbang.dto.item.ItemFilterRequestDto;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -29,14 +27,16 @@ public class BroadcastQueryRepository {
     public List<Broadcast> searchBroadcastByFilter(ItemFilterRequestDto filter) {
         BooleanBuilder builder = new BooleanBuilder();
 
+        BooleanBuilder tmp = new BooleanBuilder();
         //매물 종류
         if (filter.getItem_type() != null) {
             for (int i = 0; i < filter.getItem_type().length; i++) {
-                builder.or(item.item_type.eq(filter.getItem_type()[i]));
+                tmp.or(item.item_type.eq(filter.getItem_type()[i]));
             }
         }
+        builder.and(tmp);
 
-        BooleanBuilder tmp = new BooleanBuilder();
+        tmp = new BooleanBuilder();
         //거래 종류
         if (filter.getItem_deal_type() != null) {
             for (int i = 0; i < filter.getItem_deal_type().length; i++) {
@@ -70,47 +70,50 @@ public class BroadcastQueryRepository {
         if (filter.getItem_floor() != null) {
             for (int i = 0; i < filter.getItem_floor().length; i++) {
                 if (filter.getItem_floor()[i] == 0) {
-                    tmp.and(item.item_floor.lt(0));
+                    tmp.or(item.item_floor.lt(0));
                 }
                 if (filter.getItem_floor()[i] == 1) {
-                    tmp.and(item.item_floor.eq(1));
+                    tmp.or(item.item_floor.eq(1));
                 }
                 if (filter.getItem_floor()[i] == 2) {
-                    tmp.and(item.item_floor.eq(2));
+                    tmp.or(item.item_floor.eq(2));
                 }
                 if (filter.getItem_floor()[i] == 3) {
-                    tmp.and(item.item_floor.eq(3));
+                    tmp.or(item.item_floor.eq(3));
                 }
                 if (filter.getItem_floor()[i] == 4) {
-                    tmp.and(item.item_floor.gt(3));
+                    tmp.or(item.item_floor.goe(3));
                 }
             }
         }
 
         builder.and(tmp);
 
+        tmp = new BooleanBuilder();
         //사용승인일
         LocalDate now = LocalDate.now();
         int year = now.getYear();
         if (filter.getItem_build_year() != null) {
             for (int i = 0; i < filter.getItem_build_year().length; i++) {
                 if (filter.getItem_build_year()[i] == 0) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(1));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-1));
                 }
                 if (filter.getItem_build_year()[i] == 1) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(5));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-5));
                 }
                 if (filter.getItem_build_year()[i] == 2) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(10));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-10));
                 }
                 if (filter.getItem_build_year()[i] == 3) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(15));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-15));
                 }
                 if (filter.getItem_build_year()[i] == 4) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(15));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(-15));
                 }
             }
         }
+
+        builder.and(tmp);
 
         tmp = new BooleanBuilder();
         //옵션

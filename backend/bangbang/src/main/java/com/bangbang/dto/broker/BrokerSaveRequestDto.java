@@ -3,7 +3,9 @@ package com.bangbang.dto.broker;
 import com.bangbang.domain.broker.Broker;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
 public class BrokerSaveRequestDto {
     private Long userId;

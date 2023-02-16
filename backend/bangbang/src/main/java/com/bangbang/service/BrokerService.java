@@ -1,5 +1,6 @@
 package com.bangbang.service;
 
+import com.bangbang.domain.broker.Broker;
 import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
 
@@ -10,4 +11,5 @@ public interface BrokerService {
     List<BrokerResponseDto> searchBrokerAll();
     void registerBroker(Long userId);
     void deactiveBroker(Long brokerId);
+    Broker searchBroker(Long brokerId);
 }
