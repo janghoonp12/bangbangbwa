@@ -714,7 +714,7 @@ class Openvidu extends Component {
                             // Set the main video in the page to display our webcam and store our Publisher
                             if (this.state.subscribers.length === 0) {
                               this.setState({
-                                myUserName: 'host-'+this.state.myUserName,
+                                myUserName: this.state.myUserName,
                                 mainStreamManager: publisher,
                                 publisher: publisher,
                                });
@@ -726,7 +726,7 @@ class Openvidu extends Component {
                               })
                               for (let i=0; i<this.state.subscribers.length; i++) {
                                 // if (this.state.subscribers[i].stream.connection.remoteOptions.metadata === '{"clientData":"Participant1"}') {
-                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('host')) {
+                                if (this.state.subscribers[i].stream.connection.remoteOptions.metadata.includes('broker_')) {
                                 // if (this.state.subscribers[i].videos === []) {
                                   this.setState({
                                     mainStreamManager: this.state.subscribers[i]
@@ -734,11 +734,11 @@ class Openvidu extends Component {
                                   console.log("이밑을봐라")
                                   console.log(this.state.subscribers[i])
                                 } 
-                                else {
-                                  this.setState({
-                                    mainStreamManager: this.state.subscribers[0]
-                                  })
-                                }
+                                // else {
+                                //   this.setState({
+                                //     mainStreamManager: this.state.subscribers[0]
+                                //   })
+                                // }
                               }                              
                             }                           
                         })
@@ -1048,7 +1048,7 @@ class Openvidu extends Component {
                   <STitleP id="session-title">{myTitle}</STitleP>
                   <SWatchersP><SWatcherImg src={watchers} alt="시청자"/> {this.state.subscribers.length}</SWatchersP>
                   {/* {this.state.myUserName === 'Participant1' ? ( */}
-                  {this.state.myUserName.includes('host') ? (
+                  {this.state.myUserName.includes('broker_') ? (
                     <div>
                       <SButtonInput3
                         type="button"
@@ -1217,7 +1217,7 @@ class Openvidu extends Component {
                 </div> */}
               </div>
             ) : (
-              <p>방송이 존재하지 않습니다.</p>
+              <p>방송이 종료되었습니다.</p>
             )}
           </Container>
           {/* <div>
@@ -1343,7 +1343,7 @@ const STitleDiv = styled.div`
 
 const SScreenDiv = styled.div`
   width: 100%;
-  height: 58vh;
+  height: 55vh;
 `;
 
 // const SButtonDiv = styled.div`
