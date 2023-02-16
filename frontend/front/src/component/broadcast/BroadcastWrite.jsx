@@ -67,6 +67,7 @@ function BroadcastWrite() {
     setItem(e.target.value)
   }
   
+  console.log(images);
   const createBroadcast = () => {
     dispatch(writeBroadcastAsync(
       {
