@@ -68,7 +68,6 @@ function ItemList({ children }) {
     const { searchDetailItemDone, itemDetail } = useSelector((state) => state.itemSlice);
     useEffect(() => {
       if (searchDetailItemDone) {
-        dispatch(clearSearchDetailItemDone())
         navigate(`/items/${itemDetail.item_id}`)
       }
     })
