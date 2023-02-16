@@ -300,6 +300,7 @@ const userSlice = createSlice({
         role : action.payload.role,
         level : action.payload.level
       }
+      console.log(me)
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
       sessionStorage.setItem("refresh-token", action.payload.refreshtoken)
@@ -372,7 +373,6 @@ const userSlice = createSlice({
       state.searchBrokerInfoLoading = false;
       state.searchBrokerInfoDone = true;
       state.myBrokerInfo = action.payload;
-      console.log(state.myBrokerInfo);
     });
     builder.addCase(searchBrokerInfoAsync.rejected, (state, action) => {
       state.searchBrokerInfoLoading = false;
