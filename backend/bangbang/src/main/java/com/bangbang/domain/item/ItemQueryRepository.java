@@ -29,14 +29,16 @@ public class ItemQueryRepository {
     public List<ItemDto> searchItemByFilter(ItemFilterRequestDto filter) {
         BooleanBuilder builder = new BooleanBuilder();
 
+        BooleanBuilder tmp = new BooleanBuilder();
         //매물 종류
         if (filter.getItem_type() != null) {
             for (int i = 0; i < filter.getItem_type().length; i++) {
-                builder.or(item.item_type.eq(filter.getItem_type()[i]));
+                tmp.or(item.item_type.eq(filter.getItem_type()[i]));
             }
         }
+        builder.and(tmp);
 
-        BooleanBuilder tmp = new BooleanBuilder();
+        tmp = new BooleanBuilder();
         //거래 종류
         if (filter.getItem_deal_type() != null) {
             for (int i = 0; i < filter.getItem_deal_type().length; i++) {
@@ -89,28 +91,31 @@ public class ItemQueryRepository {
 
         builder.and(tmp);
 
+        tmp = new BooleanBuilder();
         //사용승인일
         LocalDate now = LocalDate.now();
         int year = now.getYear();
         if (filter.getItem_build_year() != null) {
             for (int i = 0; i < filter.getItem_build_year().length; i++) {
                 if (filter.getItem_build_year()[i] == 0) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-1));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-1));
                 }
                 if (filter.getItem_build_year()[i] == 1) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-5));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-5));
                 }
                 if (filter.getItem_build_year()[i] == 2) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-10));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-10));
                 }
                 if (filter.getItem_build_year()[i] == 3) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-15));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-15));
                 }
                 if (filter.getItem_build_year()[i] == 4) {
-                    builder.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(-15));
+                    tmp.or(item.item_build_year.castToNum(Integer.class).subtract(year).loe(-15));
                 }
             }
         }
+
+        builder.and(tmp);
 
         tmp = new BooleanBuilder();
         //옵션
