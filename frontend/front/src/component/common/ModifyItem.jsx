@@ -446,40 +446,40 @@ function ModifyItem() {
         <SGridDiv>
           <STitleP>매물 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" checked={(roomType === 0) ? true : false} onChange={(e) => roomTypeChange(0, e)} disabled={(roomType === 1 || !roomType) ? false : true} /> 원룸</SP>
-            <SP><input type="checkbox" checked={(roomType === 1) ? true : false} onChange={(e) => roomTypeChange(1, e)} disabled={(roomType === 2 || !roomType) ? false : true} /> 투,쓰리룸</SP>
-            <SP><input type="checkbox" checked={(roomType === 2) ? true : false} onChange={(e) => roomTypeChange(2, e)} disabled={(roomType === 3 || !roomType) ? false : true} /> 오피스텔</SP>
-            <SP><input type="checkbox" checked={(roomType === 3) ? true : false} onChange={(e) => roomTypeChange(3, e)} disabled={(roomType === 4 || !roomType) ? false : true} /> 아파트</SP>
+            <SP><input type="checkbox" checked={(roomType === 0) ? true : false} onChange={(e) => roomTypeChange(0, e)} disabled={(roomType === 0 || !roomType) ? false : true} /> 원룸</SP>
+            <SP><input type="checkbox" checked={(roomType === 1) ? true : false} onChange={(e) => roomTypeChange(1, e)} disabled={(roomType === 1 || !roomType) ? false : true} /> 투,쓰리룸</SP>
+            <SP><input type="checkbox" checked={(roomType === 2) ? true : false} onChange={(e) => roomTypeChange(2, e)} disabled={(roomType === 2 || !roomType) ? false : true} /> 오피스텔</SP>
+            <SP><input type="checkbox" checked={(roomType === 3) ? true : false} onChange={(e) => roomTypeChange(3, e)} disabled={(roomType === 3 || !roomType) ? false : true} /> 아파트</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>거래 종류</STitleP>
           <SGridListDiv>
-            <SP><input type="checkbox" checked={(dealType === 0) ? true : false} onChange={(e) => dealTypeChange(0, e)} disabled={(dealType === 1 || !dealType) ? false : true}/> 월세</SP>
-            <SP><input type="checkbox" checked={(dealType === 1) ? true : false} onChange={(e) => dealTypeChange(1, e)} disabled={(dealType === 2 || !dealType) ? false : true}/> 전세</SP>
-            <SP><input type="checkbox" checked={(dealType === 2) ? true : false} onChange={(e) => dealTypeChange(2, e)} disabled={(dealType === 3 || !dealType) ? false : true}/> 매매</SP>
+            <SP><input type="checkbox" checked={(dealType === 0) ? true : false} onChange={(e) => dealTypeChange(0, e)} disabled={(dealType === 0 || !dealType) ? false : true}/> 월세</SP>
+            <SP><input type="checkbox" checked={(dealType === 1) ? true : false} onChange={(e) => dealTypeChange(1, e)} disabled={(dealType === 1 || !dealType) ? false : true}/> 전세</SP>
+            <SP><input type="checkbox" checked={(dealType === 2) ? true : false} onChange={(e) => dealTypeChange(2, e)} disabled={(dealType === 2 || !dealType) ? false : true}/> 매매</SP>
           </SGridListDiv>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>보증금/전세가</STitleP>
           <div>
-            <input onChange={depositChange} value={(dealType !== 2) ? deposit : '000'} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === '1' || dealType === '2') ? false : true} />&nbsp;만원
+            <input onChange={depositChange} value={(dealType !== 2) ? deposit : '000'} type="number" min="0" step="100" placeholder=" 000" style={{width: '100px'}} disabled={(dealType === 0 || dealType === 1) ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>월세</STitleP>
           <div>
-            <input onChange={monthRentChange} value={(dealType === 0) ? monthRent : '00'} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === '1') ? false : true} />&nbsp;만원
+            <input onChange={monthRentChange} value={(dealType === 0) ? monthRent : '00'} type="number" min="0" step="10" placeholder=" 00" style={{width: '100px'}} disabled={(dealType === 0) ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
         <SGridDiv>
           <STitleP>매매가</STitleP>
           <div>
-            <input onChange={buyPriceChange} value={(dealType === 2) ? buyPrice : '0000'}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === '3') ? false : true} />&nbsp;만원
+            <input onChange={buyPriceChange} value={(dealType === 2) ? buyPrice : '0000'}  type="number" min="0" step="1000" placeholder=" 0000" style={{width: '100px'}} disabled={(dealType === 2) ? false : true} />&nbsp;만원
           </div>
         </SGridDiv>
         <hr />
