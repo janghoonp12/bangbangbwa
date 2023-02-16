@@ -18,12 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -105,10 +100,13 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심지역 삭제")
-    @DeleteMapping("/user/interest/areas/{interestId}")
-    public ResponseEntity<?> deleteInterestArea(@PathVariable Long interestId) {
+    @DeleteMapping("/user/interest/areas/{itemId}")
+    public ResponseEntity<?> deleteInterestArea(@PathVariable Long itemId, HttpServletRequest request) {
         try {
-            interestService.deleteInterestArea(interestId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            interestService.interestItemStatus(uid, itemId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
@@ -119,6 +117,17 @@ public class InterestRestController {
     @ApiOperation(value="관심매물 삭제")
     @DeleteMapping("/user/interest/items/{interestId}")
     public ResponseEntity<?> deleteInterestItem(@PathVariable Long interestId) {
+        try {
+            interestService.deleteInterestItem(interestId);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            return exceptionHandling();
+        }
+    }
+
+    @ApiOperation(value="관심매물 체크")
+    @GetMapping("/user/interest/items/check/{interestId}")
+    public ResponseEntity<?> checkInterestItem(@PathVariable Long interestId) {
         try {
             interestService.deleteInterestItem(interestId);
             return new ResponseEntity(HttpStatus.OK);

@@ -14,4 +14,5 @@ public interface InterestService {
     List<Interestitem> searchInterestItem(Long userId);
     void deleteInterestArea(Long interestareaId);
     void deleteInterestItem(Long interestitemId);
+    boolean interestItemStatus(Long userId, Long itemId);
 }
