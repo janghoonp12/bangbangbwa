@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NoticeListItem from "./NoticeListItem";
 import Table from 'react-bootstrap/Table';
-
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { clearSearchDetailNoticeDone } from "../../reducers/noticeSlice"
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function NoticeList() {
+  const dispatch = useDispatch();
   const { noticeData } = useSelector((state) => state.noticeSlice);
+  const { searchDetailNoticeDone, noticeDetail } = useSelector((state) => state.noticeSlice);
+  const navigate = useNavigate();
+
+  
+  useEffect(() => {
+    if (searchDetailNoticeDone) {
+      dispatch(clearSearchDetailNoticeDone())
+      navigate(`/notices/${noticeDetail.notice_id}`)
+    }
+  })
 
   return (
     <Table

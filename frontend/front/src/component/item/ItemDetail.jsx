@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import styled from "styled-components";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from "axios";
-import { searchInterestDetailAsync, clearSearchDetailItemDone, addInterestAsync, deleteInterestAsync } from "../../reducers/itemSlice";
+import { searchInterestDetailAsync, addInterestAsync, deleteInterestAsync } from "../../reducers/itemSlice";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Swal from "sweetalert2";
@@ -124,7 +124,6 @@ function ItemDetail() {
   }
   const { itemDetail } = useSelector((state) => state.itemSlice);
   useEffect(() => {
-    dispatch(clearSearchDetailItemDone())
     if (me !== null) {
       dispatch(searchInterestDetailAsync(itemDetail.item_id))
     }

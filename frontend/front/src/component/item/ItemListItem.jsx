@@ -87,7 +87,7 @@ function ItemListItem(props) {
   
   return (
       <SCardDiv onDoubleClick={onClick}>
-        <SImgDiv onDoubleClick={onClick} onClick={imgClick} id={item.item.item_id}> </SImgDiv>
+        <SImgDiv onClick={imgClick} id={item.item.item_id}> </SImgDiv>
         <SCardBodyDiv>
           <SCardTitleP>{props.posts.item.item_title}</SCardTitleP>
           <SCardContentP>
