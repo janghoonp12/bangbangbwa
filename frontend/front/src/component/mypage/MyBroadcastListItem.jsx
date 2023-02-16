@@ -83,7 +83,7 @@ function MyBroadcastListItem(props) {
   const onClickLive = () => {
     dispatch(choiceWatchingBroadCast(myBroadcast))
     dispatch(StartBroadcastAsync(myBroadcast.broadcastId))
-    navigate(`/broadcasts/${myBroadcast.broadcastId}`)
+    navigate(`/live/${myBroadcast.broadcastId}`)
   }
   return (
     <Wrapper>
