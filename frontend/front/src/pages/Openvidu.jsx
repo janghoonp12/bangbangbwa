@@ -1343,7 +1343,7 @@ const STitleDiv = styled.div`
 
 const SScreenDiv = styled.div`
   width: 100%;
-  height: 55vh;
+  height: 60vh;
 `;
 
 // const SButtonDiv = styled.div`
@@ -1381,7 +1381,7 @@ const SChatDiv = styled.div`
   grid-direction: row;
   grid-template-row: 5fr 1fr;
   width: 100%;
-  height: 16vh;
+  height: 14vh;
   border: 1px solid grey;
   margin-top: 1%;
 `;
