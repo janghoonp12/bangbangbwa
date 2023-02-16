@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import noticelogo from "../../assets/noticelogo.png"
+// import noticelogo from "../../assets/noticelogo.png"
 // import alarmlogo from "../../assets/alarmlogo.png"
 import mypagelogo from "../../assets/mypagelogo.png"
 import logo from "../../assets/logo.png"
@@ -9,6 +9,9 @@ import searchbutton from "../../assets/searchbutton.png"
 // import AlarmList from "../alarm/AlarmList";
 import axios from "axios";
 import SearchInfoModal from "./ui/SearchInfoModal";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from "../../reducers/userSlice";
+import { FaSignOutAlt } from "react-icons/fa";
 
 
 const Navbar = styled.nav`
@@ -117,6 +120,12 @@ const SSelect = styled.select`
   border-radius: 8px;
 `;
 
+const LogoutIcon = styled(FaSignOutAlt)`
+  cursor: pointer;
+  font-size: 30px;
+
+`
+
 
 const MobileNav = () => {
   // 메뉴 토글
@@ -125,7 +134,7 @@ const MobileNav = () => {
 
   
   // 로그인 여부 파악
-  const isLogin = !!sessionStorage.getItem('access-token')
+  const { me } = useSelector((state) => state.userSlice);
 
   // 페이지 렌더링시 시도코드 받아오기
   useEffect(() => {
@@ -187,6 +196,13 @@ const MobileNav = () => {
     if (e.key === 'Enter') {
       onClick()
     }
+  }
+
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(logout());
+    navigate("/")
   }
 
   const navigate = useNavigate();
@@ -270,24 +286,17 @@ const MobileNav = () => {
            <SInput type="text" value={search} onChange={onChange} onKeyDown={(e) => activeEnter(e)} placeholder=" 검색어를 입력하세요" />
            <SButton disabled={(search || dong) ? false : true}><SImg src={searchbutton} alt="#" onClick={onClick} /></SButton>
         </NavSearchBarDiv>}
-        <NavDiv>
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/notices">
-            <SImg src={noticelogo} alt="#" />
-          </NavLink>
-        </NavDiv>
+        { me ? <NavDiv><NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
+          <SImg src={mypagelogo} alt="#" />
+          </NavLink></NavDiv> : <></>
+          }
         {/* <NavDiv>
           <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
             <SImg src={alarmlogo} alt="#" />
           </NavLink>
         </NavDiv> */}
         <NavDiv>
-          {isLogin &&
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/mypage">
-            <SImg src={mypagelogo} alt="#" />
-          </NavLink>
-          }
-          {!isLogin &&
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
+        { me ? <LogoutIcon onClick={signOut}></LogoutIcon> : <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
             로그인  
           </NavLink>
           }
