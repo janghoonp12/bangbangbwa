@@ -36,7 +36,6 @@ export const initialState = {
   submitBrokerInfoError: null,
   me: null,
   myBrokerInfo: null,
-  userInfo : null
 };
 
 export const signUpAsync = createAsyncThunk(
@@ -294,7 +293,6 @@ const userSlice = createSlice({
       state.signInDone = false;
     });
     builder.addCase(oauth2SignInAsync.fulfilled, (state, action) => {
-      let level = 0
       state.signInLoading = false;
       state.me = {
         email : action.payload.email,
@@ -320,7 +318,7 @@ const userSlice = createSlice({
     builder.addCase(searchMyInfoAsync.fulfilled, (state, action) => {
       state.searchMyInfoLoading = false;
       state.searchMyInfoDone = true;
-      state.userInfo = action.payload
+      state.me = action.payload
     });
     builder.addCase(searchMyInfoAsync.rejected, (state, action) => {
       state.searchMyInfoLoading = false;
