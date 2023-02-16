@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
 import { oauth2SignInAsync } from "../../reducers/userSlice";
 import { useSearchParams } from 'react-router-dom'
+import Swal from "sweetalert2";
 
 
 function OauthRedirect() {
@@ -27,7 +28,12 @@ function OauthRedirect() {
   useEffect(() => {
     if (signInDone) {
       setTimeout(() => {
-        alert("로그인에 성공하였습니다.")
+        Swal.fire({
+          icon: 'success',
+          title: '로그인 성공!',
+          showConfirmButton: false,
+          timer: 500
+        })
         navigate('/');
       }, 100);
     }
