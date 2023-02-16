@@ -5,6 +5,7 @@ import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState, useCallback, useEffect } from "react";
 import { signUpAsync, clearSignUpDone } from "../../reducers/userSlice"
+import Swal from "sweetalert2";
 
 const Wrapper = styled.div`
   display: flex;
@@ -88,6 +89,12 @@ function SignUp() {
   useEffect(() => {
     if (signUpDone) {
       dispatch(clearSignUpDone());
+      Swal.fire({
+        icon: 'success',
+        title: '회원가입 성공!',
+        showConfirmButton: false,
+        timer: 500
+      })
       navigate('/signin');
     }
   })
