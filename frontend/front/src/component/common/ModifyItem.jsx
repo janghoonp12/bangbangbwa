@@ -150,6 +150,7 @@ function ModifyItem() {
     const data = {
       "item": {
         // "broker_id": 1,
+        "item_id" : itemDetail.item.item_id,
         "item_bonbun": oriBon,
         "item_bubun": oriBu,                                      
         "item_build_year": buildYear,
@@ -186,13 +187,17 @@ function ModifyItem() {
         "item_type": roomType,
         "item_zonecode": (postCode) ? postCode.zonecode : itemDetail.item.item_zonecode
          },
-        "itemPrice": {
+      "itemPrice": {
+        "item_price_id": itemDetail.itemPrice.item_price_id,
+        "item_id" : itemDetail.itemPrice.item_id,
           "item_price_buy_house": (dealType === 2) ? buyPrice : null,
           "item_price_house_deposit": (dealType === 1) ? deposit : null,
           "item_price_month_deposit": (dealType === 0) ? deposit : null,
           "item_price_month_rent": (dealType === 0) ? monthRent : null
         },
-        "manageOption": {                                          
+      "manageOption": {                      
+        "item_id" : itemDetail.manageOption.item_id,
+          "manage_option_id" : itemDetail.manageOption.manage_option_id,
           "manage_option_clean": optclean,
           "manage_option_electric": optElectric,
           "manage_option_etc": optEtc,                  
@@ -201,7 +206,9 @@ function ModifyItem() {
           "manage_option_tv": optTv,
           "manage_option_water": optWater
         },
-        "option": {
+      "option": {
+        "item_id" : itemDetail.option.item_id,
+          "option_id" : itemDetail.option.option_id,
           "option_aircon": aircon,
           "option_bed": bed,
           "option_bidet": bidet,
@@ -222,12 +229,10 @@ function ModifyItem() {
           "option_washer": washer
         }
     }
-    console.log('변경된 데이터')
-    console.log(data)
+    console.log(itemDetail, "뮹뮹")
+    console.log(data, "뮹뮹2")
     dispatch(modifyItemAsync(data))
   }
-  console.log('기존 아이템')
-  console.log(itemDetail)
 
   // 변수 실시간 추적
   const itemNameChange = (e) => { 
