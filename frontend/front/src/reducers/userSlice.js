@@ -28,6 +28,9 @@ export const initialState = {
   withdrawalLoading: false,
   withdrawalDone: false,
   withdrawalError: null,
+  submitBrokerInfoLoading: false,
+  submitBrokerInfoDone: false,
+  submitBrokerInfoError: null,
   me: null,
   userInfo : null
 };
@@ -139,6 +142,36 @@ export const withdrawalAsync = createAsyncThunk(
     try {
       const response = await AxiosHeaderToken.patch(
         `/user/mypage/deactivate`
+      );
+
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const submitBrokerInfo = createAsyncThunk(
+  'user/SUBMIT_BROKER_INFO',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.post(
+        '/user/brokers/new', data
+      );
+
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const searchBrokerInfoAsync = createAsyncThunk(
+  'user/LOAD_BROKER_INFO',
+  async (data, thunkAPI) => {
+    try {
+      const response = await AxiosHeaderToken.get(
+        '/user/mypage'
       );
 
       return response.data
@@ -329,6 +362,19 @@ const userSlice = createSlice({
     builder.addCase(withdrawalAsync.rejected, (state, action) => {
       state.withdrawalLoading = false;
       state.withdrawalError = action.error
+    });
+    builder.addCase(searchBrokerInfoAsync.pending, (state, action) => {
+      state.submitBrokerInfoLoading = true;
+      state.submitBrokerInfoError = null;
+      state.submitBrokerInfoDone = false;
+    });
+    builder.addCase(searchBrokerInfoAsync.fulfilled, (state, action) => {
+      state.submitBrokerInfoLoading = false;
+      state.submitBrokerInfoDone = true;
+    });
+    builder.addCase(searchBrokerInfoAsync.rejected, (state, action) => {
+      state.submitBrokerInfoLoading = false;
+      state.submitBrokerInfoError = action.error
     });
   }
 });

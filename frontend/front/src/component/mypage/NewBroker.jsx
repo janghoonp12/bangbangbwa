@@ -1,6 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Input, Button } from 'antd';
+import useInput from "../../hooks/useInput";
+import { useDispatch } from 'react-redux';
+import { submitBrokerInfo } from "../../reducers/userSlice"
 
 const SItemDiv = styled.div`
   width: 100%;
@@ -50,49 +54,48 @@ const SButton = styled.button`
 function NewBroker() {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [broker_name, onChangeBrokerName] = useInput('');
+  const [broker_email, onChangeBrokerEmail] = useInput('');
+  const [broker_contact, onChangeBrokerContact] = useInput('');
 
   const onClickSubmit = () => {
+    dispatch(submitBrokerInfo(
+      {
+        "brokerName": broker_name,
+        "brokerEmail": broker_email,
+        "brokerContact": broker_contact
+      }
+    ))
     alert('제출이 완료되었습니다.')
   }
 
   return (
     <SItemDiv>
       <div>
-        <p>기본정보</p>
-      </div>
-      <SFlexDiv>
-        <div>
-          <p>정진수</p>
-          <p>abcde@gmail.com</p>
-        </div>
-
-      </SFlexDiv>
-      <hr />
-      <div>
-        <p>중개사무소 정보</p>
-        <SButton>중개사무소 찾기</SButton>
+        <p>중개사무소 상호명</p>
+        <Input style={{width: "250px"}} value={broker_name} required onChange={onChangeBrokerName} placeholder="중개사무소명을 입력해주세요" />
       </div>
       <hr />
       <div>
         <p>연락처</p>
         <SFlexDiv>
-          <p><SPhoneInput type="text" /> - <SPhoneInput type="text" /> - <SPhoneInput type="text" /></p>
+          <p><Input style={{width: "250px"}} value={broker_contact} required onChange={onChangeBrokerContact} placeholder="010-0000-0000" /></p>
         </SFlexDiv>
       </div>
       <hr />
       <div>
         <p>대표 공인중개사 이메일</p>
         <p>
-          <input style={{ width: "120px" }}type="text"
-          /> @ <input style={{ width: "120px" }} type="text"
-          />
+        <Input style={{width: "250px"}} value={broker_email} required onChange={onChangeBrokerEmail} placeholder="이메일을 입력해주세요!" />
         </p>
       </div>
       <hr />
       <div>
         <SAgreePTag><input type="checkbox" />개인정보 수집 동의</SAgreePTag>
         <SSubmitDiv>
-          <SButton onClick={onClickSubmit}>신청하기</SButton>
+          <Button onClick={onClickSubmit}>신청하기</Button>
         </SSubmitDiv>
       </div>
       
