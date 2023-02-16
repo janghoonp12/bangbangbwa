@@ -44,8 +44,9 @@ public class InterestServiceImpl implements InterestService{
     }
 
     @Override
-    public void deleteInterestItem(Long interestitemId) {
-        interestitemRepository.deleteById(interestitemId);
+    public void deleteInterestItem(Long userId, Long itemId) {
+        Interestitem item = interestitemRepository.interestItemStatus(userId, itemId);
+        interestitemRepository.deleteById(item.getInterestitemId());
     }
 
     @Override
