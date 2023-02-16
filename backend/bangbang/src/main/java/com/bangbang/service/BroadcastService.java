@@ -61,13 +61,17 @@ public class BroadcastService {
 
   //라이브중인 방송 조회
   public Page<BroadcastListResponseDto> searchLiveBroadcastAll(Pageable pageable){
-    return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 1).map(BroadcastListResponseDto::new);
+    return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 2).map(BroadcastListResponseDto::new);
+  }
 
+  //예정중인 방송 조회
+  public Page<BroadcastListResponseDto> searchExpectedBroadcastAll(Pageable pageable){
+    return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 1).map(BroadcastListResponseDto::new);
   }
 
   //종료된 방송 조회
   public Page<BroadcastListResponseDto> searchEndBroadcastAll(Pageable pageable){
-      return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 0).map(BroadcastListResponseDto::new);
+      return broadcastRepository.findByBroadcastStatusOrderByBroadcastIdDesc(pageable, 3).map(BroadcastListResponseDto::new);
   }
 
   //해당 방송 조회
@@ -122,7 +126,7 @@ public class BroadcastService {
     }
   }
 
-  public List<BroadcastResponseDto> searchBroadcastByFilter(ItemFilterRequestDto filter) {
+  public List<Broadcast> searchBroadcastByFilter(ItemFilterRequestDto filter) {
     return broadcastQueryRepository.searchBroadcastByFilter(filter);
   }
 }

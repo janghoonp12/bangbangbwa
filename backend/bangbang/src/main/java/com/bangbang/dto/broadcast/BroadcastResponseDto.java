@@ -18,8 +18,6 @@ public class BroadcastResponseDto {
     private String broadcastRoomId;
     private String imagePath;
 
-    private String imagePath;
-
     @QueryProjection
     public BroadcastResponseDto(Broadcast entity){
         this.broadcastId = entity.getBroadcastId();
