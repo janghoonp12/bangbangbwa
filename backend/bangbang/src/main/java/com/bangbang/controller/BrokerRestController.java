@@ -5,8 +5,6 @@ import com.bangbang.dto.broker.BrokerSaveRequestDto;
 import com.bangbang.service.BrokerService;
 import com.bangbang.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +29,9 @@ public class BrokerRestController {
     @ApiOperation(value="중개사 신청")
     @PostMapping("/user/brokers/new")
     public ResponseEntity<?> newBroker(@RequestBody BrokerSaveRequestDto broker, HttpServletRequest request) {
+        System.out.println(1234);
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
+            System.out.println(broker);
             String token = request.getHeader("X-AUTH-TOKEN");
             Long uid = userService.findUserId(token);
             broker.setUserId(uid);

@@ -82,6 +82,7 @@ public class NoticeRestController {
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             notice.setUser_id(uid);
+            System.out.println(notice);
             noticeService.modifyNotice(notice);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {

@@ -17,19 +17,15 @@ function NoticeItem(props) {
   const dispatch = useDispatch();
   const data = props.notice
   const navigate = useNavigate();
-  const { searchDetailNoticeDone, noticeDetail } = useSelector((state) => state.noticeSlice);
-  const { noticeGetImagesDone } = useSelector((state) => state.fileSlice);
+  const { searchDetailNoticeDone } = useSelector((state) => state.noticeSlice);
+
   
   useEffect(() => {
     if (searchDetailNoticeDone) {
       dispatch(clearSearchDetailNoticeDone())
-      dispatch(noticeGetFileAsync(noticeDetail.image_id))
-    }
-    if (noticeGetImagesDone) {
-      dispatch(clearNoticeGetImagesDone())
       navigate(`/notices/${data.notice_id}`)
     }
-  }, [searchDetailNoticeDone, noticeGetImagesDone])
+  }, [searchDetailNoticeDone])
     const onClick = () => {
       dispatch(searchDetailNoticeAsync(data.notice_id))
     }

@@ -13,8 +13,6 @@ import lombok.Setter;
 public class NoticeSaveRequestDto {
     private long notice_id; //PK
     private long user_id; //FK
-
-    private Long image_id;
     private String notice_title;
     private String notice_type;
     private String notice_comment;
@@ -23,16 +21,14 @@ public class NoticeSaveRequestDto {
     @Builder
     public NoticeSaveRequestDto(long user_id, Long image_id, String notice_title, String notice_type, String notice_comment) {
         this.user_id = user_id;
-        this.image_id = image_id;
         this.notice_title = notice_title;
         this.notice_type = notice_type;
         this.notice_comment = notice_comment;
     }
 
-    public Notice toEntity(Image image) {
+    public Notice toEntity() {
         return Notice.builder()
                 .user_id(user_id)
-                .image(image)
                 .notice_title(notice_title)
                 .notice_type(notice_type)
                 .notice_comment(notice_comment)
