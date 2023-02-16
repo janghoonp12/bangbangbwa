@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice"
+import Swal from "sweetalert2";
 
 const SCardDiv = styled.div`
   display: flex;
@@ -47,8 +48,24 @@ function BroadcastListItem(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onClick = () => {
-    dispatch(choiceWatchingBroadCast(props.posts))
-    navigate(`/broadcasts/${props.posts.broadcastId}`)
+    if(props.posts.broadcastStatus === 2) {
+      dispatch(choiceWatchingBroadCast(props.posts))
+      navigate(`/live/${props.posts.broadcastId}`)
+    } else if (props.posts.broadcastStatus === 3) {
+      Swal.fire({
+        icon: 'error',
+        title: '종료된 방송입니다.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: '시작되지 않은 방송입니다.',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    }
   }
 
   return (

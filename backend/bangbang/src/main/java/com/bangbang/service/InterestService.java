@@ -13,6 +13,6 @@ public interface InterestService {
     List<Interestarea> searchInterestArea(Long userId);
     List<Interestitem> searchInterestItem(Long userId);
     void deleteInterestArea(Long interestareaId);
-    void deleteInterestItem(Long interestitemId);
+    void deleteInterestItem(Long userId, Long itemId);
     boolean interestItemStatus(Long userId, Long itemId);
 }

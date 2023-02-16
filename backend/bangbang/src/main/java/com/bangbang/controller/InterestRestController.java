@@ -103,7 +103,7 @@ public class InterestRestController {
     @DeleteMapping("/user/interest/areas/{iterestId}")
     public ResponseEntity<?> deleteInterestArea(@PathVariable Long interestId) {
         try {
-            interestService.deleteInterestItem(interestId);
+            interestService.deleteInterestArea(interestId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
@@ -115,7 +115,10 @@ public class InterestRestController {
     @PostMapping("/user/interest/items/{interestId}")
     public ResponseEntity<?> deleteInterestItem(@PathVariable Long interestId) {
         try {
-            interestService.deleteInterestItem(interestId);
+            HttpStatus status = HttpStatus.ACCEPTED;
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
+            Long uid = userService.findUserId(token);
+            interestService.deleteInterestItem(uid, itemId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
