@@ -48,7 +48,7 @@ function Home() {
     <Wrapper>
       <Container>
         <div>
-          <h2>최근 방송</h2>
+          <h2>라이브 방송</h2>
           <hr />
           <HotBroadcastList>
           {liveBroadcast ? liveBroadcast.map((item, index) => (
