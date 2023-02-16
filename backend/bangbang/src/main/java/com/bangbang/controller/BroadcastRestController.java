@@ -91,6 +91,22 @@ public class BroadcastRestController {
     }
   }
 
+  //방송예정인 방송 조회
+  @GetMapping(value = "/broadcasts/expected")
+  @ApiOperation(value = "예정된 방송 조회", notes = "해당 페이지의 방송 12개를 조회합니다.")
+  public ResponseEntity<?> searchExpectedBroadcastAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size){
+    Pageable pageable = PageRequest.of(page, size);
+    try {
+      Page<BroadcastListResponseDto> broadcasts = broadcastService.searchExpectedBroadcastAll(pageable);
+      if(broadcasts != null && broadcasts.hasContent()){
+        return new ResponseEntity<Page<BroadcastListResponseDto>>(broadcasts, HttpStatus.OK);
+      }
+      else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } catch (Exception e){
+      return extracted();
+    }
+  }
+
   //종료된 방송 조회(페이지)
   @GetMapping(value = "/broadcasts/end")
   @ApiOperation(value = "종료된 방송 조회", notes = "해당 페이지의 방송 12개를 조회합니다.")
