@@ -90,7 +90,7 @@ function BroadcastAll() {
     </BroadcastList>
     <hr />
     <div style={{height: '50px'}}>
-      <SH2>지난 방송</SH2>
+      <SH2>방송 예정</SH2>
       <SButton onClick={NonLiveBroadcastNavigation}>더보기</SButton>
     </div>
 

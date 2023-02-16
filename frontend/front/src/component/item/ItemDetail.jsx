@@ -120,7 +120,7 @@ function ItemDetail() {
   const { me } = useSelector((state) => state.userSlice);
 
   const goBack = () => {
-    navigate(-1);
+    navigate('/items');
   }
   const { itemDetail } = useSelector((state) => state.itemSlice);
   useEffect(() => {
@@ -217,7 +217,13 @@ function ItemDetail() {
           <SPicRightDiv>
             <SBroadcastDiv>
               <h1>방송정보</h1>
-              {/* <ImgTag src={logosample} alt="이미지" /> */}
+              {(broadcastInfo && broadcastInfo.broadcastStatus === 1) ? 
+              <div>
+                <p>제목 : {broadcastInfo.broadcastTitle}</p>
+                <p>{broadcastInfo.broadcastReservationTime.split('T')[0]} {broadcastInfo.broadcastReservationTime.split('T')[1]}</p>
+              </div>  
+                : <p>예정된 방송이 없습니다.</p>}
+              
             </SBroadcastDiv>
             <SMapDiv id="map">
             </SMapDiv>
