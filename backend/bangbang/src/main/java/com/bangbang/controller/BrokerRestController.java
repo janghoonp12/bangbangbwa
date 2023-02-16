@@ -26,7 +26,6 @@ import java.util.List;
 public class BrokerRestController {
     @Autowired
     private final BrokerService brokerService;
-
     @Autowired
     private final UserService userService;
     @Autowired
@@ -34,13 +33,12 @@ public class BrokerRestController {
     @Autowired
     private BroadcastRepository broadcastRepository;
 
-
     @ApiOperation(value="중개사 신청")
     @PostMapping("/user/brokers/new")
     public ResponseEntity<?> newBroker(@RequestBody BrokerSaveRequestDto broker, HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             broker.setUserId(uid);
             brokerService.newBroker(broker);
@@ -70,7 +68,7 @@ public class BrokerRestController {
     public ResponseEntity<?> registerBroker(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             brokerService.registerBroker(uid);
             return new ResponseEntity(HttpStatus.OK);
@@ -85,7 +83,7 @@ public class BrokerRestController {
     public ResponseEntity<?> deactiveBroker(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             brokerService.deactiveBroker(uid);
             return new ResponseEntity(HttpStatus.OK);
@@ -99,7 +97,7 @@ public class BrokerRestController {
     public ResponseEntity<?> searchBroker(HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN");
+            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
             Long brokerId = brokerRepository.findByUserId(uid).getBrokerId();
             Broker broker = brokerService.searchBroker(brokerId);

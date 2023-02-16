@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BrokerRepository extends JpaRepository<Broker, Long> {
+    @Query("select b from Broker b where b.userId=:userId")
     Broker findByUserId(Long userId);
     @Query("select new com.bangbang.dto.broker.BrokerResponseDto(b) " +
             "from Broker b, UserRoles u " +
