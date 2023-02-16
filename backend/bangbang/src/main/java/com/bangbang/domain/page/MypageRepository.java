@@ -17,7 +17,7 @@ public interface MypageRepository extends JpaRepository <User, Long>{
     User findByUserId(Long userId);
     @Query(value = "select new com.bangbang.dto.broadcast.BroadcastListResponseDto(bc) " +
             "from Broadcast bc, Item i, Image im " +
-            "where i.broker_id =:brokerId and i.item_id = bc.itemId and bc.broadcastStatus = 1 and im.imageId = bc.image.imageId " +
+            "where i.broker_id =:brokerId and i.item_id = bc.itemId and bc.broadcastStatus = 1 " +
             "order by bc.broadcastId desc")
     List<BroadcastListResponseDto> searchBroadcastByBrokerId(Long brokerId);
 
