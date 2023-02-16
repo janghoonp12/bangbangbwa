@@ -158,7 +158,6 @@ export const submitBrokerInfo = createAsyncThunk(
       const response = await AxiosHeaderToken.post(
         '/user/brokers/new', data
       );
-
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);

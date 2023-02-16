@@ -32,9 +32,7 @@ public class NoticeServiceImpl implements NoticeService{
     @Transactional
     @Override
     public void newNotice(NoticeSaveRequestDto notice) {
-        Image image = imageRepository.findByImageId(notice.getImage_id())
-            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
-        noticeRepository.save(notice.toEntity(image));
+        noticeRepository.save(notice.toEntity());
     }
 
     @Override

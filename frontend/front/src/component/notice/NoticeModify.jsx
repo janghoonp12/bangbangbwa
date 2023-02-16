@@ -55,7 +55,7 @@ function NoticeModify() {
   const [comment, setComment] = useState(noticeDetail ? noticeDetail.notice_comment : '');
 
   // const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
-
+  console.log(noticeDetail)
   const dispatch = useDispatch();
   
 
@@ -80,6 +80,7 @@ function NoticeModify() {
   const ModifyNotice = () => {
     dispatch(modifyNoticeAsync(
       {
+        'notice_id': noticeDetail.notice_id,
         'notice_type': type,
         'notice_title': title,
         'notice_comment': comment,
@@ -117,11 +118,6 @@ function NoticeModify() {
         <SGridDiv>
           <STitleP>공지 내용</STitleP>
           <ReactQuill value={comment} required onChange={setComment}/>
-        </SGridDiv>
-        <hr />
-        <SGridDiv>
-          <STitleP>첨부 파일</STitleP>
-          <input type="file" multiple={true} />
         </SGridDiv>
         <hr />
         <div style={{float: "left"}}>

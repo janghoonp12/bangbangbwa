@@ -55,7 +55,6 @@ function NoticeNew() {
   const [comment, setComment] = useState();
 
   const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
-  const {images} = useSelector((state) => state.fileSlice)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -81,7 +80,6 @@ function NoticeNew() {
     setComment(e.target.value)
   }
 
-  console.log(images);
   const createNotice = () => {
     dispatch(writeNoticeAsync(
       {
@@ -90,7 +88,6 @@ function NoticeNew() {
         'notice_comment': comment,
         // 'notice_regidate': realToday,
         'notice_status': 1,
-        'image_id' : images.imageId
       }
     ))
     // let today = new Date();   
@@ -138,11 +135,6 @@ function NoticeNew() {
         <SGridDiv>
           <STitleP>공지 내용</STitleP>
           <textarea onChange={commentChange} rows="8" placeholder=" 내용을 입력하세요." />
-        </SGridDiv>
-        <hr />
-        <SGridDiv>
-          <STitleP>첨부 파일</STitleP>
-          <NoticeFileData></NoticeFileData>
         </SGridDiv>
         <hr />
         <div style={{display: 'flex', flexDirection: 'row-reverse'}}>
