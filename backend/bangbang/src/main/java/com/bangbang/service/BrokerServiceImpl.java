@@ -58,4 +58,10 @@ public class BrokerServiceImpl implements BrokerService{
         broker.setBrokerStatus(0);
         brokerRepository.save(broker);
     }
+
+    @Override
+    public Broker searchBroker(Long brokerId) {
+        return brokerRepository.findById(brokerId).orElseThrow(
+                () -> new IllegalArgumentException("해당 브로커가 없습니다."));
+    }
 }
