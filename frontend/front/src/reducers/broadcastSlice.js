@@ -21,6 +21,9 @@ export const initialState = {
   deleteBroadcastLoading: false,
   deleteBroadcastDone: false,
   deleteBroadcastError: null,
+  startBroadcastLoading: false,
+  startBroadcastDone: false,
+  startBroadcastError: null,
   liveBroadcast: null,
   endBroadcast: null,
   myBroadcast: null,
@@ -36,6 +39,22 @@ export const SearchLiveBroadcastAsync = createAsyncThunk(
       const response = await axios.get(
         `/broadcasts/live?page=${data.page}&size=${data.size}`,
       );
+      return response.data
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const StartBroadcastAsync = createAsyncThunk(
+  'broadcast/START_BROADCAST',
+  async (data, thunkAPI) => {
+    try {
+      console.log(data);
+      const response = await AxiosHeaderToken.post(
+        `/broker/broadcasts/start/${data}`
+      );
+      console.log(response);
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -62,7 +81,7 @@ export const searchMyBroadcastAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.get(
-        '/mypage/broadcast',
+        'mypage/broadcast',
       );
       return response.data
     } catch (err) {
@@ -103,7 +122,7 @@ export const DeleteBroadcastAsync = createAsyncThunk(
   'item/DELETE_MY_BROADCAST',
   async (data, thunkAPI) => {
     try {
-      const response = await AxiosHeaderToken.patch(
+      const response = await AxiosHeaderToken.post(
         `/broker/broadcasts/deactivate/${data}`,
       );
       return response.data
@@ -219,6 +238,21 @@ const broadcastSlice = createSlice({
       state.deleteBroadcastLoading = false;
       state.deleteBroadcastError = action.error
     });
+
+    builder.addCase(StartBroadcastAsync.pending, (state, action) => {
+      state.startBroadcastLoading = true;
+      state.startBroadcastDone = null;
+      state.startBroadcastError = false;
+    });
+    builder.addCase(StartBroadcastAsync.fulfilled, (state, action) => {
+      state.startBroadcastLoading = false;
+      state.startBroadcastDone = true;
+    });
+    builder.addCase(StartBroadcastAsync.rejected, (state, action) => {
+      state.startBroadcastLoading = false;
+      state.startBroadcastError = action.error
+    });
+
   }
 });
 
