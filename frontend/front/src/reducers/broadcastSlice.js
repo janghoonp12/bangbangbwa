@@ -123,7 +123,7 @@ export const DeleteBroadcastAsync = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await AxiosHeaderToken.post(
-        `/broker/broadcasts/deactivate/${data}`,
+        `/broker/broadcasts/deactive/${data}`,
       );
       console.log("잘됐습니다.")
       console.log(response)
