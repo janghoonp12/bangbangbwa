@@ -1136,18 +1136,6 @@ class Openvidu extends Component {
                         value={this.state.countMold()}
                         onClick={this.onClickMoldClear}
                       />
-                      <SButtonInput2 
-                        type="button"
-                        id=""
-                        value="버튼7"
-                        onClick={this.onClickToiletClear}
-                      />
-                      <SButtonInput2 
-                        type="button"
-                        id=""
-                        value="버튼8"
-                        onClick={this.onClickToiletClear}
-                      />
                     </SButtonDiv>
                   </SButtonLineDiv>
                 ) : (
@@ -1197,18 +1185,6 @@ class Openvidu extends Component {
                         id="mold"
                         value={this.state.countMold()}
                         onClick={this.onClickMold}
-                      />
-                      <SButtonInput2 
-                        type="button"
-                        id=""
-                        value="버튼7"
-                        onClick={this.onClickToilet}
-                      />
-                      <SButtonInput2 
-                        type="button"
-                        id=""
-                        value="버튼8"
-                        onClick={this.onClickToilet}
                       />
                     </SButtonDiv>
                   </SButtonLineDiv>
