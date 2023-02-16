@@ -64,13 +64,10 @@ public class BrokerRestController {
 
 
     @ApiOperation(value="중개사 등록")
-    @PatchMapping("/admin/brokers/register")
-    public ResponseEntity<?> registerBroker(HttpServletRequest request) {
+    @PatchMapping("/admin/brokers/register/{userId}")
+    public ResponseEntity<?> registerBroker(@PathVariable long userId) {
         try {
-            HttpStatus status = HttpStatus.ACCEPTED;
-            String token = request.getHeader("X-AUTH-TOKEN").substring(7);
-            Long uid = userService.findUserId(token);
-            brokerService.registerBroker(uid);
+            brokerService.registerBroker(userId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return exceptionHandling();
