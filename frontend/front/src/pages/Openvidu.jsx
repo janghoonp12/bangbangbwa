@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import throttle from '../utils/Throttle';
 import watchers from '../assets/eye.png';
 import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { DeleteBroadcastAsync } from '../reducers/broadcastSlice';
 // import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
@@ -18,16 +19,15 @@ const mapStateToProps = (state) => ({
   watchingBroadCast: state.broadcastSlice.watchingBroadCast,
 })
 
-const mapDispatchToProps = dispatch => {
-  return {
-    DeleteBroadcastAsync: (props) => dispatch(this.props.DeletebroadcastAsync(props.broadcastId))
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  DeleteBroadcastAsync: id => dispatch(DeleteBroadcastAsync(id))
+});
 
 class Openvidu extends Component {
   
     constructor(props) {
         super(props);
+
         this.state = {
             myTitle : "",
             mySessionId: 'SessionA',
@@ -840,7 +840,8 @@ class Openvidu extends Component {
     }
 
     leaveSessionHost() {
-      this.DeleteBroadcastAsync()
+      const { watchingBroadCast, DeleteBroadcastAsync } = this.props;
+      DeleteBroadcastAsync(watchingBroadCast.broadcastId)
       // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
       this.endAxios()
       const mySession = this.state.session;
