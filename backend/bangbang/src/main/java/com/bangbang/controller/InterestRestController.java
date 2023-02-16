@@ -3,6 +3,7 @@ package com.bangbang.controller;
 import com.bangbang.domain.interest.Interestarea;
 import com.bangbang.domain.interest.InterestareaRepository;
 import com.bangbang.domain.interest.Interestitem;
+import com.bangbang.domain.item.Item;
 import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
 import com.bangbang.dto.interest.InterestareaSaveRequestDto;
@@ -89,9 +90,9 @@ public class InterestRestController {
             HttpStatus status = HttpStatus.ACCEPTED;
             String token = request.getHeader("X-AUTH-TOKEN").substring(7);
             Long uid = userService.findUserId(token);
-            List<Interestitem> list = interestService.searchInterestItem(uid);
+            List<Item> list = interestService.searchInterestItem(uid);
             if (list != null && !list.isEmpty())
-                return new ResponseEntity<List<Interestitem>>(list, HttpStatus.OK);
+                return new ResponseEntity<List<Item>>(list, HttpStatus.OK);
             else return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return exceptionHandling();
