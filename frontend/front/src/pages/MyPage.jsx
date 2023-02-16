@@ -48,6 +48,8 @@ function MyPage() {
     }
   },[])
 
+  console.log(me)
+
   return (
     <Wrapper>
       <SecondWrapper>

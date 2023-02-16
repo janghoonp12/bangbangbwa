@@ -235,7 +235,8 @@ const userSlice = createSlice({
       state.me = {
         email : action.payload.email,
         nickname: action.payload.nickname,
-        role : action.payload.role
+        role : action.payload.role,
+        level : action.payload.level
       }
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)
@@ -258,11 +259,13 @@ const userSlice = createSlice({
       state.signInDone = false;
     });
     builder.addCase(oauth2SignInAsync.fulfilled, (state, action) => {
+      let level = 0
       state.signInLoading = false;
       state.me = {
         email : action.payload.email,
         nickname: action.payload.nickname,
-        role : action.payload.role
+        role : action.payload.role,
+        level : action.payload.level
       }
       sessionStorage.clear()
       sessionStorage.setItem("access-token", action.payload.accesstoken)

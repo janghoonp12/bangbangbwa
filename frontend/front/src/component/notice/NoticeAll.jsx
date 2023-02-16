@@ -55,7 +55,7 @@ function Notice() {
       <SSDiv>
         <SH1 align="center">공지사항</SH1>
         <SDiv>
-        { me ? me.role === "ROLE_ADMIN" ? <SButton onClick={onClick}>공지 작성</SButton> : <></> : <></>}
+        { me ? me.level > 2 ? <SButton onClick={onClick}>공지 작성</SButton> : <></> : <></>}
         </SDiv>
         <NoticeList />
         <br />

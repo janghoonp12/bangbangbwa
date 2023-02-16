@@ -42,13 +42,23 @@ public class oAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     user.setUser_refresh_token(refreshToken);
     userRepository.save(user);
 
-    String url = makeRedirectUrl(accessToken, refreshToken, user.getUserEmail(), user.getUserNickname());
+    String level = "";
+
+    if (user.getUser_roles().get(0).equals("ROLE_USER")) {
+      level = "1";
+    } else if (user.getUser_roles().get(0).equals("ROLE_BROKER")) {
+      level = "2";
+    } else if (user.getUser_roles().get(0).equals("ROLE_ADMIN")) {
+      level = "3";
+    }
+
+    String url = makeRedirectUrl(accessToken, refreshToken, user.getUserEmail(), user.getUserNickname(), user.getUser_roles().get(0), level );
 
     getRedirectStrategy().sendRedirect(request, response, url);
   }
 
-  private String makeRedirectUrl(String accessToken, String refreshToken, String email, String nickname) {
-    return UriComponentsBuilder.fromUriString("https://i8a405.p.ssafy.io/oauth2/redirect?accessToken="+accessToken +"&refreshToken=" + refreshToken +"&email=" + email + "&nickname=" +nickname)
+  private String makeRedirectUrl(String accessToken, String refreshToken, String email, String nickname, String role, String level) {
+    return UriComponentsBuilder.fromUriString("https://i8a405.p.ssafy.io/oauth2/redirect?accessToken="+accessToken +"&refreshToken=" + refreshToken +"&email=" + email + "&nickname=" + nickname + "&role=" + role + "&level=" +level)
         .build().toUriString();
   }
 }

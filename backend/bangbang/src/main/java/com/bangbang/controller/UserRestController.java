@@ -56,9 +56,20 @@ public class UserRestController {
   @PostMapping("/users/auth")
   public ResponseEntity<?> login(@RequestBody SignIn user) throws Exception {
     Map<String, Object> token = userService.login(user);
+    String level = "";
+
+    if (token.get("role").equals("ROLE_USER")) {
+      level = "1";
+    } else if (token.get("role").equals("ROLE_BROKER")) {
+      level = "2";
+    } else if (token.get("role").equals("ROLE_ADMIN")) {
+      level = "3";
+    }
+    String finalLevel = level;
     return new ResponseEntity<Object>(new HashMap<String, Object>() {{
       put("result", true);
       put("msg", "로그인을 성공하였습니다.");
+      put("level", finalLevel);
       put("accesstoken", token.get("access-token"));
       put("refreshtoken", token.get("refresh-token"));
       put("nickname", token.get("nickname"));
