@@ -82,7 +82,7 @@ public class ItemQueryRepository {
                     tmp.and(item.item_floor.eq(3));
                 }
                 if (filter.getItem_floor()[i] == 4) {
-                    tmp.and(item.item_floor.gt(3));
+                    tmp.and(item.item_floor.goe(3));
                 }
             }
         }
@@ -95,19 +95,19 @@ public class ItemQueryRepository {
         if (filter.getItem_build_year() != null) {
             for (int i = 0; i < filter.getItem_build_year().length; i++) {
                 if (filter.getItem_build_year()[i] == 0) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(1));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-1));
                 }
                 if (filter.getItem_build_year()[i] == 1) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(5));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-5));
                 }
                 if (filter.getItem_build_year()[i] == 2) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(10));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-10));
                 }
                 if (filter.getItem_build_year()[i] == 3) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(15));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(-15));
                 }
                 if (filter.getItem_build_year()[i] == 4) {
-                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).goe(15));
+                    builder.and(item.item_build_year.castToNum(Integer.class).subtract(year).loe(-15));
                 }
             }
         }
