@@ -34,6 +34,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @Api(value="BroadcastRestController-Version 1")
 public class BroadcastRestController {
 
@@ -157,9 +158,9 @@ public class BroadcastRestController {
   }
 
   //방송 시작
-  @PatchMapping(value = "/broker/broadcasts/start/{broadcastId}")
+  @PostMapping(value = "/broker/broadcasts/start/{broadcastId}")
   @ApiOperation(value = "해당 방송 시작", notes = "해당 방송을 시작합니다.")
-  public ResponseEntity<?> stratBroadcast(@PathVariable Long broadcastId){
+  public ResponseEntity<?> startBroadcast(@PathVariable("broadcastId") Long broadcastId){
     broadcastService.startBroadcast(broadcastId);
     try {
       return new ResponseEntity<Object>(new HashMap<String, Object>() {{
@@ -173,7 +174,7 @@ public class BroadcastRestController {
   }
 
   //방송 삭제(비활성화)
-  @PatchMapping(value = "/broker/broadcasts/deactive/{broadcastId}")
+  @PostMapping(value = "/broker/broadcasts/deactive/{broadcastId}")
   @ApiOperation(value = "해당 방송 삭제", notes = "해당 방송을 비활성화합니다.")
   public ResponseEntity<?> deactivateBroadcast(@PathVariable Long broadcastId){
     broadcastService.deactivateBroadcast(broadcastId);
