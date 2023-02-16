@@ -113,7 +113,7 @@ public class InterestRestController {
 
 
     @ApiOperation(value="관심매물 삭제")
-    @DeleteMapping("/user/interest/items/{itemId}")
+    @PostMapping("/user/interest/items/{itemId}")
     public ResponseEntity<?> deleteInterestItem(@PathVariable Long itemId, HttpServletRequest request) {
         try {
             HttpStatus status = HttpStatus.ACCEPTED;
