@@ -11,5 +11,4 @@ public interface BrokerService {
     List<BrokerResponseDto> searchBrokerAll();
     void registerBroker(Long userId);
     void deactiveBroker(Long brokerId);
-    Broker searchBroker(Long brokerId);
 }
