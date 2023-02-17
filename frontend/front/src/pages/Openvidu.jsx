@@ -12,7 +12,6 @@ import { DeleteBroadcastAsync } from '../reducers/broadcastSlice';
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
 const OPENVIDU_SERVER_SECRET = 'A405';
-// const {me} = useSelector((state) => state.userSlice);
 const mapStateToProps = (state) => ({
   me: state.userSlice.me,
   watchingBroadCast: state.broadcastSlice.watchingBroadCast,
@@ -30,7 +29,6 @@ class Openvidu extends Component {
         this.state = {
             myTitle : "",
             mySessionId: 'SessionA',
-            // myUserName: 'Participant' + Math.floor(Math.random() * 100),
             myUserName: 'Participant1',
             session: undefined,
             mainStreamManager: undefined,
