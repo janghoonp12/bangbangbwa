@@ -81,7 +81,7 @@ function NonLiveBroadcastList() {
       <div id="filterDiv" style={{ display: "none" }}>
         <Filter />
       </div>
-      <h2 style={{marginTop : '10px'}}>지난 방송 목록</h2>
+      <h2 style={{marginTop : '10px'}}>방송 예정 목록</h2>
       <Wrapper>
       {endBroadcast ? endBroadcast.map((broadcast, index) => (
         <BroadcastListItem
@@ -91,7 +91,7 @@ function NonLiveBroadcastList() {
         ) : <label>no data</label>}
       </Wrapper>
       <SButtonDiv>
-        {!last ? <SButton onClick={loadItem}>지난 방송 더보기</SButton> : <></>}
+        {!last ? <SButton onClick={loadItem}>예정 방송 더보기</SButton> : <></>}
       </SButtonDiv>
     </div>
   )
