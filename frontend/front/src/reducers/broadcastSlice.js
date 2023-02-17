@@ -147,10 +147,7 @@ const broadcastSlice = createSlice({
     },
     deleteMyBroadcast: (state, action) => {
       state.myBroadcast.map((item, index) => {
-        // if (item.item_id === action.payload) {
-        //   state.myItem.splice(index, 1);
-        //   return
-        // }
+
       })
     }
     

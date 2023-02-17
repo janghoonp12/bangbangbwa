@@ -8,7 +8,6 @@ const Wrapper = styled.div`
     align-items: flex-start;
     overflow-x: auto;
     white-space: nowrap;
-    // border: 1px solid grey;
     & > * {
         :not(:last-child) {
             margin-bottom: 16px;

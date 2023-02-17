@@ -39,7 +39,6 @@ function Pagination({ total, limit, page, setPage }) {
               key ={i+1}
               onClick={() => setPage(lastNum)}
               aria-current={page === lastNum ? "page" : null}
-              // disabled={(page>=numPages) ? true : false}
               style={(lastNum >numPages ? {display:"none"} : null)}
             >
               {lastNum}

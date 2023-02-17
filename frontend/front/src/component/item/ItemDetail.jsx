@@ -18,7 +18,6 @@ const Container = styled.div`
 
 const SGridDiv = styled.div`
   display: grid;
-  // grid-template-columns: 0.6fr 0.4fr;
   grid-template-columns: 1fr;
   grid-template-areas:
     "div";
@@ -38,7 +37,6 @@ const SPicRightDiv = styled.div`
   width: 100%;
   max-width: 100%;
   height: 30vh;
-  // max-height: 100%;
   overflow: hidden;
 `;
 

@@ -15,7 +15,6 @@ AxiosHeaderToken.interceptors.request.use(
         const accessToken = sessionStorage.getItem("access-token");
       // before send request logic
     if(accessToken) {
-        // config.headers.Authorization = `Bearer ${accessToken}`;
         config.headers['X-AUTH-TOKEN'] = `Bearer ${accessToken}`;
     }
     return config;
@@ -50,7 +49,6 @@ AxiosHeaderToken.interceptors.response.use(
 
 const reissueAccessToken = async () => {
   axios.defaults.headers["X-AUTH-TOKEN"] = "Bearer " + sessionStorage.getItem("refreshtoken");
-  // api.defaults.headers["Authorization"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiYmJiNDIyNEBuYXRlLmNvbSIsImV4cCI6MTY3NTg0NzIwMX0.JxV4s5snsSvWTDUHiLMw0jCNJeErptu3R4rHK8VGJhqZzHNeqVs5DtBxYca7TJV1qHjjzOqwRC8ApaACaHU8eQ";
   await axios.post("/users/user/refresh-token", {})
   .then((response) => {
       sessionStorage.setItem("access-token", response.data.accesstoken);
@@ -79,13 +77,12 @@ function ErrorCode(response) {
           });
           return;
       case 401:
-          // Test 필요하다.
           Swal.fire({
               title: code,
               text: message,
               icon: "info"
           }).then(function() {
-              window.location.href="http://localhost:3000/login";
+              window.location.href="http://localhost:3000/signin";
           })
           return;
       case 403: case 404: case 409: case 500:

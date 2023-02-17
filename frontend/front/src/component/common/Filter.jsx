@@ -12,7 +12,6 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  // display: flex;
   width: 100%;
   margin-top: 5%;
   margin-bottom: 5%;
