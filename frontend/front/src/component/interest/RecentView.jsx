@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
-// import data from "../../data.json";
 import RecentViewList from "./RecentViewList";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import ItemList from "../item/ItemList";
-import ItemListItem from "../item/ItemListItem";
 import RecentViewListItem from "./RecentViewListItem";
 
 const SDiv = styled.div`
@@ -18,7 +14,6 @@ const SH3 = styled.h3`
 `;
 
 function RecentView() {
-  const navigate = useNavigate();
   const [recentItemData, setRecentItemData] = useState(null);
 
   useEffect(() => {
@@ -37,14 +32,6 @@ function RecentView() {
       )
         ) : <label>no data</label>}
         </RecentViewList>
-        {/* <ItemList>
-      {recentItemData ? recentItemData.map((item, index) => (
-        <ItemListItem
-          posts={item}
-        />
-      )
-        ) : <label>no data</label>}
-      </ItemList> */}
       </SDiv>
     </div>
   )

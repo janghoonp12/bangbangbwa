@@ -1,5 +1,4 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
 import AxiosHeaderToken from "./AxiosHeaderToken";
 
 export const initialState = {
@@ -95,7 +94,6 @@ const fileSlice = createSlice({
   reducers: {
     clearNoticeGetImagesDone: (state) => {
       state.noticeGetImagesDone = false
-      console.log(state.noticeGetImagesDone)
     },
   },
   extraReducers: (builder) => {
@@ -107,7 +105,6 @@ const fileSlice = createSlice({
     builder.addCase(noticeFileUploadAsync.fulfilled, (state, action) => {
       state.noticeUploadImagesLoading = false;
       state.noticeUploadImagesDone = true;
-      console.log(action.payload);
       state.images = action.payload;
     });
     builder.addCase(noticeFileUploadAsync.rejected, (state, action) => {

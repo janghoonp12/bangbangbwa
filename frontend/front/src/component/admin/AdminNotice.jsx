@@ -12,7 +12,6 @@ function AdminNotice() {
   useEffect(() => {
     axios.get('/notices?page=0&size=100000')
     .then((res) => {
-      console.log(res.data.content)
 
       const notices = res.data.content.map((obj) => {
         const id = obj.notice_id

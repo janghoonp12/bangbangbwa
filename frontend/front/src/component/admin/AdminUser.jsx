@@ -16,7 +16,6 @@ function AdminUser() {
       }
     })
     .then((res) => {
-      console.log(res.data)
 
       const users = res.data.map((obj) => {
         const id = obj.user.userId

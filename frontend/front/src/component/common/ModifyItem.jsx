@@ -149,7 +149,6 @@ function ModifyItem() {
 
     const data = {
       "item": {
-        // "broker_id": 1,
         "item_id" : itemDetail.item.item_id,
         "item_bonbun": oriBon,
         "item_bubun": oriBu,                                      
@@ -229,8 +228,7 @@ function ModifyItem() {
           "option_washer": washer
         }
     }
-    console.log(itemDetail, "뮹뮹")
-    console.log(data, "뮹뮹2")
+
     dispatch(modifyItemAsync(data))
   }
 
@@ -422,8 +420,6 @@ function ModifyItem() {
           />
           <div style={{display: 'flex'}}>
             <input type="text" value={(postCode) ? postCode.address : itemDetail.item.item_road_name} style={{marginTop: '20px', width: '300px', marginRight: '30px'}} disabled />
-            {/* <p style={{marginTop: '20px', marginBottom: '0px', fontSize: '20px', paddingRight: '10px', marginRight: '0px'}}>상세 주소 :</p>
-            <input type="text" style={{marginTop: '20px', width: '400px'}} disabled={(!postCode) ? true : false} /> */}
           </div>
           </div>
         </SGridDiv>

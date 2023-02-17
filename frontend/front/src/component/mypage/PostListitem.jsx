@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  // justify-content: center;
   border: 1px solid grey;
   border-radius: 8px;
   background: white;
@@ -52,7 +51,6 @@ const STextDiv = styled.div`
   margin-left: 20px;
 `;
 
-// TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function PostListItem(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();

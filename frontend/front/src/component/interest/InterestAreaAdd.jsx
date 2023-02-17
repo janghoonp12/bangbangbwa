@@ -107,7 +107,6 @@ function InterestAreaAdd() {
         }
       })
       .then(response => {
-        console.log(response);
         alert(`${sido} ${gugun} ${dong}이 관심지역에 추가되었습니다.`)
         setOnAdd(false)
         setSidoAll('')

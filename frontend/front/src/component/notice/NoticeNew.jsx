@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from "styled-components";
 import Button from "../common/ui/Button";
 import { writeNoticeAsync } from "../../reducers/noticeSlice"
-import NoticeFileData from "../common/NoticeFileData";
 import Swal from "sweetalert2";
 
 
@@ -15,7 +14,6 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  // display: flex;
   width: 100%;
   max-width: 70%;
   margin-top: 5%;
@@ -86,30 +84,9 @@ function NoticeNew() {
         'notice_type': type,
         'notice_title': title,
         'notice_comment': comment,
-        // 'notice_regidate': realToday,
         'notice_status': 1,
       }
     ))
-    // let today = new Date();   
-
-    // let year = today.getFullYear(); // 년도
-    // let month = today.getMonth() + 1;  // 월
-    // let date = today.getDate();  // 날짜  
-
-    // let realToday = `${year}-${month}-${date}`
-
-    // axios.post('/admin/notices/new', data, {
-    //   headers: {
-    //     "X-AUTH-TOKEN" : sessionStorage.getItem("access-token")
-    //   }
-    // })
-    // .then(response => {
-    //   console.log(response);
-    //   navigate('/notices')
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    // })
   }
 
   return (

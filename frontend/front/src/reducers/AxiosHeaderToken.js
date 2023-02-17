@@ -36,8 +36,7 @@ AxiosHeaderToken.interceptors.response.use(
       // error data 가공
       console.log(error);
       const {config, response} = error;
-      console.log(config);
-      console.log(response);
+
       if(response.status === 403) {
           const originRequest = config;
           await reissueAccessToken();
@@ -54,7 +53,6 @@ const reissueAccessToken = async () => {
   // api.defaults.headers["Authorization"] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI5IiwiYXV0aCI6IlJPTEVfVVNFUiIsImVtYWlsIjoiYmJiNDIyNEBuYXRlLmNvbSIsImV4cCI6MTY3NTg0NzIwMX0.JxV4s5snsSvWTDUHiLMw0jCNJeErptu3R4rHK8VGJhqZzHNeqVs5DtBxYca7TJV1qHjjzOqwRC8ApaACaHU8eQ";
   await axios.post("/users/user/refresh-token", {})
   .then((response) => {
-      console.log(response);
       sessionStorage.setItem("access-token", response.data.accesstoken);
   })
   .catch((error) => {

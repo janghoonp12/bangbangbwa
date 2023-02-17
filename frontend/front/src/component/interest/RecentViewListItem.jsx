@@ -48,7 +48,6 @@ const SCardContentP = styled.p`
 
 
 function RecentViewListItem(props) {
-  console.log(props)
   const dispatch = useDispatch();
 
   const item = props.item

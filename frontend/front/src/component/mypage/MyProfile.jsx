@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import QuitModal from "../common/ui/QuitModal";
 import nicknamelogo from "../../assets/nicknamelogo.png";
 import passwordlogo from "../../assets/pwlogo.png";
 import updatelogo from "../../assets/updatelogo.png";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
 import useInput from '../../hooks/useInput';
-import { changeNicknameAsync, changePasswordAsync, withdrawalAsync, clearSignInDone, changeMeNickname } from "../../reducers/userSlice"
+import { changeNicknameAsync, changePasswordAsync, changeMeNickname } from "../../reducers/userSlice"
 import Swal from 'sweetalert2'
 
 const SItemDiv = styled.div`
@@ -27,8 +26,6 @@ const SFlexDiv = styled.div`
   height: 100%;
   max-height: 40%;
   width: 100%;
-  // max-width: 40%;
-  // justify-content: center;
   align-items: center;
   text-align: left;
   
@@ -76,12 +73,10 @@ function MyProfile() {
   const [newPassword, onChangePassword] = useInput('');
 
   const changeNickname = () => {
-    console.log(newNickname.length)
     if (newNickname.length < 2 && newNickname.length > 10) {
       alert('닉네임은 2~10자로 입력해주세요!')
       return
     }
-    console.log("무한?")
     dispatch(changeNicknameAsync(newNickname))
     dispatch(changeMeNickname(newNickname))
     Swal.fire({
@@ -126,7 +121,6 @@ function MyProfile() {
         < SLogoImg src={nicknamelogo} alt="닉네임로고" />
         </SLogoDiv>
         <SInfoP>닉 네 임 : </SInfoP>
-        {/* <SInfoP>{ me.nickname }</SInfoP> */}
         <StyleInput value={newNickname} required onChange={onChangeNickname}/>
         <SLogoDiv>
         <SLogoImg src={updatelogo} alt="닉네임수정로고" onClick={changeNickname} />

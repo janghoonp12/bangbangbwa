@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import BroadcastList from "./BroadcastList";
-import data from "../../data.json";
 import { useNavigate } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import Filter from "../common/Filter";
@@ -64,13 +63,11 @@ function BroadcastAll() {
       }
     ))
   },[])
-  console.log(me)
 
   return (
   <div>
       <SButtonLineDiv>
         { me ? me.level > 1 ? <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button> : <></> : <></>}
-      {/* <Button variant="info" onClick={broadcastItem} style={{marginBottom: '10px'}}>방송 등록</Button> */}
       <div />
       <FilterButton />
     </SButtonLineDiv>

@@ -55,11 +55,6 @@ const AdminNav = () => {
           방송
         </NavLink>
       </Navdiv>
-      {/* <Navdiv>
-        <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/admin/brokers">
-          중개사
-        </NavLink>
-      </Navdiv> */}
       <Navdiv>
         <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/admin/notices">
           공지

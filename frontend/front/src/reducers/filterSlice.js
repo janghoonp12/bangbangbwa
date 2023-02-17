@@ -33,7 +33,6 @@ export const FilterBroadcastAsync = createAsyncThunk(
       const response = await axios.post(
         '/broadcasts/filter', data
       );
-      console.log(response.data)
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);

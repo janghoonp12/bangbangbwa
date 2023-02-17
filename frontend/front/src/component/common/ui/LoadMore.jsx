@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 
 const SButton = styled.button`
   border-radius: 8px;

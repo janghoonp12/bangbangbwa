@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { searchDetailItemAsync } from "../../reducers/itemSlice"
-import logosample from "../../assets/logosample.png"
+import logosample from "../../assets/logo.png"
 
 
 const SCardDiv = styled.div`
@@ -47,7 +47,6 @@ const SCardContentP = styled.p`
 
 function SearchItem(props) {
   const broadcast = props.broadcast
-  console.log(broadcast)
   const time = broadcast.broadcastReservationTime.split('T')
 
   const dispatch = useDispatch();

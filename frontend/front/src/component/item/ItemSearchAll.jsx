@@ -68,7 +68,6 @@ function ItemSearchAll() {
       .then(res => {
         setItems(res.data.dataB)
         setBroadcasts(res.data.dataD)
-        console.log(res.data.dataD)
       })
       .catch(err => console.log(err))
     } else if (dongCode) {
@@ -80,7 +79,6 @@ function ItemSearchAll() {
       .catch(err => console.log(err))  
     }
 
-    console.log(items)
   }, [keyword, dongCode])
 
   return (

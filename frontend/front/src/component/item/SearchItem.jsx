@@ -43,7 +43,7 @@ const SCardContentP = styled.p`
   font-size: 1.2rem;
 `;
 
-// TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
+
 function SearchItem(props) {
 
   const item = props.item
@@ -66,7 +66,6 @@ function SearchItem(props) {
   const onClick = () => {
     dispatch(searchDetailItemAsync(item.item_id))
   }
-  console.log(item)
   return (
       <SCardDiv onDoubleClick={onClick}>
         <SImgDiv onDoubleClick={onClick} onClick={imgClick} id={item.item_id}> </SImgDiv>

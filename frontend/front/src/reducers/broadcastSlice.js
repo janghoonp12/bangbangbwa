@@ -50,11 +50,9 @@ export const StartBroadcastAsync = createAsyncThunk(
   'broadcast/START_BROADCAST',
   async (data, thunkAPI) => {
     try {
-      console.log(data);
       const response = await AxiosHeaderToken.post(
         `/broker/broadcasts/start/${data}`
       );
-      console.log(response);
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -125,8 +123,6 @@ export const DeleteBroadcastAsync = createAsyncThunk(
       const response = await AxiosHeaderToken.post(
         `/broker/broadcasts/deactive/${data}`,
       );
-      console.log("잘됐습니다.")
-      console.log(response)
       
       return response.data
     } catch (err) {
@@ -202,7 +198,6 @@ const broadcastSlice = createSlice({
       state.SearchMyBroadcastLoading = false;
       state.SearchMyBroadcastDone = true;
       state.myBroadcast = action.payload;
-      console.log(state.myBroadcast)
     });
     builder.addCase(searchMyBroadcastAsync.rejected, (state, action) => {
       state.SearchMyBroadcastLoading = false;

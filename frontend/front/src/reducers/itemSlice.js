@@ -117,7 +117,6 @@ export const searchInterestDetailAsync = createAsyncThunk(
   'interest/SEARCH_INTEREST_DETAIL',
   async (data, thunkAPI) => {
     try {
-      console.log("이거 실행됨?")
       const response = await AxiosHeaderToken.get(
         `/user/interest/items/check/${data}`,
       );
@@ -132,7 +131,6 @@ export const searchInterestAllAsync = createAsyncThunk(
   'interest/SEARCH_INTEREST_ALL',
   async (data, thunkAPI) => {
     try {
-      console.log("이거 실행됨?")
       const response = await AxiosHeaderToken.get(
         `/user/interest/items`,
       );
@@ -161,7 +159,6 @@ export const deleteInterestAsync = createAsyncThunk(
   'interest/DELETE_INTEREST',
   async (data, thunkAPI) => {
     try {
-      console.log(data)
       const response = await AxiosHeaderToken.post(
         `/user/interest/items/${data}`,
       );
@@ -261,7 +258,6 @@ const itemSlice = createSlice({
       state.searchMyItemLoading = false;
       state.searchMyItemDone = true;
       state.myItem = action.payload
-      console.log(state.myItem)
     });
     builder.addCase(searchMyItemAsync.rejected, (state, action) => {
       state.searchMyItemLoading = false;
@@ -336,7 +332,6 @@ const itemSlice = createSlice({
     builder.addCase(searchInterestAllAsync.fulfilled, (state, action) => {
       state.searchInterestAllLoading = false;
       state.searchInterestAllDone = true;
-      console.log(action.payload)
       state.myInterests = action.payload
     });
     builder.addCase(searchInterestAllAsync.rejected, (state, action) => {

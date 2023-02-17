@@ -1,5 +1,4 @@
 import React from "react";
-// import Card from 'react-bootstrap/Card'; 
 import styled from "styled-components";
 
 const SCardDiv = styled.div`

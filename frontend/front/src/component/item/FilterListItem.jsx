@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { searchDetailItemAsync } from "../../reducers/itemSlice"
@@ -45,12 +44,10 @@ const SCardContentP = styled.p`
   font-size: 1.2rem;
 `;
 
-// TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function FilterListItem(props) {
 
   const item = props.item.item
   const prices = item.itemPrice
-  console.log(item)
 
   const dealType = (item.item_deal_type === 0) ? '월세' : (item.item_deal_type === 1) ? '전세' : '매매'
   const itemType = (item.item_type === 0) ? '원룸' : (item.item_type === 1) ? '투,쓰리룸' : (item.item_type === 2) ? '오피스텔' : '아파트'

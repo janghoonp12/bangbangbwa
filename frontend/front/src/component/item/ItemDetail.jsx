@@ -8,7 +8,6 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Swal from "sweetalert2";
 
-// import logosample from "../../assets/logosample.png"
 
 const Container = styled.div`    
   width: 100%;
@@ -64,8 +63,6 @@ const SPicsDiv = styled.div`
 const SBroadcastDiv = styled.div`
   width: 100%;
   max-width: 100%;
-  // height: 50%;
-  // max-height: 50%;
   border: 1px solid grey;
   border-radius: 8px;
 `;
@@ -73,23 +70,17 @@ const SBroadcastDiv = styled.div`
 const SMapDiv = styled.div`
   width: 100%;
   max-width: 100%;
-  // height: 50%;
-  // max-height: 50%;
   border: 1px solid grey;
   border-radius: 8px;
 `;
 
 const SInfoDiv = styled.div`
-  // display: grid;
-  // grid-template-areas:
-  //   "div div div div"
   display: flex;
   flex-wrap: wrap;
 `;
 
 const SPTag = styled.p`
   border: 0px solid grey;
-  // border-radius: 8px;
   margin-right: 1rem;
 `;
 
@@ -104,12 +95,6 @@ const Sbutton = styled.button`
     border: 1px solid black;
   }
 `;
-
-// const ImgTag = styled.img`
-//   width: 100%;
-//   height: 100%;
-//   object-fit: contain;
-// `;
 
 function ItemDetail() {
   const navigate = useNavigate();
@@ -188,7 +173,6 @@ function ItemDetail() {
             itemId: itemDetail.item_id
           }
         ))
-        console.log(interest)
       }
     }else {
       Swal.fire({
@@ -198,7 +182,6 @@ function ItemDetail() {
         timer: 500
       })
     }
-    // dispatch(changeInterest())
   }
 
   return (
@@ -250,7 +233,6 @@ function ItemDetail() {
         <hr />
         <SPTag style={{fontSize: '2rem'}}>매물 설명</SPTag>
         <SInfoDiv>
-          {/* <pre style={{wordWrap: 'break-word'}}> */}
           <pre style={{whiteSpace: 'pre-wrap', wordBreak: 'break-all', overflow: 'auto'}}>
             {itemDetail.item_description}
           </pre>

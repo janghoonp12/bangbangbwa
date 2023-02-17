@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import InterestNav from "../component/interest/InterestNav";
 import RecentView from "../component/interest/RecentView";
 import InterestItem from "../component/interest/InterestItem";
-import InterestArea from "../component/interest/InterestArea";
 import BookmarkAll from "../component/bookmark/BookmarkAll";
 import BookmarkNew from "../component/bookmark/BookmarkNew";
 import styled from "styled-components";

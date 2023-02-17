@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import HotBroadcastList from "../component/home/HotBroadcastList";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
 import { SearchItemAsync } from "../reducers/itemSlice"
@@ -22,7 +21,6 @@ const Container = styled.div`
 `;
 
 function Home() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { items } = useSelector((state) => state.itemSlice);

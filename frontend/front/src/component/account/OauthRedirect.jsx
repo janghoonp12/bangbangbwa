@@ -41,9 +41,6 @@ function OauthRedirect() {
 
 
 
-  //dispatch(Oauth2RequestAction({ userEmail: searchParams.get("email"), userNickname: searchParams.get("nickname"), accessToken: searchParams.get("accessToken"), refreshToken: searchParams.get("refreshToken") }));
-
-
 
   return <></>;
 }

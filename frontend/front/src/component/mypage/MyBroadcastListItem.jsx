@@ -10,8 +10,6 @@ const Wrapper = styled.div`
   padding: 16px;
   display: grid;
   grid-template-columns: 2fr 10fr;
-  // align-items: center;
-  // justify-content: center;
   border: 1px solid grey;
   border-radius: 8px;
   background: white;
@@ -51,9 +49,6 @@ const ContentText = styled.p`
 `;
 
 const SLiveButton = styled.button`
-  // position: absolute;
-  // right: 0;
-  // margin-right: 0px;
   background-color: white;
   border-radius: 8px;
   border: 1px solid red;
@@ -75,7 +70,7 @@ const STextDiv = styled.div`
   margin-left: 20px;
 `;
 
-// TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
+
 function MyBroadcastListItem(props) {
   const { myBroadcast, onClick } = props;
   const dispatch = useDispatch();

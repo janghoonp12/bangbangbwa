@@ -1,7 +1,6 @@
 import React from "react";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import HotBroadcastListItem from "./HotBroadcastListItem";
 import throttle from "../../utils/Throttle"
 
 const Wrapper = styled.div`

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Broker from "../component/mypage/Broker";
 import MyItem from '../component/mypage/MyItem';

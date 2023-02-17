@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from "react";
-import data from "../../data.json";
-import InterestItemList from "./InterestItemList";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import LoadMore from "../common/ui/LoadMore";
 import { useDispatch, useSelector } from 'react-redux';
 import { searchInterestAllAsync } from "../../reducers/itemSlice";
 import RecentViewList from "./RecentViewList";
@@ -20,26 +16,15 @@ const SH3 = styled.h3`
   margin-bottom: 20px;
 `;
 
-const SButtonDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-`;
 
 function InterestItem() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const limit = 12; // 한 페이지에 나올 방송 수
-  const [loads, setLoads] = useState(1); // 더보기 클릭 횟수
-  const offset = limit * loads; // 더보기 클릭할 때 마다 limit개의 방송이 추가됨
 
   const { myInterests } = useSelector((state) => state.itemSlice);
 
   useEffect(() => {
     dispatch(searchInterestAllAsync())
-    console.log(myInterests)
   },[])
 
   return (
