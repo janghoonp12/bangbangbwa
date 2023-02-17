@@ -1,5 +1,4 @@
 import styled from "styled-components";
-// import logosample from "../../assets/logosample.png"
 import logo from "../../assets/logo.png"
 import { useNavigate } from "react-router";
 import useInput from '../../hooks/useInput';
@@ -29,12 +28,6 @@ const Container = styled.div`
   margin: 200px auto;
 `
 
-// const Image = styled.img`
-//   border-radius: 5px 0px 0px 5px;
-//   width: 100%;
-//   height: 100%;
-// `
-
 const SLeftDiv = styled.div`
   background-image: url(${logo});
   background-size: contain;
@@ -61,18 +54,6 @@ const SNormalButton = styled.button`
   margin-top: 1.5rem;
   width: 60%;
 `;
-
-// const SKakaoButton = styled.button`
-//   background: yellow;
-//   margin-top: 0.25rem;
-//   width: 60%;
-// `;
-
-// const SNaverButton = styled.button`
-//   background: lightgreen;
-//   margin-top: 0.25rem;
-//   width: 60%;
-// `;
 
 const SSGignuP = styled.p`
   display: inline-block;
@@ -114,13 +95,6 @@ function Login() {
     }
   }, [findPasswordDone])
 
-  // const KakaoLogin = () => {
-  //   navigate("http://localhost:8081/api/oauth2/authoriztation/kakao")
-  // }
-
-  // const NaverLogin = () => {
-  //   navigate("http://localhost:8081/api/oauth2/authoriztation/naver")
-  // }
   
   const activeEnter = (e) => {
     if (e.key === 'Enter') {
@@ -208,8 +182,6 @@ function Login() {
           &nbsp;&nbsp;
           <a type="button" href="https://i8a405.p.ssafy.io/api/oauth2/authorization/naver"><SImg src={naver} alt="네이버" /></a>
           </div>
-          {/* <SKakaoButton type="button" onClick={() => {KakaoLogin()}}>카카오</SKakaoButton>
-          <SNaverButton type="button" onClick={() => {NaverLogin()}}>네이버</SNaverButton> */}
           <div style={{textAlign: "left", marginLeft: "10%", marginTop: '10px'}}>
             <label>계정이 필요하신가요?</label>
             <SSGignuP

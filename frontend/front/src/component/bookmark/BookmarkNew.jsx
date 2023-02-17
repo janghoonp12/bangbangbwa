@@ -59,7 +59,7 @@ function BookmarkNew() {
     axios.get(`/items/gugun/${e.target.value}`)
     .then(res => {
       setGugunAll(res.data)
-      console.log(sido)
+
     })
     .catch(err => {
       alert('지역 정보를 받아오는데 실패하였습니다.')
@@ -75,7 +75,6 @@ function BookmarkNew() {
     axios.get(`/items/dong/${e.target.value}`)
     .then(res => {
       setDongAll(res.data)
-      console.log(gugun)
     })
     .catch(err => {
       alert('지역 정보를 받아오는데 실패하였습니다.')

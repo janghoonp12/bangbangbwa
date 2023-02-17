@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import logosample from "../../assets/logosample.png";
 import { useSelector, useDispatch } from 'react-redux';
 import { changeMyPageStatus } from "../../reducers/commonSlice"
-import useInput from '../../hooks/useInput';
 import MyPageLogo from "../../assets/mypagelogo.png";
 
 const SProfileDiv = styled.div`
@@ -35,14 +32,8 @@ const SMenuP = styled.p`
   cursor: pointer;
 `;
 
-const SNowMenuP = styled.p`
-  font-size: 15px;
-  text-decoration-line: underline;
-  cursor: pointer;
-`;
 
 function MyPageSide() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.userSlice);
   const [status, setStatus] = useState();

@@ -15,7 +15,6 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  // display: flex;
   width: 100%;
   max-width: 70%;
   margin-top: 5%;
@@ -54,8 +53,6 @@ function NoticeModify() {
   const [title, setTitle] = useInput(noticeDetail ? noticeDetail.notice_title : '');
   const [comment, setComment] = useState(noticeDetail ? noticeDetail.notice_comment : '');
 
-  // const { writeNoticeDone } = useSelector((state) => state.noticeSlice);
-  console.log(noticeDetail)
   const dispatch = useDispatch();
   
 
@@ -70,12 +67,6 @@ function NoticeModify() {
       navigate(-1)
     }
   })
-
-  // useEffect(() => {
-  //   if (writeNoticeDone) {
-  //     navigate('/notices');
-  //   }
-  // })
 
   const ModifyNotice = () => {
     dispatch(modifyNoticeAsync(

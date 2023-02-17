@@ -1,6 +1,6 @@
 import {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { fileUploadAsync } from "../../reducers/fileSlice"
 
 const DropZone = () => {
@@ -11,7 +11,6 @@ const DropZone = () => {
     acceptedFiles.map((v) => {
       imageFormData.append('image', v)
     })
-    // imageFormData.append('image', acceptedFiles);
     dispatch(fileUploadAsync(imageFormData))
   }, [])
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})

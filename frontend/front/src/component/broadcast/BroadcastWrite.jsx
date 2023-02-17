@@ -41,7 +41,6 @@ function BroadcastWrite() {
   const [outlook, setOutlook] = useState("방송 개요");
   const [reservationStartDate, setReservationstartDate] = useState("");
   const [reservationStartTime, setReservationstartTime] = useState("");
-  const [thumbnail, setThumbnail] = useState("썸네일");
   const { myItem } = useSelector((state) => state.itemSlice);
   const { images } = useSelector((state) => state.fileSlice);
   const { writeBroadcastDone } = useSelector((state) => state.broadcastSlice);
@@ -67,7 +66,6 @@ function BroadcastWrite() {
     setItem(e.target.value)
   }
   
-  console.log(images);
   const createBroadcast = () => {
     dispatch(writeBroadcastAsync(
       {
@@ -88,13 +86,6 @@ function BroadcastWrite() {
           <option value={item.item.item_id}>{item.item.item_title}</option>
         )): <option value="">등록된 매물이 없습니다</option>}
       </select>
-      {/* <TextInput
-        value={item}
-        height={100}
-        onChange={(event) => {
-          setItem(event.target.value);
-      }}
-      /> */}
       <br />
       <Container>
         <TextInput

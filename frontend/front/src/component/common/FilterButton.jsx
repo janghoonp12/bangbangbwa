@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-// import Filter from "./Filter";
 
 const SButton = styled.button`
   padding: 8px 16px;

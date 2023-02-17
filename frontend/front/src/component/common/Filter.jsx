@@ -54,12 +54,6 @@ function Filter() {
     const intFloor = floor.map((elem) => parseInt(elem))
     const intRoomType = roomType.map((elem) => parseInt(elem))
 
-    // 범위 검색 확인
-    // const intExclusiveArea = (exclusiveArea[0] !== 0 && exclusiveArea[1] === 0) ? [exclusiveArea[0], 10000000] : exclusiveArea
-    // const intBuyPrice = (buyPrice[0] !== 0 && buyPrice[1] === 0) ? [buyPrice[0], 10000000] : buyPrice
-    // const intDeposit = (deposit[0] !== 0 && deposit[1] === 0) ? [deposit[0], 10000000] : deposit
-    // const intMonthDeposit = (monthDeposit[0] !== 0 && monthDeposit[1] === 0) ? [monthDeposit[0], 10000000] : monthDeposit
-    // const intMonthRent = (monthRent[0] !== 0 && monthRent[1] === 0) ? [monthRent[0], 10000000] : monthRent
 
     const data = {
       "item_build_year": (buildYear.length) ? intBuildYear : [0, 1, 2, 3, 4],
@@ -92,7 +86,7 @@ function Filter() {
         "option_washer": washer
       }
     }
-    console.log(data)
+
 
     if (where.includes('broadcast')) {
       dispatch(FilterBroadcastAsync(data))

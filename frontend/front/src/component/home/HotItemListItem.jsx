@@ -1,5 +1,4 @@
-import React from "react";
-// import Card from 'react-bootstrap/Card'; 
+import React from "react"; 
 import styled from "styled-components";
 
 const SCardDiv = styled.div`
@@ -40,7 +39,6 @@ const SCardContentP = styled.p`
   font-size: 20px;
 `;
 
-// TitleText를 이용해서 props로 받은 post객체내의 title문자열을 표시해준다
 function HotItemListItem(props) {
     const { post, onClick } = props;
     return (

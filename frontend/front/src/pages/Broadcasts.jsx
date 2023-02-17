@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import BroadcastAll from "../component/broadcast/BroadcastAll";
-import Openvidu from "./Openvidu";
 import BroadcastWrite from "../component/broadcast/BroadcastWrite";
 import LiveBroadcastList from "../component/broadcast/LiveBroadcastList";
 import NonLiveBroadcastList from "../component/broadcast/NonLiveBroadcastList";
@@ -27,7 +26,6 @@ function Broadcasts() {
         <hr/>
         <Routes>
           <Route index element={<BroadcastAll />} />
-          {/* <Route path=":postId" element={<Openvidu />} /> */}
           <Route path="filter" element={<FilterBroadcast />} />
           <Route path="new" element={<BroadcastWrite />} />
           <Route path="live" element={<LiveBroadcastList />} />

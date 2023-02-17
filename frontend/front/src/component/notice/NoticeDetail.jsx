@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
@@ -51,9 +51,7 @@ function ItemDetail() {
   const { noticeDetail } = useSelector((state) => state.noticeSlice);
   const { me } = useSelector((state) => state.userSlice);
 
-  // const notice = data.find((item) => {
-  //   return parseInt(item.id) === parseInt(postId);
-  // });
+
   const goBack = () => {
     navigate(-1);
   }

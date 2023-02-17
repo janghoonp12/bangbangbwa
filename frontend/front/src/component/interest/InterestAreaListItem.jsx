@@ -1,7 +1,5 @@
 import React from "react";
-// import Card from 'react-bootstrap/?Card';
-// import Button from 'react-bootstrap/Button';
-import sample from '../../assets/logosample.png';
+import sample from '../../assets/logo.png';
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 

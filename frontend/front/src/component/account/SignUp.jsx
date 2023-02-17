@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logosample from "../../assets/logosample.png"
+import logosample from "../../assets/logo.png"
 import { useNavigate } from "react-router-dom";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,12 +25,6 @@ const Container = styled.div`
   border-radius: 10px;
   margin: 200px auto;
 `
-
-// const Image = styled.img`
-//   border-radius: 5px 0px 0px 5px;
-//   width: 100%;
-//   height: 100%;
-// `
 
 const SLeftDiv = styled.div`
   background-image: url(${logosample});
@@ -136,7 +130,6 @@ function SignUp() {
         <SLeftDiv />
         <SRightDiv style={{textAlign:"center"}}>
           <div style={{fontSize: "2rem"}}>계정 만들기</div>
-          {/* <div style={{fontSize: "1rem"}}>돌아 오신걸 환영해요</div> */}
           <STextDiv style={{ marginTop: "10%"}}>이메일</STextDiv>
           <SCustomInput  placeholder="이메일을 입력해주세요" value={userEmail} required onChange={onChangeEmail}/>
           <STextDiv>닉네임</STextDiv>

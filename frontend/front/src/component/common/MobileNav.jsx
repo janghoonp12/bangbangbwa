@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import noticelogo from "../../assets/noticelogo.png"
-// import alarmlogo from "../../assets/alarmlogo.png"
 import mypagelogo from "../../assets/mypagelogo.png"
 import logo from "../../assets/logo.png"
 import searchbutton from "../../assets/searchbutton.png"
-// import AlarmList from "../alarm/AlarmList";
 import axios from "axios";
 import SearchInfoModal from "./ui/SearchInfoModal";
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,16 +54,6 @@ const NavRightDiv = styled.div`
   margin-right: 20px;
 `;
 
-// const NavNameDiv = styled.div`
-//   width: 50px;
-//   height: 60px;
-//   margin-left: 15px;
-//   margin-right: 5px;
-//   font-size: 25px;
-//   font-weight: bold;
-//   color: rgba(214, 174, 242, 1);
-// `;
-
 
 const activeStyle = {
   'textDecoration': 'none',
@@ -103,15 +90,6 @@ const SInput = styled.input`
   border-radius: 10px;
   border: 0 solid black;
 `;
-
-// const TestDiv = styled.div`
-//   position: absolute;
-//   top: 65px;
-//   right: 10px;
-//   background-color: white;
-//   border: 1px solid lightgrey;
-//   border-radius: 8px;
-// `;
 
 const SSelect = styled.select`
   margin-right: 2 0px;
@@ -211,7 +189,6 @@ const MobileNav = () => {
   const onClick = () => {
     if (search || dong) {
       navigate(`/items/search/${search}&${dong}`)
-      console.log(sido, gugun)
       setSearch('')
       setGugunAll('')
       setDongAll('')
@@ -290,11 +267,6 @@ const MobileNav = () => {
           <SImg src={mypagelogo} alt="#" />
           </NavLink></NavDiv> : <></>
           }
-        {/* <NavDiv>
-          <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/alarm ">
-            <SImg src={alarmlogo} alt="#" />
-          </NavLink>
-        </NavDiv> */}
         <NavDiv>
         { me ? <LogoutIcon onClick={signOut}></LogoutIcon> : <NavLink style={({ isActive }) => (isActive ? activeStyle : nonActiveStyle)} to="/signin">
             로그인  

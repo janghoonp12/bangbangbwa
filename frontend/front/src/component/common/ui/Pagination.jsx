@@ -46,7 +46,7 @@ function Pagination({ total, limit, page, setPage }) {
             </Button>
           )  
         }
-        // <SP><input type="checkbox" onClick={(e) => dealTypeChange('1', e)} disabled={(dealType === '1' || !dealType) ? false : true}/> 월세</SP>
+        
       })}
       <Button 
         onClick={() => {setPage(page+1); setCurrPage(page);}} 

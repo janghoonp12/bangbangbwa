@@ -4,7 +4,6 @@ import { writeItemAsync, clearWriteItemDone } from "../../reducers/itemSlice"
 import styled from "styled-components";
 import Button from "./ui/Button";
 import DaumPostcode from 'react-daum-postcode';
-import ImageUpload from "./ImageUpload";
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -148,7 +147,6 @@ function WriteItem() {
 
     const data = {
       "item": {
-        // "broker_id": 1,
         "item_bonbun": bon,
         "item_bubun": bu,                                      
         "item_build_year": buildYear,

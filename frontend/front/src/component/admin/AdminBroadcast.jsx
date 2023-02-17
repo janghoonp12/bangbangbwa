@@ -11,7 +11,6 @@ function AdminBroadcast() {
   useEffect(() => {
     axios.get('/broadcasts?page=0&size=100000')
     .then((res) => {
-      console.log(res.data.content)
 
       const broadcasts = res.data.content.map((obj) => {
         const id = obj.broadcastId

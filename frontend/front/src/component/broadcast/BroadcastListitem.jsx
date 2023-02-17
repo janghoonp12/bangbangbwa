@@ -1,8 +1,7 @@
 import React from "react";
-// import Card from 'react-bootstrap/Card';
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { choiceWatchingBroadCast } from "../../reducers/broadcastSlice"
 import Swal from "sweetalert2";
 
