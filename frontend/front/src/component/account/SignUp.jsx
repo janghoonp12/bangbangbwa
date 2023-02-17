@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logosample from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,21 +21,28 @@ const Container = styled.div`
   grid-template-columns: 0.5fr 0.5fr;
   background-color: white;
   width: 60%;
+  @media (max-width:1024px){
+    grid-template-columns: 1fr;
+    width: 80%;
+  }
   height: 50%;
   border-radius: 10px;
   margin: 200px auto;
 `
 
 const SLeftDiv = styled.div`
-  background-image: url(${logosample});
+  background-image: url(${logo});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 
   display: inline-block;
+  @media (max-width:1024px){
+    display: none;
+  }
   width: 100%;
   height: 100%;
-`;
+`
 
 const SRightDiv = styled.form`
   width: 100%;

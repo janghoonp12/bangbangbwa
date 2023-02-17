@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
 import { useNavigate } from "react-router";
 import useInput from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,9 +20,13 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
+  grid-template-columns: 1fr 1fr;
   background-color: white;
   width: 60%;
+  @media (max-width:1024px){
+    grid-template-columns: 1fr;
+    width: 80%;
+  }
   height: 50%;
   border-radius: 10px;
   margin: 200px auto;
@@ -35,13 +39,18 @@ const SLeftDiv = styled.div`
   background-position: center;
 
   display: inline-block;
+  @media (max-width:1024px){
+    display: none;
+  }
   width: 100%;
   height: 100%;
 `
 
 const SRightDiv = styled.form`
+  align-items: center;
   width: 100%;
   height: 100%;
+  text-align: center;
   padding: 20px;
 `
 
@@ -55,7 +64,7 @@ const SNormalButton = styled.button`
   width: 60%;
 `;
 
-const SSGignuP = styled.p`
+const SSignUpP = styled.p`
   display: inline-block;
   font-size: 1rem;
   color: blue;
@@ -173,8 +182,8 @@ function Login() {
           <div style={{textAlign: "left", marginLeft: "10%"}}>비밀번호</div>
           <SCustomInput placeholder="비밀번호를 입력해주세요" value={userPassword} required onChange={onChangePassword} onKeyDown={(e) => activeEnter(e)} type="password"/>
           <div style={{textAlign: "left", marginLeft: "10%"}}>
-            <SSGignuP
-            onClick={findPassword}>비밀번호를 잊으셨나요?</SSGignuP>
+            <SSignUpP
+            onClick={findPassword}>비밀번호를 잊으셨나요?</SSignUpP>
           </div>
           <SNormalButton type="button" onClick={() => {signInButtonClick()}}>로그인</SNormalButton>
           <div style={{marginTop: '10px', display: 'flex', justifyContent: 'center'}}>
@@ -184,10 +193,10 @@ function Login() {
           </div>
           <div style={{textAlign: "left", marginLeft: "10%", marginTop: '10px'}}>
             <label>계정이 필요하신가요?</label>
-            <SSGignuP
+            <SSignUpP
             onClick={() => {
               navigate("/signup")
-            }}>가입하기</SSGignuP>
+            }}>가입하기</SSignUpP>
           </div>
         </SRightDiv>
       </Container>

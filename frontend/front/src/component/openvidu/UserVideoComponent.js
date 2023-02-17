@@ -38,13 +38,10 @@ export default class UserVideoComponent extends Component {
     render() {
         return (
             <div>
-                {/* {this.props.streamManager.videos[0].canplayListenerAdded !== false ? ( */}
-                {/* {this.props.streamManager.stream.mediaStream ? ( */}
                 {this.props.streamManager !== undefined ? (
                   <div>
                     <div className="streamcomponent">
                         <OpenViduVideoComponent streamManager={this.props.streamManager} />
-                        {/* <div><SP>{this.getNicknameTag()}</SP></div> */}
                         <div style={{ backgroundColor: "rgba(255, 255, 255, 0.4)"}}><SP><SImg src={redDot} alt="이미지"/> Live</SP></div>
                     </div>
                     <SEndCastDiv style={this.props.streamManager.stream.mediaStream ? {display:"none"} : null}>

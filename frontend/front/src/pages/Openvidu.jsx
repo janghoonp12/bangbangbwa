@@ -8,7 +8,6 @@ import watchers from '../assets/eye.png';
 import BroadcastButtonModal from '../component/common/ui/BroadcastButtonModal';
 import { connect } from 'react-redux';
 import { DeleteBroadcastAsync } from '../reducers/broadcastSlice';
-// import SwitchCamera from '../component/openvidu/SwitchCamera';
 
 
 const OPENVIDU_SERVER_URL = 'https://i8a405.p.ssafy.io:8086';
