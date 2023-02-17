@@ -1,6 +1,6 @@
 # 🏢 BangBangBwa ( 어디서든 실시간으로 집 매물을 볼 수 있는 부동산 라이브 커머스)
 
-## 🏚방방봐 소개 🏚
+## 🏚홈동 소개 🏚
 중개사가 등록한 매물을 토대로 방송을 등록하면 호스트와 시청자로 구분하여 실시간으로 집 매물을 확인할 수 있는 서비스
 
 
@@ -25,43 +25,42 @@
 
 ---
 
+
 🖱**Backend**
-- IntelliJ
-- spring boot 3.0.1
-- spring-boot-jpa
-- Spring Security
-- Java 8
-- AWS S3
-- mysql 8.0.21
 
-🖱**Frontend**
+<img src="https://img.shields.io/badge/Spring Boot-green?style=flat&logo=Spring Boot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Hibernate-black?style=flat&logo=Hibernate&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring Security-green?style=flat&logo=Spring Security&logoColor=white"/>
+<img src="https://img.shields.io/badge/WebRTC-black?style=flat&logo=WebRTC&logoColor=white"/>
+<img src="https://img.shields.io/badge/MySQL-blue?style=flat&logo=MySQL&logoColor=white"/>
 
-- Visual Studio Code
-- React.js 18.2.0
-- redux-toolkit 1.9.1
-- redux 4.2.0
-- redux-persist 6.0.0
+👀**Frontend**👀
 
-🖱**Web RTC**
-
-- openvidu 2.19.0
-
-🖱**CI/CD**
-- aws ec2
-- docker
-- nginx
-- jenkins
+<img src="https://img.shields.io/badge/React-blue?style=flat&logo=React&logoColor=white"/>
+<img src="https://img.shields.io/badge/Redux-purple?style=flat&logo=Redux&logoColor=white"/>
+<img src="https://img.shields.io/badge/JavaScript-yellow?style=flat&logo=JavaScript&logoColor=white"/>
+<img src="https://img.shields.io/badge/styled_components-pink?style=flat&logo=styled-components&logoColor=white"/>
 
 
-### 👨‍👩‍👧 협업 툴
+🛠**Tools**🛠
 
----
+<img src="https://img.shields.io/badge/IntelliJ IDEA-purple?style=flat&logo=IntelliJ IDEA&logoColor=white"/>
+<img src="https://img.shields.io/badge/Visual Studio Code IDEA-blue?style=flat&logo=Visual Studio Code&logoColor=white"/>
 
-- Git
-- Jira
-- Notion
-- Mattermost
-- Webex
+
+<img src="https://img.shields.io/badge/Visual Amazon AWS-yellow?style=flat&logo=Amazon AWS&logoColor=white"/>
+<img src="https://img.shields.io/badge/NGINX-grreen?style=flat&logo=NGINX&logoColor=white"/>
+<img src="https://img.shields.io/badge/Jenkins-orange?style=flat&logo=Jenkins&logoColor=white"/>
+<img src="https://img.shields.io/badge/Docker-blue?style=flat&logo=Docker&logoColor=white"/>
+
+
+<img src="https://img.shields.io/badge/GitHub-black?style=flat&logo=GitHub&logoColor=white"/>
+<img src="https://img.shields.io/badge/Jira Software-blue?style=flat&logo=Jira Software&logoColor=whie"/>
+<img src="https://img.shields.io/badge/Notion-black?style=flat&logo=Notion&logoColor=white"/>
+<img src="https://img.shields.io/badge/Mattermost-blue?style=flat&logo=Mattermost&logoColor=white"/>
+
+
+
 
 ### ✨ EC2 포트 정리
 ---
