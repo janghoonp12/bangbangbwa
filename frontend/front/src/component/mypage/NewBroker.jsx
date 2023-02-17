@@ -4,6 +4,7 @@ import { Input, Button } from 'antd';
 import useInput from "../../hooks/useInput";
 import { useDispatch } from 'react-redux';
 import { submitBrokerInfo } from "../../reducers/userSlice"
+import Swal from "sweetalert2";
 
 
 const SFlexDiv = styled.div`
@@ -43,7 +44,12 @@ function NewBroker() {
         "brokerContact": broker_contact
       }
     ))
-    alert('제출이 완료되었습니다.')
+    Swal.fire({
+      icon: 'success',
+      title: '중개사 신청 성공!',
+      showConfirmButton: false,
+      timer: 500
+    })
   }
 
   return (
