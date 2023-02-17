@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 import { searchDetailItemAsync } from "../../reducers/itemSlice"
@@ -25,14 +24,6 @@ const SCardDiv = styled.div`
 `;
 
 const SImgDiv = styled.div`
-  width: 248px;
-  height: 250px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-`;
-
-
-const SCardImg = styled.img`
   width: 248px;
   height: 250px;
   border-top-left-radius: 8px;
