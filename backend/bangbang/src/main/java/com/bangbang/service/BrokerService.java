@@ -1,6 +1,5 @@
 package com.bangbang.service;
 
-import com.bangbang.domain.broker.Broker;
 import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
 

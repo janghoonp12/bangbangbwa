@@ -1,6 +1,5 @@
 package com.bangbang.service;
 
-import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.sign.User;
 import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.dto.item.ItemDto;

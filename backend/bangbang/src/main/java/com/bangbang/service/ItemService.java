@@ -1,10 +1,5 @@
 package com.bangbang.service;
 
-import com.bangbang.domain.item.Item;
-
-import com.bangbang.domain.item.ItemPrice;
-import com.bangbang.domain.item.ManageOption;
-import com.bangbang.domain.item.Option;
 import com.bangbang.dto.item.*;
 import org.springframework.data.domain.Page;
 

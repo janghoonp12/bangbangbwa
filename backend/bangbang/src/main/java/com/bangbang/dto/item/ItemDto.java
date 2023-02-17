@@ -5,7 +5,6 @@ import com.bangbang.domain.item.ItemPrice;
 import com.bangbang.domain.item.ManageOption;
 import com.bangbang.domain.item.Option;
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

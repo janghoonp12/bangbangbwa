@@ -1,17 +1,12 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.notice.Notice;
-import com.bangbang.domain.notice.NoticeRepository;
 import com.bangbang.dto.notice.NoticeResponseDto;
 import com.bangbang.dto.notice.NoticeSaveRequestDto;
 import com.bangbang.dto.notice.NoticeUpdateRequestDto;
 import com.bangbang.service.NoticeService;
 import com.bangbang.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @Api(value="NoticeController Version 1")
@@ -31,8 +25,6 @@ public class NoticeRestController {
     private final NoticeService noticeService;
     @Autowired
     private final UserService userService;
-
-
 
     @ApiOperation(value="공지사항 등록")
     @PostMapping("/admin/notices/new")

@@ -4,7 +4,6 @@ import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.broadcast.BroadcastRepository;
 import com.bangbang.domain.replay.Replay;
 import com.bangbang.domain.replay.ReplayRepository;
-import com.bangbang.dto.replay.ReplayDeactiveRequestDto;
 import com.bangbang.dto.replay.ReplayListResponseDto;
 import com.bangbang.dto.replay.ReplayResponseDto;
 import com.bangbang.dto.replay.ReplaySaveRequestDto;

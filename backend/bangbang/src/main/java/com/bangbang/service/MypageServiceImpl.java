@@ -6,8 +6,6 @@ import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
 import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.dto.item.ItemDto;
-import com.bangbang.exception.BaseException;
-import com.bangbang.exception.ErrorMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

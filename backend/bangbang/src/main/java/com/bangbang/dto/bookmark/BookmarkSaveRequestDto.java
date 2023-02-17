@@ -1,7 +1,6 @@
 package com.bangbang.dto.bookmark;
 
 import com.bangbang.domain.bookmark.Bookmark;
-import com.bangbang.domain.sign.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class BookmarkSaveRequestDto {
-
-//  private Long bookmarkId;
   private String bookmarkTitle;
   private String bookmarkComment;
   private Integer bookmarkItemType;

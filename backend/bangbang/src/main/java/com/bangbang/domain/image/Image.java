@@ -1,6 +1,5 @@
 package com.bangbang.domain.image;
 
-import io.swagger.models.auth.In;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

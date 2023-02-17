@@ -1,7 +1,5 @@
 package com.bangbang.dto.replay;
 
-import com.bangbang.domain.broadcast.Broadcast;
-import com.bangbang.domain.replay.Replay;
 import io.swagger.models.auth.In;
 import lombok.Builder;
 import lombok.Getter;

@@ -4,8 +4,6 @@ import com.bangbang.exception.BaseException;
 import com.bangbang.exception.ErrorMessage;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.ObjectError;
@@ -19,7 +17,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class globalExceptionController {
-//  private static Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
   @ExceptionHandler(BaseException.class)
   public ResponseEntity<?> baseHandler(BaseException e) {

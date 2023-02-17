@@ -6,15 +6,11 @@ import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
 import com.bangbang.dto.broker.BrokerResponseDto;
 import com.bangbang.dto.broker.BrokerSaveRequestDto;
-import com.bangbang.dto.notice.NoticeResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 @Service
 public class BrokerServiceImpl implements BrokerService{
 

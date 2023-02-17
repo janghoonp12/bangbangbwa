@@ -1,6 +1,5 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.broker.BrokerRepository;
 import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;

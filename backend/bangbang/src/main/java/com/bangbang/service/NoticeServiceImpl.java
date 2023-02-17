@@ -1,6 +1,5 @@
 package com.bangbang.service;
 
-import com.bangbang.domain.image.Image;
 import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.domain.notice.Notice;
 import com.bangbang.domain.notice.NoticeRepository;
@@ -16,8 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

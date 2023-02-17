@@ -1,19 +1,15 @@
 package com.bangbang.controller;
 
 
-import com.bangbang.dto.SignIn;
+import com.bangbang.dto.sign.SignIn;
 import com.bangbang.dto.sign.FindPassword;
 import com.bangbang.dto.sign.SignUp;
 import com.bangbang.dto.sign.UserDto;
 import com.bangbang.service.UserServiceImpl;
-import com.bangbang.domain.sign.User;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

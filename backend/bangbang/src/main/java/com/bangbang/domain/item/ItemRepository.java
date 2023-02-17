@@ -3,7 +3,6 @@ package com.bangbang.domain.item;
 import java.util.List;
 
 import com.bangbang.dto.item.ItemDto;
-import com.bangbang.dto.item.ItemResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

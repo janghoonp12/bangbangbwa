@@ -1,7 +1,7 @@
 package com.bangbang.service;
 
 import com.bangbang.domain.sign.User;
-import com.bangbang.dto.SignIn;
+import com.bangbang.dto.sign.SignIn;
 import com.bangbang.dto.sign.FindPassword;
 
 import com.bangbang.dto.sign.SignUp;
@@ -9,7 +9,6 @@ import com.bangbang.dto.sign.UserDto;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface UserService {
 

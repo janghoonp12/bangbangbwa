@@ -1,11 +1,8 @@
 package com.bangbang.dto.broadcast;
 
 import com.bangbang.domain.broadcast.Broadcast;
-import com.bangbang.domain.image.Image;
-import com.bangbang.domain.item.Item;
 
 import java.time.LocalDateTime;
-import java.util.Random;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class BroadcastSaveRequestDto {
-//  private Long broadcastId;
   private String broadcastDescription;
   private String broadcastTitle;
   private LocalDateTime broadcastReservationTime;

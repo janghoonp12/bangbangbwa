@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 public class AlarmSaveRequestDto {
   private Long alarmId;
   private String alarmComment;
-//  private Integer alarmStatus;
   private Long userId;
 
   @Builder

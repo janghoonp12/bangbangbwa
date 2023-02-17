@@ -1,7 +1,6 @@
 package com.bangbang.dto.notice;
 
 import com.bangbang.domain.notice.Notice;
-import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

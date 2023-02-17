@@ -4,10 +4,8 @@ import javax.persistence.*;
 
 import com.bangbang.domain.broadcast.Broadcast;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Getter
 @NoArgsConstructor
@@ -35,12 +33,6 @@ public class Replay {
     this.replayStatus = replayStatus;
     this.broadcast = broadcast;
   }
-
-//  public void update(Long replayId, String replayStorageLocation, Integer replayStatus){
-//    this.replayId = replayId;
-//    this.replayStorageLocation = replayStorageLocation;
-//    this.replayStatus = replayStatus;
-//  }
 
   public void deactive(Long replayId){
     this.replayId = replayId;

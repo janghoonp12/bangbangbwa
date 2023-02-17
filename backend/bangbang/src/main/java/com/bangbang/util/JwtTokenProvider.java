@@ -12,7 +12,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -23,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -76,12 +73,10 @@ public class JwtTokenProvider {
 
   // JWT 토큰 생성
   public String createToken(Long uid, List<String> roles) {
-//        return create(uid, roles, 1000 * 5);
     return create(uid, roles, 1000 * 10 * tokenValidMinutes);
   }
 
   public String createRefresh(Long uid, List<String> roles) {
-//        return create(uid, roles, 1000 * 10 * 60);
     return create(uid, roles, 1000 * 10 * refreshValidMinutes);
   }
 

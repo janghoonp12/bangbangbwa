@@ -1,6 +1,5 @@
 package com.bangbang.domain.item;
 
-import lombok.Cleanup;
 import lombok.Getter;
 
 import javax.persistence.Column;

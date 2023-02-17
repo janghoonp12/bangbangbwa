@@ -3,7 +3,6 @@ package com.bangbang.service;
 import com.bangbang.domain.broadcast.Broadcast;
 import com.bangbang.domain.broadcast.BroadcastQueryRepository;
 import com.bangbang.domain.broadcast.BroadcastRepository;
-import com.bangbang.domain.image.Image;
 import com.bangbang.domain.image.ImageRepository;
 import com.bangbang.dto.broadcast.*;
 
@@ -16,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +32,6 @@ public class BroadcastService {
   // 방송 등록
   @Transactional
   public void newBroadcast(BroadcastSaveRequestDto requestDto) throws Exception{
-//    Image image = imageRepository.findByImagePath(requestDto.getImagePath())
-//            .orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다."));
     int leftLimit = 48; // numeral '0'
     int rightLimit = 122; // letter 'z'
     int targetStringLength = 45;

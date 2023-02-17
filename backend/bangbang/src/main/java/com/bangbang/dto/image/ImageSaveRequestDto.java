@@ -1,7 +1,6 @@
 package com.bangbang.dto.image;
 
 import com.bangbang.domain.image.Image;
-import com.bangbang.domain.image.ImageRepository;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

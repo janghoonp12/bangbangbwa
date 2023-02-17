@@ -4,11 +4,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.bangbang.dto.image.ImageSaveRequestDto;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,31 +26,6 @@ public class AwsS3Service {
   private final AmazonS3 amazonS3;
   private final ImageService imageService;
 
-//  public ImageSaveRequestDto noticeUploadImage(MultipartFile file) {
-//    String fileName = createFileName(file.getOriginalFilename());
-//    String url = defaultUrl+fileName;
-//
-//    ObjectMetadata objectMetadata = new ObjectMetadata();
-//    objectMetadata.setContentLength(file.getSize());
-//    objectMetadata.setContentType(file.getContentType());
-//
-//    ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
-//    imageSaveRequestDto.setImageOriginName(file.getOriginalFilename());
-//    imageSaveRequestDto.setImagePath(url);
-//    imageSaveRequestDto.setImageName(fileName);
-//
-//    Long image_id = imageService.saveFile(imageSaveRequestDto);
-//    imageSaveRequestDto.setImageId(image_id);
-//
-//    try (InputStream inputStream = file.getInputStream()) {
-//      amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-//          .withCannedAcl(CannedAccessControlList.PublicRead));
-//    } catch (IOException e) {
-//      throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
-//    }
-//
-//    return imageSaveRequestDto;
-//  }
   public String broadcastUploadImage(MultipartFile file) {
     String fileName = createFileName(file.getOriginalFilename());
     String url = defaultUrl+fileName;
@@ -61,14 +33,6 @@ public class AwsS3Service {
     ObjectMetadata objectMetadata = new ObjectMetadata();
     objectMetadata.setContentLength(file.getSize());
     objectMetadata.setContentType(file.getContentType());
-
-//    ImageSaveRequestDto imageSaveRequestDto = new ImageSaveRequestDto();
-//    imageSaveRequestDto.setImageOriginName(file.getOriginalFilename());
-//    imageSaveRequestDto.setImagePath(url);
-//    imageSaveRequestDto.setImageName(fileName);
-//
-//    Long image_id = imageService.saveFile(imageSaveRequestDto);
-//    imageSaveRequestDto.setImageId(image_id);
 
     try (InputStream inputStream = file.getInputStream()) {
       amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)

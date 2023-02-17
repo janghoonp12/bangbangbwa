@@ -3,9 +3,7 @@ package com.bangbang.domain.item;
 import javax.persistence.*;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Data

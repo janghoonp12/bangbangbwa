@@ -1,6 +1,5 @@
 package com.bangbang.dto.notice;
 
-import com.bangbang.domain.image.Image;
 import com.bangbang.domain.notice.Notice;
 import lombok.Builder;
 import lombok.Getter;

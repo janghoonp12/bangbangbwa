@@ -1,18 +1,12 @@
 package com.bangbang.controller;
 
 import com.bangbang.domain.interest.Interestarea;
-import com.bangbang.domain.interest.InterestareaRepository;
-import com.bangbang.domain.interest.Interestitem;
 import com.bangbang.domain.item.Item;
-import com.bangbang.dto.broker.BrokerResponseDto;
-import com.bangbang.dto.broker.BrokerSaveRequestDto;
 import com.bangbang.dto.interest.InterestareaSaveRequestDto;
 import com.bangbang.dto.interest.InterestitemSaveRequestDto;
 import com.bangbang.service.InterestService;
 import com.bangbang.service.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

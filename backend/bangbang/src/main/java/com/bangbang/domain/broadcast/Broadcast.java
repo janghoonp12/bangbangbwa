@@ -1,11 +1,8 @@
 package com.bangbang.domain.broadcast;
 
 import com.bangbang.domain.BroadcastDatetime;
-import com.bangbang.domain.image.Image;
-import com.bangbang.domain.item.Item;
 import javax.persistence.*;
 
-import com.bangbang.domain.BroadcastDatetime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -38,10 +35,6 @@ public class Broadcast extends BroadcastDatetime{
           joinColumns = @JoinColumn(name="item_id"),
           inverseJoinColumns = @JoinColumn(name="item_id"))
   private Long itemId;      //FK
-
-//  @JoinColumn(name="image_id")
-//  @OneToOne(fetch = FetchType.LAZY)
-//  private Image image;     //FK
 
   @Column(name = "image_path")
   private String imagePath;

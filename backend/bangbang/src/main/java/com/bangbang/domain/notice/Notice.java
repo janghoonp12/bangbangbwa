@@ -1,7 +1,6 @@
 package com.bangbang.domain.notice;
 
 import com.bangbang.domain.NoticeDatetime;
-import com.bangbang.domain.image.Image;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

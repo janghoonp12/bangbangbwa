@@ -2,7 +2,6 @@ package com.bangbang.service;
 
 import com.bangbang.domain.sign.User;
 import com.bangbang.dto.sign.OAuth2UserInfo;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;

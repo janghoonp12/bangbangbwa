@@ -14,14 +14,10 @@ public class CorsConfig {
   public CorsFilter corsFilter() {
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     CorsConfiguration config = new CorsConfiguration();
-//    config.addAllowedOriginPattern("http://localhost:3000"); //
-//    //config.addAllowedOriginPattern("http://i8a405.p.ssafy.io:3000"); //
-//    config.addAllowedMethod("*");
 
     config.setAllowedOriginPatterns(Arrays.asList("*"));
     config.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PATCH"));
     config.setAllowedHeaders(Arrays.asList("*"));
-//    config.setAllowCredentials(true);
 
     source.registerCorsConfiguration("/**", config);
     return new CorsFilter(source);

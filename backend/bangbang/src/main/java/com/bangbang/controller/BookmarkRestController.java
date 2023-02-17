@@ -1,24 +1,17 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.bookmark.Bookmark;
-import com.bangbang.domain.sign.User;
 import com.bangbang.dto.bookmark.BookmarkListResponseDto;
-import com.bangbang.dto.bookmark.BookmarkResponseDto;
 import com.bangbang.dto.bookmark.BookmarkSaveRequestDto;
 import com.bangbang.dto.bookmark.BookmarkUpdateRequestDto;
-import com.bangbang.dto.broadcast.BroadcastListResponseDto;
 import com.bangbang.service.BookmarkService;
 import com.bangbang.service.CustomUserDetailsService;
 import com.bangbang.util.JwtTokenProvider;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

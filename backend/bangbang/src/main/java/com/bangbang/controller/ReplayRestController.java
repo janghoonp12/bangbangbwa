@@ -1,15 +1,10 @@
 package com.bangbang.controller;
 
-import com.bangbang.domain.broadcast.Broadcast;
-import com.bangbang.domain.replay.Replay;
-import com.bangbang.dto.replay.ReplayDeactiveRequestDto;
 import com.bangbang.dto.replay.ReplayListResponseDto;
 import com.bangbang.dto.replay.ReplayResponseDto;
 import com.bangbang.dto.replay.ReplaySaveRequestDto;
 import com.bangbang.service.ReplayService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,7 +21,6 @@ public class ReplayRestController {
     private final ReplayService replayService;
 
     //다시보기 등록
-
     @ApiOperation(value = "다시보기 등록", notes = "다시보기를 등록합니다.")
     @PostMapping(value = "/broker/replays/new")
     public ResponseEntity<?> newReplay(@RequestBody ReplaySaveRequestDto requestDto) throws Exception {

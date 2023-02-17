@@ -1,7 +1,6 @@
 package com.bangbang.service;
 
 import com.bangbang.domain.interest.Interestarea;
-import com.bangbang.domain.interest.Interestitem;
 import com.bangbang.domain.item.Item;
 import com.bangbang.dto.interest.InterestareaSaveRequestDto;
 import com.bangbang.dto.interest.InterestitemSaveRequestDto;

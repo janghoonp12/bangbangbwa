@@ -1,7 +1,6 @@
 package com.bangbang.dto.bookmark;
 
 import com.bangbang.domain.bookmark.Bookmark;
-import com.bangbang.domain.broadcast.Broadcast;
 import lombok.Getter;
 
 @Getter

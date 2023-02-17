@@ -3,8 +3,6 @@ package com.bangbang.util;
 import com.bangbang.domain.sign.User;
 import com.bangbang.domain.sign.UserRepository;
 import com.bangbang.dto.sign.KakaoUserInfo;
-import com.bangbang.dto.sign.NaverUserInfo;
-import com.bangbang.dto.sign.OAuth2UserInfo;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
