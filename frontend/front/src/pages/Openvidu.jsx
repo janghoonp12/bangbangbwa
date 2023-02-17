@@ -1088,7 +1088,7 @@ class Openvidu extends Component {
                 )}
                 
                 {/* {this.state.myUserName === 'Participant1' ? ( */}
-                {this.state.myUserName.includes('host') ? (
+                {this.state.myUserName.includes('broker_') ? (
                   <SButtonLineDiv>
                     <div>
                       <BroadcastButtonModal />
