@@ -10,14 +10,15 @@ import { SearchLiveBroadcastAsync, SearchEndBroadcastAsync } from "../../reducer
 import BroadcastListItem from "./BroadcastListitem";
 
 const SH2 = styled.h2`
-  float: left;
+  margin-top: 7px;
+  margin-right: 5px;
 `;
 
 const SButton = styled.button`
-  float: left;
   margin: 5px;
   border-radius: 5px;
   border: 0.5px solid lightgrey;
+  vertical-align: middle;
   background-color: rgba(251, 255, 0, 0.2);
   :hover {
     background-color: rgba(251, 255, 0, 0.4);
@@ -74,7 +75,7 @@ function BroadcastAll() {
     <div id="filterDiv" style={{ display: "none" }}>
       <Filter />
     </div>
-    <div style={{height: '50px', marginTop: '10px'}}>
+    <div style={{height: '50px', marginTop: '10px', marginBottom: '10px', display: 'flex'}}>
       <SH2>라이브 방송</SH2>
       <SButton onClick={liveBroadcastNavigation}>더보기</SButton>
     </div>
@@ -86,7 +87,7 @@ function BroadcastAll() {
       )) : <label>no data</label>}
     </BroadcastList>
     <hr />
-    <div style={{height: '50px'}}>
+    <div style={{height: '50px', display: 'flex', marginBottom: '10px'}}>
       <SH2>방송 예정</SH2>
       <SButton onClick={NonLiveBroadcastNavigation}>더보기</SButton>
     </div>
