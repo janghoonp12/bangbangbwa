@@ -207,20 +207,6 @@ const userSlice = createSlice({
       sessionStorage.clear();
     },
 
-    // addNumber: (state, action) => {
-    //   state.number = state.number + action.payload;
-    // },
-
-    // minusNumber: (state, action) => {
-    //   state.number = state.number - action.payload;
-    // },
-    // signIn: (state, action) => {
-    //   state.me = action.payload;
-    //   state.signInDone = true;
-    // },
-    // signUp: (state, action) => {
-    //   state.signUpDone = true;
-    // }
   },
   extraReducers: (builder) => {
     // builder는 Case Reducer로 액션별로 나눠서 액션을 처리할 수 있음.

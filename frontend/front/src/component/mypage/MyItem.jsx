@@ -9,10 +9,8 @@ const ItemDiv = styled.div`
   width: 100%;
   max-width: 70%;
   height: 700px;
-  // border: 1px solid grey;
   border-radius: 8px;
   margin-left: 10px;
-  // overflow: auto;
 `;
 
 function MyItem() {

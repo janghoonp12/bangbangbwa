@@ -9,8 +9,6 @@ const SFlexDiv = styled.div`
   height: 100%;
   max-height: 40%;
   width: 100%;
-  // max-width: 40%;
-  // justify-content: center;
   align-items: center;
   text-align: left;
 `;

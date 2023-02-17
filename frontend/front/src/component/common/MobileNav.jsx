@@ -164,7 +164,6 @@ const MobileNav = () => {
   };
 
 
-  // const [alarmBar, setAlarmBar] = useState(false);
   const [search, setSearch] = useState('');
   const onChange = (e) => {
           setSearch(e.target.value)

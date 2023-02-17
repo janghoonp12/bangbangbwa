@@ -1,8 +1,6 @@
 import { combineReducers } from "redux";
 import axios from 'axios';
 
-// import user from './user'
-// import notice from './notice'
 import userSlice from "./userSlice";
 import noticeSlice from "./noticeSlice"
 import itemSlice from "./itemSlice"
